@@ -395,11 +395,12 @@ class MessagesController extends AuthenticatedController {
             unset($_SESSION['sms_data']);
         }
 
+        $this->default_tags = Request::get('default_tags', '');
+
         //check if the message is a reply or if it shall be forwarded:
         if (Request::option("answer_to")) {
             $this->default_message->receivers = [];
             $old_message = new Message(Request::option("answer_to"));
-            $this->default_tags = Request::get("default_tags", "");
             $oldtags = $old_message->getTags($GLOBALS['user']->id);
             if (count($oldtags)) {
                 $this->default_tags .= " ".implode(" ", $oldtags);
