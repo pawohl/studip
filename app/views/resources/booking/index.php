@@ -136,7 +136,9 @@
                 <?= Icon::create('mail')->asImg(['class' => 'text-bottom']) ?>
             </a>
         <? endif ?>
-    <? else : ?>
+    <? endif ?>
+    <? if ($booking->description): ?>
+        <h3><?= _('Buchungstext') ?></h3>
         <?= htmlReady($booking->description) ?>
     <? endif ?>
     <? if (!empty($make_comment_editable)): ?>
