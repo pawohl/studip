@@ -43,6 +43,12 @@ class StudipAuthOIDC extends StudipAuthSSO
      */
     public $scopes = ['openid', 'email', 'profile'];
 
+    /**
+     * Which attribute contains the actual username usable for Stud.IP?
+     * Set this to "preferred_username" in your config if you're using Keycloak.
+     */
+    public string $username_attribute = 'preferred_username';
+
     public function __construct($config = [])
     {
         parent::__construct($config);
@@ -91,13 +97,18 @@ class StudipAuthOIDC extends StudipAuthSSO
     {
         $this->getClient()->authenticate();
         $this->userdata = (array) $this->getClient()->requestUserInfo();
-        if (isset($this->userdata['sub'], $this->domain)) {
-            return $this->userdata['username'] = $this->userdata['sub'] . '@' . $this->domain;
-        } else if (isset($this->userdata['sub'])) {
-            return $this->userdata['username'] = $this->userdata['sub'];
-        } else {
+
+        if (!isset($this->userdata[$this->username_attribute])) {
             return null;
         }
+
+        $username = $this->userdata[$this->username_attribute];
+
+        if (isset($this->domain)) {
+            $username .= '@' . $this->domain;
+        } 
+
+        return $this->userdata['username'] = $username;
     }
 
     /**

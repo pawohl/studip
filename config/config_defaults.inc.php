@@ -258,6 +258,20 @@ $STUDIP_AUTH_CONFIG_CAS = array("host" => "cas.studip.de",
                                                         "auth_user_md5.perms" => array("callback" => "getUserData", "map_args" => "status")));
 
 //example of OpenID Connect
+$STUDIP_AUTH_CONFIG_OIDC = [
+    'login_description' => 'über OpenID',
+    'provider_url'  => '',
+    'authorization_endpoint'  => '',
+    'client_id'     => '',
+    'client_secret' => '',
+    'redirect_uri'  => $ABSOLUTE_URI_STUDIP . '/index.php?again=yes&sso=oidc',
+    'logout_redirect_uri'  => $ABSOLUTE_URI_STUDIP . '/dispatch.php/login',
+    'user_data_mapping' => [
+        'auth_user_md5.Vorname' => ['callback' => 'getUserData', 'map_args' => 'given_name'],
+        'auth_user_md5.Nachname' => ['callback' => 'getUserData', 'map_args' => 'family_name']
+    ]
+];
+
 $STUDIP_AUTH_CONFIG_GOOGLE = [
     'provider_url' => 'https://accounts.google.com',
     'client_id'    => '',
