@@ -33,7 +33,7 @@
                 @input="validateAlias"
                 maxlength="255"
                 @keydown.enter="triggerSave"
-                v-autofocus
+                ref="linkAlias"
             />
         </LabelRequired>
 
@@ -54,7 +54,7 @@
 </template>
 
 <script setup>
-import {ref} from 'vue';
+import {ref, onMounted} from 'vue';
 import {$gettext} from "../../../assets/javascripts/lib/gettext";
 import StudipMessageBox from '../../components/StudipMessageBox';
 import LabelRequired from '../../components/forms/LabelRequired';
@@ -71,6 +71,7 @@ const props = defineProps({
 });
 const emit = defineEmits(['save']);
 const editing = ref(props.shortLink);
+const linkAlias = ref(null);
 
 function triggerSave() {
     emit('save', editing.value);
@@ -80,5 +81,9 @@ function validateAlias() {
     const pattern = /[^a-zA-Z0-9-]/g;
     editing.value.attributes.alias = editing.value.attributes.alias.replace(pattern, '').slice(0, 256);
 }
+
+onMounted(() => {
+    linkAlias.value.focus();
+});
 
 </script>

@@ -20,7 +20,11 @@
         @confirm="save"
     >
         <template #dialogContent>
-            <short-url :shortLink="newLink" :isInContext="isInContext"/>
+            <short-url
+                :shortLink="newLink"
+                :isInContext="isInContext"
+                @save="save"
+            />
         </template>
     </studip-dialog>
 </template>
