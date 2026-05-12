@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, onUnmounted, ref} from 'vue';
+import {computed, onMounted, onUnmounted, ref} from 'vue';
 import {$gettext} from '@/assets/javascripts/lib/gettext';
 import {useForumConfig} from '@/vue/store/pinia/forum/ForumConfig';
 import {useForumPost} from '@/vue/store/pinia/forum/ForumPost';
@@ -24,8 +24,9 @@ const props = defineProps({
     quote: {
         type: String,
     },
-    parentId: {
-        type: String,
+    parentPost: {
+        type: Object,
+        default: () => ({})
     }
 });
 
@@ -43,6 +44,14 @@ const normalizeQuote = quote => {
     return document.body.innerHTML;
 }
 
+const quoteAuthor = computed(() => {
+    if (props.parentPost.anonymous) {
+        return $gettext('Jemand');
+    }
+
+    return props.parentPost.author.name;
+});
+
 onMounted(() => {
     if (window.location.hash) {
         window.history.pushState('', document.title, window.location.href.split('#')[0]);
@@ -50,7 +59,14 @@ onMounted(() => {
 
     if (props.quote) {
         content.value = `
-            <blockquote>${normalizeQuote(props.quote)}</blockquote>
+            <blockquote>
+                <div>
+                    <a href="#post_${props.parentPost.id}">
+                        <b>${quoteAuthor.value} ${$gettext('hat geschrieben: ')}</b>
+                    </a>
+                </div>
+                ${normalizeQuote(props.quote)}
+            </blockquote>
             <br />
         `;
     }
@@ -83,7 +99,7 @@ const getPostJSONAPIObject = () => ({
             posting: {
                 data: {
                     type: 'forum-postings',
-                    id: props.parentId
+                    id: props.parentPost.id
                 }
             }
         }

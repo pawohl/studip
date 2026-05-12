@@ -316,7 +316,7 @@ onBeforeUnmount(() => postObserver.disconnect());
     </div>
     <div v-if="showPostCreateForm && !discussion.closed_at" :id="`create_form_${post.id}`" class="post-form-container" style="scroll-margin-top: 200px;">
         <PostCreateForm
-            :parentId="post.id"
+            :parentPost="post"
             :discussionId="props.discussion.discussion_id"
             :authUser="authUser"
             v-model:quote="selectedText"
