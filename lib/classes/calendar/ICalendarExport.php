@@ -104,6 +104,7 @@ class ICalendarExport
      */
     public function prepareCalendarDate(CalendarDate $date): array
     {
+
         return [
             'SUMMARY'       => $date->title,
             'DESCRIPTION'   => $date->description,
@@ -260,8 +261,36 @@ class ICalendarExport
 
                 case 'DTSTART':
                     $exdate_time = $value;
+                    $dtstart = (new DateTime())->setTimestamp($value);
+                    $dtend   = (new DateTime())->setTimestamp($properties['DTEND']);
+
+                    $isAllDay = $dtstart->format('His') === '000000'
+                        && $dtend->format('His') === '235959';
+
+                    if ($isAllDay) {
+                        $value = $dtstart->format('Ymd');
+                        $params_str = ';VALUE=DATE';
+                    } else {
+                        $value = $this->_exportDateTime($value);
+                        $params_str = ';TZID=Europe/Berlin';
+                    }
+                    break;
                 case 'DTEND':
+                    $dt = (new DateTime())->setTimestamp($value);
+                    if ($dt->format('His') === '000000' || $dt->format('His') === '235959') {
+                        if ($name === 'DTEND') {
+                            $dt->modify('+1 day');
+                        }
+                        $value = $dt->format('Ymd');
+                        $params_str = ';VALUE=DATE';
+                    } else {
+                        $value = $this->_exportDateTime($value);
+                        $params_str = ';TZID=Europe/Berlin';
+                    }
+                    break;
+
                 case 'DUE':
+
                 case 'RECURRENCE-ID':
                     if (array_key_exists('VALUE', $params)) {
                         if ($params['VALUE'] === 'DATE') {
