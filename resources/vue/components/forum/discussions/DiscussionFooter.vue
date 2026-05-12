@@ -71,7 +71,7 @@ const addPost = () => {
                     'disabled': postCreateForm
                 }"
             >
-                <StudipIcon shape="reply" :size="20" aria-hidden="true" />
+                <StudipIcon shape="reply2" :size="20" aria-hidden="true" />
                 {{ $gettext('Antworten') }}
             </button>
         </div>
