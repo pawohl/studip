@@ -2,8 +2,10 @@
 import {computed, onMounted, reactive, useTemplateRef} from 'vue';
 import StudipSelect from '@/vue/components/StudipSelect.vue';
 import {$gettext} from '@/assets/javascripts/lib/gettext';
+import {useForumConfig} from '@/vue/store/pinia/forum/ForumConfig';
 
 const CSRF = STUDIP.CSRF_TOKEN;
+const forumConfig = useForumConfig();
 
 const props = defineProps({
     topic: {
@@ -74,7 +76,7 @@ onMounted(() => {
                     </label>
                 </section>
 
-                <section>
+                <section v-if="!forumConfig.isCategoriesHidden">
                     <input type="hidden" name="category" :value="JSON.stringify(topicForm.category)">
                     <label for="category-input">
                         {{ $gettext('Kategorie') }}

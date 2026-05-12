@@ -25,7 +25,7 @@ class CoreForum extends CorePlugin implements StudipModuleExtended
             new Navigation(_('Themenübersicht'), 'dispatch.php/course/forum/topics')
         );
 
-        if (!RangeConfig::get($course_id)->getValue('FORUM_HIDE_CATEGORIES_NAVIGATION')) {
+        if (!RangeConfig::get($course_id)->FORUM_HIDE_CATEGORIES) {
             $navigation->addSubNavigation(
                 'categories',
                 new Navigation(_('Kategorien'), 'dispatch.php/course/forum/categories')

@@ -157,7 +157,7 @@ onMounted(async () => {
 <template>
     <ForumApp id="discussion_start">
         <header class="header">
-            <div v-if="category.color" class="flag" :style="{ backgroundColor: category.color}" aria-hidden="true"></div>
+            <div v-if="category.color && !forumConfig.isCategoriesHidden && !isLoading" class="flag" :style="{ backgroundColor: category.color}" aria-hidden="true"></div>
             <div class="header__content header__content--with-actions items-start">
                 <div class="flex items-start gap-10">
                     <a

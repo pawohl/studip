@@ -50,8 +50,8 @@ const formActionURL = STUDIP.URLHelper.getURL(`dispatch.php/course/forum/configs
                     <input
                         type="checkbox"
                         :aria-label="$gettext('Kategorien ausblenden')"
-                        name="categories_navigation"
-                        v-model="form.categories_navigation"
+                        name="is_categories_hidden"
+                        v-model="form.isCategoriesHidden"
                         value="1"
                     />
                     <span>

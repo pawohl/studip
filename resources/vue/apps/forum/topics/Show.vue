@@ -68,11 +68,11 @@ onMounted(async () => {
 <template>
     <ForumApp class="use-utility-classes forum">
         <header class="header">
-            <div v-if="category.color" class="flag" :style="{ backgroundColor: category.color}"></div>
+            <div v-if="category.color && !forumConfig.isCategoriesHidden && !isLoading" class="flag" :style="{ backgroundColor: category.color}"></div>
             <div class="header__content header__content--with-actions items-start">
                 <div>
                     <ul class="breadcrumb">
-                        <li v-if="category.category_id">
+                        <li v-if="category.category_id && !forumConfig.isCategoriesHidden">
                             <a :href="getCategoryURL(category.category_id)" :title="$gettext('Zur Kategorie')">
                                 {{ category.name }}
                             </a>

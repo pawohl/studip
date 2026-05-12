@@ -12,6 +12,7 @@ const fetchConfigs = async () => {
             isModerator: response.meta['is-moderator'],
             isAdmin: response.meta['is-admin'],
             isTutor: response.meta['is-tutor'],
+            isCategoriesHidden: response.meta['is-categories-hidden'],
             anonymousPost: response.meta['anonymous-post'],
             tileLayout: response.meta['tile-layout'],
             reactionEmojis: response.meta['reaction-emojis']

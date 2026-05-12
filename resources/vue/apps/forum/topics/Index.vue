@@ -8,7 +8,6 @@ import ForumApp from '@/vue/components/forum/ForumApp.vue';
 import TopicsIndex from '@/vue/components/forum/topics/TopicsIndex.vue';
 import {deserializeJSONAPIResponse} from '@/assets/javascripts/lib/jsonapiUtils';
 import StudipPagination from '@/vue/components/StudipPagination.vue';
-import {topicTransformer} from '@/vue/components/forum/helpers/transformers';
 import EmptyForum from '@/vue/components/forum/EmptyForum.vue';
 
 const forumConfig = useForumConfig();
@@ -39,8 +38,7 @@ const fetchTopics = async (_, offset = 0) => {
             links: response.links
         };
 
-        const data = await deserializeJSONAPIResponse(response);
-        topics.value = data.map(topicTransformer);
+        topics.value = await deserializeJSONAPIResponse(response);
     } catch (error) {
         STUDIP.Report.error(error);
     } finally {

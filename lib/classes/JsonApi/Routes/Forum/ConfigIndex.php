@@ -30,6 +30,7 @@ class ConfigIndex extends JsonApiController
             'is-admin' => CoreForum::isAdmin($range->id),
             'is-moderator' => CoreForum::isModerator($range->id),
             'is-tutor' => $GLOBALS['perm']->have_studip_perm('tutor', $range->id, $user->id),
+            'is-categories-hidden' => $range->getConfiguration()->getValue('FORUM_HIDE_CATEGORIES'),
             'anonymous-post' => (bool) Config::get()->FORUM_ANONYMOUS_POSTINGS,
             'tile-layout' => (bool) UserConfig::get($user->user_id)->FORUM_TILE_LAYOUT,
             'reaction-emojis' => ReactionEmoji::toArray()

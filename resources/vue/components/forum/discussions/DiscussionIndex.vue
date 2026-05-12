@@ -220,7 +220,7 @@ onMounted(() => {
                                 </div>
                             </div>
                             <div class="inline-flex gap-10 items-start mb-10 mt-10">
-                                <div v-if="discussion.category" class="discussion-category">
+                                <div v-if="discussion.category && !forumConfig.isCategoriesHidden" class="discussion-category">
                                     <span v-if="discussion.category.color" :style="{ width: '12px', height: '12px', backgroundColor: discussion.category.color }"></span>
                                     <p class="m-0">
                                         {{ discussion.category.name }}

@@ -24,7 +24,7 @@ class Course_Forum_ConfigsController extends Forum\BaseController
                 ->withProps([
                     'config' => [
                         'moderator' => $config->FORUM_MODERATION_PERMISSION,
-                        'categories_navigation' => $config->FORUM_HIDE_CATEGORIES_NAVIGATION
+                        'isCategoriesHidden' => $config->FORUM_HIDE_CATEGORIES
                     ]
                 ])
         );
@@ -38,7 +38,7 @@ class Course_Forum_ConfigsController extends Forum\BaseController
 
         $config->store('FORUM_MODERATION_PERMISSION', trim(Request::option('moderator')));
 
-        $config->store('FORUM_HIDE_CATEGORIES_NAVIGATION', Request::bool('categories_navigation'));
+        $config->store('FORUM_HIDE_CATEGORIES', Request::bool('is_categories_hidden'));
 
         PageLayout::postSuccess(_('Die Einstellungen wurden gespeichert.'));
 

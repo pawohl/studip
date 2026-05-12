@@ -127,7 +127,7 @@ const showCategoryDialog = category => currentCategory.value = category;
                     <template #item="{element}">
                         <li>
                             <CategoryItem
-                                v-if="element.category"
+                                v-if="element.category && !forumConfig.isCategoriesHidden"
                                 :category="element.category"
                                 @swapCategory="swapItem"
                                 @showCategory="showCategoryDialog(element)"
@@ -269,7 +269,7 @@ const showCategoryDialog = category => currentCategory.value = category;
                     tag="tbody">
                     <template #item="{element}">
                         <CategoryItem
-                            v-if="element.category"
+                            v-if="element.category && !forumConfig.isCategoriesHidden"
                             renderType="tr"
                             :category="element.category"
                             @swapCategory="swapItem"

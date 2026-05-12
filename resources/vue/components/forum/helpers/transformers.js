@@ -9,10 +9,3 @@ export const subscriptionTransformer = subscription => {
         subject: subscription.subject
     };
 };
-
-export const topicTransformer = topic => {
-    return {
-        ...topic,
-        ...topic.category
-    }
-};

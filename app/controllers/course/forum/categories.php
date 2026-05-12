@@ -8,7 +8,7 @@ class Course_Forum_CategoriesController extends Forum\BaseController
     {
         parent::before_filter($action, $args);
 
-        if (!RangeConfig::get($this->range_id)->FORUM_HIDE_CATEGORIES_NAVIGATION) {
+        if (!RangeConfig::get($this->range_id)->FORUM_HIDE_CATEGORIES) {
             Navigation::activateItem('course/forum/categories');
         } else {
             Navigation::activateItem('course/forum/topics');
