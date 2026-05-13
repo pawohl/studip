@@ -350,13 +350,13 @@ class Calendar_CalendarController extends AuthenticatedController
         $default_view = \Studip\Fullcalendar::VIEW_WEEK;
         if ($timeline_view) {
             $default_view = \Studip\Fullcalendar::GROUP_WEEK;
-            if ($calendar_settings['view'] === 'day') {
+            if ($calendar_settings['view'] === 'day' || Request::get('defaultView') === 'day') {
                 $default_view = \Studip\Fullcalendar::GROUP_DAY;
             }
         } elseif (!empty($calendar_settings['view'])) {
-            if ($calendar_settings['view'] === 'day') {
+            if ($calendar_settings['view'] === 'day' || Request::get('defaultView') === 'day') {
                 $default_view = \Studip\Fullcalendar::VIEW_DAY;
-            } elseif ($calendar_settings['view'] === 'month') {
+            } elseif ($calendar_settings['view'] === 'month' || Request::get('defaultView') === 'month') {
                 $default_view = \Studip\Fullcalendar::VIEW_MONTH;
             }
         }

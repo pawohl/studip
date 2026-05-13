@@ -410,8 +410,35 @@ export default defineComponent({
         handleCalendarRangeUpdate: function(arg: DatesSetArg) : void {
             //Update the defaultDate URL parameter first:
             const url = new URL(window.location.href);
-            url.searchParams.set('defaultDate', datetime.getISODate(arg.start));
-            //Set the new defaultDate URL parameter without reloading the page:
+            //Set the defaultView parameter:
+            let seconds = (arg.end.getTime() - arg.start.getTime()) / 1000;
+            if (seconds > (86400 * 7) + 1) {
+                //That is longer than a week, even if a leap second is in it.
+                url.searchParams.set('defaultView', 'month');
+                //Special handling for the month view: It starts on the beginning of a week
+                //that does not lie on the first day of the month in most cases.
+                const default_date = arg.start;
+                if (default_date.getDate() != 1) {
+                    //Go to the next month:
+                    if (default_date.getMonth() < 11) {
+                        default_date.setMonth(default_date.getMonth() + 1, 1);
+                    } else {
+                        //Go to the first January of the next year:
+                        default_date.setFullYear(default_date.getFullYear() + 1);
+                        default_date.setMonth(0, 1);
+                    }
+                }
+                url.searchParams.set('defaultDate', datetime.getISODate(default_date));
+            } else if (seconds <= 86401) {
+                //This is one day, even if a leap second is in it.
+                url.searchParams.set('defaultView', 'day');
+                url.searchParams.set('defaultDate', datetime.getISODate(arg.start));
+            } else {
+                //This must be a week view.
+                url.searchParams.set('defaultView', 'week');
+                url.searchParams.set('defaultDate', datetime.getISODate(arg.start));
+            }
+            //Set the updated URLs parameters without reloading the page:
             window.history.replaceState(null, '', url.toString());
 
             if (this.displayHolidays || this.displayVacations) {
