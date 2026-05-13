@@ -44,10 +44,11 @@ abstract class BaseController extends StudipController
     {
         $actions = new ActionsWidget();
 
+
         if ($this->user_id) {
             $actions->addLink(
                 _('Neue Diskussion starten'),
-                $this->url_for('course/forum/discussions/edit'),
+                $this->url_for('course/forum/discussions/edit', ['topic_id' => Request::option('topic_id')]),
                 Icon::create('add', Icon::ROLE_CLICKABLE, ['title' => _('Neue Diskussion starten')])
             )->asDialog('width=900;height=750');
         }

@@ -8,6 +8,10 @@ class Course_Forum_TopicsController extends Forum\BaseController
 {
     public function before_filter(&$action, &$args): void
     {
+        if ($action === 'show') {
+            Request::set('topic_id', $args[0] ?? null);
+        }
+        
         parent::before_filter($action, $args);
 
         unset($_SESSION['forum'][$this->range_id]['search_filter']);
