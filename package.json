@@ -18,7 +18,7 @@
         "url": "https://gitlab.studip.de/studip/studip.git"
     },
     "engines": {
-        "node": ">=18 <23"
+        "node": ">=18"
     },
     "devDependencies": {
         "@axe-core/playwright": "^4.6.1",
