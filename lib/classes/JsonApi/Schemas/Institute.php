@@ -159,7 +159,7 @@ class Institute extends SchemaProvider
         ];
 
         if ($includeData) {
-            $relation[self::RELATIONSHIP_DATA] = $resource->status_groups;
+            $relation[self::RELATIONSHIP_DATA] = $resource->all_status_groups;
         }
 
         return array_merge($relationships, [self::REL_STATUS_GROUPS => $relation]);

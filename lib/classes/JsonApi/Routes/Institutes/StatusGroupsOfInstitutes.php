@@ -22,7 +22,7 @@ class StatusGroupsOfInstitutes extends JsonApiController
         }
 
         list($offset, $limit) = $this->getOffsetAndLimit();
-        $statusGroups = $institute->status_groups;
+        $statusGroups = $institute->all_status_groups;
         $total = count($statusGroups);
 
         return $this->getPaginatedContentResponse(

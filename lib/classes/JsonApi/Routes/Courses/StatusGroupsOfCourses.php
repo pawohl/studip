@@ -27,11 +27,11 @@ class StatusGroupsOfCourses extends JsonApiController
         }
 
         list($offset, $limit) = $this->getOffsetAndLimit();
-        $statusGroups = \Statusgruppen::findBySeminar_id($course->id);
+        $statusGroups = $course->statusgruppen;
         $total = count($statusGroups);
 
         return $this->getPaginatedContentResponse(
-            array_slice($statusGroups, $offset, $limit),
+            $statusGroups->limit($offset, $limit),
             $total
         );
     }

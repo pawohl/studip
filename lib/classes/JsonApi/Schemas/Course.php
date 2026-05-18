@@ -401,8 +401,7 @@ class Course extends SchemaProvider
             ]
         ];
         if (in_array(self::REL_STATUS_GROUPS, $includeData)) {
-            $related = \Statusgruppen::findBySeminar_id($resource->id);
-            $relation[self::RELATIONSHIP_DATA] = $related;
+            $relation[self::RELATIONSHIP_DATA] = $resource->statusgruppen;
         }
 
         return array_merge($relationships, [self::REL_STATUS_GROUPS => $relation]);

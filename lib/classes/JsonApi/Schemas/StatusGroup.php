@@ -7,8 +7,9 @@ use Neomerx\JsonApi\Schema\Link;
 
 class StatusGroup extends SchemaProvider
 {
-    const REL_RANGE = 'range';
     const TYPE = 'status-groups';
+
+    const REL_RANGE = 'range';
 
     public function getId($resource): ?string
     {
@@ -27,6 +28,8 @@ class StatusGroup extends SchemaProvider
 
         return [
             'name' => (string) $resource['name'],
+            'full-name' => $resource->getFullName(),
+            'description' => $stringOrNull($resource['description']),
             'female-name' => $stringOrNull($resource['name_w']),
             'male-name' => $stringOrNull($resource['name_m']),
             'position' => (int) $resource['position'],
@@ -56,31 +59,16 @@ class StatusGroup extends SchemaProvider
 
     private function addRangeRelationship(
         array $relationships,
-        $resource,
+        \Statusgruppen $resource,
         $includeData
     ) {
-        $related = $this->findRange($resource);
-
-        $relation = [
+        $relationships[self::REL_RANGE] = [
             self::RELATIONSHIP_LINKS => [
-                Link::RELATED => $this->createLinkToResource($related)
-            ]
+                Link::RELATED => $this->createLinkToResource($resource->range)
+            ],
+            self::RELATIONSHIP_DATA => $resource->range,
         ];
-        if ($includeData) {
-            $relation[self::RELATIONSHIP_DATA] = $related;
-        }
 
-        return array_merge($relationships, [self::REL_RANGE => $relation]);
-    }
-
-    private function findRange($resource)
-    {
-        foreach (["parent", "course", "institute", "user"] as $sorm) {
-            if ($range = $resource[$sorm]) {
-                return $range;
-            }
-        }
-
-        return null;
+        return $relationships;
     }
 }
