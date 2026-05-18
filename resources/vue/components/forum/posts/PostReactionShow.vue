@@ -1,11 +1,13 @@
 <script setup>
-import {$gettext} from "../../../../assets/javascripts/lib/gettext";
-import StudipDateTime from "../../StudipDateTime.vue";
-import UserAvatarDropdown from "@/vue/components/avatar/UserAvatarDropdown.vue";
-import {REACTION_ICONS} from "./reactions";
-import {userProfileURL} from "../helpers/urls";
-import {computed, onMounted} from "vue";
-import {useSortable} from "../../../composables/useSortable";
+import {$gettext} from '@/assets/javascripts/lib/gettext';
+import StudipDateTime from '@/vue/components/StudipDateTime.vue';
+import UserAvatarDropdown from '@/vue/components/avatar/UserAvatarDropdown.vue';
+import {userProfileURL} from '@/vue/components/forum/helpers/urls';
+import {computed, onMounted} from 'vue';
+import {useSortable} from '@/vue/composables/useSortable';
+import {useForumConfig} from '@/vue/store/pinia/forum/ForumConfig';
+
+const forumConfig = useForumConfig();
 
 const props = defineProps({
     reactions: {
@@ -25,6 +27,9 @@ const computedReactions = computed(() => {
 
     return props.reactions.filter(({ emoji }) => emoji === props.emoji);
 });
+
+
+const getEmojiLabel = emoji => forumConfig.reactionEmojis.find((emojis) => emojis.value === emoji)?.label;
 
 const {
     sortedData: sortedReactions,
@@ -99,8 +104,8 @@ onMounted(() => {
                                 avatar_url: reaction.user.meta.avatar.medium
                             }"
                         />
-                        <span class="emoji-icon" v-html="REACTION_ICONS[reaction.emoji].icon"></span>
-                        <span class="sr-only">{{ emoji }}</span>
+                        <span class="emoji-icon" aria-hidden="true" v-html="reaction.emoji"></span>
+                        <span class="sr-only">{{ getEmojiLabel(reaction.emoji) }}</span>
                     </div>
                 </td>
                 <td>

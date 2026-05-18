@@ -1,12 +1,17 @@
+<?php
+
+use Studip\Forum\Enum\ReactionEmoji;
+
+?>
 <li class="notification item" data-id="<?= $notification['personal_notification_id'] ?>" data-timestamp="<?= (int) $notification['mkdate'] ?>">
     <div class="main">
         <a class="content" href="<?= URLHelper::getLink('dispatch.php/jsupdater/mark_notification_read/' . $notification['personal_notification_id']) ?>"<?= $notification['dialog'] ? ' data-dialog' : '' ?>>
             <? if ($notification['avatar']): ?>
                 <? if (filter_var($notification['avatar'], FILTER_VALIDATE_URL)): ?>
                     <div class="avatar" style="background-color: currentColor; mask: url(<?= $notification['avatar'] ?>) no-repeat center / contain;;"></div>
-                <? else: ?>
+                <? elseif (ReactionEmoji::tryFrom($notification['avatar'])): ?>
                     <div class="emoji-icon">
-                        <?= $notification['avatar'] ?>
+                        <?= ReactionEmoji::tryFrom($notification['avatar'])->value ?>
                     </div>
                 <? endif ?>
             <? endif ?>

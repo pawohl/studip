@@ -10,6 +10,7 @@ export const useForumConfig = defineStore(
         const isTutor  = ref(false);
         const anonymousPost  = ref(false);
         const tileLayout  = ref(true);
+        const reactionEmojis  = ref([]);
 
          function toggleForumLayout() {
             tileLayout.value = !tileLayout.value;
@@ -34,6 +35,7 @@ export const useForumConfig = defineStore(
             anonymousPost,
             tileLayout,
             isTutor,
+            reactionEmojis,
             toggleForumLayout
         }
     }

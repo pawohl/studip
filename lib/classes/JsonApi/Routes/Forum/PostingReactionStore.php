@@ -10,6 +10,7 @@ use JsonApi\JsonApiController;
 use JsonApi\Routes\ValidationTrait;
 use Forum\Posting;
 use Forum\PostingReaction;
+use Studip\Forum\Enum\ReactionEmoji;
 
 class PostingReactionStore extends JsonApiController
 {
@@ -25,12 +26,12 @@ class PostingReactionStore extends JsonApiController
         $user = $this->getUser($request);
 
         $posting = Posting::find(self::arrayGet($json, 'data.relationships.posting.data.id'));
-        if (!$posting) {
+        if ($posting === null) {
             throw new BadRequestException();
         }
 
         $range = get_object_by_range_id($posting->range_id);
-        if (!$range) {
+        if ($range === null) {
             throw new RecordNotFoundException();
         }
 
@@ -40,16 +41,16 @@ class PostingReactionStore extends JsonApiController
 
         $data = [
             'posting_id' => $posting->posting_id,
-            'user_id'    => $user->user_id,
-            'emoji'      => self::arrayGet($json, 'data.attributes.emoji'),
+            'user_id' => $user->user_id,
+            'emoji' => ReactionEmoji::tryFrom(self::arrayGet($json, 'data.attributes.emoji'))->value
         ];
 
         $reaction = PostingReaction::findOneBySQL(
-            "posting_id = :posting_id AND user_id = :user_id AND emoji = :emoji",
+            'posting_id = :posting_id AND user_id = :user_id AND emoji = :emoji',
             $data
         );
 
-        if (!$reaction) {
+        if ($reaction === null) {
             $reaction = PostingReaction::create($data);
 
             if ($user->user_id !== $posting->user_id) {
@@ -65,7 +66,7 @@ class PostingReactionStore extends JsonApiController
                         ['name' => $user->getFullName()]
                     ),
                     null,
-                    self::arrayGet($json, 'data.meta.emoji-icon')
+                    $reaction->emoji
                 );
             }
         }
@@ -77,7 +78,6 @@ class PostingReactionStore extends JsonApiController
     {
         $required_keys = [
             'data.attributes.emoji' => 'Missing `data.attributes.emoji`',
-            'data.meta.emoji-icon' => 'Missing `data.meta.emoji-icon`',
             'data.relationships.posting.data.id' => 'Missing `data.relationships.posting.data.id`',
         ];
 

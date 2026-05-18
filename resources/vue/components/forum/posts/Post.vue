@@ -258,7 +258,7 @@ onBeforeUnmount(() => postObserver.disconnect());
                         <LinksPreview :links="post.meta.opengraph_urls" />
                     </div>
 
-                    <PostReactions :posting_id="post.id" :reactions="post.reactions" />
+                    <PostReactions :posting_id="post.id" :postReactions="post.reactions" />
                 </template>
 
                 <div class="post__footer">

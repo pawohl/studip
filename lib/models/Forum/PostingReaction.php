@@ -18,15 +18,6 @@ use User;
 
 class PostingReaction extends SimpleORMap
 {
-    public const thumbUp = 'THUMBS UP SIGN';
-    public const thumbDown = 'THUMBS DOWN SIGN';
-    public const rocket = 'ROCKET';
-    public const grinningFace = 'GRINNING FACE';
-    public const sunglasses = 'SMILING FACE WITH SUNGLASSES';
-    public const confused = 'CONFUSED FACE';
-    public const heart = 'BLACK HEART SUIT';
-    public const party = 'PARTY POPPER';
-
 
     protected static function configure($config = [])
     {

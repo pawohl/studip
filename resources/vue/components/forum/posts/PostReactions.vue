@@ -1,6 +1,5 @@
 <script setup>
 import {computed, reactive, ref, useTemplateRef} from 'vue';
-import {REACTION_ICONS} from './reactions';
 import {$gettext} from '@/assets/javascripts/lib/gettext';
 import {numberFormatter} from '@/assets/javascripts/lib/number_formatter';
 import useDetectOutsideClick from '@/vue/composables/useDetectOutsideClick';
@@ -13,30 +12,31 @@ import {useForumConfig} from '@/vue/store/pinia/forum/ForumConfig';
 
 const forumConfig = useForumConfig();
 const forumDiscussionPost = useForumPost();
+
 const props = defineProps({
     posting_id: {
         type: String,
         required: true,
     },
-    reactions: {
+    postReactions: {
         type: Array,
         required: true
     }
 });
 
-
 const showReactions = ref(false);
 const reactionStatusMessage = ref(null);
 const isLoading = ref(false);
 
-const transformedReactions = computed(() => props.reactions.map(reaction => {
-    return {
+const reactionEmojis = computed(() => forumConfig.reactionEmojis);
+const transformedPostReactions = computed(() =>
+    props.postReactions.map(reaction => ({
         ...reaction,
-        ...(!reaction?.user ? { user: { formatted_name: $gettext('Unbekannt') } } : {})
-    }
-}));
+        user: reaction?.user ?? { formatted_name: $gettext('Unbekannt') }
+    }))
+);
 
-const groupedReactions = computed(() => Object.groupBy(transformedReactions.value, ({ emoji }) => emoji));
+const groupedReactions = computed(() => Object.groupBy(transformedPostReactions.value, ({ emoji }) => emoji));
 
 const announceToScreenReader = message => reactionStatusMessage.value.textContent = message;
 
@@ -45,9 +45,6 @@ const getPostReactionJSONAPIObject = emoji => ({
         type: 'forum-posting-reactions',
         attributes: {
             emoji: emoji
-        },
-        meta: {
-            'emoji-icon': REACTION_ICONS[emoji].icon
         },
         relationships: {
             posting: {
@@ -86,7 +83,7 @@ const deleteReaction = async reactionId => {
     }
 }
 
-const toggleReaction = async (emoji, reactions = transformedReactions.value) => {
+const toggleReaction = async (emoji, reactions = transformedPostReactions.value) => {
     if (forumConfig.allowGuestAccess || isLoading.value) {
         return;
     }
@@ -105,7 +102,8 @@ const toggleReaction = async (emoji, reactions = transformedReactions.value) => 
     isLoading.value = false;
 }
 
-const findUserReaction = (emoji, reactions = transformedReactions.value) => reactions.find(reaction => reaction.user.id === STUDIP.USER_ID && reaction.emoji === emoji);
+const findUserReaction = (emoji, reactions = transformedPostReactions.value) => reactions.find(reaction => reaction.user.id === STUDIP.USER_ID && reaction.emoji === emoji);
+const getEmojiLabel = emoji => forumConfig.reactionEmojis.find((emojis) => emojis.value === emoji)?.label;
 
 const reactionCreate = useTemplateRef('reactionCreate');
 useDetectOutsideClick(reactionCreate, () => showReactions.value = false);
@@ -120,7 +118,7 @@ const reactionShowDialog = reactive({
     <div class="post-reactions-container">
         <div aria-live="polite" class="sr-only" role="status" ref="reactionStatusMessage"></div>
 
-        <template v-if="transformedReactions.length">
+        <template v-if="transformedPostReactions.length">
             <template v-for="(reaction, emoji) in groupedReactions" :key="emoji">
                 <button
                     type="button"
@@ -131,7 +129,8 @@ const reactionShowDialog = reactive({
                     :title="findUserReaction(emoji, reaction)  ? $gettext('Reaktion zurücknehmen') : $gettext('Reaktion hinzufügen')"
                     :aria-label="findUserReaction(emoji, reaction) ? $gettext('Reaktion zurücknehmen') : $gettext('Reaktion hinzufügen')"
                     @click="toggleReaction(emoji, reaction)">
-                    <span class="emoji-icon" v-html="REACTION_ICONS[emoji].icon"></span>
+                    <span class="emoji-icon" v-html="emoji" aria-hidden="true"></span>
+                    <span class="sr-only">{{ getEmojiLabel(emoji) }}</span>
                     <span>{{ numberFormatter(reaction.length, 1) }}</span>
                 </button>
             </template>
@@ -149,28 +148,28 @@ const reactionShowDialog = reactive({
                     <StudipIcon shape="add-reaction" class="add-reaction-icon" :size="18" aria-hidden="true" />
                 </button>
                 <button
-                    v-if="transformedReactions.length"
+                    v-if="transformedPostReactions.length"
                     type="button"
                     class="post-reactions__show-reactions button-base"
                     :title="$gettext('Reaktionen anzeigen')"
-                    :aria-label="$gettext('%{count} Reaktionen anzeigen', { count: transformedReactions.length })"
+                    :aria-label="$gettext('%{count} Reaktionen anzeigen', { count: transformedPostReactions.length })"
                     @click="reactionShowDialog.isOpen = true">
-                    {{ numberFormatter(transformedReactions.length, 1) }}
+                    {{ numberFormatter(transformedPostReactions.length, 1) }}
                 </button>
             </div>
             <Transition name="fade">
                 <div v-if="showReactions" class="post-reactions__container">
-                    <template v-for="(emoji, index) in REACTION_ICONS" :key="index">
+                    <template v-for="(emoji, index) in reactionEmojis" :key="index">
                         <button
                             type="button"
                             :class="{
                                 'post-reaction--active': findUserReaction(emoji.value)
                             }"
-                            :title="$gettext('Auf diesen Beitrag reagieren')"
-                            :aria-label="$gettext('Auf diesen Beitrag mit %{emojiName} reagieren', { emojiName: emoji.value })"
+                            :title="$gettext('Auf diesen Beitrag mit „%{emojiLabel}“  reagieren', { emojiLabel: emoji.label })"
+                            :aria-label="$gettext('Auf diesen Beitrag mit „%{emojiLabel}“  reagieren', { emojiLabel: emoji.label })"
                             @click="toggleReaction(emoji.value)"
                         >
-                            <span class="emoji-icon" v-html="emoji.icon" aria-hidden="true"></span>
+                            <span class="emoji-icon" v-html="emoji.value" aria-hidden="true"></span>
                         </button>
                     </template>
                 </div>
@@ -179,7 +178,7 @@ const reactionShowDialog = reactive({
     </div>
 
     <StudipDialog
-        v-if="reactionShowDialog.isOpen && transformedReactions.length"
+        v-if="reactionShowDialog.isOpen && transformedPostReactions.length"
         :title="$gettext('Reaktionen anzeigen')"
         :closeText="$gettext('Schließen')"
         closeClass="cancel"
@@ -201,7 +200,7 @@ const reactionShowDialog = reactive({
                             />
                             <label class="button-base" for="reaction-all" :class="{ 'active': reactionShowDialog.emoji === 'all' }">
                                 {{ $gettext('Alle') }}
-                                <span>{{ numberFormatter(transformedReactions.length, 1) }}</span>
+                                <span>{{ numberFormatter(transformedPostReactions.length, 1) }}</span>
                             </label>
                         </div>
                         <div
@@ -217,14 +216,14 @@ const reactionShowDialog = reactive({
                                 v-model="reactionShowDialog.emoji"
                             />
                             <label class="button-base" :for="`reaction-${emoji}`" :class="{ 'active': reactionShowDialog.emoji === emoji }">
-                                <span class="emoji-icon" v-html="REACTION_ICONS[emoji].icon" aria-hidden="true"></span>
-                                <span class="sr-only">{{ emoji }}</span>
+                                <span class="emoji-icon" v-html="emoji" aria-hidden="true"></span>
+                                <span class="sr-only">{{ getEmojiLabel(emoji) }}</span>
                                 <span>{{ numberFormatter(reaction.length, 1) }}</span>
                             </label>
                         </div>
                     </div>
                     <div class="tab__content">
-                        <PostReactionShow :reactions="transformedReactions" :emoji="reactionShowDialog.emoji" />
+                        <PostReactionShow :reactions="transformedPostReactions" :emoji="reactionShowDialog.emoji" />
                     </div>
                 </div>
             </div>

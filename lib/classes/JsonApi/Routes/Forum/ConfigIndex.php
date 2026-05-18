@@ -4,6 +4,7 @@ namespace JsonApi\Routes\Forum;
 
 use Config;
 use CoreForum;
+use Studip\Forum\Enum\ReactionEmoji;
 use UserConfig;
 use JsonApi\Errors\AuthorizationFailedException;
 use JsonApi\Errors\RecordNotFoundException;
@@ -30,7 +31,8 @@ class ConfigIndex extends JsonApiController
             'is-moderator' => CoreForum::isModerator($range->id),
             'is-tutor' => $GLOBALS['perm']->have_studip_perm('tutor', $range->id, $user->id),
             'anonymous-post' => (bool) Config::get()->FORUM_ANONYMOUS_POSTINGS,
-            'tile-layout' => (bool) UserConfig::get($user->user_id)->FORUM_TILE_LAYOUT
+            'tile-layout' => (bool) UserConfig::get($user->user_id)->FORUM_TILE_LAYOUT,
+            'reaction-emojis' => ReactionEmoji::toArray()
         ]);
     }
 }

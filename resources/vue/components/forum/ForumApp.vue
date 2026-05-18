@@ -13,7 +13,8 @@ const fetchConfigs = async () => {
             isAdmin: response.meta['is-admin'],
             isTutor: response.meta['is-tutor'],
             anonymousPost: response.meta['anonymous-post'],
-            tileLayout: response.meta['tile-layout']
+            tileLayout: response.meta['tile-layout'],
+            reactionEmojis: response.meta['reaction-emojis']
         });
     } catch (error) {
         STUDIP.Report.error(error);
