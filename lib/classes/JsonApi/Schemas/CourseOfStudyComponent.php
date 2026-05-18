@@ -1,6 +1,7 @@
 <?php
 namespace JsonApi\Schemas;
 
+use JsonApi\Routes\Mvv\Authority;
 use Neomerx\JsonApi\Contracts\Schema\ContextInterface;
 use Neomerx\JsonApi\Schema\Link;
 
@@ -65,7 +66,9 @@ class CourseOfStudyComponent extends SchemaProvider
         ];
 
         if ($includeData) {
-            $relationships[self::REL_VERSIONS][self::RELATIONSHIP_DATA] = $resource->versionen;
+            $relationships[self::REL_VERSIONS][self::RELATIONSHIP_DATA] = $resource->versionen->filter(
+                fn($version) => Authority::canShowComponentVersion($this->currentUser, $version)
+            );
         }
 
         return $relationships;

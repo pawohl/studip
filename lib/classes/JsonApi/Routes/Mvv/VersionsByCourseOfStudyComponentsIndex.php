@@ -23,15 +23,19 @@ class VersionsByCourseOfStudyComponentsIndex extends JsonApiController
      */
     public function __invoke(Request $request, Response $response, $args)
     {
+        $user = $this->getUser($request);
         $component = \StudiengangTeil::find($args['id']);
         if (!$component) {
             throw new RecordNotFoundException();
         }
         [$offset, $limit] = $this->getOffsetAndLimit();
+        $versions = $component->versionen->filter(
+            fn($version) => Authority::canShowComponentVersion($user, $version)
+        );
 
         return $this->getPaginatedContentResponse(
-            $component->versionen->limit($offset, $limit),
-            count($component->versionen)
+            $versions->limit($offset, $limit),
+            count($versions)
         );
     }
 }
