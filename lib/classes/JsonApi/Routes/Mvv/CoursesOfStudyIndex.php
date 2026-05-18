@@ -29,7 +29,8 @@ class CoursesOfStudyIndex extends JsonApiController
      */
     public function __invoke(Request $request, Response $response, $args)
     {
-        if (!Authority::canIndexCoursesOfStudy($user = $this->getUser($request))) {
+        $user = $this->getUser($request);
+        if (!Authority::canIndexCoursesOfStudy($user)) {
             throw new AuthorizationFailedException();
         }
 
@@ -40,10 +41,13 @@ class CoursesOfStudyIndex extends JsonApiController
         }
 
         [$offset, $limit] = $this->getOffsetAndLimit();
-        $courses_of_study = $this->getCoursesOfStudy($filtering, $offset, $limit);
+        $courses_of_study = array_filter(
+            $this->getCoursesOfStudy($filtering),
+            fn($cos) => Authority::canShowCourseOfStudy($user, $cos)
+        );
 
         return $this->getPaginatedContentResponse(
-            $courses_of_study,
+            array_slice($courses_of_study, $offset, $limit),
             count($courses_of_study)
         );
     }
@@ -76,12 +80,10 @@ class CoursesOfStudyIndex extends JsonApiController
         }
     }
 
-    private function getCoursesOfStudy($filtering, $offset, $limit): array
+    private function getCoursesOfStudy($filtering): array
     {
         $join = '';
         $where = ' 1 ';
-        $filtering['offset'] = $offset;
-        $filtering['limit'] = $limit;
         if (isset($filtering['institute'])) {
             $where .= ' AND `institut_id` = :institute ';
         }
@@ -110,8 +112,7 @@ class CoursesOfStudyIndex extends JsonApiController
         if (isset($filtering['q'])) {
             $where .= " AND (`mvv_studiengang`.`name` LIKE CONCAT('%', :q, '%') OR `mvv_studiengang`.`name_kurz` LIKE CONCAT('%', :q, '%')) ";
         }
-        $where .= ' ORDER BY `mvv_studiengang`.`name` ASC
-                    LIMIT :limit OFFSET :offset';
+        $where .= ' ORDER BY `mvv_studiengang`.`name` ASC';
         return \Studiengang::findBySQL(
             ($join ? $join . ' WHERE ' : '') . $where,
             $filtering
