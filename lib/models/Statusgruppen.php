@@ -99,6 +99,9 @@ class Statusgruppen extends SimpleORMap implements PrivacyObject
 
         $config['additional_fields']['range'] = [
             'get' => function (Statusgruppen $group): ?Range {
+                while ($group->parent) {
+                    $group = $group->parent;
+                }
                 return RangeFactory::find($group->range_id);
             },
         ];
