@@ -104,7 +104,6 @@
                     {{ $gettext('Veranstaltungszuordnung') }}
                 </legend>
                 <section>
-                    <template v-if="!isSearching">
                         <label class="col-2">
                             {{ $gettext('Semester') }}
                             <select ref="semesterChooser"
@@ -131,63 +130,64 @@
                                 @click.prevent="getAvailableCourses">
                             {{ $gettext('Suche') }}
                         </button>
-                    </template>
-                    <studip-progress-indicator v-else :size="32"
-                                               :description="$gettext('Veranstaltungen werden gesucht...')"/>
                 </section>
                 <section>
-                    <table v-if="availableCourses?.length > 0"
-                           class="default">
-                        <caption>
-                            {{ $gettext(
-                                'Veranstaltungen im %{semester}',
-                                { semester: allSemesters[selectedSemester].name }
-                            ) }}
-                        </caption>
-                        <colgroup>
-                            <col style="width: 15px">
-                            <col>
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th colspan="2">
-                                    <input type="checkbox"
-                                           :checked="allCoursesChecked"
-                                           @click="checkUncheckAll"
-                                           :title="$gettext('alle (ab)wählen')"
-                                           ref="proxy"
-                                    >
-                                    {{ $gettext('Veranstaltung') }}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="course in availableCourses" :key="course.id">
-                                <td>
-                                    <label>
+                    <template v-if="!isSearching">
+                        <table v-if="availableCourses?.length > 0"
+                               class="default">
+                            <caption>
+                                {{ $gettext(
+                                    'Veranstaltungen im %{semester}',
+                                    { semester: allSemesters[selectedSemester].name }
+                                ) }}
+                            </caption>
+                            <colgroup>
+                                <col style="width: 15px">
+                                <col>
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th colspan="2">
                                         <input type="checkbox"
-                                               :value="course.id"
-                                               class="assignable-course"
-                                               v-model="checkedCourses"
-                                               :title="$gettext(
-                                                   'Veranstaltung %{coursename} dem Anmeldeset zuordnen',
-                                                   { coursename: course.attributes.title }
-                                               )">
-                                        <template v-if="course.attributes['course-number']">
-                                            {{ course.attributes['course-number'] }}
-                                        </template>
-                                        {{ course.attributes.title }}
-                                    </label>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <studip-message-box v-if="!isSearching && noCoursesFound"
-                                        type="info"
-                                        :hide-close="true"
-                                        role="alert">
-                        {{ $gettext('Es wurden keine Veranstaltungen gefunden, die zugeordnet werden könnten.') }}
-                    </studip-message-box>
+                                               :checked="allCoursesChecked"
+                                               @click="checkUncheckAll"
+                                               :title="$gettext('alle (ab)wählen')"
+                                               ref="proxy"
+                                        >
+                                        {{ $gettext('Veranstaltung') }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="course in availableCourses" :key="course.id">
+                                    <td>
+                                        <label>
+                                            <input type="checkbox"
+                                                   :value="course.id"
+                                                   class="assignable-course"
+                                                   v-model="checkedCourses"
+                                                   :title="$gettext(
+                                                       'Veranstaltung %{coursename} dem Anmeldeset zuordnen',
+                                                       { coursename: course.attributes.title }
+                                                   )">
+                                            <template v-if="course.attributes['course-number']">
+                                                {{ course.attributes['course-number'] }}
+                                            </template>
+                                            {{ course.attributes.title }}
+                                        </label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <studip-message-box v-if="!isSearching && noCoursesFound"
+                                            type="info"
+                                            :hide-close="true"
+                                            role="alert">
+                            {{ $gettext('Es wurden keine Veranstaltungen gefunden, die zugeordnet werden könnten.') }}
+                        </studip-message-box>
+                    </template>
+                    <studip-progress-indicator v-else :size="32"
+                                               :description="$gettext('Veranstaltungen werden gesucht...')" />
                 </section>
                 <table v-if="courses?.length > 0"
                        class="default assignments">
