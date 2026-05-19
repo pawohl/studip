@@ -636,11 +636,8 @@ class Calendar_CalendarController extends AuthenticatedController
                 $result[] = $event->toFullcalendarEvent();
             }
         }
-        //At this point, everything went fine. We can save the beginning as default date
-        //if the current user is looking at their own calendar:
-        if ($owner instanceof User && $owner->id === User::findCurrent()->id) {
-            $_SESSION['calendar_date'] = $begin->format('Y-m-d');
-        }
+        //At this point, everything went fine. We can save the beginning as default date.
+        $_SESSION['calendar_date'] = $begin->format('Y-m-d');
         $this->render_json($result);
     }
 
