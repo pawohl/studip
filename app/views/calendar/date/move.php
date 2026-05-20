@@ -2,8 +2,8 @@
 <form class="default" method="post" data-dialog="reload-on-close"
       action="<?= $controller->link_for('calendar/date/move/' . $date->id) ?>">
     <?= CSRFProtection::tokenTag() ?>
-    <input type="hidden" name="begin" value="<?= htmlReady($begin->format(\DateTime::RFC3339)) ?>">
-    <input type="hidden" name="end" value="<?= htmlReady($end->format(\DateTime::RFC3339)) ?>">
+    <input type="hidden" name="start" value="<?= htmlReady($begin->format(\DateTimeInterface::RFC3339_EXTENDED)) ?>">
+    <input type="hidden" name="end" value="<?= htmlReady($end->format(\DateTimeInterface::RFC3339_EXTENDED)) ?>">
     <label>
         <input type="radio" name="repetition_handling" value="create_single_date">
         <?= _('Der Termin soll aus der Terminserie herausgelöst werden.') ?>

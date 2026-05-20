@@ -667,8 +667,8 @@ class Calendar_DateController extends AuthenticatedController
         }
 
         $tz_date = new DateTime();
-        $this->begin = Request::getDateTime('start', \DateTime::RFC3339_EXTENDED);
-        $this->end   = Request::getDateTime('end', \DateTime::RFC3339_EXTENDED);
+        $this->begin = Request::getDateTime('start', \DateTimeInterface::RFC3339_EXTENDED);
+        $this->end   = Request::getDateTime('end', \DateTimeInterface::RFC3339_EXTENDED);
         if ($this->begin) {
             $this->begin->setTimezone($tz_date->getTimezone());
         }

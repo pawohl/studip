@@ -663,8 +663,8 @@ class CalendarDateAssignment extends SimpleORMap implements Event
             $studip_urls['show'] = URLHelper::getURL('dispatch.php/calendar/date/index/' . $this->calendar_date_id, $show_url_params);
 
             if ($this->isWritable($user_id)) {
-                $action_urls['resize'] = URLHelper::getURL('dispatch.php/calendar/date/move/' . $this->calendar_date_id);
-                $action_urls['move']   = URLHelper::getURL('dispatch.php/calendar/date/move/' . $this->calendar_date_id, ['original_date' => $begin->format('Y-m-d')]);
+                $studip_urls['resize_dialog'] = URLHelper::getURL('dispatch.php/calendar/date/move/' . $this->calendar_date_id);
+                $studip_urls['move_dialog']   = URLHelper::getURL('dispatch.php/calendar/date/move/' . $this->calendar_date_id, ['original_date' => $begin->format('Y-m-d')]);
             }
         }
 
