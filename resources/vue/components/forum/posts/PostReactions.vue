@@ -129,7 +129,7 @@ const reactionShowDialog = reactive({
                     :title="findUserReaction(emoji, reaction)  ? $gettext('Reaktion zurücknehmen') : $gettext('Reaktion hinzufügen')"
                     :aria-label="findUserReaction(emoji, reaction) ? $gettext('Reaktion zurücknehmen') : $gettext('Reaktion hinzufügen')"
                     @click="toggleReaction(emoji, reaction)">
-                    <span class="emoji-icon" v-html="emoji" aria-hidden="true"></span>
+                    <span class="emoji-icon" aria-hidden="true">{{ emoji }}</span>
                     <span class="sr-only">{{ getEmojiLabel(emoji) }}</span>
                     <span>{{ numberFormatter(reaction.length, 1) }}</span>
                 </button>
@@ -165,11 +165,11 @@ const reactionShowDialog = reactive({
                             :class="{
                                 'post-reaction--active': findUserReaction(emoji.value)
                             }"
-                            :title="$gettext('Auf diesen Beitrag mit „%{emojiLabel}“  reagieren', { emojiLabel: emoji.label })"
-                            :aria-label="$gettext('Auf diesen Beitrag mit „%{emojiLabel}“  reagieren', { emojiLabel: emoji.label })"
+                            :title="$gettext('Auf diesen Beitrag mit „%{emojiLabel}“ reagieren', { emojiLabel: emoji.label })"
+                            :aria-label="$gettext('Auf diesen Beitrag mit „%{emojiLabel}“ reagieren', { emojiLabel: emoji.label })"
                             @click="toggleReaction(emoji.value)"
                         >
-                            <span class="emoji-icon" v-html="emoji.value" aria-hidden="true"></span>
+                            <span class="emoji-icon" aria-hidden="true">{{ emoji.value }}</span>
                         </button>
                     </template>
                 </div>
@@ -216,7 +216,7 @@ const reactionShowDialog = reactive({
                                 v-model="reactionShowDialog.emoji"
                             />
                             <label class="button-base" :for="`reaction-${emoji}`" :class="{ 'active': reactionShowDialog.emoji === emoji }">
-                                <span class="emoji-icon" v-html="emoji" aria-hidden="true"></span>
+                                <span class="emoji-icon" aria-hidden="true">{{ emoji }}</span>
                                 <span class="sr-only">{{ getEmojiLabel(emoji) }}</span>
                                 <span>{{ numberFormatter(reaction.length, 1) }}</span>
                             </label>

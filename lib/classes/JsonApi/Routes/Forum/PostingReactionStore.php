@@ -26,7 +26,8 @@ class PostingReactionStore extends JsonApiController
         $user = $this->getUser($request);
 
         $posting = Posting::find(self::arrayGet($json, 'data.relationships.posting.data.id'));
-        if ($posting === null) {
+        $emoji = ReactionEmoji::tryFrom(self::arrayGet($json, 'data.attributes.emoji'))?->value;
+        if ($posting === null || $emoji === null) {
             throw new BadRequestException();
         }
 
@@ -42,7 +43,7 @@ class PostingReactionStore extends JsonApiController
         $data = [
             'posting_id' => $posting->posting_id,
             'user_id' => $user->user_id,
-            'emoji' => ReactionEmoji::tryFrom(self::arrayGet($json, 'data.attributes.emoji'))->value
+            'emoji' => $emoji
         ];
 
         $reaction = PostingReaction::findOneBySQL(
@@ -66,7 +67,7 @@ class PostingReactionStore extends JsonApiController
                         ['name' => $user->getFullName()]
                     ),
                     null,
-                    $reaction->emoji
+                    $emoji
                 );
             }
         }

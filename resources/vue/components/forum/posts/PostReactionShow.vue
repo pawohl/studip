@@ -104,7 +104,7 @@ onMounted(() => {
                                 avatar_url: reaction.user.meta.avatar.medium
                             }"
                         />
-                        <span class="emoji-icon" aria-hidden="true" v-html="reaction.emoji"></span>
+                        <span class="emoji-icon" aria-hidden="true">{{ reaction.emoji }}</span>
                         <span class="sr-only">{{ getEmojiLabel(reaction.emoji) }}</span>
                     </div>
                 </td>

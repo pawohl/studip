@@ -9,9 +9,9 @@ use Studip\Forum\Enum\ReactionEmoji;
             <? if ($notification['avatar']): ?>
                 <? if (filter_var($notification['avatar'], FILTER_VALIDATE_URL)): ?>
                     <div class="avatar" style="background-color: currentColor; mask: url(<?= $notification['avatar'] ?>) no-repeat center / contain;;"></div>
-                <? elseif (ReactionEmoji::tryFrom($notification['avatar'])): ?>
+                <? else: ?>
                     <div class="emoji-icon">
-                        <?= ReactionEmoji::tryFrom($notification['avatar'])->value ?>
+                        <?= htmlReady($notification['avatar']) ?>
                     </div>
                 <? endif ?>
             <? endif ?>

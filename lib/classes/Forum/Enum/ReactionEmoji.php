@@ -5,14 +5,14 @@ namespace Studip\Forum\Enum;
 
 enum ReactionEmoji: string
 {
-    case THUMB_UP    = '&#128077;';
-    case THUMB_DOWN  = '&#128078;';
-    case ROCKET      = '&#128640;';
-    case GRINNING_FACE = '&#128512;';
-    case SUNGLASSES  = '&#128526;';
-    case CONFUSED    = '&#128533;';
-    case HEART       = '&#x2665;';
-    case PARTY       = '&#127881;';
+    case THUMB_UP      = '👍';
+    case THUMB_DOWN    = '👎';
+    case ROCKET        = '🚀';
+    case GRINNING_FACE = '😀';
+    case SUNGLASSES    = '😎';
+    case CONFUSED      = '😕';
+    case HEART         = '♥';
+    case PARTY         = '🎉';
 
     public function label(): string
     {
