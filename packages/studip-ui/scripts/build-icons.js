@@ -54,7 +54,7 @@ files.forEach((file) => {
 
     const inner = optimized.replace(/<\s*svg[^>]*>/, '').replace(/<\/svg>/, '')
     const id = path.basename(file, '.svg')
-    spriteContent += `<symbol id="icon-${id}"${viewBox}>${inner}</symbol>`
+    spriteContent += `<symbol id="icon-${id}" fill="currentColor"${viewBox}>${inner}</symbol>`
 })
 
 spriteContent += '</svg>'
