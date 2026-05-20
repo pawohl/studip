@@ -36,7 +36,6 @@
     cursor: help;
     display: inline-block;
     position: relative;
-    vertical-align: text-bottom;
 
     &.tooltip-icon {
         @include icon(before, info-circle, inactive, $icon-size-inline);
