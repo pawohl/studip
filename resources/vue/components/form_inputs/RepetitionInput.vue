@@ -76,7 +76,7 @@
         </section>
         <section v-else-if="repetition_type_value === 'YEARLY'">
             <LabelRequired :label="$gettext('Abstand in Jahren')">
-                <input type="number" min="1" required name="name + '_interval'"
+                <input type="number" min="1" required :name="name + '_interval'"
                        v-model="repetition_interval_value">
             </LabelRequired>
             <label>
