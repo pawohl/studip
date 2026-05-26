@@ -97,7 +97,7 @@
                 <? if ($available_rooms) : ?>
                     <label>
                         <strong><?= _('Passende Räume') ?></strong>
-                        <section id="room_selection">
+                        <section class="selectbox" id="room_selection">
                                 <? foreach ($available_rooms as $room): ?>
                                     <div class="flex-row">
                                         <label class="horizontal">
