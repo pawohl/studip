@@ -233,7 +233,7 @@ function show_rss_news($range_id, $type)
     $items = StudipNews::GetNewsByRange($range_id, true, true);
     $last_changed = 0;
 
-    foreach ($items as &$item) {
+    foreach ($items as $item) {
         if ($last_changed < $item['chdate']) {
             $last_changed = $item['chdate'];
         }
@@ -243,16 +243,20 @@ function show_rss_news($range_id, $type)
         }
     }
 
-    header('Content-type: application/rss+xml; charset=utf-8');
+    header('Content-Type: application/rss+xml; charset=utf-8');
+    header('Content-Disposition: inline; ' . encode_header_parameter(
+        'filename',
+        'News - ' . $title . '.rss'
+    ));
 
-    $template = $GLOBALS['template_factory']->open('news/rss-feed');
-    $template->items        = $items;
-    $template->title        = $title;
-    $template->studip_url   = $studip_url;
-    $template->description  = $description;
-    $template->last_changed = $last_changed;
-    $template->item_url_fmt = $item_url_fmt;
-    echo $template->render();
+    echo $GLOBALS['template_factory']->render('news/rss-feed', [
+        'items'        => $items,
+        'title'        => $title,
+        'studip_url'   => $studip_url,
+        'description'  => $description,
+        'last_changed' => $last_changed,
+        'item_url_fmt' => $item_url_fmt,
+    ]);
 
     return true;
 }

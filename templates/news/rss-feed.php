@@ -1,4 +1,4 @@
-<?='<?xml'?> version="1.0"?>
+<?='<?xml'?> version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
     <channel>
         <title><?= htmlReady($title) ?></title>
@@ -9,7 +9,7 @@
             <link><?= htmlReady($studip_url) ?></link>
         </image>
         <description><?= htmlReady($description) ?></description>
-        <lastBuildDate><?= date('r',$last_changed) ?></lastBuildDate>
+        <lastBuildDate><?= date('r',$last_changed ?: time()) ?></lastBuildDate>
         <generator><?= htmlReady('Stud.IP - ' . $GLOBALS['SOFTWARE_VERSION']) ?></generator>
 <? foreach ($items as $id => $item): ?>
         <item>

@@ -32,7 +32,7 @@ class NewsWidget extends CorePlugin implements PortalPlugin
         $icons = [];
         if (StudipNews::CountUnread() > 0) {
             $navigation = new Navigation('', 'dispatch.php/news/visit_all');
-            $navigation->setImage(Icon::create('refresh'));
+            $navigation->setImage(Icon::create('accept'));
             $navigation->setLinkAttributes([
                 'class' => 'visit-all',
                 'title' => _('Alles als gelesen markieren'),

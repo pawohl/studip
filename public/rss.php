@@ -37,5 +37,5 @@ if (Config::get()->NEWS_RSS_EXPORT_ENABLE){
         header("Content-type: text/xml; charset=utf-8");
         echo "<?xml version=\"1.0\"?>\n<rss version=\"2.0\">\n</rss>\n";
     }
-}   
+}
 ob_end_flush();
