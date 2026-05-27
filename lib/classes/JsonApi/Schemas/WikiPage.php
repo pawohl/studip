@@ -84,22 +84,21 @@ class WikiPage extends SchemaProvider
     public function getRelationships($wiki, ContextInterface $context): iterable
     {
         $isPrimary = $context->getPosition()->getLevel() === 0;
-        $includeList = $context->getIncludePaths();
 
         $relationships = [];
 
         if ($isPrimary) {
-            $relationships = $this->addAuthorRelationship($relationships, $wiki, $includeList);
-            $relationships = $this->addChildrenRelationship($relationships, $wiki, $includeList);
-            $relationships = $this->addDescendantsRelationship($relationships, $wiki, $includeList);
-            $relationships = $this->addParentRelationship($relationships, $wiki, $includeList);
-            $relationships = $this->addRangeRelationship($relationships, $wiki, $includeList);
+            $relationships = $this->addAuthorRelationship($relationships, $wiki, $this->shouldInclude($context, self::REL_AUTHOR));
+            $relationships = $this->addChildrenRelationship($relationships, $wiki, $this->shouldInclude($context, self::REL_CHILDREN));
+            $relationships = $this->addDescendantsRelationship($relationships, $wiki, $this->shouldInclude($context, self::REL_DESCENDANTS));
+            $relationships = $this->addParentRelationship($relationships, $wiki, $this->shouldInclude($context, self::REL_PARENT));
+            $relationships = $this->addRangeRelationship($relationships, $wiki, $this->shouldInclude($context, self::REL_RANGE));
         }
 
         return $relationships;
     }
 
-    private function addParentRelationship(array $relationships, \WikiPage $wiki, array $includeList): array
+    private function addParentRelationship(array $relationships, \WikiPage $wiki, bool $includeData): array
     {
         $related = $wiki->parent;
         $relationships[self::REL_PARENT] = [
@@ -118,7 +117,7 @@ class WikiPage extends SchemaProvider
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    private function addChildrenRelationship(array $relationships, \WikiPage $wiki, array $includeList): array
+    private function addChildrenRelationship(array $relationships, \WikiPage $wiki, bool $includeData): array
     {
         $relationships[self::REL_CHILDREN] = [
             self::RELATIONSHIP_LINKS => [
@@ -132,7 +131,7 @@ class WikiPage extends SchemaProvider
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    private function addDescendantsRelationship(array $relationships, \WikiPage $wiki, array $includeList): array
+    private function addDescendantsRelationship(array $relationships, \WikiPage $wiki, bool $includeData): array
     {
         $relationships[self::REL_DESCENDANTS] = [
             self::RELATIONSHIP_LINKS => [
@@ -146,11 +145,11 @@ class WikiPage extends SchemaProvider
     /**
      * @param array $relationships
      * @param \WikiPage $wiki
-     * @param array $includeList
+     * @param bool $includeData
      *
      * @return array
      */
-    private function addAuthorRelationship($relationships, $wiki, $includeList)
+    private function addAuthorRelationship($relationships, $wiki, bool $includeData)
     {
         if ($wiki->user_id && $wiki->user_id !== 'nobody') {
             $relationships[self::REL_AUTHOR] = [
@@ -167,11 +166,11 @@ class WikiPage extends SchemaProvider
     /**
      * @param array $relationships
      * @param \WikiPage $wiki
-     * @param array $includeList
+     * @param bool $includeData
      *
      * @return array
      */
-    private function addRangeRelationship($relationships, $wiki, $includeList)
+    private function addRangeRelationship($relationships, $wiki, bool $includeData)
     {
         $range = $this->prepareRange($wiki);
         $relationships[self::REL_RANGE] = [

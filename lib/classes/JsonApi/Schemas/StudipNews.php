@@ -56,20 +56,18 @@ class StudipNews extends SchemaProvider
      */
     public function getRelationships($news, ContextInterface $context): iterable
     {
-        $includeList = $context->getIncludePaths();
-
         $relationships = [];
 
-        $relationships = $this->addAuthorRelationship($relationships, $news, $includeList);
-        $relationships = $this->addCommentsRelationship($relationships, $news, $includeList);
-        $relationships = $this->addRangesRelationship($relationships, $news, $includeList);
+        $relationships = $this->addAuthorRelationship($relationships, $news, $this->shouldInclude($context, self::REL_AUTHOR));
+        $relationships = $this->addCommentsRelationship($relationships, $news, $this->shouldInclude($context, self::REL_COMMENTS));
+        $relationships = $this->addRangesRelationship($relationships, $news, $this->shouldInclude($context, self::REL_RANGES));
 
         return $relationships;
     }
 
-    private function addAuthorRelationship($relationships, $news, $includeList)
+    private function addAuthorRelationship($relationships, $news, bool $includeData)
     {
-        $data = in_array(self::REL_AUTHOR, $includeList)
+        $data = $includeData
               ? $news->owner
               : \User::build(['id' => $news->user_id], false);
         $relationships[self::REL_AUTHOR] = [
@@ -85,7 +83,7 @@ class StudipNews extends SchemaProvider
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    private function addCommentsRelationship($relationships, $news, $includeList)
+    private function addCommentsRelationship($relationships, $news, bool $includeData)
     {
         $relationships[self::REL_COMMENTS] = [
             self::RELATIONSHIP_LINKS => [
@@ -96,20 +94,18 @@ class StudipNews extends SchemaProvider
         return $relationships;
     }
 
-    private function addRangesRelationship($relationships, $news, $includeList)
+    private function addRangesRelationship($relationships, $news, bool $includeData)
     {
         $relationships[self::REL_RANGES] = [
             self::RELATIONSHIP_LINKS_SELF => true,
-            self::RELATIONSHIP_DATA => $this->prepareRanges($news, $includeList),
+            self::RELATIONSHIP_DATA => $this->prepareRanges($news, $includeData),
         ];
 
         return $relationships;
     }
 
-    private function prepareRanges($news, $includeList)
+    private function prepareRanges($news, bool $include)
     {
-        $include = in_array(self::REL_RANGES, $includeList);
-
         return $news->news_ranges->map(function ($range) use ($include) {
             switch ($range->type) {
                 case 'global':
