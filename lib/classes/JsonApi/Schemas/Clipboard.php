@@ -39,12 +39,8 @@ final class Clipboard extends SchemaProvider
     {
         $relationships = [];
 
-        $isPrimary = $context->getPosition()->getLevel() === 0;
-        if ($isPrimary) {
-            $relationships = $this->getUserRelationship($relationships, $resource, $this->shouldInclude($context, self::REL_USER));
-            $relationships = $this->getItemsRelationship($relationships, $resource, $this->shouldInclude($context, self::REL_ITEMS));
-        }
-
+        $relationships = $this->getUserRelationship($relationships, $resource, $this->shouldInclude($context, self::REL_USER));
+        $relationships = $this->getItemsRelationship($relationships, $resource, $this->shouldInclude($context, self::REL_ITEMS));
 
         return $relationships;
     }

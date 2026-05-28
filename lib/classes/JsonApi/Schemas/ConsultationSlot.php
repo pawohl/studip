@@ -51,12 +51,8 @@ class ConsultationSlot extends SchemaProvider
     {
         $relationships = [];
 
-        $isPrimary = $context->getPosition()->getLevel() === 0;
-        if ($isPrimary) {
-            $relationships = $this->getBlockRelationship($relationships, $resource, $this->shouldInclude($context, self::REL_BLOCK));
-            $relationships = $this->getBookingsRelationship($relationships, $resource, $this->shouldInclude($context, self::REL_BOOKINGS));
-        }
-
+        $relationships = $this->getBlockRelationship($relationships, $resource, $this->shouldInclude($context, self::REL_BLOCK));
+        $relationships = $this->getBookingsRelationship($relationships, $resource, $this->shouldInclude($context, self::REL_BOOKINGS));
 
         return $relationships;
     }

@@ -83,17 +83,13 @@ class WikiPage extends SchemaProvider
 
     public function getRelationships($wiki, ContextInterface $context): iterable
     {
-        $isPrimary = $context->getPosition()->getLevel() === 0;
-
         $relationships = [];
 
-        if ($isPrimary) {
-            $relationships = $this->addAuthorRelationship($relationships, $wiki, $this->shouldInclude($context, self::REL_AUTHOR));
-            $relationships = $this->addChildrenRelationship($relationships, $wiki, $this->shouldInclude($context, self::REL_CHILDREN));
-            $relationships = $this->addDescendantsRelationship($relationships, $wiki, $this->shouldInclude($context, self::REL_DESCENDANTS));
-            $relationships = $this->addParentRelationship($relationships, $wiki, $this->shouldInclude($context, self::REL_PARENT));
-            $relationships = $this->addRangeRelationship($relationships, $wiki, $this->shouldInclude($context, self::REL_RANGE));
-        }
+        $relationships = $this->addAuthorRelationship($relationships, $wiki, $this->shouldInclude($context, self::REL_AUTHOR));
+        $relationships = $this->addChildrenRelationship($relationships, $wiki, $this->shouldInclude($context, self::REL_CHILDREN));
+        $relationships = $this->addDescendantsRelationship($relationships, $wiki, $this->shouldInclude($context, self::REL_DESCENDANTS));
+        $relationships = $this->addParentRelationship($relationships, $wiki, $this->shouldInclude($context, self::REL_PARENT));
+        $relationships = $this->addRangeRelationship($relationships, $wiki, $this->shouldInclude($context, self::REL_RANGE));
 
         return $relationships;
     }

@@ -57,12 +57,8 @@ class ConsultationBlock extends SchemaProvider
     {
         $relationships = [];
 
-        $isPrimary = $context->getPosition()->getLevel() === 0;
-        if ($isPrimary) {
-            $relationships = $this->getSlotsRelationship($relationships, $resource, $this->shouldInclude($context, self::REL_SLOTS));
-            $relationships = $this->getRangeRelationship($relationships, $resource, $this->shouldInclude($context, self::REL_RANGE));
-        }
-
+        $relationships = $this->getSlotsRelationship($relationships, $resource, $this->shouldInclude($context, self::REL_SLOTS));
+        $relationships = $this->getRangeRelationship($relationships, $resource, $this->shouldInclude($context, self::REL_RANGE));
 
         return $relationships;
     }

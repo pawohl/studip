@@ -69,11 +69,6 @@ class BlubberThread extends SchemaProvider
             $this->shouldInclude($context, self::REL_AUTHOR)
         );
 
-        $isPrimary = $context->getPosition()->getLevel() === 0;
-        if (!$isPrimary) {
-            return $relationships;
-        }
-
         $relationships = $this->getCommentsRelationship(
             $relationships,
             $resource,

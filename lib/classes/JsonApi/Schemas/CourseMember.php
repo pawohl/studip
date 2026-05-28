@@ -43,27 +43,23 @@ class CourseMember extends SchemaProvider
 
     public function getRelationships($membership, ContextInterface $context): iterable
     {
-        $isPrimary = $context->getPosition()->getLevel() === 0;
-
         $relationships = [];
 
-        if ($isPrimary) {
-            $course = \Course::build(['id' => $membership['seminar_id']], false);
-            $relationships[self::REL_COURSE] = [
-                self::RELATIONSHIP_LINKS => [
-                    Link::RELATED => $this->createLinkToResource($course)
-                ],
-                self::RELATIONSHIP_DATA => $membership->course,
-            ];
+        $course = \Course::build(['id' => $membership['seminar_id']], false);
+        $relationships[self::REL_COURSE] = [
+            self::RELATIONSHIP_LINKS => [
+                Link::RELATED => $this->createLinkToResource($course)
+            ],
+            self::RELATIONSHIP_DATA => $membership->course,
+        ];
 
-            $user = \User::build(['id' => $membership['user_id']], false);
-            $relationships[self::REL_USER] = [
-                self::RELATIONSHIP_LINKS => [
-                    Link::RELATED => $this->createLinkToResource($user)
-                ],
-                self::RELATIONSHIP_DATA => $membership->user,
-            ];
-        }
+        $user = \User::build(['id' => $membership['user_id']], false);
+        $relationships[self::REL_USER] = [
+            self::RELATIONSHIP_LINKS => [
+                Link::RELATED => $this->createLinkToResource($user)
+            ],
+            self::RELATIONSHIP_DATA => $membership->user,
+        ];
 
         return $relationships;
     }

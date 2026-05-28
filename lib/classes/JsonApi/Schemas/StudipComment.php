@@ -27,28 +27,24 @@ class StudipComment extends SchemaProvider
 
     public function getRelationships($comment, ContextInterface $context): iterable
     {
-        $isPrimary = $context->getPosition()->getLevel() === 0;
-
         $relationships = [];
 
-        if ($isPrimary) {
-            if ($author = \User::find($comment->user_id)) {
-                $relationships[self::REL_AUTHOR] = [
-                    self::RELATIONSHIP_LINKS => [
-                        Link::RELATED => $this->createLinkToResource($author),
-                    ],
-                    self::RELATIONSHIP_DATA => $author,
-                ];
-            }
+        if ($author = \User::find($comment->user_id)) {
+            $relationships[self::REL_AUTHOR] = [
+                self::RELATIONSHIP_LINKS => [
+                    Link::RELATED => $this->createLinkToResource($author),
+                ],
+                self::RELATIONSHIP_DATA => $author,
+            ];
+        }
 
-            if ($news = \StudipNews::find($comment->object_id)) {
-                $relationships[self::REL_NEWS] = [
-                    self::RELATIONSHIP_LINKS => [
-                        Link::RELATED => $this->createLinkToResource($news),
-                    ],
-                    self::RELATIONSHIP_DATA => $news,
-                ];
-            }
+        if ($news = \StudipNews::find($comment->object_id)) {
+            $relationships[self::REL_NEWS] = [
+                self::RELATIONSHIP_LINKS => [
+                    Link::RELATED => $this->createLinkToResource($news),
+                ],
+                self::RELATIONSHIP_DATA => $news,
+            ];
         }
 
         return $relationships;

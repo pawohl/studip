@@ -43,14 +43,10 @@ class File extends SchemaProvider
      */
     public function getRelationships($resource, ContextInterface $context): iterable
     {
-        $isPrimary = $context->getPosition()->getLevel() === 0;
-
         $relationships = [];
 
-        if ($isPrimary) {
-            $relationships = $this->addOwnerRelationship($relationships, $resource);
-            $relationships = $this->addFileRefsRelationship($relationships, $resource);
-        }
+        $relationships = $this->addOwnerRelationship($relationships, $resource);
+        $relationships = $this->addFileRefsRelationship($relationships, $resource);
 
         return $relationships;
     }

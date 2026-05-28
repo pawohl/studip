@@ -45,11 +45,6 @@ class BlubberComment extends SchemaProvider
         $relationships = [];
         $relationships = $this->getAuthorRelationship($relationships, $resource, $this->shouldInclude($context, self::REL_AUTHOR));
 
-        $isPrimary = $context->getPosition()->getLevel() === 0;
-        if (!$isPrimary) {
-            return $relationships;
-        }
-
         $relationships = $this->getMentionsRelationship($relationships, $resource, $this->shouldInclude($context, self::REL_MENTIONS));
         $relationships = $this->getThreadRelationship($relationships, $resource, $this->shouldInclude($context, self::REL_THREAD));
 

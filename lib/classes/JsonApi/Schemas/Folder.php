@@ -53,18 +53,14 @@ class Folder extends SchemaProvider
      */
     public function getRelationships($resource, ContextInterface $context): iterable
     {
-        $isPrimary = $context->getPosition()->getLevel() === 0;
-
         $relationships = [];
 
-        if ($isPrimary) {
-            $relationships = $this->getFeedbackRelationship($relationships, $resource);
-            $relationships = $this->getFilesRelationship($relationships, $resource);
-            $relationships = $this->getFoldersRelationship($relationships, $resource);
-            $relationships = $this->getOwnerRelationship($relationships, $resource);
-            $relationships = $this->getParentRelationship($relationships, $resource);
-            $relationships = $this->getRangeRelationship($relationships, $resource);
-        }
+        $relationships = $this->getFeedbackRelationship($relationships, $resource);
+        $relationships = $this->getFilesRelationship($relationships, $resource);
+        $relationships = $this->getFoldersRelationship($relationships, $resource);
+        $relationships = $this->getOwnerRelationship($relationships, $resource);
+        $relationships = $this->getParentRelationship($relationships, $resource);
+        $relationships = $this->getRangeRelationship($relationships, $resource);
 
         return $relationships;
     }

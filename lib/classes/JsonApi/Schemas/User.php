@@ -126,54 +126,51 @@ class User extends SchemaProvider
      */
     public function getRelationships($user, ContextInterface $context): iterable
     {
-        $isPrimary = $context->getPosition()->getLevel() === 0;
-
         $relationships = [];
-        if ($isPrimary) {
-            $relationships = $this->getActivityStreamRelationship(
-                $relationships,
-                $user,
-                $this->shouldInclude($context, self::REL_ACTIVITYSTREAM)
-            );
-            $relationships = $this->getBlubberRelationship(
-                $relationships,
-                $user,
-                $this->shouldInclude($context, self::REL_BLUBBER)
-            );
-            $relationships = $this->getConfigValuesRelationship(
-                $relationships,
-                $user,
-                $this->shouldInclude($context, self::REL_CONFIG_VALUES)
-            );
-            $relationships = $this->getContactsRelationship(
-                $relationships,
-                $user,
-                $this->shouldInclude($context, self::REL_CONTACTS)
-            );
-            $relationships = $this->getCoursesRelationship(
-                $relationships,
-                $user,
-                $this->shouldInclude($context, self::REL_COURSES)
-            );
-            $relationships = $this->getCourseMembershipsRelationship(
-                $relationships,
-                $user,
-                $this->shouldInclude($context, self::REL_COURSE_MEMBERSHIPS)
-            );
-            $relationships = $this->getEventsRelationship($relationships, $user, $this->shouldInclude($context, self::REL_EVENTS));
-            $relationships = $this->getFileRefsRelationship($relationships, $user, $this->shouldInclude($context, self::REL_FILES));
-            $relationships = $this->getFoldersRelationship($relationships, $user, $this->shouldInclude($context, self::REL_FOLDERS));
-            $relationships = $this->getInboxRelationship($relationships, $user, $this->shouldInclude($context, self::REL_INBOX));
-            $relationships = $this->getInstituteMembershipsRelationship(
-                $relationships,
-                $user,
-                $this->shouldInclude($context, self::REL_INSTITUTE_MEMBERSHIPS)
-            );
-            $relationships = $this->getNewsRelationship($relationships, $user, $this->shouldInclude($context, self::REL_NEWS));
-            $relationships = $this->getOutboxRelationship($relationships, $user, $this->shouldInclude($context, self::REL_OUTBOX));
-            $relationships = $this->getScheduleRelationship($relationships, $user, $this->shouldInclude($context, self::REL_SCHEDULE));
-            $relationships = $this->getCoursewareBookmarksRelationship($relationships, $user, $this->shouldInclude($context, self::REL_COURSEWARE_BOOKMARKS));
-        }
+
+        $relationships = $this->getActivityStreamRelationship(
+            $relationships,
+            $user,
+            $this->shouldInclude($context, self::REL_ACTIVITYSTREAM)
+        );
+        $relationships = $this->getBlubberRelationship(
+            $relationships,
+            $user,
+            $this->shouldInclude($context, self::REL_BLUBBER)
+        );
+        $relationships = $this->getConfigValuesRelationship(
+            $relationships,
+            $user,
+            $this->shouldInclude($context, self::REL_CONFIG_VALUES)
+        );
+        $relationships = $this->getContactsRelationship(
+            $relationships,
+            $user,
+            $this->shouldInclude($context, self::REL_CONTACTS)
+        );
+        $relationships = $this->getCoursesRelationship(
+            $relationships,
+            $user,
+            $this->shouldInclude($context, self::REL_COURSES)
+        );
+        $relationships = $this->getCourseMembershipsRelationship(
+            $relationships,
+            $user,
+            $this->shouldInclude($context, self::REL_COURSE_MEMBERSHIPS)
+        );
+        $relationships = $this->getEventsRelationship($relationships, $user, $this->shouldInclude($context, self::REL_EVENTS));
+        $relationships = $this->getFileRefsRelationship($relationships, $user, $this->shouldInclude($context, self::REL_FILES));
+        $relationships = $this->getFoldersRelationship($relationships, $user, $this->shouldInclude($context, self::REL_FOLDERS));
+        $relationships = $this->getInboxRelationship($relationships, $user, $this->shouldInclude($context, self::REL_INBOX));
+        $relationships = $this->getInstituteMembershipsRelationship(
+            $relationships,
+            $user,
+            $this->shouldInclude($context, self::REL_INSTITUTE_MEMBERSHIPS)
+        );
+        $relationships = $this->getNewsRelationship($relationships, $user, $this->shouldInclude($context, self::REL_NEWS));
+        $relationships = $this->getOutboxRelationship($relationships, $user, $this->shouldInclude($context, self::REL_OUTBOX));
+        $relationships = $this->getScheduleRelationship($relationships, $user, $this->shouldInclude($context, self::REL_SCHEDULE));
+        $relationships = $this->getCoursewareBookmarksRelationship($relationships, $user, $this->shouldInclude($context, self::REL_COURSEWARE_BOOKMARKS));
 
         return $relationships;
     }
