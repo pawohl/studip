@@ -182,7 +182,7 @@ class Course extends SimpleORMap implements Range, PrivacyObject, StudipItem, Fe
             'on_delete'         => 'delete',
             'on_store'          => 'store'
         ];
-        $config['has_many']['news'] = [
+        $config['has_and_belongs_to_many']['news'] = [
             'class_name'        => StudipNews::class,
             'thru_table'        => 'news_range',
             'thru_key'          => 'range_id',
