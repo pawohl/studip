@@ -119,8 +119,12 @@ ul.widget-list {
             line-height: $icon-size;
             gap: 6px;
             width: 100%;
+
+            .studip-icon {
+                flex: none;
+            }
         }
-        
+
         .label-text {
             text-indent: 0;
         }
