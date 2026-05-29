@@ -18,8 +18,6 @@ class CoursesShow extends JsonApiController
         'end-semester',
         'events',
         'feedback-elements',
-        'file-refs',
-        'folders',
         'forum-categories',
         'institute',
         'memberships',
@@ -35,13 +33,14 @@ class CoursesShow extends JsonApiController
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function __invoke(Request $request, Response $response, $args)
+    public function __invoke(Request $request, Response $response, $args): Response
     {
-        if (!$course = \Course::find($args['id'])) {
+        $course = \Course::find($args['id']);
+        if (!$course) {
             throw new RecordNotFoundException();
         }
 
-        if (!Authority::canShowCourse($this->getUser($request), $course, Authority::SCOPE_BASIC)) {
+        if (!Authority::canShowCourse($this->getUser($request), $course)) {
             throw new AuthorizationFailedException();
         }
 
