@@ -241,7 +241,7 @@ $sidebarOut: -330px;
         }
 
         img,
-        svg {
+        .studip-icon {
             &:not(.avatar) {
                 filter: contrast(0) brightness(2);
             }

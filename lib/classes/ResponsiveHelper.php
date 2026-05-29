@@ -22,6 +22,7 @@ class ResponsiveHelper
         $activated  = [];
 
         $link_params = array_fill_keys(array_keys(URLHelper::getLinkParams()), null);
+        $old_base = URLHelper::setBaseURL('');
 
         foreach (Navigation::getItem('/')->getSubNavigation() as $path => $nav) {
             $image = $nav->getImage();
@@ -45,14 +46,13 @@ class ResponsiveHelper
                 $forceVisibility = true;
             }
 
-            $image_src = $image ? $image->copyWithRole('info_alt')->asImagePath() : false;
             $item = [
-                'icon'     => $image_src ? self::getAssetsURL($image_src) : false,
+                'icon'     => $image?->isStatic() ? self::getAssetsURL($image->asImagePath()) : $image?->getShape() ?? false,
                 'title'    => (string) $nav->getTitle(),
                 'url'      => URLHelper::getURL($nav->getURL(), $link_params, true),
                 'parent'   => '/',
                 'path'     => $path,
-                'visible'  => $forceVisibility ? true : $nav->isVisible(true),
+                'visible'  => $forceVisibility || $nav->isVisible(true),
                 'active'   => $nav->isActive(),
                 'button'   => $nav->getRenderAsButton(),
             ];
@@ -74,6 +74,7 @@ class ResponsiveHelper
                 $navigation[$path] = $item;
             }
         }
+        URLHelper::setBaseURL($old_base);
 
         return [$navigation, $activated];
     }

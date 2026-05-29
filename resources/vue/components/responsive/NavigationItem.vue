@@ -3,14 +3,13 @@
         <template v-if="hasChildren()">
             <div class="navigation-title">
                 <a
-                    :href="item.url"
+                    :href="url"
                     :title="navigateToText(item.title)"
                     :aria-label="navigateToText(item.title)"
                     tabindex="0"
                 >
                     <span class="navigation-icon">
-                        <studip-icon v-if="isCourse" shape="seminar" role="info_alt" :size="24" alt=""></studip-icon>
-                        <img v-else-if="item.icon" :src="iconUrl" width="24" alt="" :class="{avatar: item.avatar}"/>
+                        <studip-icon v-if="item.icon" :shape="item.icon" :size="24" :class="{avatar: item.avatar}" />
                     </span>
                     <span class="navigation-text">
                         {{ item.title }}
@@ -30,7 +29,7 @@
         </template>
         <div v-else class="navigation-title">
             <form v-if="item.button"
-                  :action="item.url"
+                  :action="url"
                   method="post"
             >
                 <button class="as-link"
@@ -38,19 +37,17 @@
                         :title="navigateToText(item.title)"
                         :aria-label="navigateToText(item.title)"
                 >
-                    <studip-icon v-if="isCourse" shape="seminar" role="info_alt" :size="24" alt=""></studip-icon>
-                    <img v-else-if="item.icon" :src="iconUrl" width="24" alt="" :class="{avatar: item.avatar}"/>
+                    <studip-icon v-if="item.icon" :shape="item.icon" :size="24" :class="{avatar: item.avatar}" />
                     {{ item.title }}
                 </button>
             </form>
             <a v-else
-                :href="item.url"
+                :href="url"
                 tabindex="0"
                 :title="navigateToText(item.title)"
                 :aria-label="navigateToText(item.title)"
             >
-                <studip-icon v-if="isCourse" shape="seminar" role="info_alt" :size="24" alt=""></studip-icon>
-                <img v-else-if="item.icon" :src="iconUrl" width="24" alt="" :class="{avatar: item.avatar}"/>
+                <studip-icon v-if="item.icon" :shape="item.icon" :size="24" :class="{avatar: item.avatar}" />
                 {{ item.title }}
             </a>
         </div>
@@ -73,23 +70,13 @@ export default defineComponent({
             type: Boolean,
             default: false,
         },
-        isCourse: {
-            type: Boolean,
-            default: false,
-        },
     },
     computed: {
-        iconUrl() {
-            if (this.item.icon && !this.item.icon.match(/^https?:\/\//)) {
-                return window.STUDIP.ASSETS_URL + this.item.icon;
-            }
-            return this.item.icon;
-        },
+        url(): string {
+            return window.STUDIP.URLHelper.getURL(this.item.url);
+        }
     },
     methods: {
-        getUrl(url: string) {
-            return window.STUDIP.URLHelper.getURL(url);
-        },
         moveTo(path: string) {
             window.STUDIP.eventBus.emit('responsive-navigation-move-to', path);
         },

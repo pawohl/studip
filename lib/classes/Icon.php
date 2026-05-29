@@ -243,7 +243,7 @@ class Icon implements JsonSerializable
 
         $size ??= self::SIZE_DEFAULT;
 
-        if ($force_img_tag || self::isStatic($this->shape)) {
+        if ($force_img_tag || $this->isStatic()) {
             return sprintf(
                 '<img %s>',
                 $this->prepareHTMLAttributes($size, $view_attributes)
@@ -329,10 +329,10 @@ class Icon implements JsonSerializable
     {
         $size = $this->get_size($size);
 
-        if (self::isStatic($this->shape)) {
+        if ($this->isStatic()) {
             return sprintf(
                 'background-image:url(%1$s);background-size:%2$upx %2$upx;',
-                $this->shapeToPath($this->shape),
+                $this->shapeToPath(),
                 $size
             );
         }
@@ -408,7 +408,7 @@ class Icon implements JsonSerializable
             }
         }
 
-        $html_attributes['src'] = self::isStatic($this->shape) ? $this->shape : $this->get_asset_svg();
+        $html_attributes['src'] = $this->isStatic() ? $this->shape : $this->get_asset_svg();
 
         if (!isset($html_attributes['alt']) && !isset($html_attributes['title'])) {
             //Add an empty alt attribute to prevent screen readers from
@@ -422,8 +422,8 @@ class Icon implements JsonSerializable
             $html_attributes['class'] = 'studip-icon-inline';
         }
 
-        if (!self::isStatic($this->shape)) {
-            $html_attributes['class'] = 'icon-shape-' . $this->shapeToPath($this->shape);
+        if (!$this->isStatic()) {
+            $html_attributes['class'] = 'icon-shape-' . $this->shapeToPath();
         }
 
         return $html_attributes;
@@ -436,7 +436,7 @@ class Icon implements JsonSerializable
      */
     protected function get_asset_svg()
     {
-        return Assets::url('images/icons/' . self::roleToColor($this->role) . '/' . $this->shapeToPath($this->shape) . '.svg');
+        return Assets::url('images/icons/' . self::roleToColor($this->role) . '/' . $this->shapeToPath() . '.svg');
     }
 
     /**
@@ -460,15 +460,15 @@ class Icon implements JsonSerializable
     }
 
     // an icon is static if it starts with 'http'
-    private static function isStatic($shape)
+    public function isStatic(): bool
     {
-        return mb_strpos($shape, 'http') === 0;
+        return preg_match('/^https?:/', $this->shape);
     }
 
     // transforms a shape w/ possible additions (`shape`) to a path `(addition/)?shape`
     private function shapeToPath()
     {
-        if (self::isStatic($this->shape)) {
+        if ($this->isStatic()) {
             return $this->shape;
         }
         $shape = array_reverse(explode('/', $this->shape))[0];
