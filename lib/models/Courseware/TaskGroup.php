@@ -93,7 +93,7 @@ class TaskGroup extends \SimpleORMap implements \PrivacyObject
     {
         $solvers = $this->tasks->pluck('solver');
 
-        return $solvers;
+        return array_filter($solvers);
     }
 
     /**

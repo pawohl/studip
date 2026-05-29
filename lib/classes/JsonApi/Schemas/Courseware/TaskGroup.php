@@ -77,10 +77,11 @@ class TaskGroup extends SchemaProvider
 
         $user = $this->currentUser;
         $relationships[self::REL_SOLVERS] = [
-            self::RELATIONSHIP_DATA =>
+            self::RELATIONSHIP_DATA => array_filter(
                 $resource->tasks->filter(
                     fn($task) => CoursewareAuthority::canShowTaskSolver($user, $task)
-                )->map(fn ($task) => $task->solver),
+                )->map(fn ($task) => $task->solver)
+            ),
         ];
 
         $target = StructuralElement::build(['id' => $resource['target_id']]);
