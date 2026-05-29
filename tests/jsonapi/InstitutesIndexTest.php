@@ -22,9 +22,11 @@ class InstitutesIndexTest extends \Codeception\Test\Unit
 
     public function testGetInstitutesIndex()
     {
-        $app = $this->tester->createApp(null, 'get', '/institutes', InstitutesIndex::class);
+        $credentials = $this->tester->getCredentialsForTestDozent();
 
-        $requestBuilder = $this->tester->createRequestBuilder(null);
+        $app = $this->tester->createApp($credentials, 'get', '/institutes', InstitutesIndex::class);
+
+        $requestBuilder = $this->tester->createRequestBuilder($credentials);
         $requestBuilder->setUri('/institutes')->fetch();
 
         $response = $this->tester->sendMockRequest($app, $requestBuilder->getRequest());
