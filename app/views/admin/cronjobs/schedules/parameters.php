@@ -14,11 +14,11 @@ $parameters = $schedule->parameters;
 <? foreach ($task->parameters as $key => $data): ?>
     <li class="parameter">
     <? if ($data['type'] === 'boolean'): ?>
-        <input type="hidden" name="parameters[<?= $task->task_id ?>][<?= htmlReady($key) ?>]" value="0">
+        <input type="hidden" name="parameters[<?= htmlReady($task->task_id) ?>][<?= htmlReady($key) ?>]" value="0">
         <label>
-            <input type="checkbox" name="parameters[<?= $task->task_id ?>][<?= htmlReady($key) ?>]" value="1"
+            <input type="checkbox" name="parameters[<?= htmlReady($task->task_id) ?>][<?= htmlReady($key) ?>]" value="1"
                    id="parameter-<?= htmlReady($key) ?>"
-                   <? if ($selected ? $parameters[$key] : $data['default']) echo 'checked'; ?>>
+                   <? if ($selected ? $parameters[$key] : ($data['default'] ?? false)) echo 'checked'; ?>>
         <? if ($data['status'] === 'mandatory'): ?>
             <span class="required">
                 <?= htmlReady($data['description']) ?>
@@ -39,31 +39,31 @@ $parameters = $schedule->parameters;
 
     <? endif; ?>
     <? if ($data['type'] === 'string'): ?>
-        <input type="text" name="parameters[<?= $task->task_id ?>][<?= htmlReady($key) ?>]"
+        <input type="text" name="parameters[<?= htmlReady($task->task_id) ?>][<?= htmlReady($key) ?>]"
                id="parameter-<?= htmlReady($key) ?>"
-               value="<?= htmlReady($selected ? $parameters[$key] : ($data['default'] ?: '')) ?>"
-               placeholder="<?= $data['default'] ?: '' ?>"
+               value="<?= htmlReady($selected ? $parameters[$key] : ($data['default'] ?? '')) ?>"
+               placeholder="<?= htmlReady($data['default'] ?? '') ?>"
                <? if ($data['status'] === 'mandatory') echo 'required'; ?>>
     <? elseif ($data['type'] === 'text'): ?>
-        <textarea name="parameters[<?= $task->task_id ?>][<?= htmlReady($key) ?>]"
+        <textarea name="parameters[<?= htmlReady($task->task_id) ?>][<?= htmlReady($key) ?>]"
                   id="parameter-<?= htmlReady($key) ?>"
-                  placeholder="<?= $data['default'] ?: '' ?>"
+                  placeholder="<?= htmlReady($data['default'] ?? '') ?>"
                   <? if ($data['status'] === 'mandatory') echo 'required'; ?>
-        ><?= htmlReady($selected ? $parameters[$key] : ($data['default'] ?: '')); ?></textarea>
+        ><?= htmlReady($selected ? $parameters[$key] : ($data['default'] ?? '')); ?></textarea>
     <? elseif ($data['type'] === 'integer'): ?>
-        <input type="number" name="parameters[<?= $task->task_id ?>][<?= htmlReady($key) ?>]"
+        <input type="number" name="parameters[<?= htmlReady($task->task_id) ?>][<?= htmlReady($key) ?>]"
                id="parameter-<?= htmlReady($key) ?>"
-               placeholder="<?= $data['default'] ?: '' ?>"
-               value="<?= (int)($selected ? $parameters[$key] : ($data['default'] ?: 0)) ?>"
+               placeholder="<?= htmlReady($data['default'] ?? '') ?>"
+               value="<?= (int)($selected ? $parameters[$key] : ($data['default'] ?? 0)) ?>"
                <? if ($data['status'] === 'mandatory') echo 'required'; ?>>
     <? elseif ($data['type'] === 'select'): ?>
-        <select name="parameters[<?= $task->task_id ?>][<?= htmlReady($key) ?>]">
+        <select name="parameters[<?= htmlReady($task->task_id) ?>][<?= htmlReady($key) ?>]">
         <? if ($data['status'] === 'optional'): ?>
             <option value=""><?= _('Bitte wählen Sie einen Wert aus') ?></option>
         <? endif; ?>
         <? foreach ($data['values'] as $k => $l): ?>
             <option value="<?= htmlReady($k) ?>"
-                    <? if (($parameters[$key] ?: $data['default'] ?: null) === $k) echo 'selected'; ?>>
+                    <? if (($parameters[$key] ?? $data['default'] ?? null) === $k) echo 'selected'; ?>>
                 <?= htmlReady($l) ?>
             </option>
         <? endforeach; ?>
