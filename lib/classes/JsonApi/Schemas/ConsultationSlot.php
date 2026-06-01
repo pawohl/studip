@@ -12,6 +12,11 @@ class ConsultationSlot extends SchemaProvider
     const REL_BLOCK = 'block';
     const REL_BOOKINGS = 'bookings';
 
+    protected array $allowedIncludes = [
+        self::REL_BLOCK,
+        self::REL_BOOKINGS,
+    ];
+
     public function getId($resource): ?string
     {
         return $resource->id;

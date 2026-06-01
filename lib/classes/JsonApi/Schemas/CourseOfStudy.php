@@ -12,6 +12,15 @@ class CourseOfStudy extends SchemaProvider
     const REL_DEGREE = 'degree';
     const REL_END_SEMESTER = 'end-semester';
     const REL_START_SEMESTER = 'start-semester';
+
+    protected array $allowedIncludes = [
+        self::REL_SECTIONS,
+        self::REL_INSTITUTE,
+        self::REL_COMPONENTS,
+        self::REL_DEGREE,
+        self::REL_END_SEMESTER,
+        self::REL_START_SEMESTER,
+    ];
     const TYPE = 'courses-of-study';
 
     public function getId($resource): ?string

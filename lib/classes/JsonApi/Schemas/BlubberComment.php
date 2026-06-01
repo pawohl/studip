@@ -12,6 +12,12 @@ class BlubberComment extends SchemaProvider
     const REL_MENTIONS = 'mentions';
     const REL_THREAD = 'thread';
 
+    protected array $allowedIncludes = [
+        self::REL_AUTHOR,
+        self::REL_MENTIONS,
+        self::REL_THREAD,
+    ];
+
     public function getId($resource): ?string
     {
         return $resource->id;

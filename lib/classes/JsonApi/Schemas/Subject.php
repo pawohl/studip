@@ -8,6 +8,10 @@ use Neomerx\JsonApi\Schema\Link;
 class Subject extends SchemaProvider
 {
     const REL_DEPARTMENTS = 'departments';
+
+    protected array $allowedIncludes = [
+        self::REL_DEPARTMENTS,
+    ];
     const TYPE = 'subjects';
 
     /**

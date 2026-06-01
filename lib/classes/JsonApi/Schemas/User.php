@@ -28,6 +28,26 @@ class User extends SchemaProvider
     const REL_OUTBOX = 'outbox';
     const REL_SCHEDULE = 'schedule';
 
+    protected array $allowedIncludes = [
+        self::REL_ACTIVITYSTREAM,
+        self::REL_BLUBBER,
+        self::REL_BLUBBER_DEFAULT_THREAD,
+        self::REL_CONFIG_VALUES,
+        self::REL_CONTACTS,
+        self::REL_COURSES,
+        self::REL_COURSE_MEMBERSHIPS,
+        self::REL_COURSEWARE_BOOKMARKS,
+        self::REL_EVENTS,
+        self::REL_FILES,
+        self::REL_FOLDERS,
+        self::REL_INBOX,
+        self::REL_INSTITUTE_MEMBERSHIPS,
+        self::REL_NEWS,
+        self::REL_OUTBOX,
+        self::REL_PROFILE_CATEGORIES,
+        self::REL_SCHEDULE,
+    ];
+
     /**
      * Diese Method entscheidet über die JSON-API-spezifische ID von
      * \User-Objekten.

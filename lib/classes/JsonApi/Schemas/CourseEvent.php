@@ -10,6 +10,10 @@ class CourseEvent extends SchemaProvider
     const TYPE = 'course-events';
     const REL_OWNER = 'owner';
 
+    protected array $allowedIncludes = [
+        self::REL_OWNER,
+    ];
+
     /**
      * @param \CourseDate|\CourseExDate $resource
      */

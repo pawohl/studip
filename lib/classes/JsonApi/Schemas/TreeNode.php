@@ -10,11 +10,18 @@ use Neomerx\JsonApi\Schema\Link;
 class TreeNode extends SchemaProvider
 {
     const REL_CHILDREN = 'children';
-
     const REL_COURSEINFO = 'courseinfo';
     const REL_COURSES = 'courses';
     const REL_INSTITUTE = 'institute';
     const REL_PARENT = 'parent';
+
+    protected array $allowedIncludes = [
+        self::REL_CHILDREN,
+        self::REL_COURSEINFO,
+        self::REL_COURSES,
+        self::REL_INSTITUTE,
+        self::REL_PARENT,
+    ];
 
     const TYPE = 'tree-node';
 

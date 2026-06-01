@@ -22,6 +22,18 @@ class Block extends SchemaProvider
     const REL_USERPROGRESS = 'user-progress';
     const REL_FILES = 'file-refs';
 
+    protected array $allowedIncludes = [
+        self::REL_COMMENTS,
+        self::REL_CONTAINER,
+        self::REL_EDITBLOCKER,
+        self::REL_EDITOR,
+        self::REL_FEEDBACK,
+        self::REL_OWNER,
+        self::REL_USERDATAFIELD,
+        self::REL_USERPROGRESS,
+        self::REL_FILES,
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -112,7 +124,7 @@ class Block extends SchemaProvider
                 ],
                 self::RELATIONSHIP_DATA => $userDataField,
             ];
-    
+
             $userProgress = UserProgress::getUserProgress($user, $resource);
             $relationships[self::REL_USERPROGRESS] = [
                 self::RELATIONSHIP_LINKS => [

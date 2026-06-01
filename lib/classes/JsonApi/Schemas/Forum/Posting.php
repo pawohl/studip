@@ -17,6 +17,16 @@ class Posting extends SchemaProvider
     const REL_REACTIONS_USER = 'reactions.user';
     const REL_OPENGRAPH_URLS = 'opengraph-urls';
 
+    protected array $allowedIncludes = [
+        self::REL_AUTHOR,
+        self::REL_DISCUSSION,
+        self::REL_POSTING,
+        self::REL_RANGE,
+        self::REL_REACTIONS,
+        self::REL_REACTIONS_USER,
+        self::REL_OPENGRAPH_URLS,
+    ];
+
     /**
      * @param \Forum\Posting $resource
      */
@@ -136,5 +146,5 @@ class Posting extends SchemaProvider
 
         return $relationships;
     }
-    
+
 }

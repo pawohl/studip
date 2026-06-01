@@ -13,6 +13,11 @@ class UserDataField extends SchemaProvider
     const REL_BLOCK = 'block';
     const REL_USER = 'user';
 
+    protected array $allowedIncludes = [
+        self::REL_BLOCK,
+        self::REL_USER,
+    ];
+
     /**
      * {@inheritdoc}
      */

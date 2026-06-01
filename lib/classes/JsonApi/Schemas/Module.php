@@ -15,6 +15,17 @@ class Module extends SchemaProvider
     const REL_MODULE_COMPONENTS = 'module-components';
     const REL_LANGUAGES = 'languages';
 
+    protected array $allowedIncludes = [
+        self::REL_DEPARTMENTS,
+        self::REL_RESPONSIBLE_DEPARTMENT,
+        self::REL_SOURCE_MODULE,
+        self::REL_VARIANT_MODULE,
+        self::REL_START_SEMESTER,
+        self::REL_END_SEMESTER,
+        self::REL_MODULE_COMPONENTS,
+        self::REL_LANGUAGES,
+    ];
+
     const TYPE = 'modules';
 
     public function getId($resource): ?string

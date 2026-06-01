@@ -12,6 +12,11 @@ class Degree extends SchemaProvider
     const REL_AUTHOR = 'author';
     const REL_EDITOR = 'editor';
 
+    protected array $allowedIncludes = [
+        self::REL_AUTHOR,
+        self::REL_EDITOR,
+    ];
+
     /**
      * @param \Degree $resource
      */

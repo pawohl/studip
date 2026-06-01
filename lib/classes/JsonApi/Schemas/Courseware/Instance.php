@@ -13,6 +13,11 @@ class Instance extends SchemaProvider
     const REL_BOOKMARKS = 'bookmarks';
     const REL_ROOT = 'root';
 
+    protected array $allowedIncludes = [
+        self::REL_BOOKMARKS,
+        self::REL_ROOT,
+    ];
+
     /**
      * {@inheritdoc}
      */

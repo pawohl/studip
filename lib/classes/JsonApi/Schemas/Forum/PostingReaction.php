@@ -12,6 +12,11 @@ class PostingReaction extends SchemaProvider
     const REL_POSTING = 'posting';
     const REL_USER = 'user';
 
+    protected array $allowedIncludes = [
+        self::REL_POSTING,
+        self::REL_USER,
+    ];
+
     /**
      * @param \Forum\PostingReaction $resource
      */

@@ -15,6 +15,15 @@ class MassMailMessage extends SchemaProvider
     const REL_FOLDER = 'folder';
     const REL_TOKENS = 'tokens';
 
+    protected array $allowedIncludes = [
+        self::REL_FILTERS,
+        self::REL_SENDER,
+        self::REL_AUTHOR,
+        self::REL_RECIPIENTS,
+        self::REL_FOLDER,
+        self::REL_TOKENS,
+    ];
+
     public function getId($resource): ?string
     {
         return $resource->id;

@@ -12,6 +12,10 @@ class PublicLink extends SchemaProvider
 
     const REL_STRUCTURAL_ELEMENT = 'structural-element';
 
+    protected array $allowedIncludes = [
+        self::REL_STRUCTURAL_ELEMENT,
+    ];
+
     /**
      * {@inheritdoc}
      */

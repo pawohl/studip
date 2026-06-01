@@ -11,6 +11,11 @@ class FeedbackEntry extends SchemaProvider
     const REL_AUTHOR = 'author';
     const REL_FEEDBACK = 'feedback-element';
 
+    protected array $allowedIncludes = [
+        self::REL_AUTHOR,
+        self::REL_FEEDBACK,
+    ];
+
     public function getId($resource): ?string
     {
         return $resource->id;

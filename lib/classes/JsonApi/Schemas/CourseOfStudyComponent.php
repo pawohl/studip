@@ -9,6 +9,11 @@ class CourseOfStudyComponent extends SchemaProvider
 {
     const REL_SUBJECT = 'subject';
     const REL_VERSIONS = 'versions';
+
+    protected array $allowedIncludes = [
+        self::REL_SUBJECT,
+        self::REL_VERSIONS,
+    ];
     const TYPE = 'courses-of-study-components';
 
     public function getId($resource): ?string

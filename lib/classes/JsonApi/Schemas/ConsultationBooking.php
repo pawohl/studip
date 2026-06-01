@@ -12,6 +12,11 @@ class ConsultationBooking extends SchemaProvider
     const REL_SLOT = 'slot';
     const REL_USER = 'user';
 
+    protected array $allowedIncludes = [
+        self::REL_SLOT,
+        self::REL_USER,
+    ];
+
     /**
      * @param \ConsultationBooking $resource
      */

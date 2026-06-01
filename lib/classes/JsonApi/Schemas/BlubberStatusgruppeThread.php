@@ -10,6 +10,10 @@ class BlubberStatusgruppeThread extends BlubberThread
 {
     const REL_STATUSGRUPPE = 'group';
 
+    protected array $allowedIncludes = [
+        self::REL_STATUSGRUPPE,
+    ];
+
     /**
      * In dieser Methode können Relationships zu anderen Objekten
      * spezifiziert werden.

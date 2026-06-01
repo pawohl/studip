@@ -11,6 +11,11 @@ class StudipComment extends SchemaProvider
     const REL_AUTHOR = 'author';
     const REL_NEWS = 'news';
 
+    protected array $allowedIncludes = [
+        self::REL_AUTHOR,
+        self::REL_NEWS,
+    ];
+
     public function getId($comment): ?string
     {
         return $comment->comment_id;

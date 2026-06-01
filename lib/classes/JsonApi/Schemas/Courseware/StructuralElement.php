@@ -26,6 +26,23 @@ class StructuralElement extends SchemaProvider
     const REL_UNIT = 'unit';
     const REL_FEEDBACKELEMENT = 'feedback-element';
 
+    protected array $allowedIncludes = [
+        self::REL_ANCESTORS,
+        self::REL_CHILDREN,
+        self::REL_CONTAINERS,
+        self::REL_COURSE,
+        self::REL_DESCENDANTS,
+        self::REL_EDITBLOCKER,
+        self::REL_EDITOR,
+        self::REL_IMAGE,
+        self::REL_OWNER,
+        self::REL_PARENT,
+        self::REL_USER,
+        self::REL_TASK,
+        self::REL_UNIT,
+        self::REL_FEEDBACKELEMENT,
+    ];
+
     /**
      * {@inheritdoc}
      */

@@ -10,6 +10,13 @@ class StudyArea extends SchemaProvider
     const REL_COURSES = 'courses';
     const REL_INSTITUTE = 'institute';
     const REL_PARENT = 'parent';
+
+    protected array $allowedIncludes = [
+        self::REL_CHILDREN,
+        self::REL_COURSES,
+        self::REL_INSTITUTE,
+        self::REL_PARENT,
+    ];
     const TYPE = 'study-areas';
 
     public function getId($resource): ?string

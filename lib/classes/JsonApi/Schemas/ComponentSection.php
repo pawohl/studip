@@ -7,6 +7,10 @@ use Neomerx\JsonApi\Schema\Link;
 class ComponentSection extends SchemaProvider
 {
     const REL_MODULES = 'modules';
+
+    protected array $allowedIncludes = [
+        self::REL_MODULES,
+    ];
     const TYPE = 'component-sections';
 
     public function getId($resource): ?string

@@ -21,6 +21,14 @@ class Task extends SchemaProvider
     const REL_STRUCTURAL_ELEMENT = 'structural-element';
     const REL_TASK_GROUP = 'task-group';
 
+    protected array $allowedIncludes = [
+        self::REL_FEEDBACK,
+        self::REL_PEER_REVIEWS,
+        self::REL_SOLVER,
+        self::REL_STRUCTURAL_ELEMENT,
+        self::REL_TASK_GROUP,
+    ];
+
     /**
      * {@inheritdoc}
      */

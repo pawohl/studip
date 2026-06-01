@@ -19,6 +19,18 @@ class Institute extends SchemaProvider
     const REL_SUB_INSTITUTES = 'sub-institutes';
     const REL_COURSES_OF_STUDY = 'courses-of-study';
 
+    protected array $allowedIncludes = [
+        self::REL_BLUBBER,
+        self::REL_COURSES,
+        self::REL_FACULTY,
+        self::REL_FILES,
+        self::REL_FOLDERS,
+        self::REL_MEMBERSHIPS,
+        self::REL_STATUS_GROUPS,
+        self::REL_SUB_INSTITUTES,
+        self::REL_COURSES_OF_STUDY,
+    ];
+
     /**
      * @param \Institute $institute
      */

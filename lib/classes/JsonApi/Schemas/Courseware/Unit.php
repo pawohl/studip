@@ -15,6 +15,13 @@ class Unit extends SchemaProvider
     const REL_STRUCTURAL_ELEMENT = 'structural-element';
     const REL_FEEDBACK_ELEMENT = 'feedback-element';
 
+    protected array $allowedIncludes = [
+        self::REL_CREATOR,
+        self::REL_RANGE,
+        self::REL_STRUCTURAL_ELEMENT,
+        self::REL_FEEDBACK_ELEMENT,
+    ];
+
     /**
      * {@inheritdoc}
      */

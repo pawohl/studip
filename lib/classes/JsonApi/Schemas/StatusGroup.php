@@ -11,6 +11,10 @@ class StatusGroup extends SchemaProvider
 
     const REL_RANGE = 'range';
 
+    protected array $allowedIncludes = [
+        self::REL_RANGE,
+    ];
+
     public function getId($resource): ?string
     {
         return $resource->id;

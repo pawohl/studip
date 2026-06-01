@@ -9,6 +9,12 @@ class ComponentVersion extends SchemaProvider
     const REL_SECTIONS = 'component-sections';
     const REL_START_SEMESTER = 'start-semester';
     const REL_END_SEMESTER = 'end-semester';
+
+    protected array $allowedIncludes = [
+        self::REL_SECTIONS,
+        self::REL_START_SEMESTER,
+        self::REL_END_SEMESTER,
+    ];
     const TYPE = 'component-versions';
 
     public function getId($resource): ?string

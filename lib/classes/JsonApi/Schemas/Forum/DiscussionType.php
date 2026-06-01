@@ -11,6 +11,10 @@ class DiscussionType extends SchemaProvider
 
     const REL_DISCUSSIONS = 'discussions';
 
+    protected array $allowedIncludes = [
+        self::REL_DISCUSSIONS,
+    ];
+
     /**
      * @inheritDoc
      * @param \Forum\DiscussionType $resource

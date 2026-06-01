@@ -10,6 +10,10 @@ final class ShortUrl extends SchemaProvider
     public const TYPE     = 'short-urls';
     public const REL_USER = 'user';
 
+    protected array $allowedIncludes = [
+        self::REL_USER,
+    ];
+
     /**
      * @param \Clipboard $resource
      */

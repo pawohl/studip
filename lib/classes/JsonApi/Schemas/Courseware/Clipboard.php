@@ -15,6 +15,13 @@ class Clipboard extends SchemaProvider
     const REL_CONTAINER = 'container';
     const REL_BLOCK = 'block';
 
+    protected array $allowedIncludes = [
+        self::REL_USER,
+        self::REL_STRUCTURAL_ELEMENT,
+        self::REL_CONTAINER,
+        self::REL_BLOCK,
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -57,7 +64,7 @@ class Clipboard extends SchemaProvider
                 self::RELATIONSHIP_DATA => $resource->user,
             ]
             : [self::RELATIONSHIP_DATA => null];
-        
+
         $relationships[self::REL_BLOCK] = $resource->block
         ? [
                 self::RELATIONSHIP_LINKS => [

@@ -18,6 +18,8 @@ class CoursesShow extends JsonApiController
         'end-semester',
         'events',
         'feedback-elements',
+        'file-refs',
+        'folders',
         'forum-categories',
         'institute',
         'memberships',

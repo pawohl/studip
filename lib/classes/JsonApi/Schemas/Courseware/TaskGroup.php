@@ -25,6 +25,16 @@ class TaskGroup extends SchemaProvider
     const REL_TASK_TEMPLATE = 'task-template';
     const REL_TASKS = 'tasks';
 
+    protected array $allowedIncludes = [
+        self::REL_COURSE,
+        self::REL_LECTURER,
+        self::REL_PEER_REVIEW_PROCESSES,
+        self::REL_SOLVERS,
+        self::REL_TARGET,
+        self::REL_TASK_TEMPLATE,
+        self::REL_TASKS,
+    ];
+
     /**
      * {@inheritdoc}
      */

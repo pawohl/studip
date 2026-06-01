@@ -12,6 +12,12 @@ class StudipNews extends SchemaProvider
     const REL_COMMENTS = 'comments';
     const REL_RANGES = 'ranges';
 
+    protected array $allowedIncludes = [
+        self::REL_AUTHOR,
+        self::REL_COMMENTS,
+        self::REL_RANGES,
+    ];
+
     public static function getRangeClasses()
     {
         return [

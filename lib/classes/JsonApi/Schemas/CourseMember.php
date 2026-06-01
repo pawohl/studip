@@ -13,6 +13,11 @@ class CourseMember extends SchemaProvider
     const REL_COURSE = 'course';
     const REL_USER = 'user';
 
+    protected array $allowedIncludes = [
+        self::REL_COURSE,
+        self::REL_USER,
+    ];
+
     public function getId($membership): ?string
     {
         return $membership->id;

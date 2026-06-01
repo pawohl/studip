@@ -11,6 +11,10 @@ class UserFilterField extends SchemaProvider
 
     const REL_USERS = 'users';
 
+    protected array $allowedIncludes = [
+        self::REL_USERS,
+    ];
+
     public function getId($resource): ?string
     {
         return get_class($resource) . '_' . $resource->getId();

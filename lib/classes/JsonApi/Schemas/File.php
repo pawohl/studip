@@ -13,6 +13,11 @@ class File extends SchemaProvider
     const REL_FILE_REFS = 'file-refs';
     const REL_OWNER = 'owner';
 
+    protected array $allowedIncludes = [
+        self::REL_FILE_REFS,
+        self::REL_OWNER,
+    ];
+
     public function getId($resource): ?string
     {
         return $resource->getId();

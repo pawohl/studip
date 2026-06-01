@@ -38,6 +38,28 @@ class Course extends SchemaProvider
     const REL_TOOLS = 'tools';
     const REL_WIKI_PAGES = 'wiki-pages';
 
+    protected array $allowedIncludes = [
+        self::REL_BLUBBER,
+        self::REL_COURSEWARE,
+        self::REL_CYCLE_DATES,
+        self::REL_END_SEMESTER,
+        self::REL_EVENTS,
+        self::REL_FEEDBACK,
+        self::REL_FORUM_CATEGORIES,
+        self::REL_INSTITUTE,
+        self::REL_MEMBERSHIPS,
+        self::REL_NEWS,
+        self::REL_PARTICIPATING_INSTITUTES,
+        self::REL_SEM_CLASS,
+        self::REL_SEM_TYPE,
+        self::REL_START_SEMESTER,
+        self::REL_STATUS_GROUPS,
+        self::REL_STUDY_AREAS,
+        self::REL_TAGS,
+        self::REL_TOOLS,
+        self::REL_WIKI_PAGES,
+    ];
+
     /**
      * @param \Course $course
      */

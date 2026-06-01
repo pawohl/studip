@@ -4,10 +4,13 @@ namespace JsonApi\Schemas;
 
 use JsonApi\Errors\InternalServerError;
 use Neomerx\JsonApi\Contracts\Factories\FactoryInterface;
+use Neomerx\JsonApi\Contracts\Http\Query\BaseQueryParserInterface;
 use Neomerx\JsonApi\Contracts\Schema\ContextInterface;
 use Neomerx\JsonApi\Contracts\Schema\LinkInterface;
 use Neomerx\JsonApi\Contracts\Schema\SchemaContainerInterface;
+use Neomerx\JsonApi\Exceptions\JsonApiException;
 use Neomerx\JsonApi\Schema\BaseSchema;
+use Neomerx\JsonApi\Schema\ErrorCollection;
 
 abstract class SchemaProvider extends BaseSchema
 {
@@ -16,6 +19,13 @@ abstract class SchemaProvider extends BaseSchema
 
     /** @var ?\User */
     protected $currentUser;
+
+    /**
+     * A list of allowed includes for this schema in input parameters.
+     *
+     * @var string[]
+     */
+    protected array $allowedIncludes = [];
 
     public function __construct(FactoryInterface $factory, SchemaContainerInterface $schemaContainer, ?\User $user)
     {
@@ -58,6 +68,29 @@ abstract class SchemaProvider extends BaseSchema
         }
 
         return $this->schemaContainer->getSchema($resource)->getSelfLink($resource);
+    }
+
+    public function checkAllowedIncludes(ContextInterface $context): void
+    {
+        $errors = new ErrorCollection();
+        $pos = $context->getPosition()->getLevel();
+
+        foreach ($context->getIncludePaths() as $path) {
+            $components = explode('.', $path);
+
+            if (isset($components[$pos])) {
+                if (!in_array($components[$pos], $this->allowedIncludes)) {
+                    $errors->addQueryParameterError(
+                        BaseQueryParserInterface::PARAM_INCLUDE,
+                        sprintf('Include path %s is not allowed.', $components[$pos])
+                    );
+                }
+            }
+        }
+
+        if ($errors->count()) {
+            throw new JsonApiException($errors, JsonApiException::HTTP_CODE_BAD_REQUEST);
+        }
     }
 
     /**

@@ -4,11 +4,11 @@ namespace JsonApi\JsonApiIntegration;
 
 use Neomerx\JsonApi\Contracts\Parser\EditableContextInterface;
 use Neomerx\JsonApi\Contracts\Parser\ParserInterface;
+use Neomerx\JsonApi\Contracts\Parser\ResourceInterface;
 use Neomerx\JsonApi\Contracts\Representation\FieldSetFilterInterface;
-use Neomerx\JsonApi\Contracts\Schema\LinkInterface;
+use Neomerx\JsonApi\Contracts\Schema\PositionInterface;
 use Neomerx\JsonApi\Contracts\Schema\SchemaContainerInterface;
 use Neomerx\JsonApi\Factories\Factory as NeomerxFactory;
-use Neomerx\JsonApi\Schema\Link;
 
 /**
  * Die "normale" \Neomerx\JsonApi\Factories\Factory stellt in
@@ -47,5 +47,17 @@ class Factory extends NeomerxFactory
     public function createSchemaContainer(iterable $schemas): SchemaContainerInterface
     {
         return new SchemaContainer($this, $schemas);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function createParsedResource(
+        EditableContextInterface $context,
+        PositionInterface $position,
+        SchemaContainerInterface $container,
+        $data
+    ): ResourceInterface {
+        return new IdentifierAndResource($context, $position, $this, $container, $data);
     }
 }

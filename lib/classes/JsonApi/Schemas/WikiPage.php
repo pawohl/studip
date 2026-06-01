@@ -16,6 +16,14 @@ class WikiPage extends SchemaProvider
     const REL_PARENT = 'parent';
     const REL_RANGE = 'range';
 
+    protected array $allowedIncludes = [
+        self::REL_AUTHOR,
+        self::REL_CHILDREN,
+        self::REL_DESCENDANTS,
+        self::REL_PARENT,
+        self::REL_RANGE,
+    ];
+
     public static function getRangeClasses(): array
     {
         return [

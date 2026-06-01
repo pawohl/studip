@@ -13,6 +13,12 @@ class Activity extends SchemaProvider
     const REL_CONTEXT = 'context';
     const REL_OBJECT = 'object';
 
+    protected array $allowedIncludes = [
+        self::REL_ACTOR,
+        self::REL_CONTEXT,
+        self::REL_OBJECT,
+    ];
+
     /**
      * Hier wird der Typ des Schemas festgelegt.
      * {@inheritdoc}

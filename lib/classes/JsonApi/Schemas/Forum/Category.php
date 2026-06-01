@@ -10,6 +10,10 @@ class Category extends SchemaProvider
     const TYPE = 'forum-categories';
     const REL_TOPICS = 'topics';
 
+    protected array $allowedIncludes = [
+        self::REL_TOPICS,
+    ];
+
     /**
      * @param \Forum\Category $resource
      */
