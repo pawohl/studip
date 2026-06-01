@@ -329,7 +329,7 @@ class LVGroupsWizardStep implements CourseWizardStep
         $values = $values[__CLASS__];
 
         if (Request::submitted('open_nodes')) {
-            $already_open_nodes = unserialize(Request::get('open_nodes'));
+            $already_open_nodes = json_decode(Request::get('open_nodes'), true);
             foreach ($already_open_nodes as $open_lvgnode) {
                 $values['open_lvg_nodes'][] = $open_lvgnode;
             }
