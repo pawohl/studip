@@ -2,6 +2,12 @@
 
 namespace JsonApi\Schemas;
 
+use JsonApi\Routes\ConfigValues\Authority as ConfigValuesAuthority;
+use JsonApi\Routes\ConfigValues\HelperTrait as ConfigValuesHelperTrait;
+use JsonApi\Routes\CourseMemberships\Authority as CourseMembershipsAuthority;
+use JsonApi\Routes\Courseware\Authority as CoursewareAuthority;
+use JsonApi\Routes\News\Authority as NewsAuthority;
+use JsonApi\Routes\ProfileCategories\Authority as ProfileCategoriesAuthority;
 use JsonApi\Routes\Users\Authority as UsersAuthority;
 use Neomerx\JsonApi\Contracts\Factories\FactoryInterface;
 use Neomerx\JsonApi\Contracts\Schema\ContextInterface;
@@ -9,6 +15,8 @@ use Neomerx\JsonApi\Schema\Link;
 
 class User extends SchemaProvider
 {
+    use ConfigValuesHelperTrait;
+
     const TYPE = 'users';
 
     const REL_ACTIVITYSTREAM = 'activitystream';
@@ -29,23 +37,14 @@ class User extends SchemaProvider
     const REL_SCHEDULE = 'schedule';
 
     protected array $allowedIncludes = [
-        self::REL_ACTIVITYSTREAM,
-        self::REL_BLUBBER,
-        self::REL_BLUBBER_DEFAULT_THREAD,
         self::REL_CONFIG_VALUES,
         self::REL_CONTACTS,
-        self::REL_COURSES,
         self::REL_COURSE_MEMBERSHIPS,
         self::REL_COURSEWARE_BOOKMARKS,
         self::REL_EVENTS,
-        self::REL_FILES,
-        self::REL_FOLDERS,
-        self::REL_INBOX,
         self::REL_INSTITUTE_MEMBERSHIPS,
         self::REL_NEWS,
-        self::REL_OUTBOX,
         self::REL_PROFILE_CATEGORIES,
-        self::REL_SCHEDULE,
     ];
 
     /**
@@ -238,9 +237,6 @@ class User extends SchemaProvider
         return $relationships;
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
     private function getConfigValuesRelationship(array $relationships, \User $user, $includeData)
     {
         $relationships[self::REL_CONFIG_VALUES] = [
@@ -250,12 +246,15 @@ class User extends SchemaProvider
             ],
         ];
 
+        if ($includeData && ConfigValuesAuthority::canShowConfigValue($this->currentUser, $user)) {
+            $fields = $user->getConfiguration()->getFields('user');
+            $relationships[self::REL_CONFIG_VALUES][self::RELATIONSHIP_DATA] =
+                array_map(fn($field) => $this->findOrFakeConfigValue($user, $field), $fields);
+        }
+
         return $relationships;
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
     private function getContactsRelationship(array $relationships, \User $user, $includeData)
     {
         $relationships[self::REL_CONTACTS] = [
@@ -264,6 +263,10 @@ class User extends SchemaProvider
                 Link::RELATED => $this->getRelationshipRelatedLink($user, self::REL_CONTACTS),
             ],
         ];
+
+        if ($includeData && UsersAuthority::canEditUser($this->currentUser, $user)) {
+            $relationships[self::REL_CONTACTS][self::RELATIONSHIP_DATA] = $user->contacts;
+        }
 
         return $relationships;
     }
@@ -282,9 +285,6 @@ class User extends SchemaProvider
         return $relationships;
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
     private function getCourseMembershipsRelationship(array $relationships, \User $user, $includeData)
     {
         $relationships[self::REL_COURSE_MEMBERSHIPS] = [
@@ -293,12 +293,13 @@ class User extends SchemaProvider
             ],
         ];
 
+        if ($includeData && CourseMembershipsAuthority::canIndexMembershipsOfUser($this->currentUser, $user)) {
+            $relationships[self::REL_COURSE_MEMBERSHIPS][self::RELATIONSHIP_DATA] = $user->course_memberships;
+        }
+
         return $relationships;
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
     private function getCoursewareBookmarksRelationship(array $relationships, \User $user, $includeData)
     {
         $relationships[self::REL_COURSEWARE_BOOKMARKS] = [
@@ -307,6 +308,11 @@ class User extends SchemaProvider
                 Link::RELATED => $this->getRelationshipRelatedLink($user, self::REL_COURSEWARE_BOOKMARKS),
             ],
         ];
+
+        if ($includeData && CoursewareAuthority::canIndexBookmarksOfAUser($this->currentUser, $user)) {
+            $relationships[self::REL_COURSEWARE_BOOKMARKS][self::RELATIONSHIP_DATA] =
+                array_column(\Courseware\Bookmark::findUsersBookmarks($user), 'element');
+        }
 
         return $relationships;
     }
@@ -353,9 +359,6 @@ class User extends SchemaProvider
         return $relationships;
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
     private function getInstituteMembershipsRelationship(array $relationships, \User $user, $includeData)
     {
         $relationships[self::REL_INSTITUTE_MEMBERSHIPS] = [
@@ -364,12 +367,17 @@ class User extends SchemaProvider
             ],
         ];
 
+        if ($includeData) {
+            $institutes = $user->institute_memberships;
+            if (!$GLOBALS['perm']->have_profile_perm('user', $user->id)) {
+                $institutes = $institutes->filter(fn($membership) => $membership->inst_perms !== 'user');
+            }
+            $relationships[self::REL_INSTITUTE_MEMBERSHIPS][self::RELATIONSHIP_DATA] = $institutes;
+        }
+
         return $relationships;
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
     private function getEventsRelationship(array $relationships, \User $user, $includeData)
     {
         $relationships[self::REL_EVENTS] = [
@@ -378,12 +386,14 @@ class User extends SchemaProvider
             ],
         ];
 
+        if ($includeData && $this->currentUser->id === $user->id) {
+            $relationships[self::REL_EVENTS][self::RELATIONSHIP_DATA] =
+                \CalendarDateAssignment::getEvents(new \DateTime('midnight'), new \DateTime('+2 weeks'), $user->id);
+        }
+
         return $relationships;
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
     private function getNewsRelationship(array $relationships, \User $user, $includeData)
     {
         $relationships[self::REL_NEWS] = [
@@ -391,6 +401,10 @@ class User extends SchemaProvider
                 Link::RELATED => $this->getRelationshipRelatedLink($user, self::REL_NEWS),
             ],
         ];
+
+        if ($includeData && NewsAuthority::canIndexNewsOfUser($this->currentUser, $user)) {
+            $relationships[self::REL_NEWS][self::RELATIONSHIP_DATA] = \StudipNews::GetNewsByAuthor($user->id, true);
+        }
 
         return $relationships;
     }

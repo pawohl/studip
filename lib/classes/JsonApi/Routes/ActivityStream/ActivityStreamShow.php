@@ -1,6 +1,6 @@
 <?php
 
-namespace JsonApi\Routes;
+namespace JsonApi\Routes\ActivityStream;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -14,15 +14,6 @@ use Studip\Activity\InstituteContext;
 use Studip\Activity\Stream;
 use Studip\Activity\UserContext;
 
-function canShowActivityStream(\User $observer, string $userId): bool
-{
-    if ($GLOBALS['perm']->have_perm('root', $observer->id)) {
-        return true;
-    }
-
-    return $observer->id === $userId;
-}
-
 class ActivityStreamShow extends JsonApiController
 {
     protected $allowedFilteringParameters = ['start', 'end', 'activity-type', 'context-type', 'context-id', 'object-type', 'object-id'];
@@ -31,13 +22,13 @@ class ActivityStreamShow extends JsonApiController
 
     public function __invoke(Request $request, Response $response, array $args): Response
     {
-        if (!canShowActivityStream($this->getUser($request), $userId = $args['id'])) {
-            throw new AuthorizationFailedException();
-        }
-
-        $user = \User::find($userId);
+        $user = \User::find($args['id']);
         if (!$user) {
             throw new RecordNotFoundException();
+        }
+
+        if (!Authority::canShowActivityStream($this->getUser($request), $user)) {
+            throw new AuthorizationFailedException();
         }
 
         $urlFilter = $this->getUrlFilter();

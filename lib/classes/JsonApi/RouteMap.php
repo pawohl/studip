@@ -101,7 +101,7 @@ class RouteMap
         $group->get('/users/{id}', Routes\Users\UsersShow::class);
         $group->delete('/users/{id}', Routes\Users\UsersDelete::class)->add(DangerousRouteHandler::class);
 
-        $group->get('/users/{id}/activitystream', Routes\ActivityStreamShow::class);
+        $group->get('/users/{id}/activitystream', Routes\ActivityStream\ActivityStreamShow::class);
         $group->get('/users/{id}/institute-memberships', Routes\InstituteMemberships\ByUserIndex::class);
         $group->get('/users/{id}/course-memberships', Routes\CourseMemberships\ByUserIndex::class);
         $group->get('/course-memberships/{id}', Routes\CourseMemberships\CourseMembershipsShow::class);

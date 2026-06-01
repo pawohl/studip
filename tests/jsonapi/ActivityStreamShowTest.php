@@ -1,7 +1,7 @@
 <?php
 
 
-use JsonApi\Routes\ActivityStreamShow;
+use JsonApi\Routes\ActivityStream\ActivityStreamShow;
 
 class ActivityStreamShowTest extends \Codeception\Test\Unit
 {
