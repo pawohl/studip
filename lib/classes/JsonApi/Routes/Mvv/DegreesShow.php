@@ -10,8 +10,6 @@ use JsonApi\JsonApiController;
 
 class DegreesShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

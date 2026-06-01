@@ -12,8 +12,6 @@ use JsonApi\JsonApiController;
  */
 class UserFiltersShow extends JsonApiController
 {
-    protected $allowedIncludePaths = ['user-filter-fields'];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

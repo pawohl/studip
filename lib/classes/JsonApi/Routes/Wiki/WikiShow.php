@@ -14,8 +14,6 @@ class WikiShow extends JsonApiController
 {
     use HelperTrait;
 
-    protected $allowedIncludePaths = ['author', 'children', 'descendants', 'parent', 'range'];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameters)
      */

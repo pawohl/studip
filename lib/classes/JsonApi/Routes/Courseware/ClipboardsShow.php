@@ -20,10 +20,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class ClipboardsShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        ClipboardSchema::REL_USER,
-    ];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @param array $args

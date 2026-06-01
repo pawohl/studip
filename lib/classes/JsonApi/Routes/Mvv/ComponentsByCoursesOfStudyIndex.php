@@ -2,7 +2,6 @@
 
 namespace JsonApi\Routes\Mvv;
 
-use JsonApi\Schemas\CourseOfStudyComponent;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use JsonApi\Errors\RecordNotFoundException;
@@ -13,11 +12,6 @@ class ComponentsByCoursesOfStudyIndex extends JsonApiController
     protected $allowedPagingParameters = [
         'offset',
         'limit'
-    ];
-
-    protected $allowedIncludePaths = [
-        CourseOfStudyComponent::REL_SUBJECT,
-        CourseOfStudyComponent::REL_VERSIONS,
     ];
 
     /**

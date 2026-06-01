@@ -17,8 +17,6 @@ class DescendantsOfStructuralElementsIndex extends JsonApiController
 {
     protected $allowedPagingParameters = ['offset', 'limit'];
 
-    protected $allowedIncludePaths = ['containers', 'course', 'editor', 'owner', 'parent'];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

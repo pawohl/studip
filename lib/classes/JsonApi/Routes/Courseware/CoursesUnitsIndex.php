@@ -16,12 +16,6 @@ class CoursesUnitsIndex extends JsonApiController
 {
     use CoursewareInstancesHelper;
 
-    protected $allowedIncludePaths = [
-        'structural-element',
-        'creator',
-        'feedback-element',
-    ];
-
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     /**

@@ -19,12 +19,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class ProcessesShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        ProcessSchema::REL_COURSE,
-        ProcessSchema::REL_OWNER,
-        ProcessSchema::REL_TASK_GROUP,
-    ];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @param array $args

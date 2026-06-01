@@ -17,7 +17,6 @@ class ThreadsIndex extends JsonApiController
     use TimestampTrait, FilterTrait;
 
     protected $allowedFilteringParameters = ['since', 'before', 'search', 'context-type', 'context-id'];
-    protected $allowedIncludePaths = ['author', 'comments', 'context', 'mentions'];
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     /**

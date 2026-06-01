@@ -11,10 +11,6 @@ use Forum\Category;
 class CategoryIndex extends JsonApiController
 {
     protected $allowedPagingParameters = ['offset', 'limit'];
-    protected $allowedIncludePaths = [
-        \JsonApi\Schemas\Forum\Category::REL_TOPICS
-    ];
-
     public function __invoke(Request $request, Response $response, $args)
     {
         $range = get_object_by_range_id($args['range_id']);

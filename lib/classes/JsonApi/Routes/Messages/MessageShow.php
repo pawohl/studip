@@ -13,8 +13,6 @@ use JsonApi\JsonApiController;
  */
 class MessageShow extends JsonApiController
 {
-    protected $allowedIncludePaths = ['sender', 'recipients'];
-
     public function __invoke(Request $request, Response $response, $args)
     {
         if (!$message = \Message::find($args['id'])) {

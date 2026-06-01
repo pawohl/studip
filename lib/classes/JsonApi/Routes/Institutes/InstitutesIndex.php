@@ -5,17 +5,9 @@ namespace JsonApi\Routes\Institutes;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use JsonApi\JsonApiController;
-use JsonApi\Schemas\Institute as InstituteSchema;
 
 class InstitutesIndex extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        InstituteSchema::REL_FACULTY,
-        InstituteSchema::REL_STATUS_GROUPS,
-        InstituteSchema::REL_SUB_INSTITUTES,
-        InstituteSchema::REL_COURSES_OF_STUDY,
-    ];
-
     protected $allowedFilteringParameters = ['is-faculty'];
 
     protected $allowedPagingParameters = ['offset', 'limit'];

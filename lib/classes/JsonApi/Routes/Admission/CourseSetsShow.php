@@ -12,14 +12,6 @@ use JsonApi\JsonApiController;
  */
 class CourseSetsShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        'admission-rules',
-        'institutes',
-        'courses',
-        'semester',
-        'owner'
-    ];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

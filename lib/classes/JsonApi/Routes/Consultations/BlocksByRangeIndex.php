@@ -4,7 +4,6 @@ namespace JsonApi\Routes\Consultations;
 use JsonApi\Errors\AuthorizationFailedException;
 use JsonApi\Errors\RecordNotFoundException;
 use JsonApi\JsonApiController;
-use JsonApi\Schemas\ConsultationBlock;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -15,10 +14,6 @@ class BlocksByRangeIndex extends JsonApiController
 {
     use FilterTrait;
 
-    protected $allowedIncludePaths = [
-        ConsultationBlock::REL_SLOTS,
-        ConsultationBlock::REL_RANGE,
-    ];
     protected $allowedPagingParameters = ['offset', 'limit'];
     protected $allowedFilteringParameters = ['current', 'expired'];
 

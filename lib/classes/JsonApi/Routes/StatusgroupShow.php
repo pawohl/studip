@@ -10,10 +10,6 @@ use JsonApi\Errors\RecordNotFoundException;
 
 class StatusgroupShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        'range'
-    ];
-
     public function __invoke(Request $request, Response $response, $args)
     {
         $group = \Statusgruppen::find($args['id']);

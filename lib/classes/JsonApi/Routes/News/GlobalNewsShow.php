@@ -12,8 +12,6 @@ use JsonApi\JsonApiController;
 class GlobalNewsShow extends JsonApiController
 {
     protected $allowedPagingParameters = ['offset', 'limit'];
-    protected $allowedIncludePaths = ['author', 'ranges'];
-
     public function __invoke(Request $request, Response $response, $args)
     {
         if (!$news = \StudipNews::getNewsByRange('studip', true, true)) {

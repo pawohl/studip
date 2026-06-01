@@ -22,15 +22,6 @@ class DiscussionIndex extends JsonApiController
         'user-ids',
         'status'
     ];
-    protected $allowedIncludePaths = [
-        \JsonApi\Schemas\Forum\Category::REL_TOPICS,
-        \JsonApi\Schemas\Forum\Discussion::REL_CATEGORY,
-        \JsonApi\Schemas\Forum\Discussion::REL_USER,
-        \JsonApi\Schemas\Forum\Discussion::REL_DISCUSSION_TYPE,
-        \JsonApi\Schemas\Forum\Discussion::REL_MEMBERS,
-        \JsonApi\Schemas\Forum\Discussion::REL_TAGS
-    ];
-
 
     public function __invoke(Request $request, Response $response, $args)
     {

@@ -4,29 +4,18 @@ namespace JsonApi\Routes\Mvv;
 
 use JsonApi\Errors\AuthorizationFailedException;
 use JsonApi\Errors\BadRequestException;
-use JsonApi\Schemas\Module;
+use JsonApi\JsonApiController;
 use Modul;
 use Psr\Http\Message\{
     ServerRequestInterface as Request,
     ResponseInterface as Response
 };
-use JsonApi\JsonApiController;
 
 class ModulesIndex extends JsonApiController
 {
     protected $allowedFilteringParameters = ['q', 'institute', 'semester', 'section', 'stat'];
 
     protected $allowedPagingParameters = ['offset', 'limit'];
-
-    protected $allowedIncludePaths = [
-        Module::REL_MODULE_COMPONENTS,
-        Module::REL_END_SEMESTER,
-        Module::REL_START_SEMESTER,
-        Module::REL_RESPONSIBLE_DEPARTMENT,
-        Module::REL_DEPARTMENTS,
-        Module::REL_SOURCE_MODULE,
-        Module::REL_VARIANT_MODULE,
-    ];
 
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameters)

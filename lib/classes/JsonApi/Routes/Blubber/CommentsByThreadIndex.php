@@ -19,7 +19,6 @@ class CommentsByThreadIndex extends JsonApiController
     use TimestampTrait;
 
     protected $allowedFilteringParameters = ['since', 'before', 'search'];
-    protected $allowedIncludePaths = ['author', 'mentions', 'thread', 'thread.author'];
     protected $allowedPagingParameters = ['offset', 'limit'];
     protected $allowedSortFields = ['mkdate'];
 

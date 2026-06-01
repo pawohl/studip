@@ -9,7 +9,6 @@ use JsonApi\Errors\AuthorizationFailedException;
 use JsonApi\Errors\RecordNotFoundException;
 use JsonApi\JsonApiController;
 use JsonApi\Routes\ValidationTrait;
-use JsonApi\Schemas\FeedbackElement as FeedbackElementSchema;
 use JsonApi\Schemas\FeedbackEntry as FeedbackEntrySchema;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;

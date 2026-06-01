@@ -15,11 +15,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class TaskFeedbackShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        'lecturer',
-        'task'
-    ];
-
         /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

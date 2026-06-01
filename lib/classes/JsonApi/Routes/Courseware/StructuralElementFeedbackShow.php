@@ -14,8 +14,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class StructuralElementFeedbackShow extends JsonApiController
 {
-    protected $allowedIncludePaths = ['user', 'structural-element'];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

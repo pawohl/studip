@@ -16,8 +16,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class CertificateShow extends NonJsonApiController
 {
-    protected $allowedIncludePaths = [];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

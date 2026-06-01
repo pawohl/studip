@@ -10,10 +10,6 @@ use JsonApi\Errors\RecordNotFoundException;
 
 class StatusGroupsOfCourses extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        'range'
-    ];
-
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     public function __invoke(Request $request, Response $response, $args)

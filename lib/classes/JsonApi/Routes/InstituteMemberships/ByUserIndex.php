@@ -11,8 +11,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class ByUserIndex extends JsonApiController
 {
-    protected $allowedIncludePaths = ['user', 'institute'];
-
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     /**

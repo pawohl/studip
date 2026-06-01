@@ -15,8 +15,6 @@ class CoursewareInstancesShow extends JsonApiController
 {
     use CoursewareInstancesHelper;
 
-    protected $allowedIncludePaths = ['bookmarks', 'root'];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

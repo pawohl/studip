@@ -10,10 +10,6 @@ use JsonApi\JsonApiController;
 
 class SemTypesShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        'sem-class',
-    ];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameters)
      */

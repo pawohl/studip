@@ -16,21 +16,6 @@ class UsersBookmarkedStructuralElementsIndex extends JsonApiController
 {
     use CoursewareInstancesHelper;
 
-    protected $allowedIncludePaths = [
-        'ancestors',
-        'containers',
-        'containers.blocks',
-        'containers.blocks.edit-blocker',
-        'containers.blocks.editor',
-        'containers.blocks.owner',
-        'containers.blocks.user-data-field',
-        'containers.blocks.user-progress',
-        'course',
-        'editor',
-        'owner',
-        'parent',
-    ];
-
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     /**

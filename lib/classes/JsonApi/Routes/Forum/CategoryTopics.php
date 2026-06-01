@@ -11,10 +11,6 @@ use Forum\Category;
 class CategoryTopics extends JsonApiController
 {
     protected $allowedPagingParameters = ['offset', 'limit'];
-    protected $allowedIncludePaths = [
-        \JsonApi\Schemas\Forum\Category::REL_TOPICS
-    ];
-
     public function __invoke(Request $request, Response $response, $args)
     {
         $category = Category::find($args['category_id']);

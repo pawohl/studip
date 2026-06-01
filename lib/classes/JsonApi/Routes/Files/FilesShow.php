@@ -10,8 +10,6 @@ use JsonApi\JsonApiController;
 
 class FilesShow extends JsonApiController
 {
-    protected $allowedIncludePaths = ['file-refs', 'owner'];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameters)
      */

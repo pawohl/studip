@@ -14,19 +14,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class ContainersShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        'blocks',
-        'blocks.edit-blocker',
-        'blocks.editor',
-        'blocks.owner',
-        'blocks.user-data-field',
-        'blocks.user-progress',
-        'editor',
-        'edit-blocker',
-        'owner',
-        'structural-element',
-    ];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

@@ -2,7 +2,6 @@
 
 namespace JsonApi\Routes\Mvv;
 
-use JsonApi\Schemas\CourseOfStudy;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use JsonApi\Errors\AuthorizationFailedException;
@@ -12,15 +11,6 @@ use JsonApi\JsonApiController;
 class CoursesOfStudyIndex extends JsonApiController
 {
     protected $allowedFilteringParameters = ['q', 'institute', 'semester', 'degree', 'category', 'type'];
-
-    protected $allowedIncludePaths = [
-        CourseOfStudy::REL_SECTIONS,
-        CourseOfStudy::REL_INSTITUTE,
-        CourseOfStudy::REL_COMPONENTS,
-        CourseOfStudy::REL_DEGREE,
-        CourseOfStudy::REL_END_SEMESTER,
-        CourseOfStudy::REL_START_SEMESTER,
-    ];
 
     protected $allowedPagingParameters = ['offset', 'limit'];
 

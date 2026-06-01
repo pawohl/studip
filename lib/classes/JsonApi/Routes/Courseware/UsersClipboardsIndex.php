@@ -21,10 +21,6 @@ class UsersClipboardsIndex extends JsonApiController
 {
     use CoursewareInstancesHelper;
 
-    protected $allowedIncludePaths = [
-        'user',
-    ];
-
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     /**

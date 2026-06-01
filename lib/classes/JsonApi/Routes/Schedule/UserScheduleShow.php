@@ -18,8 +18,6 @@ class UserScheduleShow extends JsonApiController
 {
     protected $allowedFilteringParameters = ['timestamp'];
 
-    protected $allowedIncludePaths = ['owner'];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

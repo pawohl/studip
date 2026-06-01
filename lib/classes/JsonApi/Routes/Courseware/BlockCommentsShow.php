@@ -14,8 +14,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class BlockCommentsShow extends JsonApiController
 {
-    protected $allowedIncludePaths = ['block', 'user'];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

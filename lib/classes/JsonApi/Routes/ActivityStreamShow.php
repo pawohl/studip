@@ -25,8 +25,6 @@ function canShowActivityStream(\User $observer, string $userId): bool
 
 class ActivityStreamShow extends JsonApiController
 {
-    protected $allowedIncludePaths = ['actor', 'context', 'object'];
-
     protected $allowedFilteringParameters = ['start', 'end', 'activity-type', 'context-type', 'context-id', 'object-type', 'object-id'];
 
     protected $allowedPagingParameters = ['offset', 'limit'];

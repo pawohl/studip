@@ -2,8 +2,6 @@
 
 namespace JsonApi\Routes\Consultations;
 
-use JsonApi\Schemas\ConsultationBooking;
-
 final class Authority
 {
     public static function canShowRange(\User $user, \Range $range): bool

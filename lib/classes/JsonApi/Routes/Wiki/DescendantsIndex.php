@@ -15,8 +15,6 @@ class DescendantsIndex extends JsonApiController
     use HelperTrait;
 
     protected $allowedPagingParameters = ['offset', 'limit'];
-    protected $allowedIncludePaths = ['author', 'children', 'descendants', 'parent', 'range'];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameters)
      */

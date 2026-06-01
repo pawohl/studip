@@ -13,7 +13,6 @@ use JsonApi\JsonApiController;
  */
 class FeedbackEntriesIndex extends JsonApiController
 {
-    protected $allowedIncludePaths = ['author', 'feedback-element'];
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     /**

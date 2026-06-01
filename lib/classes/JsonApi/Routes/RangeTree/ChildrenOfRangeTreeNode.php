@@ -11,12 +11,6 @@ use RangeTreeNode;
 
 class ChildrenOfRangeTreeNode extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        'children',
-        'courses',
-        'institute',
-        'parent',
-    ];
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     /**

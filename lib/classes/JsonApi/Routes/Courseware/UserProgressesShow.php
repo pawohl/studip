@@ -14,8 +14,6 @@ class UserProgressesShow extends JsonApiController
 {
     use UserProgressesHelper;
 
-    protected $allowedIncludePaths = ['block', 'user'];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

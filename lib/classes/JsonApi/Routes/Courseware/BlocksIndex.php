@@ -16,15 +16,6 @@ class BlocksIndex extends JsonApiController
 {
     protected $allowedPagingParameters = ['offset', 'limit'];
 
-    protected $allowedIncludePaths = [
-        'container',
-        'owner',
-        'editor',
-        'edit_blocker',
-        'user-data-field',
-        'user-progress',
-    ];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

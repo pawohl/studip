@@ -81,7 +81,7 @@ class JsonApiController
      *
      * @var string[]|null
      */
-    protected $allowedIncludePaths = [];
+    protected $allowedIncludePaths = null;
 
     /**
      * A list of JSON API types which clients can sent field sets to.

@@ -10,13 +10,6 @@ use JsonApi\JsonApiController;
 
 class DiscussionShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        \JsonApi\Schemas\Forum\Discussion::REL_POSTINGS,
-        \JsonApi\Schemas\Forum\Category::REL_TOPICS,
-        \JsonApi\Schemas\Forum\Discussion::REL_CATEGORY,
-        \JsonApi\Schemas\Forum\Discussion::REL_DISCUSSION_TYPE
-    ];
-
     public function __invoke(Request $request, Response $response, $args)
     {
         $discussion = Discussion::find($args['discussion_id']);

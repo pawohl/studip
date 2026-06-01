@@ -13,8 +13,6 @@ class MassMailMessagesIndex extends JsonApiController
 {
     protected $allowedPagingParameters = ['offset', 'limit'];
     protected $allowedFilteringParameters = ['templates', 'queued', 'protected', 'locked', 'sent'];
-    protected $allowedIncludePaths = ['author', 'sender', 'filters'];
-
     public function __invoke(Request $request, Response $response, $args)
     {
         if (!Authority::canIndexMassMailMessages($this->getUser($request))) {

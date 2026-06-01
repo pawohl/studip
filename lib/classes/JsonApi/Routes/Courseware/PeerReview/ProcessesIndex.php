@@ -24,12 +24,6 @@ class ProcessesIndex extends JsonApiController
 {
     protected $allowedFilteringParameters = ['cid'];
 
-    protected $allowedIncludePaths = [
-        ProcessSchema::REL_COURSE,
-        ProcessSchema::REL_OWNER,
-        ProcessSchema::REL_TASK_GROUP,
-    ];
-
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     /**

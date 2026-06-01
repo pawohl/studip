@@ -17,7 +17,6 @@ class CommentsIndex extends JsonApiController
     use TimestampTrait, FilterTrait;
 
     protected $allowedFilteringParameters = ['since', 'before', 'search'];
-    protected $allowedIncludePaths = ['author', 'mentions', 'thread'];
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     /**

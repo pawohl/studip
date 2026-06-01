@@ -19,15 +19,6 @@ class TasksIndex extends JsonApiController
 {
     protected $allowedFilteringParameters = ['cid'];
 
-    protected $allowedIncludePaths = [
-        TaskSchema::REL_FEEDBACK,
-        TaskSchema::REL_SOLVER,
-        TaskSchema::REL_STRUCTURAL_ELEMENT,
-        TaskSchema::REL_TASK_GROUP,
-        TaskSchema::REL_TASK_GROUP . '.' . TaskGroupSchema::REL_LECTURER,
-        TaskSchema::REL_TASK_GROUP . '.' . TaskGroupSchema::REL_PEER_REVIEW_PROCESSES,
-    ];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      *

@@ -10,8 +10,6 @@ use JsonApi\JsonApiController;
 class MassMailPermissionsIndex extends JsonApiController
 {
     protected $allowedPagingParameters = ['offset', 'limit'];
-    protected $allowedIncludePaths = ['institute', 'allowed-degrees', 'allowed-subjects', 'allowed-institutes'];
-
     public function __invoke(Request $request, Response $response, $args)
     {
         if (!Authority::canIndexMassMailPermissions($this->getUser($request))) {

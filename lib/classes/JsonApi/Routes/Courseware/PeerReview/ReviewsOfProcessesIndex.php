@@ -20,13 +20,6 @@ use User;
  */
 class ReviewsOfProcessesIndex extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        PeerReviewSchema::REL_PROCESS,
-        PeerReviewSchema::REL_REVIEWER,
-        PeerReviewSchema::REL_SUBMITTER,
-        PeerReviewSchema::REL_TASK,
-    ];
-
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     /**

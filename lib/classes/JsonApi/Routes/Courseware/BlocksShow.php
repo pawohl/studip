@@ -14,15 +14,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class BlocksShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        'container',
-        'owner',
-        'editor',
-        'edit-blocker',
-        'user-data-field',
-        'user-progress',
-    ];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

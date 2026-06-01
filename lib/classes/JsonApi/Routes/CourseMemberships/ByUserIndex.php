@@ -5,14 +5,11 @@ namespace JsonApi\Routes\CourseMemberships;
 use JsonApi\Errors\AuthorizationFailedException;
 use JsonApi\Errors\RecordNotFoundException;
 use JsonApi\JsonApiController;
-use JsonApi\Schemas\CourseMember;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class ByUserIndex extends JsonApiController
 {
-    protected $allowedIncludePaths = [CourseMember::REL_COURSE, CourseMember::REL_USER];
-
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     /**

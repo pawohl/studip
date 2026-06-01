@@ -9,12 +9,6 @@ use Forum\Subscription;
 
 class SubscriptionShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        \JsonApi\Schemas\Forum\Subscription::REL_RANGE,
-        \JsonApi\Schemas\Forum\Subscription::REL_SUBJECT,
-        \JsonApi\Schemas\Forum\Subscription::REL_USER,
-    ];
-
     public function __invoke(Request $request, Response $response, $args)
     {
         $user = $this->getUser($request);

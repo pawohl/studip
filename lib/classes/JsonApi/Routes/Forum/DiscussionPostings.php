@@ -12,15 +12,6 @@ use Forum\PostingRead;
 class DiscussionPostings extends JsonApiController
 {
     protected $allowedPagingParameters = ['offset', 'limit'];
-    protected $allowedIncludePaths = [
-        \JsonApi\Schemas\Forum\Posting::REL_DISCUSSION,
-        \JsonApi\Schemas\Forum\Posting::REL_POSTING,
-        \JsonApi\Schemas\Forum\Posting::REL_OPENGRAPH_URLS,
-        \JsonApi\Schemas\Forum\Posting::REL_AUTHOR,
-        \JsonApi\Schemas\Forum\Posting::REL_REACTIONS,
-        \JsonApi\Schemas\Forum\Posting::REL_REACTIONS_USER
-    ];
-
     public function __invoke(Request $request, Response $response, $args)
     {
         $discussion = Discussion::find($args['discussion_id']);

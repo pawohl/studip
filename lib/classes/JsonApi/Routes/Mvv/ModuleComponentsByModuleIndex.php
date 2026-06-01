@@ -2,7 +2,6 @@
 
 namespace JsonApi\Routes\Mvv;
 
-use JsonApi\Schemas\ModuleComponent;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use JsonApi\Errors\RecordNotFoundException;
@@ -11,10 +10,6 @@ use JsonApi\JsonApiController;
 class ModuleComponentsByModuleIndex extends JsonApiController
 {
     protected $allowedPagingParameters = ['offset', 'limit'];
-
-    protected $allowedIncludePaths = [
-        ModuleComponent::REL_COURSES,
-    ];
 
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameters)

@@ -10,8 +10,6 @@ use JsonApi\JsonApiController;
 
 class FoldersShow extends JsonApiController
 {
-    protected $allowedIncludePaths = ['owner', 'parent', 'range', 'folders', 'file-refs'];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameters)
      */

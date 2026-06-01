@@ -13,8 +13,6 @@ use JsonApi\JsonApiController;
  */
 class CommentsShow extends JsonApiController
 {
-    protected $allowedIncludePaths = ['author', 'news'];
-
     public function __invoke(Request $request, Response $response, $args)
     {
         if (!$comment = \StudipComment::find($args['id'])) {

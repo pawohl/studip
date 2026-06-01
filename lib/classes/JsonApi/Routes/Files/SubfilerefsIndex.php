@@ -12,8 +12,6 @@ use JsonApi\JsonApiController;
 class SubfilerefsIndex extends JsonApiController
 {
 
-    protected $allowedIncludePaths = ['file', 'owner', 'parent', 'range', 'terms-of-use'];
-
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     /**

@@ -14,8 +14,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class SeminarCycleDatesShow extends JsonApiController
 {
-    protected $allowedIncludePaths = ['owner'];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

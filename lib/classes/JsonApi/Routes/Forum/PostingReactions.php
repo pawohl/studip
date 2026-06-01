@@ -12,11 +12,6 @@ use SimpleORMapCollection;
 class PostingReactions extends JsonApiController
 {
     protected $allowedPagingParameters = ['offset', 'limit'];
-    protected $allowedIncludePaths = [
-        \JsonApi\Schemas\Forum\PostingReaction::REL_POSTING,
-        \JsonApi\Schemas\Forum\PostingReaction::REL_USER
-    ];
-
     public function __invoke(Request $request, Response $response, $args)
     {
         $posting = Posting::find($args['posting_id']);

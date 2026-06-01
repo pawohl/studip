@@ -17,17 +17,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class TasksShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        TaskSchema::REL_FEEDBACK,
-        TaskSchema::REL_PEER_REVIEWS,
-        TaskSchema::REL_PEER_REVIEWS . '.' . PeerReviewSchema::REL_PROCESS,
-        TaskSchema::REL_SOLVER,
-        TaskSchema::REL_STRUCTURAL_ELEMENT,
-        TaskSchema::REL_TASK_GROUP,
-        TaskSchema::REL_TASK_GROUP . '.' . TaskGroupSchema::REL_LECTURER,
-        TaskSchema::REL_TASK_GROUP . '.' . TaskGroupSchema::REL_PEER_REVIEW_PROCESSES,
-    ];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @param array $args

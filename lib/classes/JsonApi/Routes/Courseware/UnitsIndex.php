@@ -15,8 +15,6 @@ class UnitsIndex extends JsonApiController
 {
     protected $allowedPagingParameters = ['offset', 'limit'];
 
-    protected $allowedIncludePaths = ['creator', 'structural-element'];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

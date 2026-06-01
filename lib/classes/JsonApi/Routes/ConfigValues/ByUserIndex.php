@@ -14,8 +14,6 @@ class ByUserIndex extends JsonApiController
 
     protected $allowedFilteringParameters = ['field'];
 
-    protected $allowedIncludePaths = [];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameters)
      */

@@ -14,8 +14,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class TemplatesShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [];
-
         /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

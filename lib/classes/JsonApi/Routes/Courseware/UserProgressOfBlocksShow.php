@@ -15,8 +15,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class UserProgressOfBlocksShow extends JsonApiController
 {
-    protected $allowedIncludePaths = ['block', 'user'];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

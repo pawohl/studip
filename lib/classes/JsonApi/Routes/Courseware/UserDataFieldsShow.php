@@ -17,8 +17,6 @@ class UserDataFieldsShow extends JsonApiController
 {
     use UserDataFieldsHelper;
 
-    protected $allowedIncludePaths = ['block', 'user'];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

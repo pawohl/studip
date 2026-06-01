@@ -12,8 +12,6 @@ use JsonApi\JsonApiController;
  */
 class AdmissionRulesShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

@@ -15,8 +15,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class BlockFeedbacksOfBlocksIndex extends JsonApiController
 {
-    protected $allowedIncludePaths = ['user', 'block'];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

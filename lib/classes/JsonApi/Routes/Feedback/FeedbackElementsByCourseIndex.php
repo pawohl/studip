@@ -13,7 +13,6 @@ use JsonApi\JsonApiController;
  */
 class FeedbackElementsByCourseIndex extends JsonApiController
 {
-    protected $allowedIncludePaths = ['author', 'course', 'entries', 'range'];
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     /**

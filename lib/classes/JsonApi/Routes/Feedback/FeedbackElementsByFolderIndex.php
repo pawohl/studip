@@ -13,7 +13,6 @@ use JsonApi\JsonApiController;
  */
 class FeedbackElementsByFolderIndex extends JsonApiController
 {
-    protected $allowedIncludePaths = ['author', 'course', 'entries', 'range'];
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     /**

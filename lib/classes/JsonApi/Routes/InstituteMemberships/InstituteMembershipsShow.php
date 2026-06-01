@@ -10,8 +10,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class InstituteMembershipsShow extends JsonApiController
 {
-    protected $allowedIncludePaths = ['user', 'institute'];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

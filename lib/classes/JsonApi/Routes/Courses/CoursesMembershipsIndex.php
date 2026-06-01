@@ -6,7 +6,6 @@ use JsonApi\Errors\AuthorizationFailedException;
 use JsonApi\Errors\BadRequestException;
 use JsonApi\Errors\RecordNotFoundException;
 use JsonApi\JsonApiController;
-use JsonApi\Schemas\CourseMember;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -19,8 +18,6 @@ class CoursesMembershipsIndex extends JsonApiController
     use CourseMembershipsTrait;
 
     protected $allowedFilteringParameters = ['permission'];
-
-    protected $allowedIncludePaths = [CourseMember::REL_COURSE, CourseMember::REL_USER];
 
     protected $allowedPagingParameters = ['offset', 'limit'];
 

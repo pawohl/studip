@@ -14,8 +14,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class PublicLinksShow extends JsonApiController
 {
-    protected $allowedIncludePaths = ['structural-element'];
-
         /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

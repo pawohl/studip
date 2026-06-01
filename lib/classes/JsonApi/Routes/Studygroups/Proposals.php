@@ -5,14 +5,12 @@ namespace JsonApi\Routes\Studygroups;
 use Course;
 use DBManager;
 use JsonApi\JsonApiController;
-use JsonApi\Schemas\Course as CourseSchema;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use User;
 
 final class Proposals extends JsonApiController
 {
-    protected $allowedIncludePaths = [CourseSchema::REL_TAGS];
     protected $allowedPagingParameters = ['limit'];
 
     public function __invoke(Request $request, Response $response, $args): Response

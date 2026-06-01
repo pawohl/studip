@@ -15,14 +15,6 @@ use JsonApi\JsonApiController;
 class TreeShow extends JsonApiController
 {
     protected $allowUnrecognizedParams = true;
-    protected $allowedIncludePaths = [
-        'children',
-        'courseinfo',
-        'courses',
-        'institute',
-        'parent'
-    ];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameters)
      */

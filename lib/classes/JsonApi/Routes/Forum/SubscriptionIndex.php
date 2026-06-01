@@ -11,12 +11,6 @@ use Forum\Subscription;
 class SubscriptionIndex extends JsonApiController
 {
     protected $allowedPagingParameters = ['offset', 'limit'];
-    protected $allowedIncludePaths = [
-        \JsonApi\Schemas\Forum\Subscription::REL_RANGE,
-        \JsonApi\Schemas\Forum\Subscription::REL_SUBJECT,
-        \JsonApi\Schemas\Forum\Subscription::REL_USER
-    ];
-
     public function __invoke(Request $request, Response $response, $args)
     {
         $range = get_object_by_range_id($args['range_id']);

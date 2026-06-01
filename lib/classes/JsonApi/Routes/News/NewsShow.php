@@ -13,8 +13,6 @@ use JsonApi\JsonApiController;
  */
 class NewsShow extends JsonApiController
 {
-    protected $allowedIncludePaths = ['author', 'ranges'];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameters)
      */

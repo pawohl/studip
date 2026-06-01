@@ -16,8 +16,6 @@ class ConfigValuesUpdate extends JsonApiController
     use ValidationTrait;
     use HelperTrait;
 
-    protected $allowedIncludePaths = [];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

@@ -7,14 +7,9 @@ use Psr\Http\Message\ResponseInterface as Response;
 use JsonApi\Errors\AuthorizationFailedException;
 use JsonApi\Errors\RecordNotFoundException;
 use JsonApi\JsonApiController;
-use JsonApi\Schemas\Institute as InstituteSchema;
 
 class InstituteOfRangeTreeNode extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        InstituteSchema::REL_STATUS_GROUPS,
-    ];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameters)
      */

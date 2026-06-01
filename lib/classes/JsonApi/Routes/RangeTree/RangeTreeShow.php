@@ -10,13 +10,6 @@ use JsonApi\JsonApiController;
 
 class RangeTreeShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        'children',
-        'courses',
-        'institute',
-        'parent',
-    ];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameters)
      */

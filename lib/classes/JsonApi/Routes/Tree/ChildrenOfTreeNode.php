@@ -12,13 +12,6 @@ class ChildrenOfTreeNode extends JsonApiController
     protected $allowUnrecognizedParams = true;
     protected $allowedFilteringParameters = ['visible'];
 
-    protected $allowedIncludePaths = [
-        'children',
-        'courses',
-        'institute',
-        'parent',
-    ];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameters)
      */

@@ -7,15 +7,12 @@ use Psr\Http\Message\ResponseInterface as Response;
 use JsonApi\Errors\AuthorizationFailedException;
 use JsonApi\Errors\RecordNotFoundException;
 use JsonApi\JsonApiController;
-use JsonApi\Schemas\FeedbackEntry as FeedbackEntrySchema;
 
 /**
  * Displays a certain feedback entry.
  */
 class FeedbackEntriesShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [FeedbackEntrySchema::REL_AUTHOR, FeedbackEntrySchema::REL_FEEDBACK];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.StaticAccess)

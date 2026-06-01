@@ -16,10 +16,6 @@ class PostingReactionStore extends JsonApiController
 {
     use ValidationTrait;
 
-    protected $allowedIncludePaths = [
-        \JsonApi\Schemas\Forum\PostingReaction::REL_USER
-    ];
-
     public function __invoke(Request $request, Response $response, $args)
     {
         $json = $this->validate($request);

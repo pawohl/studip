@@ -12,8 +12,6 @@ class UserEventsIndex extends JsonApiController
 {
     protected $allowedFilteringParameters = ['timestamp'];
 
-    protected $allowedIncludePaths = ['owner'];
-
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     public function __invoke(Request $request, Response $response, $args)

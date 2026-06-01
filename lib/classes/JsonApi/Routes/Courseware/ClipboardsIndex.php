@@ -20,8 +20,6 @@ class ClipboardsIndex extends JsonApiController
 {
     protected $allowedPagingParameters = ['offset', 'limit'];
 
-    protected $allowedIncludePaths = ['user'];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

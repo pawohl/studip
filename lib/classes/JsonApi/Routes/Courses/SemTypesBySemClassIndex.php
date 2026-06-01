@@ -11,9 +11,6 @@ use JsonApi\JsonApiController;
 
 class SemTypesBySemClassIndex extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        'sem-class',
-    ];
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     /**

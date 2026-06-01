@@ -13,7 +13,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class FeedbackElementsByFileRefIndex extends JsonApiController
 {
-    protected $allowedIncludePaths = ['author', 'course', 'entries', 'range'];
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     /**

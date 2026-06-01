@@ -12,10 +12,6 @@ class TopicIndex extends JsonApiController
 {
     protected $allowedPagingParameters = ['offset', 'limit'];
     protected $allowedFilteringParameters = ['course-id'];
-    protected $allowedIncludePaths = [
-        \JsonApi\Schemas\Forum\Topic::REL_CATEGORY
-    ];
-
     public function __invoke(Request $request, Response $response, $args)
     {
         $range = get_object_by_range_id($args['range_id']);

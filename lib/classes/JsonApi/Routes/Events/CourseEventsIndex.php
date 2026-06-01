@@ -11,8 +11,6 @@ use JsonApi\Routes\Courses\Authority as CourseAuthority;
 
 class CourseEventsIndex extends JsonApiController
 {
-    protected $allowedIncludePaths = ['owner'];
-
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     public function __invoke(Request $request, Response $response, $args)

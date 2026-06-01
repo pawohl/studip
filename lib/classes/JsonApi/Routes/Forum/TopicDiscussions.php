@@ -11,15 +11,6 @@ use JsonApi\JsonApiController;
 class TopicDiscussions extends JsonApiController
 {
     protected $allowedPagingParameters = ['offset', 'limit'];
-    protected $allowedIncludePaths = [
-        \JsonApi\Schemas\Forum\Category::REL_TOPICS,
-        \JsonApi\Schemas\Forum\Discussion::REL_CATEGORY,
-        \JsonApi\Schemas\Forum\Discussion::REL_USER,
-        \JsonApi\Schemas\Forum\Discussion::REL_DISCUSSION_TYPE,
-        \JsonApi\Schemas\Forum\Discussion::REL_MEMBERS,
-        \JsonApi\Schemas\Forum\Discussion::REL_TAGS
-    ];
-
     public function __invoke(Request $request, Response $response, $args)
     {
         $topic = Topic::find($args['topic_id']);

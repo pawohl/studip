@@ -2,7 +2,6 @@
 
 namespace JsonApi\Routes\Mvv;
 
-use JsonApi\Schemas\Subject;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use JsonApi\Errors\RecordNotFoundException;
@@ -10,10 +9,6 @@ use JsonApi\JsonApiController;
 
 class SubjectsByCourseOfStudyComponentsShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        Subject::REL_DEPARTMENTS,
-    ];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

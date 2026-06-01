@@ -8,12 +8,9 @@ use JsonApi\Errors\RecordNotFoundException;
 use JsonApi\JsonApiController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use JsonApi\Schemas\CourseMember;
 
 class CourseMembershipsShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [CourseMember::REL_COURSE, CourseMember::REL_USER];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

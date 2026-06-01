@@ -10,12 +10,6 @@ use JsonApi\JsonApiController;
 
 class ChildrenOfStudyAreas extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        'children',
-        'courses',
-        'institute',
-        'parent',
-    ];
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     /**

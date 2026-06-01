@@ -9,8 +9,6 @@ use JsonApi\JsonApiController;
 
 class DegreesByCoursesOfStudyShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

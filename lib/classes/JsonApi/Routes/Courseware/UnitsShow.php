@@ -15,11 +15,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class UnitsShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        UnitSchema::REL_CREATOR,
-        UnitSchema::REL_STRUCTURAL_ELEMENT
-    ];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @param array $args

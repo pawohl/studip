@@ -13,8 +13,6 @@ use JsonApi\JsonApiController;
  */
 abstract class BoxController extends JsonApiController
 {
-    protected $allowedIncludePaths = ['sender', 'recipients'];
-
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     abstract public function __invoke(Request $request, Response $response, $args);

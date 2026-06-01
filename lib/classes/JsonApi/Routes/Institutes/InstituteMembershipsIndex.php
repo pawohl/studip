@@ -8,7 +8,6 @@ use JsonApi\Errors\AuthorizationFailedException;
 use JsonApi\Errors\BadRequestException;
 use JsonApi\Errors\RecordNotFoundException;
 use JsonApi\JsonApiController;
-use JsonApi\Schemas\InstituteMember;
 
 /**
  * Returns all institute-memberships of the institute.
@@ -16,8 +15,6 @@ use JsonApi\Schemas\InstituteMember;
 class InstituteMembershipsIndex extends JsonApiController
 {
     protected $allowedFilteringParameters = ['permission'];
-
-    protected $allowedIncludePaths = [InstituteMember::REL_INSTITUTE, InstituteMember::REL_USER];
 
     protected $allowedPagingParameters = ['offset', 'limit'];
 

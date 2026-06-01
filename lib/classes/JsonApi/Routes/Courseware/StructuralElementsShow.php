@@ -15,26 +15,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class StructuralElementsShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        'ancestors',
-        'children',
-        'containers',
-        'containers.edit-blocker',
-        'containers.blocks',
-        'containers.blocks.edit-blocker',
-        'containers.blocks.editor',
-        'containers.blocks.owner',
-        'containers.blocks.user-data-field',
-        'containers.blocks.user-progress',
-        'course',
-        'editor',
-        'edit-blocker',
-        'owner',
-        'parent',
-        'target',
-        'unit',
-    ];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

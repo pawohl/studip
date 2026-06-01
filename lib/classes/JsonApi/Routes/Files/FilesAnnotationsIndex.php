@@ -10,8 +10,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class FilesAnnotationsIndex extends JsonApiController
 {
-    protected $allowedIncludePaths = ['file', 'owner', 'parent', 'range', 'terms-of-use'];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameters)
      */

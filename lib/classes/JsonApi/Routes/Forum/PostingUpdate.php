@@ -14,15 +14,6 @@ class PostingUpdate extends JsonApiController
 {
     use ValidationTrait;
 
-    protected $allowedIncludePaths = [
-        \JsonApi\Schemas\Forum\Posting::REL_DISCUSSION,
-        \JsonApi\Schemas\Forum\Posting::REL_POSTING,
-        \JsonApi\Schemas\Forum\Posting::REL_OPENGRAPH_URLS,
-        \JsonApi\Schemas\Forum\Posting::REL_AUTHOR,
-        \JsonApi\Schemas\Forum\Posting::REL_REACTIONS,
-        \JsonApi\Schemas\Forum\Posting::REL_REACTIONS_USER
-    ];
-
     public function __invoke(Request $request, Response $response, $args)
     {
         $posting = Posting::find($args['posting_id']);

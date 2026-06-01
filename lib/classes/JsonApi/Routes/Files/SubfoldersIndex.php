@@ -10,8 +10,6 @@ use JsonApi\JsonApiController;
 
 class SubfoldersIndex extends JsonApiController
 {
-    protected $allowedIncludePaths = ['owner', 'parent', 'range', 'folders', 'file-refs'];
-
     protected $allowedPagingParameters = ['offset', 'limit'];
 
     /**

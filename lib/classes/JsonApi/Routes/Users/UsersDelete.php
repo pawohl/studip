@@ -10,8 +10,6 @@ use JsonApi\Errors\RecordNotFoundException;
 
 class UsersDelete extends JsonApiController
 {
-    protected $allowedIncludePaths = [];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

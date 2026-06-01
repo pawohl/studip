@@ -11,8 +11,6 @@ class ConfigValuesShow extends JsonApiController
 {
     use HelperTrait;
 
-    protected $allowedIncludePaths = [];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

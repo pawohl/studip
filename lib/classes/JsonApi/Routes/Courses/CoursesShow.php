@@ -13,25 +13,6 @@ use JsonApi\JsonApiController;
  */
 class CoursesShow extends JsonApiController
 {
-    protected $allowedIncludePaths = [
-        'blubber-threads',
-        'end-semester',
-        'events',
-        'feedback-elements',
-        'file-refs',
-        'folders',
-        'forum-categories',
-        'institute',
-        'memberships',
-        'news',
-        'participating-institutes',
-        'sem-class',
-        'sem-type',
-        'start-semester',
-        'status-groups',
-        'wiki-pages',
-    ];
-
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
