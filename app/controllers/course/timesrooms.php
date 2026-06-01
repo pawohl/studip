@@ -1874,18 +1874,28 @@ class Course_TimesroomsController extends AuthenticatedController
         $termin_date = $termin->getFullName();
         $has_topics  = $termin->topics->count();
 
-        if ($cancel_comment != '') {
+        if ($cancel_comment) {
             $termin->content = $cancel_comment;
         }
 
         //cancel cycledate entry
-        if ($termin->metadate_id || $cancel_comment != '') {
+        if ($termin->metadate_id || $cancel_comment) {
             $termin = $termin->cancelDate();
-            StudipLog::log('SEM_DELETE_SINGLEDATE', $termin->id, $seminar_id, 'Cycle_id: ' . $termin->metadate_id);
-        } else {
-            if ($termin->delete()) {
-                StudipLog::log("SEM_DELETE_SINGLEDATE", $termin->id, $seminar_id, 'appointment cancelled');
-            }
+            StudipLog::log(
+                'SEM_DELETE_SINGLEDATE',
+                $termin->id,
+                $seminar_id,
+                'Cycle_id: ' . $termin->metadate_id,
+                $termin_date
+            );
+        } elseif ($termin->delete()) {
+            StudipLog::log(
+                "SEM_DELETE_SINGLEDATE",
+                $termin->id,
+                $seminar_id,
+                'appointment cancelled',
+                $termin_date
+            );
         }
 
         if ($has_topics) {
