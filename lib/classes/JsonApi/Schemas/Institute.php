@@ -21,7 +21,6 @@ class Institute extends SchemaProvider
 
     protected array $allowedIncludes = [
         self::REL_BLUBBER,
-        self::REL_COURSES,
         self::REL_FACULTY,
         self::REL_FILES,
         self::REL_FOLDERS,

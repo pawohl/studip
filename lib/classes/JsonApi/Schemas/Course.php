@@ -41,7 +41,6 @@ class Course extends SchemaProvider
     protected array $allowedIncludes = [
         self::REL_BLUBBER,
         self::REL_COURSEWARE,
-        self::REL_CYCLE_DATES,
         self::REL_END_SEMESTER,
         self::REL_EVENTS,
         self::REL_FEEDBACK,
@@ -54,7 +53,6 @@ class Course extends SchemaProvider
         self::REL_SEM_TYPE,
         self::REL_START_SEMESTER,
         self::REL_STATUS_GROUPS,
-        self::REL_STUDY_AREAS,
         self::REL_TAGS,
         self::REL_TOOLS,
         self::REL_WIKI_PAGES,

@@ -44,7 +44,6 @@ class User extends SchemaProvider
         self::REL_EVENTS,
         self::REL_INSTITUTE_MEMBERSHIPS,
         self::REL_NEWS,
-        self::REL_PROFILE_CATEGORIES,
     ];
 
     /**
