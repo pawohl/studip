@@ -73,16 +73,17 @@ abstract class SchemaProvider extends BaseSchema
     public function checkAllowedIncludes(ContextInterface $context): void
     {
         $errors = new ErrorCollection();
-        $pos = $context->getPosition()->getLevel();
+        $level = $context->getPosition()->getLevel();
+        $path = $level ? $context->getPosition()->getPath() . '.' : '';
 
-        foreach ($context->getIncludePaths() as $path) {
-            $components = explode('.', $path);
+        foreach ($context->getIncludePaths() as $include) {
+            if (str_starts_with($include, $path)) {
+                $components = explode('.', $include);
 
-            if (isset($components[$pos])) {
-                if (!in_array($components[$pos], $this->allowedIncludes)) {
+                if (!in_array($components[$level], $this->allowedIncludes)) {
                     $errors->addQueryParameterError(
                         BaseQueryParserInterface::PARAM_INCLUDE,
-                        sprintf('Include path %s is not allowed.', $components[$pos])
+                        sprintf('Include path %s is not allowed.', $components[$level])
                     );
                 }
             }
