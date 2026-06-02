@@ -1885,15 +1885,14 @@ class Course_TimesroomsController extends AuthenticatedController
                 'SEM_DELETE_SINGLEDATE',
                 $termin->id,
                 $seminar_id,
-                'Cycle_id: ' . $termin->metadate_id,
-                $termin_date
+                $termin_date,
+                'Cycle_id: ' . $termin->metadate_id
             );
         } elseif ($termin->delete()) {
             StudipLog::log(
                 "SEM_DELETE_SINGLEDATE",
                 $termin->id,
                 $seminar_id,
-                'appointment cancelled',
                 $termin_date
             );
         }
