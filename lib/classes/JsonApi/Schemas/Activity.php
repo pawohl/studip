@@ -107,13 +107,9 @@ class Activity extends SchemaProvider
         if (isset($mapping[$activity->object_type])) {
             $objectMapping = $mapping[$activity->object_type];
 
-            if ($activity->object_type === 'wiki') {
-                $data = \WikiPage::findOneBySQL('`course_id` = ? AND `name` = ?', [$activity->context_id, $activity->object_id]);
-            } else {
-                $data = $include
-                      ? call_user_func([$objectMapping, 'find'], $activity->object_id)
-                      : call_user_func([$objectMapping, 'build'], ['id' => $activity->object_id], false);
-            }
+            $data = $include
+                  ? $objectMapping::find($activity->object_id)
+                  : $objectMapping::build(['id' => $activity->object_id], false);
 
             if ($data) {
                 $link = $this->createLinkToResource($data);
