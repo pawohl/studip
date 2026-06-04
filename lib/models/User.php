@@ -1543,17 +1543,10 @@ class User extends AuthUserMd5 implements Range, PrivacyObject, Studip\Calendar\
      * Decides whether the user may edit/alter the range.
      *
      * @param string|null $user_id Optional id of a user, defaults to current user
-     * @return bool
      */
-    public function isEditableByUser($user_id = null)
+    public function isEditableByUser($user_id = null): bool
     {
-        if ($user_id === null) {
-            $user_id = $GLOBALS['user']->id;
-        }
-        return $user_id === $this->user_id
-            || $GLOBALS['perm']->have_profile_perm('admin', $this->user_id)
-            || Deputy::isDeputy($user_id, $this->user_id, true)
-            || static::find($user_id)->perms === 'root';
+        return $GLOBALS['perm']->have_profile_perm('user', $this->id);
     }
 
     /**

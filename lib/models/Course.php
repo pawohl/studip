@@ -2187,14 +2187,10 @@ class Course extends SimpleORMap implements Range, PrivacyObject, StudipItem, Fe
      *
      * @param string|null $user_id Optional id of a user, defaults to current user
      * @return bool
-     * @todo Check permissions
      */
-    public function isEditableByUser($user_id = null)
+    public function isEditableByUser($user_id = null): bool
     {
-        if ($user_id === null) {
-            $user_id = $GLOBALS['user']->id;
-        }
-        return $GLOBALS['perm']->have_studip_perm('tutor', $this->id, $user_id);
+        return $GLOBALS['perm']->have_studip_perm('tutor', $this->id);
     }
 
     /**

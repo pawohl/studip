@@ -314,24 +314,10 @@ class Institute extends SimpleORMap implements Range
      * Decides whether the user may edit/alter the range.
      *
      * @param string|null $user_id Optional id of a user, defaults to current user
-     * @return bool
-     * @todo Check permissions
      */
     public function isEditableByUser($user_id = null): bool
     {
-        if ($user_id === null) {
-            $user = User::findCurrent();
-        } else {
-            $user = User::find($user_id);
-        }
-
-        if (!$user) {
-            return false;
-        }
-
-        $member = $this->members->findOneBy('user_id', $user->id);
-        return ($member && $member->inst_perms === 'admin')
-            || $user->perms === 'root';
+        return $GLOBALS['perm']->have_studip_perm('admin', $this->id);
     }
 
     /**
