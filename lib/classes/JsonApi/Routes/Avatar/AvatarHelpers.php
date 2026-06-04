@@ -2,39 +2,40 @@
 
 namespace JsonApi\Routes\Avatar;
 
+use Avatar;
+use CourseAvatar;
+use InstituteAvatar;
 use JsonApi\Errors\RecordNotFoundException;
+use Range;
+use RangeFactory;
+use StudygroupAvatar;
 
 trait AvatarHelpers
 {
-
-    protected static function getAvatarClass(String $range_id, String $range_type, \User $user): Array
+    protected static function getRange(string $rangeId, string $rangeType): Range
     {
-        $has_perm = false;
-        $class = null;
+        $range = RangeFactory::find($rangeId, match ($rangeType) {
+            'users'      => ['user'],
+            'institutes' => ['inst', 'fak'],
+            'courses'    => ['sem'],
+        });
 
-        if ($range_type === 'users') {
-            $has_perm = Authority::canUpdateAvatarOfUser($user);
-            $class = \Avatar::class;
-        } else if ($range_type === 'institutes') {
-            $inst = \Institute::find($range_id);
-            if ($inst) {
-                $has_perm = Authority::canUpdateAvatarOfInstitute($user, $inst);
-                $class = \InstituteAvatar::class;
-            }
-        } else if ($range_type === 'courses') {
-            $course = \Course::find($range_id);
-            if ($course) {
-                $has_perm = Authority::canUpdateAvatarOfSeminar($user, $course);
-                if ($course->isStudygroup()) {
-                    $class = \StudygroupAvatar::class;
-                } else {
-                    $class = \CourseAvatar::class;
-                }
-            }
-        } else {
-            throw new RecordNotFoundException();
+        if (!$range) {
+            throw new RecordNotFoundException('Unknown range given');
         }
 
-        return ['class' => $class, 'has_perm' => $has_perm];
+        return $range;
+    }
+
+    /**
+     * @return class-string<Avatar>
+     */
+    protected static function getAvatarClassForRange(Range $range): string
+    {
+        return match ($range->getRangeType()) {
+            'user'      => Avatar::class,
+            'institute' => InstituteAvatar::class,
+            'course'    => $range->isStudygroup() ? StudygroupAvatar::class : CourseAvatar::class,
+        };
     }
 }

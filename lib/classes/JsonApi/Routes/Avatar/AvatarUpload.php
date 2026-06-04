@@ -2,6 +2,7 @@
 
 namespace JsonApi\Routes\Avatar;
 
+use Avatar;
 use JsonApi\Errors\AuthorizationFailedException;
 use JsonApi\Errors\BadRequestException;
 use JsonApi\Errors\RecordNotFoundException;
@@ -22,27 +23,33 @@ class AvatarUpload extends NonJsonApiController
     {
         $user = $this->getUser($request);
         $json = $this->validate($request);
+
         $range_id = self::arrayGet($json, 'data.range-id');
         $range_type = self::arrayGet($json, 'data.range-type');
 
-        ['class' => $class, 'has_perm' => $has_perm] = self::getAvatarClass($range_id, $range_type, $user);
+        $range = self::getRange($range_id, $range_type);
 
-        if (!$has_perm) {
+        if (!Authority::canEditAvatarOfRange($user, $range)) {
             throw new AuthorizationFailedException();
         }
 
-        $avatar = $class::getAvatar($range_id);
+        // Extract avatar image data
         $imgdata_string = self::arrayGet($json, 'data.image');
-        [$type, $imgdata_part] = explode(';', $imgdata_string);
-        [$base, $imgdata_base64] = explode(',', $imgdata_part);
+        [, $imgdata_part] = explode(';', $imgdata_string);
+        [, $imgdata_base64] = explode(',', $imgdata_part);
         $imgdata = base64_decode($imgdata_base64);
+
+        if (strlen($imgdata) > Avatar::MAX_FILE_SIZE) {
+            throw new BadRequestException('Image file is too big.');
+        }
+
         // Write data to file.
         $filename = $GLOBALS['TMP_PATH'] . '/avatar-' . $range_id . '.webp';
         file_put_contents($filename, $imgdata);
 
         // Use new image file for avatar creation.
-        $avatar->createFrom($filename);
-
+        $class = self::getAvatarClassForRange($range);
+        $class::getAvatar($range_id)->createFrom($filename);
 
         return $response->withStatus(201);
     }

@@ -15,19 +15,17 @@ class AvatarOfRangeShow extends JsonApiController
     {
         $range_id = $args['id'];
         $range_type = $args['type'];
+
         $user = $this->getUser($request);
 
-        ['class' => $class] = self::getAvatarClass($range_id, $range_type, $user);
+        $range = self::getRange($range_id, $range_type);
+        $class = self::getAvatarClassForRange($range);
 
-        $resource = $class::getAvatar($range_id);
-
-        if (!$resource) {
-            throw new RecordNotFoundException();
-        }
-
-        if (!Authority::canShowAvatarOfRange($this->getUser($request), $resource)) {
+        if (!Authority::canShowAvatarOfRange($user, $range)) {
             throw new AuthorizationFailedException();
         }
+
+        $resource = $class::getAvatar($range_id);
 
         return $this->getContentResponse($resource);
     }

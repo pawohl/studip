@@ -42,7 +42,7 @@ class Avatar
     /**
      * This constant represents the maximal size of a user picture in bytes.
      */
-    public const MAX_FILE_SIZE = 10485760;
+    public const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 Megabyte
 
     /**
      * This constant holds the username and ID of the "nobody" avatar.

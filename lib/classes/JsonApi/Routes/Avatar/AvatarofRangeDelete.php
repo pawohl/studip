@@ -21,13 +21,16 @@ class AvatarofRangeDelete extends JsonApiController
     {
         $range_id = $args['id'];
         $range_type = $args['type'];
+
         $user = $this->getUser($request);
 
-        ['class' => $class, 'has_perm' => $has_perm] = self::getAvatarClass($range_id, $range_type, $user);
+        $range = self::getRange($range_id, $range_type);
 
-        if (!$has_perm) {
+        if (!Authority::canEditAvatarOfRange($user, $range)) {
             throw new AuthorizationFailedException();
         }
+
+        $class = self::getAvatarClassForRange($range);
 
         $class::getAvatar($range_id)->reset();
 
