@@ -110,7 +110,7 @@ td.tree-indent {
 
         a {
             background: left center no-repeat;
-            @include icon(before, arr_1down, $align: middle, $padding: -4px);
+            @include icon(before, arr_1down, $align: top);
             color: var(--color--font-primary);
             cursor: pointer;
             display: block;
@@ -122,14 +122,14 @@ td.tree-indent {
     }
 
     .empty .toggle-indicator a {
-        @include icon(before, arr_1right, $align: middle, $padding: -4px);
+        @include icon(before, arr_1right, $align: top);
         ::before {
             color: var(--color--font-inactive);
         }
     }
 
     .collapsed .toggle-indicator a {
-        @include icon(before, arr_1right, $align: middle, $padding: -4px);
+        @include icon(before, arr_1right, $align: top);
     }
 
     td.label-cell, .empty .toggle-indicator {
