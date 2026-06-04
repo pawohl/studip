@@ -25,6 +25,9 @@ class AvatarofRangeDelete extends JsonApiController
         $user = $this->getUser($request);
 
         $range = self::getRange($range_id, $range_type);
+        if (!$range) {
+            throw new RecordNotFoundException('Unknown range given');
+        }
 
         if (!Authority::canEditAvatarOfRange($user, $range)) {
             throw new AuthorizationFailedException();

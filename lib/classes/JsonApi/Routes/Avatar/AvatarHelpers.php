@@ -5,26 +5,20 @@ namespace JsonApi\Routes\Avatar;
 use Avatar;
 use CourseAvatar;
 use InstituteAvatar;
-use JsonApi\Errors\RecordNotFoundException;
 use Range;
 use RangeFactory;
 use StudygroupAvatar;
 
 trait AvatarHelpers
 {
-    protected static function getRange(string $rangeId, string $rangeType): Range
+    protected static function getRange(string $rangeId, string $rangeType): ?Range
     {
-        $range = RangeFactory::find($rangeId, match ($rangeType) {
+        return RangeFactory::find($rangeId, match ($rangeType) {
             'users'      => ['user'],
             'institutes' => ['inst', 'fak'],
             'courses'    => ['sem'],
+            default      => [$rangeType]
         });
-
-        if (!$range) {
-            throw new RecordNotFoundException('Unknown range given');
-        }
-
-        return $range;
     }
 
     /**
