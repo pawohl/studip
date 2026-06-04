@@ -1546,7 +1546,7 @@ class User extends AuthUserMd5 implements Range, PrivacyObject, Studip\Calendar\
      */
     public function isEditableByUser($user_id = null): bool
     {
-        return $GLOBALS['perm']->have_profile_perm('user', $this->id);
+        return $GLOBALS['perm']->have_profile_perm('user', $this->id, $user_id);
     }
 
     /**
