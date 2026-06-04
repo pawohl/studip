@@ -38,7 +38,7 @@ class Course extends SchemaProvider
     const REL_TOOLS = 'tools';
     const REL_WIKI_PAGES = 'wiki-pages';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_BLUBBER,
         self::REL_COURSEWARE,
         self::REL_END_SEMESTER,

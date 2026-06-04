@@ -10,7 +10,7 @@ class SeminarCycleDate extends SchemaProvider
     const TYPE = 'seminar-cycle-dates';
     const REL_OWNER = 'owner';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_OWNER,
     ];
 

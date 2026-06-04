@@ -12,7 +12,7 @@ class ConsultationBlock extends SchemaProvider
     const REL_SLOTS = 'slots';
     const REL_RANGE = 'range';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_SLOTS,
         self::REL_RANGE,
     ];

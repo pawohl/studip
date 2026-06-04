@@ -13,7 +13,7 @@ class CourseOfStudy extends SchemaProvider
     const REL_END_SEMESTER = 'end-semester';
     const REL_START_SEMESTER = 'start-semester';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_SECTIONS,
         self::REL_INSTITUTE,
         self::REL_COMPONENTS,

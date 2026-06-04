@@ -17,7 +17,7 @@ class Posting extends SchemaProvider
     const REL_REACTIONS_USER = 'reactions.user';
     const REL_OPENGRAPH_URLS = 'opengraph-urls';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_AUTHOR,
         self::REL_DISCUSSION,
         self::REL_POSTING,

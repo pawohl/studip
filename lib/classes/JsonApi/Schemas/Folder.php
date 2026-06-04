@@ -15,7 +15,7 @@ class Folder extends SchemaProvider
     const REL_FILE_REFS = 'file-refs';
     const REL_FOLDERS = 'folders';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_OWNER,
         self::REL_PARENT,
         self::REL_RANGE,

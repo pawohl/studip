@@ -22,7 +22,7 @@ class Block extends SchemaProvider
     const REL_USERPROGRESS = 'user-progress';
     const REL_FILES = 'file-refs';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_COMMENTS,
         self::REL_CONTAINER,
         self::REL_EDITBLOCKER,

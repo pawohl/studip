@@ -11,7 +11,7 @@ class UserFilterField extends SchemaProvider
 
     const REL_USERS = 'users';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_USERS,
     ];
 

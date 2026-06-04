@@ -13,7 +13,7 @@ class MassMailPermission extends SchemaProvider
     const REL_ALLOWED_SUBJECTS = 'allowed-subjects';
     const REL_ALLOWED_INSTITUTES = 'allowed-institutes';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_INSTITUTE,
         self::REL_ALLOWED_DEGREES,
         self::REL_ALLOWED_SUBJECTS,

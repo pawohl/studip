@@ -15,7 +15,7 @@ class Clipboard extends SchemaProvider
     const REL_CONTAINER = 'container';
     const REL_BLOCK = 'block';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_USER,
         self::REL_STRUCTURAL_ELEMENT,
         self::REL_CONTAINER,

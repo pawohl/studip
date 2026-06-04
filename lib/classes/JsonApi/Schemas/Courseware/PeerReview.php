@@ -16,7 +16,7 @@ class PeerReview extends SchemaProvider
     public const REL_SUBMITTER = 'submitter';
     public const REL_TASK = 'task';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_PROCESS,
         self::REL_REVIEWER,
         self::REL_SUBMITTER,

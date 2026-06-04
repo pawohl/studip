@@ -10,7 +10,7 @@ class ScheduleEntry extends SchemaProvider
     const TYPE = 'schedule-entries';
     const REL_OWNER = 'owner';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_OWNER,
     ];
 

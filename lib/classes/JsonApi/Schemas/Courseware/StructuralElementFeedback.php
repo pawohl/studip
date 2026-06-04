@@ -13,7 +13,7 @@ class StructuralElementFeedback extends SchemaProvider
     const REL_USER = 'user';
     const REL_STRUCTURAL_ELEMENT = 'structural-element';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_USER,
         self::REL_STRUCTURAL_ELEMENT,
     ];

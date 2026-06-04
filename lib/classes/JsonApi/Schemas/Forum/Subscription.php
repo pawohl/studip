@@ -13,7 +13,7 @@ class Subscription extends SchemaProvider
     const REL_RANGE = 'range';
     const REL_SUBJECT = 'subject';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_USER,
         self::REL_RANGE,
         self::REL_SUBJECT,

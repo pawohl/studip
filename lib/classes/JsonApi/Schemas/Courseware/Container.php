@@ -16,7 +16,7 @@ class Container extends SchemaProvider
     const REL_EDITBLOCKER = 'edit-blocker';
     const REL_STRUCTURAL_ELEMENT = 'structural-element';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_BLOCKS,
         self::REL_OWNER,
         self::REL_EDITOR,

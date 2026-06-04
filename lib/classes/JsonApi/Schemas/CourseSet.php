@@ -15,7 +15,7 @@ class CourseSet extends SchemaProvider
     const REL_COURSES = 'courses';
     const REL_OWNER = 'owner';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_RULES,
         self::REL_INSTITUTES,
         self::REL_SEMESTER,

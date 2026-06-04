@@ -11,7 +11,7 @@ class StatusGroup extends SchemaProvider
 
     const REL_RANGE = 'range';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_RANGE,
     ];
 

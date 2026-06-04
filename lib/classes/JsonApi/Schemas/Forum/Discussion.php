@@ -17,7 +17,7 @@ class Discussion extends SchemaProvider
     const REL_MEMBERS = 'members';
     const REL_TAGS = 'tags';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_POSTINGS,
         self::REL_TOPIC,
         self::REL_CATEGORY,

@@ -16,7 +16,7 @@ class LibraryFile extends SchemaProvider
     const REL_RANGE = 'range';
     const REL_TERMS = 'terms-of-use';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_FEEDBACK,
         self::REL_FILE,
         self::REL_OWNER,

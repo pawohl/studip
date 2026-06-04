@@ -9,7 +9,7 @@ class ModuleInstitute extends SchemaProvider
     const REL_MODULE = 'modules';
     const REL_INSTITUTE = 'institutes';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_MODULE,
         self::REL_INSTITUTE,
     ];

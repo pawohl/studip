@@ -12,7 +12,7 @@ class Topic extends SchemaProvider
     const REL_CATEGORY = 'category';
     const REL_DISCUSSION = 'discussion';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_CATEGORY,
         self::REL_DISCUSSION,
     ];

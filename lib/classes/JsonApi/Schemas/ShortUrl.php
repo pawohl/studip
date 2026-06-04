@@ -10,7 +10,7 @@ final class ShortUrl extends SchemaProvider
     public const TYPE     = 'short-urls';
     public const REL_USER = 'user';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_USER,
     ];
 

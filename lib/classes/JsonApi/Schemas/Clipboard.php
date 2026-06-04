@@ -10,7 +10,7 @@ final class Clipboard extends SchemaProvider
     public const REL_USER = 'user';
     public const REL_ITEMS = 'clipboard-items';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_USER,
         self::REL_ITEMS,
     ];

@@ -13,7 +13,7 @@ class TaskFeedback extends SchemaProvider
     const REL_TASK = 'task';
     const REL_LECTURER = 'lecturer';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_TASK,
         self::REL_LECTURER,
     ];

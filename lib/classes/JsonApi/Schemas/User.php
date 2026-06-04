@@ -36,7 +36,7 @@ class User extends SchemaProvider
     const REL_OUTBOX = 'outbox';
     const REL_SCHEDULE = 'schedule';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_CONFIG_VALUES,
         self::REL_CONTACTS,
         self::REL_COURSE_MEMBERSHIPS,

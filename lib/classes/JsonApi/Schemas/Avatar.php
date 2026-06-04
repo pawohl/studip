@@ -11,7 +11,7 @@ class Avatar extends SchemaProvider
     public const TYPE = 'avatar';
     const REL_RANGE = 'range';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_RANGE,
     ];
 

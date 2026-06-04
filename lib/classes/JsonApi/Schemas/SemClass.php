@@ -9,7 +9,7 @@ class SemClass extends SchemaProvider
 {
     const REL_SEM_TYPES = 'sem-types';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_SEM_TYPES,
     ];
     const TYPE = 'sem-classes';

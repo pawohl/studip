@@ -13,7 +13,7 @@ class BlockFeedback extends SchemaProvider
     const REL_USER = 'user';
     const REL_BLOCK = 'block';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_USER,
         self::REL_BLOCK,
     ];

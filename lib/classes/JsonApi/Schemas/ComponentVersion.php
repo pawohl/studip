@@ -10,7 +10,7 @@ class ComponentVersion extends SchemaProvider
     const REL_START_SEMESTER = 'start-semester';
     const REL_END_SEMESTER = 'end-semester';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_SECTIONS,
         self::REL_START_SEMESTER,
         self::REL_END_SEMESTER,

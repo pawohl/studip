@@ -11,7 +11,7 @@ class StudyArea extends SchemaProvider
     const REL_INSTITUTE = 'institute';
     const REL_PARENT = 'parent';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_CHILDREN,
         self::REL_COURSES,
         self::REL_INSTITUTE,

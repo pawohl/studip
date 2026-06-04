@@ -14,7 +14,7 @@ class FeedbackElement extends SchemaProvider
     public const REL_ENTRIES = 'entries';
     public const REL_RANGE = 'range';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_AUTHOR,
         self::REL_COURSE,
         self::REL_ENTRIES,

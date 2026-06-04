@@ -11,7 +11,7 @@ class InstituteMember extends SchemaProvider
     const REL_INSTITUTE = 'institute';
     const REL_USER = 'user';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_INSTITUTE,
         self::REL_USER,
     ];

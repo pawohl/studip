@@ -15,7 +15,7 @@ class PeerReviewProcess extends SchemaProvider
     const REL_PEER_REVIEWS = 'reviews';
     const REL_TASK_GROUP = 'task-group';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_COURSE,
         self::REL_OWNER,
         self::REL_PEER_REVIEWS,

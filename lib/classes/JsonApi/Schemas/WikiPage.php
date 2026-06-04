@@ -16,7 +16,7 @@ class WikiPage extends SchemaProvider
     const REL_PARENT = 'parent';
     const REL_RANGE = 'range';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_AUTHOR,
         self::REL_CHILDREN,
         self::REL_DESCENDANTS,

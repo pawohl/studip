@@ -9,7 +9,7 @@ final class ClipboardItem extends SchemaProvider
     public const TYPE = 'clipboard-items';
     public const REL_CLIPBOARD = 'clipboard';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_CLIPBOARD,
     ];
 

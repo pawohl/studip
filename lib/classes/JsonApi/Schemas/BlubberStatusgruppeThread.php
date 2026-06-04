@@ -10,7 +10,7 @@ class BlubberStatusgruppeThread extends BlubberThread
 {
     const REL_STATUSGRUPPE = 'group';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_STATUSGRUPPE,
     ];
 

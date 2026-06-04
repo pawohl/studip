@@ -11,7 +11,7 @@ class Message extends SchemaProvider
     const REL_SENDER = 'sender';
     const REL_RECIPIENTS = 'recipients';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_SENDER,
         self::REL_RECIPIENTS,
     ];

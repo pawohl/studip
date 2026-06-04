@@ -11,7 +11,7 @@ class DiscussionType extends SchemaProvider
 
     const REL_DISCUSSIONS = 'discussions';
 
-    protected array $allowedIncludes = [
+    protected ?array $allowedIncludes = [
         self::REL_DISCUSSIONS,
     ];
 

@@ -22,10 +22,9 @@ abstract class SchemaProvider extends BaseSchema
 
     /**
      * A list of allowed includes for this schema in input parameters.
-     *
-     * @var string[]
+     * Empty array means clients are not allowed to specify includes and 'null' means all paths are allowed.
      */
-    protected array $allowedIncludes = [];
+    protected ?array $allowedIncludes = null;
 
     public function __construct(FactoryInterface $factory, SchemaContainerInterface $schemaContainer, ?\User $user)
     {
@@ -72,6 +71,10 @@ abstract class SchemaProvider extends BaseSchema
 
     public function checkAllowedIncludes(ContextInterface $context): void
     {
+        if ($this->allowedIncludes === null) {
+            return;
+        }
+
         $errors = new ErrorCollection();
         $level = $context->getPosition()->getLevel();
         $path = $level ? $context->getPosition()->getPath() . '.' : '';
