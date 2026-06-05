@@ -170,6 +170,10 @@ class Course_StudygroupController extends AuthenticatedController
      */
     public function edit_action()
     {
+        if (!$GLOBALS['perm']->have_studip_perm('dozent', Context::getId())) {
+            throw new AccessDeniedException();
+        }
+
         PageLayout::setTitle(Context::getHeaderLine() . ' - ' . _('Studiengruppe bearbeiten'));
         Navigation::activateItem('/course/admin/main');
         PageLayout::setHelpKeyword('Basis.StudiengruppenBearbeiten');

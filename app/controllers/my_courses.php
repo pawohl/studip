@@ -453,7 +453,7 @@ class MyCoursesController extends AuthenticatedController
                     ));
                 }
             }
-            $this->redirect('my_courses/index');
+            $this->redirect(Request::option('from') === 'studygroups' ? 'my_studygroups' : 'my_courses/index');
         }
     }
 

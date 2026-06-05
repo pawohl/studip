@@ -1,3 +1,9 @@
+<?php
+/**
+ * @var array $studygroups
+ * @var bool $is_widget
+ */
+?>
 <? foreach ($studygroups as $group)  : ?>
     <tr>
         <td class="gruppe<?= $group['gruppe'] ?>"></td>
@@ -49,7 +55,7 @@
         </td>
         <? if (!$is_widget) : ?>
             <td style="text-align: right">
-                <? if (in_array($group["user_status"], ["dozent", "tutor"])) : ?>
+                <? if ($group['user_status'] === 'dozent') : ?>
                     <? $adminmodule = $group["sem_class"]->getAdminModuleObject(); ?>
                     <? if ($adminmodule && $group['tools']->findOneby('plugin_id', $adminmodule->getPluginId())) : ?>
                         <? $adminnavigation = $adminmodule->getIconNavigation($group['seminar_id'], 0, $GLOBALS['user']->id); ?>
@@ -61,14 +67,17 @@
                     <? endif ?>
 
                 <? elseif (!empty($group['binding'])) : ?>
-                    <a href="<?= URLHelper::getLink('', ['to' => $group['seminar_id'], 'cmd' => 'no_kill']) ?>">
-                        <?= Icon::create('door-leave', Icon::ROLE_INACTIVE)->asImg(['title' => _('Die Teilnahme ist bindend. Bitte wenden Sie sich an die Lehrenden.')]) ?>
-                    </a>
-                <?
-                else : ?>
-                    <a href="<?= URLHelper::getLink("dispatch.php/my_courses/decline/{$group['seminar_id']}", ['cmd' => 'suppose_to_kill']) ?>">
-                        <?= Icon::create('door-leave', Icon::ROLE_INACTIVE)->asImg(['title' => _('Aus der Studiengruppe abmelden')]) ?>
-                    </a>
+                    <?= Icon::create('door-leave', Icon::ROLE_INACTIVE)->asImg(['title' => _('Die Teilnahme ist bindend. Bitte wenden Sie sich an die Lehrenden.')]) ?>
+                <? else : ?>
+                    <form action="<?= URLHelper::getLink("dispatch.php/my_courses/decline/{$group['seminar_id']}") ?>"
+                          method="post"
+                          data-confirm="<?= htmlReady(sprintf(_('Wollen Sie sich von der Studiengruppe "%s" wirklich abmelden?'), $group['name'])) ?>"
+                    >
+                        <input type="hidden" name="from" value="studygroups">
+                        <input type="hidden" name="cmd" value="kill">
+                        <input type="hidden" name="studipticket" value="<?= htmlReady(get_ticket()) ?>">
+                        <?= Icon::create('door-leave')->asInput(['title' => _('Aus der Studiengruppe abmelden')]) ?>
+                    </form>
                 <? endif ?>
             </td>
             <? endif ?>
