@@ -1,5 +1,5 @@
 <form method="post" action="<?= $controller->store_order_settings() ?>" class="default">
-    <input type="hidden" name="from" value="<?= Request::get('from')?>">
+    <input type="hidden" name="from" value="<?= htmlReady(Request::get('from')) ?>">
     <?= CSRFProtection::tokenTag() ?>
     <label>
         <?= _('Letzte Veranstaltungsliste sortieren nach') ?>

@@ -106,7 +106,7 @@ class FeedbackElementsCreate extends JsonApiController
             'mode' => self::arrayGet($json, 'data.attributes.mode'),
             'results_visible' => (int) self::arrayGet($json, 'data.attributes.results-visible'),
             'commentable' => (int) self::arrayGet($json, 'data.attributes.is-commentable'),
-            'anonymous_entries' => (int) self::arrayGet($json, 'data.attributes.anonymous-entries'), 
+            'anonymous_entries' => (int) self::arrayGet($json, 'data.attributes.anonymous-entries'),
             // TODO:
             'course_id' => $range->getRangeCourseId(),
         ]);

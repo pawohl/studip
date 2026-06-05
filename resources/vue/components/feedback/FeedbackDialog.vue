@@ -27,7 +27,7 @@
                             </div>
                             <div v-if="hasDescription">
                                 <h3>{{ $gettext('Beschreibung') }}</h3>
-                                <p v-html="description"></p>
+                                <p>{{ description }}</p>
                             </div>
                         </template>
                         <feedback-element-update

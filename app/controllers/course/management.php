@@ -63,7 +63,12 @@ class Course_ManagementController extends AuthenticatedController
         UserConfig::get($GLOBALS['user']->id)->store('COURSE_MANAGEMENT_SELECTOR_ORDER_BY', Request::get('order_by', 'name'));
         PageLayout::postSuccess(_('Die Sortiereinstellungen wurden erfolgreich gespeichert.'));
 
-        $this->redirect(URLHelper::getURL(Request::get('from')));
+        $from = URLHelper::getURL(Request::get('from'));
+        if (!is_internal_url($from)) {
+            throw new RuntimeException('Only internal redirects allowed');
+        }
+
+        $this->redirect($from);
     }
 
     /**

@@ -131,9 +131,9 @@
                 <? if ($default_attachments) : ?>
                     <? foreach ($default_attachments as $a) : ?>
                     <li class="file" data-document_id="<?=$a['document_id']?>">
-                    <span class="icon"><?=$a['icon']?></span>
-                    <span class="name"><?=$a['name']?></span>
-                    <span class="size"><?=$a['size']?></span>
+                    <span class="icon"><?= $a['icon'] ?></span>
+                    <span class="name"><?= htmlReady($a['name']) ?></span>
+                    <span class="size"><?= htmlReady($a['size']) ?></span>
                     <a class="remove_attachment"><?= Icon::create('trash', 'clickable')->asImg(['class' => 'text-bottom']) ?></a>
                     </li>
                     <? endforeach ?>

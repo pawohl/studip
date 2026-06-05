@@ -148,9 +148,6 @@ $cal_step_weeks = [
 <? endif ?>
 
     <footer data-dialog-button>
-        <? if (Request::option('atime')): ?>
-            <input type="hidden" name="atime" value="<?= Request::option('atime') ?>">
-        <? endif ?>
         <input type="hidden" name="view" value="calendar">
         <?= Button::createAccept(_('Übernehmen'), ['title' => _('Änderungen übernehmen')]) ?>
         <?= Button::createCancel(_('Abbrechen')) ?>
