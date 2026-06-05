@@ -2,6 +2,7 @@
 
 namespace JsonApi\Schemas;
 
+use MessageUser;
 use Neomerx\JsonApi\Contracts\Schema\ContextInterface;
 use Neomerx\JsonApi\Schema\Link;
 
@@ -16,43 +17,49 @@ class Message extends SchemaProvider
         self::REL_RECIPIENTS,
     ];
 
-    public function getId($message): ?string
+    /**
+     * @param \Message $resource
+     */
+    public function getId($resource): ?string
     {
-        return $message->id;
+        return $resource->id;
     }
 
-    public function getAttributes($message, ContextInterface $context): iterable
+    /**
+     * @param \Message $resource
+     */
+    public function getAttributes($resource, ContextInterface $context): iterable
     {
         $user = $this->currentUser;
 
         return [
-            'subject' => $message->subject,
-            'message' => $message->message,
-            'mkdate' => date('c', $message->mkdate),
-            'is-read' => (bool) $message->isRead($user->id),
-            'priority' => $message->priority,
-            'tags' => $message->getTags(),
+            'subject'  => $resource->subject,
+            'message'  => $resource->message,
+            'mkdate'   => date('c', $resource->mkdate),
+            'is-read'  => $resource->isRead($user->id),
+            'priority' => $resource->priority,
+            'tags'     => $resource->getTags(),
         ];
     }
 
-    public function getRelationships($message, ContextInterface $context): iterable
+    /**
+     * @param \Message $resource
+     */
+    public function getRelationships($resource, ContextInterface $context): iterable
     {
         $relationships = [];
 
-        $relationships = $this->getSenderRelationship($relationships, $message, $this->shouldInclude($context, self::REL_SENDER));
-        $relationships = $this->getRecipientsRelationship($relationships, $message, $this->shouldInclude($context, self::REL_RECIPIENTS));
+        $relationships = $this->getSenderRelationship($relationships, $resource, $this->shouldInclude($context, self::REL_SENDER));
+        $relationships = $this->getRecipientsRelationship($relationships, $resource, $this->shouldInclude($context, self::REL_RECIPIENTS));
 
         return $relationships;
     }
 
-    private function getSenderRelationship(array $relationships, \Message $message, $includeData)
+    private function getSenderRelationship(array $relationships, \Message $message, $includeData): array
     {
-        $userId = $message->getSender()->id;
+        $data = $message->getSender();
 
-        $data = null;
-        if ($userId) {
-            $data = $includeData ? \User::find($userId) : \User::build(['id' => $userId], false);
-
+        if ($data) {
             $relationships[self::REL_SENDER] = [
                 // self::RELATIONSHIP_LINKS_SELF => true,
                 self::RELATIONSHIP_LINKS => [
@@ -68,11 +75,14 @@ class Message extends SchemaProvider
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    private function getRecipientsRelationship(array $relationships, \Message $message, $includeData)
+    private function getRecipientsRelationship(array $relationships, \Message $message, $includeData): array
     {
+        $recipients = $message->receivers->pluck('user');
+        $recipients = array_filter($recipients);
+
         $relationships[self::REL_RECIPIENTS] = [
             // self::RELATIONSHIP_LINKS_SELF => true,
-            self::RELATIONSHIP_DATA => $message->receivers->map(function ($i) { return $i->user; }),
+            self::RELATIONSHIP_DATA => $recipients,
         ];
 
         return $relationships;
