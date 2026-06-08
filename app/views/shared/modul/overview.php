@@ -142,10 +142,16 @@
                         <? if (mb_strlen($gruppe->alttext) > 0): ?>
                             <?= formatReady($gruppe->alttext) ?>
                         <? endif; ?>
-                        <? $courses = $gruppe->courses->filter(
-                            fn(\Course $course) => $course->isInSemester($semester)
-                                && $course->isVisibleForUser()
-                        ) ?>
+                        <?
+                        $courses = $gruppe->courses->filter(
+                            fn(\Course $course) => $course->isInSemester($semester) && $course->isVisibleForUser()
+                        );
+                        $sort_format = Config::get()->getValue('IMPORTANT_SEMNUMBER') ? 'number_name' : 'number';
+                        $courses->uasort(
+                            fn(\Course $course_a, \Course $course_b) =>
+                                strnatcasecmp($course_a->getFullName($sort_format), $course_b->getFullName($sort_format))
+                        );
+                        ?>
                         <? if (count($courses)) : ?>
                         <ul>
                         <? foreach ($courses as $course): ?>
