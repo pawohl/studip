@@ -128,10 +128,12 @@ class User extends SchemaProvider
 
         return [
             'avatar' => [
-                'small' => $avatar->getURL(\Avatar::SMALL),
-                'medium' => $avatar->getURL(\Avatar::MEDIUM),
-                'normal' => $avatar->getURL(\Avatar::NORMAL),
-                'original' => $avatar->getURL(\Avatar::NORMAL),
+                'customized' => $avatar->is_customized(),
+
+                \Avatar::SMALL    => $avatar->getURL(\Avatar::SMALL),
+                \Avatar::MEDIUM   => $avatar->getURL(\Avatar::MEDIUM),
+                \Avatar::NORMAL   => $avatar->getURL(\Avatar::NORMAL),
+                \Avatar::ORIGINAL => $avatar->getURL(\Avatar::NORMAL),
             ],
         ];
     }
