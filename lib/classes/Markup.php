@@ -274,7 +274,10 @@ class Markup
             br
             caption
             code[class]
+            dd
             div[class|style|data-oembed-url]
+            dl
+            dt
             em
             figure[class|style]
             figcaption
@@ -503,6 +506,8 @@ class Markup
             $html = str_replace('</li>', '</li><br>', $html);
             $html = str_replace('</ol>', '</ol><br>', $html);
             $html = str_replace('</ul>', '</ul><br>', $html);
+            $html = str_replace('</dd>', '</dd><br>', $html);
+            $html = str_replace('</dl>', '</dl><br>', $html);
             $html = str_replace('</tr>', '</tr><br>', $html);
             $html = str_replace('</p>', '</p><br><br>', $html);
             $html = str_replace('</div>', '</div><br><br>', $html);
