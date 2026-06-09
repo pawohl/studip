@@ -216,8 +216,8 @@ class Institute extends SchemaProvider
     public function getResourceMeta($resource)
     {
         return [
-            'sub-institutes-count' => count($resource->sub_institutes),
-            'courses-of-study-count' => count($resource->courses_of_study),
+            'sub-institutes-count' => \Institute::countBySql('fakultaets_id = ? AND fakultaets_id != Institut_id', [$resource->id]),
+            'courses-of-study-count' => \Studiengang::countBySql('institut_id = ?', [$resource->id]),
         ];
     }
 }

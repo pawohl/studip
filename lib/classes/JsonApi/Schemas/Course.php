@@ -501,7 +501,7 @@ class Course extends SchemaProvider
                 \Avatar::MEDIUM => $avatar->getURL(\Avatar::MEDIUM),
                 \Avatar::NORMAL => $avatar->getURL(\Avatar::NORMAL),
             ],
-            'members-count' => count($resource->members),
+            'members-count' => \CourseMember::countBySql('Seminar_id = ?', [$resource->id]),
         ];
     }
 

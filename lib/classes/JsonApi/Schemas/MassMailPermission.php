@@ -47,10 +47,43 @@ class MassMailPermission extends SchemaProvider
     public function getResourceMeta($resource)
     {
         return [
-            'allowed-degrees-count' => count($resource->allowed_degrees),
-            'allowed-subjects-count' => count($resource->allowed_subjects),
-            'allowed-institutes-count' => count($resource->allowed_institutes)
+            'allowed-degrees-count' => $this->countAllowedDegrees($resource),
+            'allowed-subjects-count' => $this->countAllowedSubjects($resource),
+            'allowed-institutes-count' => $this->countAllowedInstitutes($resource),
         ];
+    }
+
+    private function countAllowedDegrees(\MassMail\MassMailPermission $permission): int
+    {
+        $query = "SELECT COUNT(*)
+                  FROM `massmail_permission_degree`
+                  WHERE `permission_id` = :id";
+        return (int) \DBManager::get()->fetchColumn(
+            $query,
+            [$permission->id]
+        );
+    }
+
+    private function countAllowedSubjects(\MassMail\MassMailPermission $permission): int
+    {
+        $query = "SELECT COUNT(*)
+                  FROM `massmail_permission_subject`
+                  WHERE `permission_id` = :id";
+        return (int) \DBManager::get()->fetchColumn(
+            $query,
+            [$permission->id]
+        );
+    }
+
+    private function countAllowedInstitutes(\MassMail\MassMailPermission $permission): int
+    {
+        $query = "SELECT COUNT(*)
+                  FROM `massmail_permission_institute`
+                  WHERE `permission_id` = :id";
+        return (int) \DBManager::get()->fetchColumn(
+            $query,
+            [$permission->id]
+        );
     }
 
     public function getRelationships($resource, ContextInterface $context): iterable
