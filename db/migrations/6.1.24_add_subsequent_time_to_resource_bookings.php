@@ -3,6 +3,8 @@
 
 class AddSubsequentTimeToResourceBookings extends Migration
 {
+    use DatabaseMigrationTrait;
+
     public function description()
     {
         return 'Adds the subsequent_time column to the resource_bookings table.';
@@ -10,6 +12,11 @@ class AddSubsequentTimeToResourceBookings extends Migration
 
     protected function up()
     {
+        if ($this->columnExists('resource_bookings', 'subsequent_time')) {
+            // This migration has propably already been executed as 6.0.41.1
+            return;
+        }
+
         $db = DBManager::get();
         $db->exec(
             "ALTER TABLE `resource_bookings`

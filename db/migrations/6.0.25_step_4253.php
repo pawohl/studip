@@ -15,7 +15,7 @@ return new class extends Migration {
              (
               'ENABLE_NUMBER_OF_PARTICIPANTS',
               0,
-              'bool',
+              'boolean',
               'global',
               'global',
               UNIX_TIMESTAMP(),
