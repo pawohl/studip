@@ -57,7 +57,7 @@ class MassMailPermission extends SchemaProvider
     {
         $query = "SELECT COUNT(*)
                   FROM `massmail_permission_degree`
-                  WHERE `permission_id` = :id";
+                  WHERE `permission_id` = ?";
         return (int) \DBManager::get()->fetchColumn(
             $query,
             [$permission->id]
@@ -68,7 +68,7 @@ class MassMailPermission extends SchemaProvider
     {
         $query = "SELECT COUNT(*)
                   FROM `massmail_permission_subject`
-                  WHERE `permission_id` = :id";
+                  WHERE `permission_id` = ?";
         return (int) \DBManager::get()->fetchColumn(
             $query,
             [$permission->id]
@@ -79,7 +79,7 @@ class MassMailPermission extends SchemaProvider
     {
         $query = "SELECT COUNT(*)
                   FROM `massmail_permission_institute`
-                  WHERE `permission_id` = :id";
+                  WHERE `permission_id` = ?";
         return (int) \DBManager::get()->fetchColumn(
             $query,
             [$permission->id]
