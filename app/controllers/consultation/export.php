@@ -19,10 +19,11 @@ class Consultation_ExportController extends ConsultationController
         }
     }
 
-    public function bookings_action(bool $expired = false)
+    public function bookings_action(bool $expired = false): void
     {
-        $csv = [];
-        $csv[] = [
+        $extendedPerms = User::findCurrent()->hasPermissionLevel('dozent');
+
+        $headers = [
             _('Datum'),
             _('Beginn'),
             _('Ende'),
@@ -32,24 +33,39 @@ class Consultation_ExportController extends ConsultationController
             _('Grund'),
         ];
 
+        if ($extendedPerms) {
+            $headers[] = _('E-Mail');
+        }
+
+
+        $data = [];
         $blocks = ConsultationBlock::findByRange($this->range, 'ORDER BY start ASC', $expired);
         foreach ($blocks as $block) {
             foreach ($block->slots as $slot) {
                 foreach ($slot->bookings as $booking) {
-                    $csv[] = [
+                    $row = [
                         strftime('%x', $slot->start_time),
                         date('H:i', $slot->start_time),
                         date('H:i', $slot->end_time),
                         $booking->user->getFullName(),
                         $slot->block->room,
                         $slot->note ?: $slot->block->note,
-                        $booking->reason
+                        $booking->reason,
                     ];
+
+                    if ($extendedPerms) {
+                        $row[] = $booking->user->email;
+                    }
+
+                    $data[] = $row;
                 }
             }
         }
 
-        $this->render_csv($csv, 'Terminvergabe-Anmeldungen-' . date('Ymd') . '.csv');
+        $this->render_csv(
+            array_merge($headers, $data),
+            'Terminvergabe-Anmeldungen-' . date('Ymd') . '.csv'
+        );
     }
 
     public function all_action(bool $expired = false)

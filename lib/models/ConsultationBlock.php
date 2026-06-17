@@ -373,7 +373,7 @@ class ConsultationBlock extends SimpleORMap implements PrivacyObject
      * @param Range  $range    Range
      * @param string $order    Optional order
      * @param boolean $expired Select expired blocks
-     * @return array
+     * @return static[]
      */
     public static function findByRange(Range $range, $order = '', $expired = false)
     {
