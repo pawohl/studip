@@ -964,18 +964,17 @@ class CourseSet implements UserFilterRange
             $stmt->execute([$this->id, $list, time()]);
         }
         // Delete removed admission rules from database.
-        $dta = DBManager::get()->fetchAll(
+        DBManager::get()->fetchAll(
             "SELECT `rule_id`, `type`
              FROM `courseset_rule`
              WHERE `set_id` = ?
                AND `rule_id` NOT IN (?)",
-            [$this->id, array_keys($this->admissionRules)]
+            [$this->id, array_keys($this->admissionRules)],
+            function (array $row) {
+                $rule = new $row['type']($row['rule_id']);
+                $rule->delete();
+            }
         );
-        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($data as $ruleData) {
-            $rule = new $ruleData['type']($ruleData['rule_id']);
-            $rule->delete();
-        }
         // Store all rules.
         foreach ($this->admissionRules as $rule) {
             $rule->courseSetId = $this->id;
