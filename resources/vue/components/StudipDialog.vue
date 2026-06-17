@@ -1,7 +1,11 @@
 <template>
     <Teleport to="body">
         <focus-trap v-model="trap">
-            <div class="studip-dialog" @keydown.esc="closeDialog" v-bind="{...$attrs}">
+            <div class="studip-dialog"
+                 @keydown.esc="closeDialog"
+                 v-bind="$attrs"
+                 :style="{ zIndex: zIndex }"
+            >
                 <transition name="dialog-fade">
                     <div class="studip-dialog-backdrop" v-if="true">
                         <vue-resizeable

@@ -178,9 +178,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss">
-#studip-user-filter {
-    z-index: 1002;
-}
-</style>
