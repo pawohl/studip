@@ -4,14 +4,11 @@ namespace JsonApi\Schemas;
 
 use Avatar as StudipAvatar;
 use JsonApi\Errors\RecordNotFoundException;
-use JsonApi\Routes\Avatar\AvatarHelpers;
 use Neomerx\JsonApi\Contracts\Schema\ContextInterface;
 use Neomerx\JsonApi\Schema\Link;
 
 class Avatar extends SchemaProvider
 {
-    use AvatarHelpers;
-
     public const TYPE = 'avatar';
     const REL_RANGE = 'range';
 
@@ -68,7 +65,7 @@ class Avatar extends SchemaProvider
     {
         $relationships = [];
 
-        $range = self::getRange($resource->getId(), $resource::AVATAR_TYPE);
+        $range = \RangeFactory::createRange($resource::AVATAR_TYPE, $resource->getId());
         if ($range) {
             $relationships[self::REL_RANGE] = [
                 self::RELATIONSHIP_LINKS => [
