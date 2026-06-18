@@ -165,13 +165,21 @@
                                 $menu->addButton(
                                     'news_remove_' . $news['object']->news_id . '_' . $news['range_id'],
                                     _('Ankündigung aus diesem Bereich entfernen'),
-                                    Icon::create('remove')
+                                    Icon::create('remove'),
+                                    [
+                                        'formaction' => $controller->unassignURL($news['object'], $news['range_id'], $area_type),
+                                        'data-confirm' => _('Soll die Ankündigung wirklich aus diesem Bereich entfernt werden?'),
+                                    ]
                                 );
                             } else {
                                 $menu->addButton(
                                     'news_remove_' . $news['object']->news_id . '_' . $news['range_id'],
                                     _('Ankündigung löschen'),
-                                    Icon::create('trash')
+                                    Icon::create('trash'),
+                                    [
+                                        'formaction' => $controller->deleteURL($news['object'], $area_type),
+                                        'data-confirm' => _('Soll die Ankündigung wirklich gelöscht werden?'),
+                                    ]
                                 );
                             }
                             echo $menu->render();

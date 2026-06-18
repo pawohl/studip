@@ -537,22 +537,15 @@ class NewsController extends StudipController
                 $this->filter_text = sprintf(_('Angezeigt werden Ankündigungen, die vor dem %s sichtbar sind.'), date('d.m.Y', $this->news_enddate));
             }
         }
+
         $counter = 0;
         // check for delete-buttons and news limit
         foreach ($this->area_structure as $type => $area_data) {
             if (isset($this->news_items[$type]) && is_array($this->news_items[$type])) {
                 foreach($this->news_items[$type] as $key => $news) {
-                    // has trash icon been clicked?
-                    if (Request::submitted('news_remove_' . $news['object']->news_id . '_' . $news['range_id']) && Request::isPost()) {
-                        $this->flash['question_text'] = remove_news([$news['object']->news_id => $news['range_id']]);
-                        $this->flash['question_param'] = [
-                            'mark_news' => [$news['object']->news_id.'_'.$news['range_id']],
-                            'remove_marked_news' => 1
-                        ];
-                    }
                     // check if result set too big
                     $counter++;
-                    if ($counter === $limit + 1) {
+                    if ($counter > $limit) {
                         PageLayout::postInfo(sprintf(_('Es werden nur die ersten %s Ankündigungen angezeigt.'), $limit));
                         unset($this->news_items[$type][$key]);
                     }
@@ -628,6 +621,51 @@ class NewsController extends StudipController
         }
 
         return strtotime($date);
+    }
+
+    public function unassign_action(StudipNews $news, string $range_id, string $from = 'all'): void
+    {
+        CSRFProtection::verifyUnsafeRequest();
+
+        if (!$news->havePermission('unassign', $range_id)) {
+            throw new AccessDeniedException(sprintf(
+                _('Keine Berechtigung zum Entfernen der Ankündigung "%s" aus diesem Bereich.'),
+                $news->topic
+            ));
+        }
+
+        if ($news->deleteRange($range_id)) {
+            $news->store();
+            PageLayout::postSuccess(sprintf(
+                _('Ankündigung "%s" wurde aus dem Bereich entfernt.'),
+                htmlReady($news->topic)
+            ));
+        }
+
+        $this->redirect($this->admin_newsURL($from));
+    }
+
+    public function delete_action(StudipNews $news, string $from = 'all'): void
+    {
+        CSRFProtection::verifyUnsafeRequest();
+
+        if (!$news->havePermission('delete')) {
+            throw new AccessDeniedException(sprintf(
+                _('Keine Berechtigung zum Löschen der Ankündigung "%s".'),
+                $news->topic
+            ));
+        }
+
+        $topic = $news->topic;
+
+        if ($news->delete()) {
+            PageLayout::postSuccess(sprintf(
+                _('Ankündigung "%s" wurde gelöscht.'),
+                htmlReady($topic)
+            ));
+        }
+
+        $this->redirect($this->admin_newsURL($from));
     }
 
     public function rss_config_action($range_id)
