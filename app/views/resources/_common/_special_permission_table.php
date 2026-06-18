@@ -35,7 +35,8 @@
 ?>
 <table class="default sortable-table resource-permissions-table"
        data-sortlist="[[1, 0]]"
-    <?= $table_id ? 'id="' . htmlReady($table_id) . '"' : '' ?>>
+    <?= !empty($table_id) ? 'id="' . htmlReady($table_id) . '"' : '' ?>
+>
     <? if (!empty($table_caption)): ?>
         <caption><?= htmlReady($table_caption) ?></caption>
     <? endif ?>

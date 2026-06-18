@@ -63,11 +63,11 @@ class Resources_RoomGroupController extends AuthenticatedController
         $user_permissions = [];
         if(!empty($all_permissions)) {
             foreach ($all_permissions as $permission) {
-                if (!is_array($user_permissions[$permission->user_id])) {
+                if (!isset($user_permissions[$permission->user_id])) {
                     $user_permissions[$permission->user_id] = [];
                 }
 
-                if (!is_array($user_permissions[$permission->user_id][$permission->perms])) {
+                if (!isset($user_permissions[$permission->user_id][$permission->perms])) {
                     $user_permissions[$permission->user_id][$permission->perms] = [];
                 }
 
