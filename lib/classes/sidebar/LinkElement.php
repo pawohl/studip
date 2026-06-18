@@ -209,39 +209,10 @@ class LinkElement extends WidgetElement implements ArrayAccess
         }
 
         return sprintf(
-            '<%1$s %2$s>%3$s</%1$s>',
-            $tag,
-            arrayToHtmlAttributes($attributes),
-            htmlReady($this->label)
-        );
-    }
-
-    public function renderWithIcon($icon)
-    {
-        $disabled = $this->isDisabled();
-
-        if ($this->as_button && !$disabled) {
-            return $this->renderButton($icon);
-        }
-
-        if ($this->active) {
-            $this->addClass('active');
-        }
-
-        $attributes = (array) $this->attributes;
-
-        if ($disabled) {
-            $tag = 'span';
-        } else {
-            $tag = 'a';
-            $attributes['href'] = $this->url;
-        }
-
-        return sprintf(
             '<%1$s %2$s>%3$s%4$s</%1$s>',
             $tag,
             arrayToHtmlAttributes($attributes),
-            $icon->asImg(),
+            $this->icon?->asImg() ?? '',
             htmlReady($this->label)
         );
     }
@@ -251,13 +222,13 @@ class LinkElement extends WidgetElement implements ArrayAccess
      *
      * @return string
      */
-    protected function renderButton(?Icon $icon = null)
+    protected function renderButton()
     {
         return sprintf(
             '<button formaction="%s" %s>%s %s</button>',
             htmlReady($this->url),
             arrayToHtmlAttributes((array) $this->attributes),
-            $icon?->asImg() ?? '',
+            $this->icon?->asImg() ?? '',
             htmlReady($this->label)
         );
     }

@@ -14,7 +14,7 @@
 
     <ul class="widget-list widget-links invisible">
     <? foreach ($elements as $index => $element): ?>
-        <li id="<?= htmlReady($index) ?>" <?= $element->icon ? 'style="' . $element->icon->asCSS() .'"' : '' ?>>
+        <li id="<?= htmlReady($index) ?>">
             <?= $element->render() ?>
         </li>
     <? endforeach; ?>

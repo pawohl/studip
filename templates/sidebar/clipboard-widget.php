@@ -13,7 +13,7 @@
 
 <ul class="widget-list widget-links invisible">
 <? foreach ($elements as $index => $element): ?>
-    <li id="<?= htmlReady('link-' . md5($element->url)) ?>" <?= $element->icon ? 'style="' . $element->icon->asCSS() .'"' : '' ?>>
+    <li id="<?= htmlReady('link-' . md5($element->url)) ?>">
         <?= $element->render() ?>
     </li>
 <? endforeach; ?>
