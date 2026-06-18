@@ -488,7 +488,9 @@ export default {
             if (this.canSearchCourses) {
                 this.noCoursesFound = false;
                 this.isSearching = true;
+                this.courses = this.courses.concat(this.availableCourses.filter(c => this.checkedCourses.includes(c.id)));
                 this.availableCourses = [];
+                this.checkedCourses = [];
 
                 let term = this.courseSearchterm;
                 if (!this.courseSearchterm || this.courseSearchterm === '') {
@@ -744,7 +746,10 @@ export default {
     watch: {
         checkedCourses: {
             handler(current) {
-                this.$refs.proxy.indeterminate = current.length > 0 && current.length < this.availableCourses.length;
+                if (this.$refs.proxy) {
+                    this.$refs.proxy.indeterminate = current?.length > 0
+                        && current?.length < this.availableCourses.length;
+                }
             },
             deep: true
         }
