@@ -194,13 +194,11 @@ class Course_DatesController extends AuthenticatedController
         if ($this->hasAccess()) {
             $this->assignLockRulesToTemplate();
 
-            $this->teachers = array_map(function (CourseMember $member) {
-                return $member->user;
-            }, $this->date->course->getMembersWithStatus('dozent'));
+            $this->teachers = $this->date->course->getMembersWithStatus('dozent', true)->pluck('user');
             $this->assigned_teachers = $this->date->dozenten;
 
-            $this->groups          = $this->date->course->statusgruppen;
-            $this->assigned_groups = $this->date->statusgruppen;
+            $this->groups          = $this->date->course->statusgruppen->orderBy('name asc');
+            $this->assigned_groups = $this->date->statusgruppen->orderBy('name asc');
 
             $this->render_action('details-edit');
         }
