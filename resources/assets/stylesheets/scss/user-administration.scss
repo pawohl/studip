@@ -1,4 +1,15 @@
+tbody.filter_selection {
+    vertical-align: top;
 
+    .select-and-button-wrapper {
+        display: flex;
+        align-items: center;
+        flex-basis: 0;
+        button {
+            flex: 1;
+        }
+    }
+}
 .user_form {
     width: 250px;
 }

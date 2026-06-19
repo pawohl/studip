@@ -42,6 +42,7 @@ class Admin_AutoinsertController extends AuthenticatedController
 
         // search seminars
         if (Request::submitted('suchen')) {
+
             if (Request::get('sem_search')) {
                 $this->sem_search = Request::get('sem_search');
                 $this->sem_select = Request::option('sem_select') ?: null;
@@ -202,21 +203,28 @@ class Admin_AutoinsertController extends AuthenticatedController
         }
 
         $this->sem_id = Request::option('sem_id');
-        $this->sem_search = Request::get('sem_search');
-        $this->sem_select = Request::option('sem_select');
+        $this->sem_search = trim(Request::get('sem_search'));
+        $this->sem_select = Request::option('sem_select')?: null;
         $this->filtertype = Request::getArray('filtertype');
         $this->filter = Request::getArray('filter');
 
-        if (count(Request::getArray('remove_filter'))) {
+        $doSearch = Request::submitted('suchen');
+
+        if (count(Request::getArray('remove_filter')) > 0) {
             $this->filtertype = array_diff($this->filtertype, array_keys(Request::getArray('remove_filter')));
+            $doSearch = true;
         } elseif (Request::submitted('add_filter')) {
-            array_push($this->filtertype, Request::get('add_filtertype'));
+            $this->filtertype[] = Request::get('add_filtertype');
+            $doSearch = true;
         }
 
-        if (Request::get('sem_search') and Request::get('sem_select')) {
-            if (Request::get('sem_search')) {
+        if ($doSearch) {
+            if ($this->sem_search) {
                 $search = new SeminarSearch();
-                $this->seminar_search = $search->getResults(Request::get('sem_search'), ['search_sem_sem' => $this->sem_select]);
+                $this->seminar_search = $search->getResults(
+                    $this->sem_search,
+                    ['search_sem_sem' => $this->sem_select]
+                );
                 if (count($this->seminar_search) == 0) {
                     PageLayout::postInfo(_('Es wurden keine Veranstaltungen gefunden.'));
                 }

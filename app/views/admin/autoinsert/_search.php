@@ -10,9 +10,7 @@
     </legend>
     <label>
         <?= _('Semester') ?>
-        <?= Semester::getSemesterSelector(
-            ['name' => 'sem_select', 'id' => 'sem_select', 'class' => 'user_form']
-        ) ?>
+        <?= Semester::getSemesterSelector([], $sem_select) ?>
     </label>
     <label>
         <?= _('Veranstaltung') ?>

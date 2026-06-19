@@ -11,24 +11,13 @@
  * @var array $filter
  */
 ?>
-
-<style type="text/css">
-    .filter_selection select {
-        width: 100%;
-    }
-
-    .filter_selection input[name=remove_filter] {
-        float: right;
-    }
-</style>
-
 <form class="default" action="<?= $controller->manual() ?>" method="post">
     <?= CSRFProtection::tokenTag() ?>
     <?= $this->render_partial('admin/autoinsert/_search.php', compact('sem_search', 'sem_select')) ?>
 </form>
 
 
-<? if ((is_array($seminar_search) && count($seminar_search) > 0) && $sem_search && $sem_select): ?>
+<? if (count($seminar_search) > 0): ?>
     <form class="default" action="<?= $controller->manual() ?>" method="post">
         <?= CSRFProtection::tokenTag() ?>
         <input type="hidden" name="sem_search" value="<?= htmlReady($sem_search) ?>">
@@ -67,7 +56,7 @@
             <? if (count($filtertype) != count($available_filtertypes)): ?>
                 <tr>
                     <td>
-                        <legend for="add_filtertype"><?= _('Filterkriterien') ?></legend>
+                        <label for="add_filtertype"><?= _('Filterkriterien') ?></label>
                     </td>
                     <td colspan="2">
                         <select name="add_filtertype">
@@ -87,44 +76,42 @@
             <? endif ?>
             </tbody>
 
-            <!-- #2 Auswahllisten anzeigen -->
-            <? if (!empty($filtertype)): ?>
-                <tbody class="default filter_selection" style="vertical-align: top;">
+        <!-- #2 Auswahllisten anzeigen -->
+        <? if (!empty($filtertype)): ?>
+            <tbody class="filter_selection">
                 <tr>
                     <th colspan="3"><?= _('Ausgewählte Filterkriterien') ?></th>
                 </tr>
                 <? $index = 0;
-                foreach ($filtertype
-
-                as $type): ?>
+                foreach ($filtertype as $type): ?>
                 <? if ($index % 2 == 0): ?>
                 <? if ($index != 0): ?></tr><? endif ?>
                 <tr>
                     <? endif ?>
                     <td colspan="<?= $index % 2 ? 1 : 2 ?>">
-                        <label for="<?= $type ?>"><b><?= $available_filtertypes[$type] ?></b></label>
-                        <?= Icon::create('remove')->asInput([
-                            'title' => _('Filter entfernen'),
-                            'class' => 'middle',
-                            'name'  => "remove_filter[{$type}]",
-                        ]) ?>
-                        <br>
-
-                        <select name="filter[<?= $type ?>][]" multiple size="5" class="nested-select">
-                            <? foreach ($values[$type] as $key => $value): ?>
-                                <? if (is_array($value)): ?>
-                                    <option value="<?= $key ?>"
-                                            class="nested-item-header" <?= in_array($key, $filter[$type] ?? []) ? 'selected' : '' ?>><?= htmlReady($value['name']) ?></option>
-                                    <? foreach ($value['values'] as $k => $v): ?>
-                                        <option value="<?= $k ?>"
-                                                class="nested-item" <?= in_array($k, $filter[$type] ?? []) ? 'selected' : '' ?>><?= htmlReady($v) ?></option>
-                                    <? endforeach; ?>
-                                <? else: ?>
-                                    <option
-                                        value="<?= $key ?>" <?= in_array($key, $filter[$type] ?? []) ? 'selected' : '' ?>><?= htmlReady($value) ?></option>
-                                <? endif ?>
-                            <? endforeach; ?>
-                        </select>
+                        <label for="<?= htmlReady($type) ?>"><?= htmlReady($available_filtertypes[$type]) ?></label>
+                        <div class="select-and-button-wrapper">
+                            <select name="filter[<?= $type ?>][]" multiple size="5" class="nested-select" id="<?= htmlReady($type) ?>" style="display: inline-block;">
+                                <? foreach ($values[$type] as $key => $value): ?>
+                                    <? if (is_array($value)): ?>
+                                        <option value="<?= htmlReady($key) ?>"
+                                                class="nested-item-header" <?= in_array($key, $filter[$type] ?? []) ? 'selected' : '' ?>><?= htmlReady($value['name']) ?></option>
+                                        <? foreach ($value['values'] as $k => $v): ?>
+                                            <option value="<?= htmlReady($k) ?>"
+                                                    class="nested-item" <?= in_array($k, $filter[$type] ?? []) ? 'selected' : '' ?>><?= htmlReady($v) ?></option>
+                                        <? endforeach; ?>
+                                    <? else: ?>
+                                        <option value="<?= htmlReady($key) ?>" <?= in_array($key, $filter[$type] ?? []) ? 'selected' : '' ?>><?= htmlReady($value) ?></option>
+                                    <? endif ?>
+                                <? endforeach; ?>
+                            </select>
+                            <?= Icon::create('remove')->asInput([
+                                'title'        => _('Filter entfernen'),
+                                'class'        => 'middle',
+                                'name'         => "remove_filter[{$type}]",
+                                'data-confirm' => _('Soll der Filter wirklich entfernt werden?'),
+                            ]) ?>
+                        </div>
                     </td>
                     <? $index++;
                     endforeach; ?>
@@ -132,8 +119,8 @@
                         <td>&nbsp;</td>
                     <? endif ?>
                 </tr>
-                </tbody>
-            <? endif ?>
+            </tbody>
+        <? endif ?>
             <thead>
                 <tr>
                     <th colspan="3"><?= _('Einstellungen') ?></th>
@@ -171,15 +158,15 @@
     </form>
 
     <script type="text/javascript">
-        jQuery(function ($) {
-            $('input[name=preview]').show().click(function (event) {
+        jQuery($ => {
+            $('button[name=preview]').click(function (event) {
                 if (!$(this).next().length || !$(this).next().is('span')) {
                     $(this).after($('<span id="autoinsert_count" style="vertical-align: middle;"/>'));
                 }
                 $.getJSON(
                     '<?= $controller->manual_count() ?>',
                     $(this).closest('form').serializeArray()
-                ).done(function (json) {
+                ).done(json => {
                     let result = '';
                     if (!json || json.error) {
                         result = '<?= _('Fehler') ?>: ';
@@ -191,9 +178,6 @@
                     $('#autoinsert_count').html(' ' + result);
                 });
                 event.preventDefault();
-            });
-            $('input[name^=remove_filter]').click(function (event) {
-                return confirm('<?= _('Wollen Sie diesen Filter wirklich entfernen?') ?>');
             });
         });
     </script>

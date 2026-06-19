@@ -14,10 +14,10 @@
 <? endif; ?>
     <form class="default" action="<?= $controller->index() ?>" method="post">
         <?= CSRFProtection::tokenTag() ?>
-        <?= $this->render_partial('admin/autoinsert/_search.php') ?>
+        <?= $this->render_partial('admin/autoinsert/_search.php', compact('sem_search', 'sem_select')) ?>
     </form>
 
-<? if (is_array($seminar_search) && count($seminar_search) > 0): ?>
+<? if (count($seminar_search) > 0): ?>
     <br>
     <form class="default" action="<?= $controller->new() ?>" method="post">
         <?= CSRFProtection::tokenTag() ?>
