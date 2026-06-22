@@ -59,13 +59,7 @@ class RoomManager
             $used_time = $time;
         }
 
-        $user_is_admin = (
-            ResourceManager::userHasGlobalPermission(
-                $user,
-                'admin'
-            ) ||
-            $GLOBALS['perm']->have_perm('root')
-        );
+        $user_is_admin = ResourceManager::userHasGlobalPermission($user, 'admin');
 
         $query = '';
         $data = [];

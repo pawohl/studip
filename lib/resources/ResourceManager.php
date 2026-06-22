@@ -409,10 +409,7 @@ class ResourceManager
                 WHERE ';
         }
 
-        $user_is_resource_admin = self::userHasGlobalPermission(
-            $user,
-            'admin'
-        ) || $GLOBALS['perm']->have_perm('root', $user->id);
+        $user_is_resource_admin = self::userHasGlobalPermission($user, 'admin');
 
         if (!$user_is_resource_admin) {
             $sql .= "resources.id IN (
