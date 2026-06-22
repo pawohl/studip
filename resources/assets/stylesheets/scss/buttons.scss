@@ -147,6 +147,10 @@ button,
             pointer-events: none;
         }
     }
+
+    > .studip-icon {
+        vertical-align: text-bottom;
+    }
 }
 
 .button-base {

@@ -4,9 +4,13 @@
             <header>
                 <h3>
                     {{ $gettext('Memcached-Server') }} {{ index + 1 }}
-                    <studip-icon shape="trash" class="remove-server"
-                                 @click.prevent="removeServer(index)"
-                                 :size="24"></studip-icon>
+                    <button type="button"
+                            class="as-link remove-server"
+                            @click="removeServer(index)"
+                            :title="$gettext('Server entfernen')"
+                    >
+                        <studip-icon shape="trash" />
+                    </button>
                 </h3>
             </header>
             <section class="col-4">
@@ -28,13 +32,18 @@
                 </label>
             </section>
         </article>
-        <label class="add-server" @click="addServer()">
-            <studip-icon shape="add"></studip-icon>
+        <button type="button"
+                class="as-link add-server"
+                @click="addServer()"
+        >
+            <studip-icon shape="add" />
             {{ $gettext('Server hinzufügen') }}
-        </label>
+        </button>
     </div>
 </template>
 <script>
+const defaultServer = { hostname: 'localhost', port: 11211 };
+
 export default {
     name: 'MemcachedCacheConfig',
     emits: ['is-valid'],
@@ -51,10 +60,12 @@ export default {
     },
     methods: {
         addServer () {
-            this.serverConfig.push({ hostname: 'localhost', port: 11211 })
+            this.serverConfig.push(defaultServer);
         },
         removeServer (index) {
-            this.serverConfig.splice(index, 1)
+            STUDIP.Dialog.confirm(this.$gettext('Server wirklich entfernen?')).done(() => {
+                this.serverConfig.splice(index, 1)
+            });
         }
     },
     computed: {
@@ -87,10 +98,6 @@ export default {
 .add-server {
     &:not(:only-child) {
         margin-top: 25px;
-    }
-
-    img {
-        vertical-align: top;
     }
 }
 </style>

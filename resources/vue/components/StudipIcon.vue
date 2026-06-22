@@ -1,7 +1,10 @@
 <template>
-    <button v-if="name" type="submit" class="icon-button as-link" v-bind="attrs">
+    <button v-if="renderAsButton"
+            class="icon-button as-link"
+            :type="type"
+            v-bind="attrs"
+    >
         <IconContent v-bind="iconAttrs" />
-        <span v-if="text">{{ text }}</span>
     </button>
 
     <IconContent v-else v-bind="allAttrs" />
@@ -17,7 +20,7 @@ import {
     watch,
 
     CSSProperties,
-    PropType
+    PropType, mergeProps
 } from 'vue';
 import iconLoader, { CachedIcon } from '../../assets/javascripts/lib/icon-loader';
 
@@ -28,7 +31,7 @@ interface IconProps {
     shape: string;
     size?: number | null;
     inline?: boolean;
-    text?: string;
+    type?: 'button'|'reset'|'submit';
 }
 
 const props = withDefaults(defineProps<IconProps>(),{
@@ -43,7 +46,7 @@ const content = ref('');
 const attrs = useAttrs();
 const iconAttrs = computed(() => ({
     ariaRole: props.ariaRole,
-    class: cssClass.value,
+    cssClass: cssClass.value,
     content: content.value,
     isSvg: isSvg.value,
     style: computedStyle.value,
@@ -79,22 +82,22 @@ watch(
     },
     { immediate: true }
 );
+const renderAsButton = computed(() => props.type !== undefined || props.name !== undefined);
 
 const IconContent = defineComponent({
     props: {
         isSvg: Boolean,
         content: String,
         ariaRole: String,
-        cssClass: String,
-        computedStyle: Object as PropType<CSSProperties>
+        cssClass: [String, Array],
+        style: Object as PropType<CSSProperties>
     },
     setup(props, { attrs }) {
-        const baseAttrs = {
+        const baseAttrs = mergeProps(attrs, {
             class: props.cssClass,
             role: props.ariaRole,
-            style: props.computedStyle,
-            ...attrs
-        };
+            style: props.style,
+        });
 
         return () => props.isSvg
             ? h('div', {
