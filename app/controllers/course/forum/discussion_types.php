@@ -18,7 +18,7 @@ class Course_Forum_DiscussionTypesController extends AuthenticatedController
         $actions->addLink(
             _('Neuen Diskussionstyp anlegen'),
             $this->url_for('course/forum/discussion_types/edit'),
-            Icon::create('add', Icon::ROLE_CLICKABLE, ['title' => _('Neuen Diskussionstyp anlegen')])
+            Icon::create('add')
         )->asDialog('width=700;height=650');
 
         Sidebar::Get()->addWidget($actions);

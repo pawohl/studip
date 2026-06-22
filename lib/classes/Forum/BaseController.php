@@ -49,7 +49,7 @@ abstract class BaseController extends StudipController
             $actions->addLink(
                 _('Neue Diskussion starten'),
                 $this->url_for('course/forum/discussions/edit', ['topic_id' => Request::option('topic_id')]),
-                Icon::create('add', Icon::ROLE_CLICKABLE, ['title' => _('Neue Diskussion starten')])
+                Icon::create('add')
             )->asDialog('width=900;height=750');
         }
 
@@ -57,7 +57,7 @@ abstract class BaseController extends StudipController
             $actions->addLink(
                 _('Forum verwalten'),
                 $this->url_for('course/forum/configs/edit'),
-                Icon::create('admin', Icon::ROLE_CLICKABLE, ['title' => _('Forum verwalten')])
+                Icon::create('admin')
             )->asDialog('width=500;height=350');
         }
 
