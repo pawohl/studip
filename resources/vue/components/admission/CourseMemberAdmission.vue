@@ -19,19 +19,46 @@
                 {{ $gettext('Mitgliedschaft ist in keiner dieser Veranstaltungen erlaubt') }}
             </label>
         </section>
-        <section>
-            <label for="csearch">
+        <section class="col-4">
+            <label>
                 {{ $gettext('Veranstaltung(en)') }}
+                <quicksearch v-if="courseSearch !== null"
+                             :searchtype="courseSearch"
+                             name="course"
+                             @update:model-value="addCourse"
+                             ref="courseSearch"></quicksearch>
             </label>
-            <quicksearch v-if="courseSearch !== null"
-                         :searchtype="courseSearch"
-                         name="course"
-                         @update:model-value="addCourse"
-                         id="csearch"
-                         ref="courseSearch"></quicksearch>
+        </section>
+        <section class="col-2">
+            <label>
+                {{ $gettext('Semester') }}
+                <span class="admission-aligned">
+                    <select
+                        name="search_sem_sem"
+                        v-model="searchSemester"
+                    >
+                        <option
+                            v-for="semester in semesters"
+                            :key="semester.id"
+                            :value="semester.id"
+                        >
+                            {{ semester.attributes.title }}
+                        </option>
+                    </select>
+                </span>
+            </label>
+        </section>
+        <section>
             <ul v-if="courseList.length > 0">
                 <li v-for="(course, index) in courseList" :key="index">
                     {{ course.name }}
+                    <a
+                        href="#"
+                        :title="deleteLinkText(index)"
+                        @click.prevent="removeCourse(index)"
+                    >
+                        <studip-icon shape="trash" />
+                    </a>
                 </li>
             </ul>
         </section>
@@ -58,7 +85,9 @@ export default {
             courseList: [],
             courseSearch: null,
             startTime: 0,
-            endTime: 0
+            endTime: 0,
+            semesters: [],
+            searchSemester: ''
         }
     },
     computed: {
@@ -95,6 +124,12 @@ export default {
             }
 
             return this.invalidData.length === 0;
+        },
+        removeCourse(index) {
+            this.courseList.splice(index, 1);
+        },
+        deleteLinkText(index) {
+            return this.$gettext('Veranstaltung %{course} entfernen', {course: this.courseList[index].name});
         }
     },
     created() {
@@ -116,6 +151,19 @@ export default {
                 this.courseSearch = response.data.attributes.payload.search;
             });
         }
+        STUDIP.jsonapi.withPromises().get('semesters')
+            .then(response => {
+                this.semesters = response.data;
+                this.searchSemester = response.data.filter(semester => semester.attributes['is-current']).at(0)?.id;
+            });
     },
 }
 </script>
+
+<style lang="scss" scoped>
+.admission-aligned {
+    display: inline-block;
+    margin-top: 15px;
+    width: 100%;
+}
+</style>

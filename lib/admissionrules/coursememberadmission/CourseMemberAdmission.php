@@ -254,7 +254,7 @@ class CourseMemberAdmission extends AdmissionRule
                     $this->getDecodedCourses()
                 ),
                 'modus' => $this->modus,
-                'search' => (string) new StandardSearch('Seminar_id')
+                'search' => (string) new SeminarSearch()
             ]
         );
     }
