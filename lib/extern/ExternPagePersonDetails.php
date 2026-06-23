@@ -336,7 +336,7 @@ class ExternPagePersonDetails extends ExternPage
 
     private function getContentNews(User $user)
     {
-        $news = StudipNews::GetNewsByRange($user->id, true);
+        $news = StudipNews::GetNewsByRange($user->id, true, true);
         $content = [];
         foreach ($news as $news_detail) {
             $content[] = [

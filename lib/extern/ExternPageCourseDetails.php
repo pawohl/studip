@@ -273,7 +273,7 @@ class ExternPageCourseDetails extends ExternPage
      */
     private function getContentNews(Course $course): array
     {
-        $news = StudipNews::GetNewsByRange($course->id, true);
+        $news = StudipNews::GetNewsByRange($course->id, true, true);
         $content = [];
         foreach ($news as $news_detail) {
             $content[] = [
