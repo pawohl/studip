@@ -22,7 +22,7 @@ class Migrate extends Command
         $this->addOption('domain', 'd', InputOption::VALUE_OPTIONAL, 'the domain of the migrations', 'studip');
 
         $defaultPath = $GLOBALS['STUDIP_BASE_PATH'] . '/db/migrations';
-        $this->addOption('path', 'p', InputOption::VALUE_OPTIONAL, 'the id of the migration to list to', $defaultPath);
+        $this->addOption('path', 'p', InputOption::VALUE_OPTIONAL, 'the path to the directory containing the migrations', $defaultPath);
 
         $this->addOption('target', 't', InputOption::VALUE_OPTIONAL, 'the target version', null);
     }
