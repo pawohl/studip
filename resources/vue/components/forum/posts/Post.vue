@@ -4,7 +4,7 @@ import PostEditForm from '@/vue/components/forum/posts/PostEditForm.vue';
 import PostCreateForm from '@/vue/components/forum/posts/PostCreateForm.vue';
 import PostContent from '@/vue/components/forum/posts/PostContent.vue';
 import PostReactions from '@/vue/components/forum/posts/PostReactions.vue';
-import {getDiscussionURL, userProfileURL} from '@/vue/components/forum/helpers/urls';
+import {getPostURL, userProfileURL} from '@/vue/components/forum/helpers/urls';
 import StudipDateTime from '@/vue/components/StudipDateTime.vue';
 import StudipIcon from '@/vue/components/StudipIcon.vue';
 import {$gettext} from '@/assets/javascripts/lib/gettext';
@@ -103,7 +103,7 @@ const forwardPost = () => {
         <br />
         <br />
         ${$gettext('Link zum Beitrag: ')}
-        <a href="${getDiscussionURL(props.discussion.discussion_id) + '#post_' + props.post.id}">
+        <a href="${getPostURL(props.discussion.discussion_id, props.post.id)}">
             ${props.discussion.title}
         </a>
     `;
@@ -189,11 +189,15 @@ onBeforeUnmount(() => postObserver.disconnect());
                     >
                         {{ post.author.name }}
                     </a>
-                    <span v-if="post.chdate > post.mkdate">
-                        {{ $gettext('Bearbeitet: ') }}
-                        <StudipDateTime :iso="post.chdate" :relative="true" />
-                    </span>
-                    <StudipDateTime v-else :iso="post.mkdate" :relative="true" />
+                    <a :href="getPostURL(discussion.discussion_id, post.id)"
+                       :title="$gettext('Link zum Beitrag')"
+                    >
+                        <span v-if="post.chdate > post.mkdate">
+                            {{ $gettext('Bearbeitet: ') }}
+                            <StudipDateTime :iso="post.chdate" :relative="true" />
+                        </span>
+                        <StudipDateTime v-else :iso="post.mkdate" :relative="true" />
+                    </a>
                 </div>
             </div>
             <div class="post__content">
@@ -213,11 +217,15 @@ onBeforeUnmount(() => postObserver.disconnect());
                     >
                         {{ post.author.name }}
                     </a>
-                    <span v-if="post.chdate > post.mkdate">
-                        {{ $gettext('Bearbeitet: ') }}
-                        <StudipDateTime :iso="post.chdate" :relative="true" />
-                    </span>
-                    <StudipDateTime v-else :iso="post.mkdate" :relative="true" />
+                    <a :href="getPostURL(discussion.discussion_id, post.id)"
+                       :title="$gettext('Link zum Beitrag')"
+                    >
+                        <span v-if="post.chdate > post.mkdate">
+                            {{ $gettext('Bearbeitet: ') }}
+                            <StudipDateTime :iso="post.chdate" :relative="true" />
+                        </span>
+                        <StudipDateTime v-else :iso="post.mkdate" :relative="true" />
+                    </a>
                 </div>
                 <template v-if="showPostEditForm">
                     <PostEditForm :post="post" :authUser="authUser" class="mt-10" @canceled="showPostEditForm = false" @updated="showPostEditForm = false" />
