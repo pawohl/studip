@@ -1,12 +1,16 @@
 <template>
     <div class="formpart">
         <p>{{ $gettext('An dieser Stelle prüfen wir automatisch, ob Sie ein Mensch sind.') }}</p>
-        <altcha-widget :challengeurl="challengeUrl" ref="widget"></altcha-widget>
+        <altcha-widget :challenge="challenge"
+                       ref="widget"
+                       :type="type"
+        ></altcha-widget>
     </div>
 </template>
 <script>
 import 'altcha';
-import { $gettext } from '../../../assets/javascripts/lib/gettext';
+import 'altcha/i18n/de';
+import 'altcha/i18n/en';
 
 export default {
     name: 'CaptchaInput',
@@ -16,9 +20,14 @@ export default {
             type: String,
             default: 'altcha'
         },
-        challengeUrl: {
+        challenge: {
             type: String,
             requird: true,
+        },
+        type: {
+            type: String,
+            default: 'checkbox',
+            validator: (value) => ['checkbox', 'switch', 'native'].includes(value),
         },
         auto: {
             type: String,
@@ -33,14 +42,6 @@ export default {
                 name: this.name,
                 hidefooter: true,
                 hidelogo: false,
-                strings: {
-                    error: $gettext('Überprüfung fehlgeschlagen. Versuchen Sie es später erneut.'),
-                    footer: $gettext('Geschützt von <a href="https://altcha.org/" target="_blank">ALTCHA</a>'),
-                    label: $gettext('Ich bin kein Bot'),
-                    verified: $gettext('Überprüft'),
-                    verifying: $gettext('Überprüfung...'),
-                    waitAlert: $gettext('Überprüfung... Bitte warten.'),
-                },
             });
 
             this.$refs.widget.addEventListener('statechange', (ev) => {
@@ -52,8 +53,8 @@ export default {
     }
 }
 </script>
-<style>
-:root {
+<style lang="scss">
+.altcha-main {
     --altcha-border-width: 0;
     --altcha-border-radius: 0;
     --altcha-color-base: transparent;
@@ -63,8 +64,11 @@ export default {
     --altcha-color-error-text: var(--red);
     --altcha-color-footer-bg: none;
     --altcha-max-width: auto;
-}
-.altcha-main {
+
     padding: 0 !important;
+
+    .altcha-checkbox-wrap > label {
+        margin-bottom: 0 !important;
+    }
 }
 </style>

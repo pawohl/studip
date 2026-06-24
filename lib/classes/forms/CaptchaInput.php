@@ -23,7 +23,7 @@ final class CaptchaInput extends Input
     public function render(): string
     {
         return sprintf(
-            '<captcha-input challenge-url="%s" v-model="%s" auto="onload"></captcha-input>',
+            '<captcha-input challenge="%s" v-model="%s" auto="onload"></captcha-input>',
             URLHelper::getLink('dispatch.php/captcha/challenge', [], true),
             htmlReady($this->name)
         );
