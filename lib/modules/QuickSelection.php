@@ -33,7 +33,7 @@ class QuickSelection extends CorePlugin implements PortalPlugin
         $navigation = new Navigation('', 'dispatch.php/quickselection/configuration');
         $navigation->setImage(Icon::create('edit'));
         $navigation->setLinkAttributes([
-            'title'       => _('Konfigurieren'),
+            'title'       => _('Schnellzugriff konfigurieren'),
             'data-dialog' => 'size=auto',
         ]);
 

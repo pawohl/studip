@@ -30,7 +30,7 @@ class ActivityFeed extends CorePlugin implements PortalPlugin
         $navigation->setImage(Icon::create('edit'));
         $navigation->setLinkAttributes([
             'data-dialog' =>'size=auto',
-            'title' => _('Konfigurieren'),
+            'title' => _('Aktivitäten konfigurieren'),
         ]);
 
         $icons[] = $navigation;
