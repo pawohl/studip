@@ -24,6 +24,8 @@ class LoginController extends AuthenticatedController
 
     public function index_action(): void
     {
+        PageLayout::setTitle(_('Login'));
+
         if (User::findCurrent()) {
             $this->redirect(URLHelper::getURL('dispatch.php/start'));
             return;
