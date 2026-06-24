@@ -81,7 +81,7 @@ $lang_attr = str_replace('_', '-', $_SESSION['_language']);
 </head>
 
 <body id="<?= PageLayout::getBodyElementId() ?>" <? if (!PageLayout::isSidebarEnabled()) echo 'class="no-sidebar"'; ?>>
-    <nav id="skip_link_navigation" aria-busy="true"></nav>
+    <nav id="skip_link_navigation" aria-label="<?= _('Sprunglinks') ?>" aria-busy="true"></nav>
     <?= PageLayout::getBodyElements() ?>
 
     <? include 'lib/include/header.php' ?>
