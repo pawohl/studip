@@ -163,7 +163,8 @@ class StudipSemSearchHelper {
                 //We cannot search for courses if the institutes they shall belong to cannot be found:
                 return [];
             }
-            $where_sql[] = "(`seminare`.`Institut_id` IN (:institute_ids) OR `seminar_inst`.`institut_id` IN (:institute_ids))";
+            $join_sql[]  = "JOIN `seminar_inst` USING (`seminar_id`)";
+            $where_sql[] = "`seminar_inst`.`institut_id` IN (:institute_ids)";
             $sql_params['institute_ids'] = $institute_ids;
         }
 
