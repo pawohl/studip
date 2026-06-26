@@ -143,8 +143,10 @@ class ActionMenu
     // when TAB or SHIFT + TAB is pressed.
     attachEventHandlers() {
         this.menu[0].addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
+            if (event.key === 'Escape' && this.is_open) {
                 this.close(true);
+                event.preventDefault();
+                event.stopPropagation();
             } else if (event.key === 'Tab' && this.is_open) {
                 this.tabThroughItems(event.shiftKey);
                 event.preventDefault();
