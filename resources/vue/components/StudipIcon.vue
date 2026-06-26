@@ -93,21 +93,23 @@ const IconContent = defineComponent({
         style: Object as PropType<CSSProperties>
     },
     setup(props, { attrs }) {
-        const baseAttrs = mergeProps(attrs, {
-            class: props.cssClass,
-            role: props.ariaRole,
-            style: props.style,
-        });
-
-        return () => props.isSvg
-            ? h('div', {
-                innerHTML: props.content,
-                ...baseAttrs
-            })
-            : h('img', {
-                src: props.content,
-                ...baseAttrs
+        return () => {
+            const baseAttrs = mergeProps(attrs, {
+                class: props.cssClass,
+                role: props.ariaRole,
+                style: props.style,
             });
+
+            return props.isSvg
+                ? h('div', {
+                    innerHTML: props.content,
+                    ...baseAttrs
+                })
+                : h('img', {
+                    src: props.content,
+                    ...baseAttrs
+                });
+        }
     }
 });
 </script>
