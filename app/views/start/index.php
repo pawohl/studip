@@ -5,18 +5,6 @@
  * @var MessageBox[] $messages
  */
 ?>
-<h1 class="sr-only">
-    <? if ($GLOBALS['perm']->have_perm('root')) :?>
-        <?= _("Startseite für Root bei Stud.IP")?>
-    <? elseif ($GLOBALS['perm']->have_perm('admin')) : ?>
-        <?= _("Startseite für Admins")?>
-    <? elseif ($GLOBALS['perm']->have_perm('dozent')) :?>
-        <?= _("Startseite für Lehrende")?>
-    <? else : ?>
-        <?= _("Ihre persönliche Startseite")?>
-    <? endif ?>
-</h1>
-
 <?= implode('', $messages) ?>
 
 <?php
