@@ -305,6 +305,11 @@ class Icon implements JsonSerializable
         $attributes['class'] = 'as-link';
         unset($attributes['src']);
 
+        if (isset($attributes['alt'])) {
+            $attributes['aria-label'] = $attributes['alt'];
+            unset($attributes['alt']);
+        }
+
         return sprintf('<button %s>%s</button>', $attributes, $this->asImg($size));
     }
 
