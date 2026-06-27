@@ -241,13 +241,11 @@ class Icon implements JsonSerializable
             [$view_attributes, $size] = [$size, self::SIZE_DEFAULT];
         }
 
-        $size ??= self::SIZE_DEFAULT;
+        $attributes = $this->prepareHTMLAttributes($size, $view_attributes);
+        $title = '';
 
         if ($force_img_tag || $this->isStatic()) {
-            return sprintf(
-                '<img %s>',
-                $this->prepareHTMLAttributes($size, $view_attributes)
-            );
+            return sprintf('<img %s>', $attributes);
         }
 
         $cacheKey = md5(json_encode([
@@ -266,21 +264,12 @@ class Icon implements JsonSerializable
             return '';
         }
 
-        $titleTag = '';
-        if (!empty($view_attributes['title'])) {
-            $titleTag = '<title>' . htmlspecialchars($view_attributes['title']) . '</title>';
-            unset($view_attributes['title']); // Entfernt 'title' aus den View-Attributen, da es separat hinzugefügt wird
+        if (isset($attributes['title'])) {
+            $title = '<title>' . htmlReady($attributes['title']) . '</title>';
+            unset($attributes['title']);
         }
 
-        $attributes = HTMLAttributes::from($view_attributes);
-        $attributes->addAttribute('class', 'studip-icon');
-        if ($this->role) {
-            $attributes->addAttribute('class', "icon-role-{$this->role}");
-        }
-
-        if ($size !== false) {
-            $attributes->addAttribute('style', "width: {$size}px; height: {$size}px");
-        }
+        unset($attributes['src']);
 
         $svgContent = file_get_contents($path);
         $svgContent = preg_replace('/fill="(?!none)[^"]+"/', 'fill="currentColor"', $svgContent);
@@ -289,8 +278,8 @@ class Icon implements JsonSerializable
             return '<svg' . $matches[1] . ' ' . $attributes->asString() . '>';
         }, $svgContent);
 
-        if (!empty($titleTag)) {
-            $svgContent = preg_replace('/(<svg[^>]*>)/', '$1' . $titleTag, $svgContent, 1);
+        if ($title) {
+            $svgContent = preg_replace('/(<svg[^>]*>)/', '$1' . $title, $svgContent, 1);
         }
 
         self::$svg_cache[$cacheKey] = $svgContent;
