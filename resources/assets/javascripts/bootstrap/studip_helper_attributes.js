@@ -12,8 +12,18 @@ function connectProxyAndProxied() {
         const proxy = $(this);
         const proxyId = proxy.uniqueId().attr('id');
         const proxied = proxy.data('proxyfor');
+
+        // Add aria-label if missing
+        if (proxy.is(':checkbox') && !proxy.attr('aria-label')) {
+            proxy.attr('aria-label', $gettext('Alle Einträge auswählen'));
+        }
+
         // The following seems like a hack but works perfectly fine.
         $(proxied).each(function () {
+            if ($(this).is(':checkbox') && !$(this).attr('aria-label')) {
+                $(this).attr('aria-label', $gettext('Eintrag auswählen'));
+            }
+
             const proxiedBy = ($(this).attr('data-proxiedby') || '').split(',').filter(a => a.length > 0);
             if (!proxiedBy.includes(`#${proxyId}`)) {
                 proxiedBy.push(`#${proxyId}`);
