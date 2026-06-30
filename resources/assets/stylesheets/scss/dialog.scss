@@ -116,11 +116,13 @@
     position: absolute;
     margin-top: -16px;
     top: 50%;
-    right: 34px; // This is ugly but hard to avoid since the close button's position on a dialog is also hardcoded
+    right: 41px; // This is ugly but hard to avoid since the close button's position on a dialog is also hardcoded
     @include icon(before, question-circle, $size: 24px);
     @include square(32px);
     &::before {
         color: var(--color--info-contrast);
+        margin-left: 4px;
+        margin-top: 2px;
     }
 }
 
