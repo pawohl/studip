@@ -11,10 +11,6 @@
     height: 22px;
     transition: width var(--transition-duration);
 
-    &:focus-within {
-        border-color: -webkit-focus-ring-color;
-    }
-
     // Reset alignments among browsers
     > * {
         box-sizing: border-box;
@@ -33,7 +29,6 @@
     #globalsearch-input {
         flex: 1;
         border: none;
-        outline: none;
         margin-right: 5px;
         color: var(--color--font-inverted);
         background-color: var(--color--brand-primary);
