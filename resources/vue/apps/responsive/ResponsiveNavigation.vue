@@ -1,147 +1,152 @@
 <template>
-    <div role="navigation" ref="container" id="responsive-navigation-container" v-show="menuNeeded">
-        <div class="responsive-navigation-header">
-            <button
-                id="responsive-navigation-button"
-                class="styleless"
-                :aria-label="showMenu ? $gettext('Navigation schließen') : $gettext('Navigation öffnen')"
-                @click.prevent="toggleMenu"
-                @keydown.prevent.space="toggleMenu"
-                @keydown.prevent.enter="toggleMenu"
-                :aria-expanded="showMenu"
-                aria-controls="responsive-navigation-items"
-            >
-                <studip-icon
-                    shape="hamburger"
-                    role="info_alt"
-                    :alt="showMenu ? $gettext('Navigation schließen') : $gettext('Navigation öffnen')"
-                    :size="iconSize"
-                    :class="showMenu ? 'menu-open' : 'menu-closed'"
+    <focus-trap :active="showMenu" :allow-outside-click="true" ref="focustrap">
+        <div role="navigation"
+             id="responsive-navigation-container"
+             v-show="menuNeeded"
+        >
+            <div class="responsive-navigation-header">
+                <button
+                    id="responsive-navigation-button"
+                    class="styleless"
+                    :aria-label="showMenu ? $gettext('Navigation schließen') : $gettext('Navigation öffnen')"
+                    @click.prevent="toggleMenu"
+                    @keydown.prevent.space="toggleMenu"
+                    @keydown.prevent.enter="toggleMenu"
+                    :aria-expanded="showMenu"
+                    aria-controls="responsive-navigation-items"
                 >
-                </studip-icon>
-            </button>
-        </div>
-        <transition name="appear" appear>
-            <nav v-show="showMenu" id="responsive-navigation-items" class="responsive" ref="navigation">
-                <header v-if="me.username !== 'nobody'">
-                    <template v-if="!avatarMenuOpen">
-                        <section class="profile-info">
-                            <div class="profile-pic">
-                                <img
-                                    :src="me.avatar"
+                    <studip-icon
+                        shape="hamburger"
+                        role="info_alt"
+                        :alt="showMenu ? $gettext('Navigation schließen') : $gettext('Navigation öffnen')"
+                        :size="iconSize"
+                        :class="showMenu ? 'menu-open' : 'menu-closed'"
+                    >
+                    </studip-icon>
+                </button>
+            </div>
+            <transition name="appear" appear>
+                <nav v-show="showMenu" id="responsive-navigation-items" class="responsive" ref="navigation">
+                    <header v-if="me.username !== 'nobody'">
+                        <template v-if="!avatarMenuOpen">
+                            <section class="profile-info">
+                                <div class="profile-pic">
+                                    <img
+                                        :src="me.avatar"
+                                        @click.prevent="toggleAvatarMenu"
+                                        :title="$gettext('Profilnavigation öffnen')"
+                                        :aria-label="$gettext('Profilnavigation öffnen')"
+                                    />
+                                </div>
+                                <div class="profile-data">
+                                    <div>{{ me.fullname }}</div>
+                                    <div>{{ me.email }} ({{ me.perm }})</div>
+                                </div>
+                            </section>
+                            <section class="open-avatarmenu">
+                                <button
+                                    class="styleless"
+                                    ref="openAvatarmenu"
+                                    @keydown.prevent.enter="toggleAvatarMenu"
+                                    @keydown.prevent.space="toggleAvatarMenu"
                                     @click.prevent="toggleAvatarMenu"
                                     :title="$gettext('Profilnavigation öffnen')"
                                     :aria-label="$gettext('Profilnavigation öffnen')"
-                                />
-                            </div>
-                            <div class="profile-data">
-                                <div>{{ me.fullname }}</div>
-                                <div>{{ me.email }} ({{ me.perm }})</div>
-                            </div>
-                        </section>
-                        <section class="open-avatarmenu">
-                            <button
-                                class="styleless"
-                                ref="openAvatarmenu"
-                                @keydown.prevent.enter="toggleAvatarMenu"
-                                @keydown.prevent.space="toggleAvatarMenu"
-                                @click.prevent="toggleAvatarMenu"
-                                :title="$gettext('Profilnavigation öffnen')"
-                                :aria-label="$gettext('Profilnavigation öffnen')"
+                                >
+                                    <studip-icon shape="arr_1right" role="info_alt" :size="iconSize" alt=""></studip-icon>
+                                </button>
+                            </section>
+                        </template>
+                        <template v-else>
+                            <focus-trap :active="true" :return-focus-on-deactivate="true" :click-outside-deactivates="true">
+                                <div>
+                                    <div class="close-avatarmenu">
+                                        <button
+                                            class="styleless"
+                                            ref="closeAvatarmenu"
+                                            @keydown.prevent.enter="toggleAvatarMenu"
+                                            @keydown.prevent.space="toggleAvatarMenu"
+                                            @click="toggleAvatarMenu"
+                                            :title="$gettext('Profilnavigation schließen')"
+                                            :aria-label="$gettext('Profilnavigation schließen')"
+                                        >
+                                            <studip-icon shape="arr_1left" role="info_alt" :size="iconSize"></studip-icon>
+                                        </button>
+                                    </div>
+                                    <ul class="avatar-navigation">
+                                        <navigation-item
+                                            v-for="(item, index) in avatarNavigation.children"
+                                            :key="index"
+                                            :item="item"
+                                        ></navigation-item>
+                                    </ul>
+                                </div>
+                            </focus-trap>
+                        </template>
+                    </header>
+                    <ul class="main-navigation">
+                        <li v-if="currentParent != null" class="navigation-item navigation-up">
+                            <div
+                                class="navigation-title"
+                                :title="$gettext('Zum Start')"
+                                :aria-label="$gettext('Zum Start')"
                             >
-                                <studip-icon shape="arr_1right" role="info_alt" :size="iconSize" alt=""></studip-icon>
-                            </button>
-                        </section>
-                    </template>
-                    <template v-else>
-                        <focus-trap :active="true" :return-focus-on-deactivate="true" :click-outside-deactivates="true">
-                            <div>
-                                <div class="close-avatarmenu">
-                                    <button
-                                        class="styleless"
-                                        ref="closeAvatarmenu"
-                                        @keydown.prevent.enter="toggleAvatarMenu"
-                                        @keydown.prevent.space="toggleAvatarMenu"
-                                        @click="toggleAvatarMenu"
-                                        :title="$gettext('Profilnavigation schließen')"
-                                        :aria-label="$gettext('Profilnavigation schließen')"
-                                    >
-                                        <studip-icon shape="arr_1left" role="info_alt" :size="iconSize"></studip-icon>
-                                    </button>
-                                </div>
-                                <ul class="avatar-navigation">
-                                    <navigation-item
-                                        v-for="(item, index) in avatarNavigation.children"
-                                        :key="index"
-                                        :item="item"
-                                    ></navigation-item>
-                                </ul>
+                                <button
+                                    class="styleless"
+                                    @click="moveTo('/')"
+                                    @keydown.prevent.enter="moveTo('/')"
+                                    @keydown.prevent.space="moveTo('/')"
+                                >
+                                    <div class="navigation-icon">
+                                        <studip-icon shape="arr_2up" role="info_alt" :size="iconSize - 4"></studip-icon>
+                                    </div>
+                                    <div class="navigation-text">
+                                        {{ $gettext('Start') }}
+                                    </div>
+                                </button>
                             </div>
-                        </focus-trap>
-                    </template>
-                </header>
-                <ul class="main-navigation">
-                    <li v-if="currentParent != null" class="navigation-item navigation-up">
-                        <div
-                            class="navigation-title"
-                            :title="$gettext('Zum Start')"
-                            :aria-label="$gettext('Zum Start')"
-                        >
-                            <button
-                                class="styleless"
-                                @click="moveTo('/')"
-                                @keydown.prevent.enter="moveTo('/')"
-                                @keydown.prevent.space="moveTo('/')"
-                            >
-                                <div class="navigation-icon">
-                                    <studip-icon shape="arr_2up" role="info_alt" :size="iconSize - 4"></studip-icon>
-                                </div>
-                                <div class="navigation-text">
-                                    {{ $gettext('Start') }}
-                                </div>
-                            </button>
-                        </div>
-                    </li>
-                    <li v-if="currentParent != null" class="navigation-item navigation-current">
-                        <div class="navigation-title">
-                            <button
-                                class="styleless"
-                                @click="moveTo(currentParent.path)"
-                                @keydown.prevent.enter="moveTo(currentParent.path)"
-                                @keydown.prevent.space="moveTo(currentParent.path)"
-                                :title="$gettext('Eine Ebene höher')"
-                                :aria-label="$gettext('Eine Ebene höher')"
-                            >
-                                <div class="navigation-icon">
-                                    <studip-icon shape="arr_1left" role="info_alt" :size="iconSize - 4"></studip-icon>
-                                </div>
-                                <div class="navigation-text">
-                                    {{ $gettext('Eine Ebene höher') }}
-                                </div>
-                            </button>
-                        </div>
-                    </li>
-                    <navigation-item
-                        v-for="(item, index) in currentNavigation.children"
-                        :key="index"
-                        :item="item"
-                        :active="item.active"
-                    ></navigation-item>
-                </ul>
-            </nav>
-        </transition>
-        <responsive-content-bar
-            v-if="(isResponsive || isFullscreen) && !isFocusMode"
-            :has-sidebar="hasSidebar"
-            :title="contentbarTitle"
-            :aria-label="contentbarTitle"
-            ref="contentbar"
-        ></responsive-content-bar>
-        <responsive-skip-links
-            v-if="(isResponsive || isFullscreen) && hasSkiplinks"
-            :links="skipLinks"
-        ></responsive-skip-links>
-    </div>
+                        </li>
+                        <li v-if="currentParent != null" class="navigation-item navigation-current">
+                            <div class="navigation-title">
+                                <button
+                                    class="styleless"
+                                    @click="moveTo(currentParent.path)"
+                                    @keydown.prevent.enter="moveTo(currentParent.path)"
+                                    @keydown.prevent.space="moveTo(currentParent.path)"
+                                    :title="$gettext('Eine Ebene höher')"
+                                    :aria-label="$gettext('Eine Ebene höher')"
+                                >
+                                    <div class="navigation-icon">
+                                        <studip-icon shape="arr_1left" role="info_alt" :size="iconSize - 4"></studip-icon>
+                                    </div>
+                                    <div class="navigation-text">
+                                        {{ $gettext('Eine Ebene höher') }}
+                                    </div>
+                                </button>
+                            </div>
+                        </li>
+                        <navigation-item
+                            v-for="(item, index) in currentNavigation.children"
+                            :key="index"
+                            :item="item"
+                            :active="item.active"
+                        ></navigation-item>
+                    </ul>
+                </nav>
+            </transition>
+            <responsive-content-bar
+                v-if="(isResponsive || isFullscreen) && !isFocusMode"
+                :has-sidebar="hasSidebar"
+                :title="contentbarTitle"
+                :aria-label="contentbarTitle"
+                ref="contentbar"
+            ></responsive-content-bar>
+            <responsive-skip-links
+                v-if="(isResponsive || isFullscreen) && hasSkiplinks"
+                :links="skipLinks"
+            ></responsive-skip-links>
+        </div>
+    </focus-trap>
 </template>
 
 <script>
@@ -189,11 +194,11 @@ export default {
             avatarNavigation: studipNavigation.avatar,
             avatarMenuOpen: false,
             classObserver: null,
-            dialogObserver: null,
             hasSkiplinks: document.querySelector('#skiplink_list') !== null,
             hasSidebar: false,
             hasContentbar: false,
             contentbarTitle: '',
+            boundClickHandler: null,
         };
     },
     computed: {
@@ -489,27 +494,12 @@ export default {
 
             return navigation.navigation;
         },
-        captureOutsideClick(target) {
-            if (this.showMenu && target !== null) {
-                if (!this.$refs.container.contains(target)) {
-                    this.toggleMenu();
-                }
-            }
-        },
-    },
-    watch: {
-        showMenu(newState) {
-            if (newState) {
-                // Click outside navigation menu should close it.
-                document.addEventListener(
-                    'click',
-                    (event) => {
-                        this.captureOutsideClick(event.target);
-                    },
-                    true,
-                );
-            } else {
-                document.removeEventListener('click', this.captureOutsideClick(null), true);
+        captureOutsideClick(event) {
+            if (
+                this.showMenu
+                && !this.$refs.focustrap.$el.contains(event.target)
+            ) {
+                this.toggleMenu();
             }
         },
     },
@@ -612,10 +602,15 @@ export default {
 
         // Check initial state after load
         this.headerMagic = document.querySelector('body').classList.contains('fixed');
+
+        // Click outside navigation menu should close it.
+        this.boundClickHandler = this.captureOutsideClick.bind(this);
+        document.addEventListener('click', this.boundClickHandler, true);
     },
     beforeUnmount() {
+        document.removeEventListener('click', this.boundClickHandler, true);
+
         this.classObserver.disconnect();
-        this.dialogObserver.disconnect();
         document.getElementById('header-links').style.display = null;
         STUDIP.eventBus.off('responsive-navigation-move-to');
         STUDIP.eventBus.off('toggle-compact-navigation');
