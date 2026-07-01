@@ -58,6 +58,8 @@ class Tooltip {
      *                             defaults to 'studip-tooltip'
      */
     constructor(x, y, content, css_class) {
+        this.domElement = null;
+
         // Obtain unique id of the tooltip
         this.id = Tooltip.getId();
 
@@ -69,10 +71,19 @@ class Tooltip {
         this.element.attr('role', 'tooltip');
         this.element.appendTo('body');
 
+        // Create bound event handlers
+        this.boundKeyHandler = this.#keyHandler.bind(this);
+        this.boundClickHandler = this.#clickHandler.bind(this);
+
         // Set position and content and paint the tooltip
         this.position(x, y);
         this.update(content);
         this.paint();
+    }
+
+    connectWithDOMElement(element) {
+        this.domElement = element;
+        this.domElement.addEventListener('click', this.boundClickHandler);
     }
 
     /**
@@ -88,6 +99,7 @@ class Tooltip {
      *
      * @param {int} x - Horizontal offset
      * @param {int} y - Vertical offset
+     * @param {boolean} left_arrow
      */
     translateArrows(x, y, left_arrow = false) {
         CSS.removeRule(`#${this.id}::before`);
@@ -188,12 +200,26 @@ class Tooltip {
      * This method implicitely calls paint before a tooltip is shown (in case
      * it was forgotten).
      *
-     * @param {bool} visible - Optional visibility parameter to set the
+     * @param {boolean|null} visible - Optional visibility parameter to set the
      *                         tooltip to a certain state
      */
-    toggle(visible) {
+    toggle(visible = null) {
+        visible = visible ?? !this.element.is(':visible');
+
         if (visible) {
+            document.addEventListener(
+                'keydown',
+                this.boundKeyHandler,
+                // Capture: tooltips inside dialogs should consume Escape before the dialog closes.
+                true
+            );
             this.paint();
+        } else {
+            document.removeEventListener(
+                'keydown',
+                this.boundKeyHandler,
+                true
+            );
         }
         this.element.toggle(visible);
     }
@@ -220,7 +246,30 @@ class Tooltip {
      * Removes the tooltip
      */
     remove() {
+        // Hide first to remove global event listener
+        this.hide();
+
+        this.domElement?.removeEventListener('click', this.boundClickHandler);
+
         this.element.remove();
+    }
+
+    #keyHandler(event) {
+        if (event.key !== 'Escape') {
+            return;
+        }
+
+        this.hide();
+
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    #clickHandler(event) {
+        this.toggle();
+
+        event.preventDefault();
+        event.stopPropagation();
     }
 }
 

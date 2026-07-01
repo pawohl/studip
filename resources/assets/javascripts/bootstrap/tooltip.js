@@ -41,6 +41,7 @@ $(document).on('mouseenter mouseleave focusin focusout', '[data-tooltip],.toolti
         $(this).attr('data-tooltip', content);
 
         tooltip = new STUDIP.Tooltip(x, y, content, tooltipClasses);
+        tooltip.connectWithDOMElement(this);
 
         data.tooltipObject = tooltip;
 
