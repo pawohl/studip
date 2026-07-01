@@ -71,6 +71,15 @@ class LogoutController extends AuthenticatedController
             );
         }
 
-        $this->redirect(URLHelper::getURL('dispatch.php/start'));
+        // Check if location header was already set by any sso plugin
+        $header = array_find(
+            headers_list(),
+            static fn ($header) => str_starts_with(strtolower($header), 'location:')
+        );
+        if ($header) {
+            $this->render_nothing();
+        } else {
+            $this->redirect(URLHelper::getURL('dispatch.php/start'));
+        }
     }
 }
