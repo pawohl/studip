@@ -26,12 +26,12 @@ article.studip.feedback-stream {
 }
 .feedback-entry-add {
     .rating {
-        label.checked img,
-        label.hover img {
+        label.checked svg,
+        label.hover svg {
             opacity: 1;
         }
-        label img,
-        label.out img {
+        label svg,
+        label.out svg {
             opacity: 0.2;
         }
         label {
