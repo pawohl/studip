@@ -37,7 +37,8 @@ div.i18n_group {
         }
     }
 
-    > div.i18n {
+    > div.i18n,
+    .length-hint-wrapper {
         input[type=text], > textarea, .editor_toolbar .buttons, .ck.ck-toolbar_grouping {
             padding-left: calc($max-width + 6px);
         }
