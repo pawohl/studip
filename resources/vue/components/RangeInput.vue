@@ -7,11 +7,10 @@
                :step="step"
                :aria-valuemin="min"
                :aria-valuemax="max"
-               :aria-valuenow="myValue"
-               v-bind="$attrs"
-               v-model="myValue">
+               :aria-valuenow="value"
+               v-model.number="value">
         <output for="fader">
-            {{ $gettext('%{myValue} von %{max}', {myValue: myValue || '1', max: max}) }}
+            {{ $gettext('%{myValue} von %{max}', {myValue: value, max: max}) }}
         </output>
     </div>
 </template>
@@ -45,24 +44,25 @@ export default {
             default: 1
         }
     },
-    data () {
-        return {
-            myValue: 1
-        };
-    },
-    mounted () {
-        this.myValue = this.modelValue > this.min ? this.modelValue : this.min;
-        if (this.myValue > this.max) {
-            this.myValue = this.max;
-        }
-    },
     inheritAttrs: false,
-    watch: {
-        myValue: {
-            handler(newValue) {
-                this.$emit('update:modelValue', newValue);
+    computed: {
+        value: {
+            get() {
+                const value = Number(this.modelValue ?? this.min);
+
+                if (value < this.min) {
+                    return this.min;
+                }
+
+                if (value > this.max) {
+                    return this.max;
+                }
+
+                return value;
             },
-            deep: true
+            set(value) {
+                this.$emit('update:modelValue', Number(value));
+            }
         }
     }
 }

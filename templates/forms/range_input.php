@@ -8,8 +8,7 @@
 </label>
 <range-input v-model="<?= htmlReady($name) ?>"
              name="<?= htmlReady($name) ?>"
-             value="<?= htmlReady($value) ?>"
-             id="<?= $id ?>"
+             id="<?= htmlReady($id) ?>"
              <? if (isset($min)) printf(':min="%s"', $min); ?>
              <? if (isset($max)) printf(':max="%s"', $max); ?>
              <? if (isset($step)) printf(':max="%s"', $step); ?>
