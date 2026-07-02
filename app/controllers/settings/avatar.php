@@ -1,21 +1,15 @@
 <?php
+require_once 'settings.php';
 
-class Settings_AvatarController extends AuthenticatedController
+class Settings_AvatarController extends Settings_SettingsController
 {
-    public function before_filter(&$action, &$args)
-    {
-        parent::before_filter($action, $args);
-
-        if (!$GLOBALS['perm']->have_profile_perm('user', User::findCurrent()->id)) {
-            throw new AccessDeniedException(_('Sie dürfen dieses Profil nicht bearbeiten'));
-        }
-    }
-    public function index_action()
+    public function index_action(): void
     {
         PageLayout::setTitle(_('Profilbild anpassen'));
         Navigation::activateItem('/profile/edit/avatar');
-        $this->user_id = User::findCurrent()->id;
-        $avatar = Avatar::getAvatar($this->user_id);
+
+        $this->user_id = $this->user->id;
+        $avatar = Avatar::getAvatar($this->user->id);
         $this->avatar_url = $avatar->getURL(Avatar::NORMAL);
     }
 }
