@@ -316,7 +316,7 @@ class CoursewareCronjob extends CronJob
          */
         Courseware\Certificate::deleteByUnit_id($unit->id);
 
-        $recipients = $course->getMembersWithStatus('autor', true);
+        $recipients = $course->getMembersWithStatus('autor');
 
         foreach (array_chunk($recipients, 100) as $chunkedRecipients) {
             $mail = new StudipMail();
