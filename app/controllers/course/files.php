@@ -60,7 +60,7 @@ class Course_FilesController extends AuthenticatedController
 
         if ($this->topFolder && $this->topFolder->isSubfolderAllowed($GLOBALS['user']->id)) {
             $actions->addLink(
-                _('Neuer Ordner'),
+                _('Ordner anlegen'),
                 URLHelper::getUrl('dispatch.php/file/new_folder/' . $this->topFolder->getId()),
                 Icon::create('folder-empty')
             )->asDialog();

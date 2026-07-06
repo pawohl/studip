@@ -67,7 +67,7 @@
     $vue_topFolder['buttons'] .= '</span>';
     if ($topFolder->isSubfolderAllowed($GLOBALS['user']->id)) {
         $vue_topFolder['buttons'] .= Studip\LinkButton::create(
-            _('Neuer Ordner'),
+            _('Ordner anlegen'),
             $controller->url_for('file/new_folder/' . $topFolder->getId()),
             ['data-dialog' => '']
         );
