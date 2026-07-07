@@ -154,8 +154,11 @@ form div.files-search {
                 border: 1px solid var(--light-gray-color-40);
                 border-left: none;
                 border-radius: 0;
-                border-top-right-radius: var(--border-radius-search);
-                border-bottom-right-radius: var(--border-radius-search);
+
+                &:last-of-type {
+                    border-top-right-radius: var(--border-radius-search);
+                    border-bottom-right-radius: var(--border-radius-search);
+                }
             }
         }
     }
