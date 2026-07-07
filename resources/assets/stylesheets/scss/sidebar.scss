@@ -143,8 +143,11 @@ ul.widget-list {
             background-color: var(--color--sidebar-active);
             border-left-color: var(--color--sidebar-marker-active);
 
-            a, button {
-                color: var(--color--sidebar-item-hover);
+            a,
+            button {
+                &:not([disabled], .no-result) {
+                    color: var(--color--sidebar-item-hover);
+                }
                 text-decoration: none;
 
                 svg {

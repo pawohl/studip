@@ -165,8 +165,8 @@ label.inactive-settings-category {
     }
 }
 
-a.no-result {
-    color: var(--base-gray);
+ul.widget-list a.no-result {
+    color: var(--color--gray-4);
     pointer-events: none;
     cursor: default;
 }

@@ -340,7 +340,9 @@ const Search = {
      * Grey out all categories in the sidebar with no results.
      */
     greyOutSearchCategories: function () {
-        $('a[id^="search_category_"]').addClass('no-result').attr('tabindex', '-1');
+        $('a[id^="search_category_"]')
+            .addClass('no-result')
+            .attr('tabindex', '-1');
     },
 
     /**
