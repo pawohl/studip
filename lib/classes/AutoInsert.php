@@ -94,6 +94,11 @@ class AutoInsert
      */
     public function saveUser($user_id, $status = false)
     {
+        $user = User::find($user_id);
+        if (!$user) {
+            throw new Exception("Unknown user (id: {$user_id})");
+        }
+
         $domains = [];
         if (!$status) {
             $status = $GLOBALS['perm']->get_perm($user_id);
@@ -136,31 +141,45 @@ class AutoInsert
         $added   = [];
         $removed = [];
 
-        foreach ($toAdd as $id => $seminar) {
-            if ($this->addUser($user_id, $seminar)) $added[] = $seminar['name'];
-        }
-        foreach ($toRemove as $id => $seminar) {
-            if ($this->removeUser($user_id, $seminar)) $removed[] = $seminar['name'];
-        }
+        Course::findEachMany(
+            function (Course $course) use ($user, &$added) {
+                if ($this->addUser($user, $course)) {
+                    $added[] = $course->name;
+                }
+            },
+            array_column($toAdd, 'Seminar_id')
+        );
+
+        Course::findEachMany(
+            function (Course $course) use ($user, &$removed) {
+                if ($this->removeUser($user, $course)) {
+                    $removed[] = $course->name;
+                }
+            },
+            array_column($toRemove, 'Seminar_id')
+        );
 
         return ['added' => $added, 'removed' => $removed];
     }
 
-    private function addUser($user_id, $seminar)
+    private function addUser(User $user, Course $course): bool
     {
-        return CourseMember::insertCourseMember($seminar['Seminar_id'], $user_id, 'autor');
+        try {
+            $course->addMember($user, regard_contingent: false);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
-    private function removeUser($user_id, $seminar)
+    private function removeUser(User $user, Course $course): bool
     {
-        $rows = CourseMember::deleteBySQL(' user_id = ? AND Seminar_id = ?', [$user_id, $seminar['Seminar_id']]);
-        $statusgruppe_rows =  StatusgruppeUser::deleteBySQL(
-            'user_id = ? AND statusgruppe_id IN (SELECT statusgruppe_id FROM statusgruppen WHERE range_id = ?)',
-            [$user_id, $seminar['Seminar_id']]
-        );
-        if ($rows > 0 || $statusgruppe_rows > 0) return true;
-
-        return false;
+        try {
+            $course->deleteMember($user);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
     /**

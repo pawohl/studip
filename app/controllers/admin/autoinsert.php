@@ -173,7 +173,7 @@ class Admin_AutoinsertController extends AuthenticatedController
                     if ($force || !AutoInsert::checkAutoInsertUser($seminar_id, $user_id)) {
                         $user = User::find($user_id);
                         if ($user) {
-                            $real_users += $course->addMember($user) ? 1 : 0;
+                            $real_users += $course->addMember($user, regard_contingent: false) ? 1 : 0;
                             AutoInsert::saveAutoInsertUser($seminar_id, $user_id);
                         }
                     }

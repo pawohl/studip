@@ -301,7 +301,7 @@ class Course_MembersController extends AuthenticatedController
         User::findEachMany(
             function (User $user) use ($course, &$added_c, &$errors) {
                 try {
-                    $course->addMember($user);
+                    $course->addMember($user, regard_contingent: false);
                     $added_c++;
                 } catch (\Studip\Exception $e) {
                     $errors[] = $e->getMessage();
@@ -717,7 +717,7 @@ class Course_MembersController extends AuthenticatedController
                         $user = User::find($row['user_id']);
                         if ($user) {
                             try {
-                                $course->addMember($user);
+                                $course->addMember($user, regard_contingent: false);
                                 $csv_count_insert++;
                             } catch (\Studip\Exception $e) {
                             }
@@ -739,7 +739,7 @@ class Course_MembersController extends AuthenticatedController
                 $user = User::findByUsername($selected_user);
                 if ($user) {
                     try {
-                        $course->addMember($user);
+                        $course->addMember($user, regard_contingent: false);
                         $csv_count_insert++;
                     } catch (\Studip\Exception $e) {
                     }
@@ -2223,7 +2223,7 @@ class Course_MembersController extends AuthenticatedController
                     continue;
                 }
                 $target_course = Course::find($target_course_id);
-                if ($target_course->addMember($user)) {
+                if ($target_course->addMember($user, regard_contingent: false)) {
                     if ($move) {
                         $remove_from = Course::find($this->course_id);
                         $remove_from->deleteMember($user);
