@@ -45,7 +45,6 @@
             ref="composer"
             v-if="threadCommentable"
             v-model="composerText"
-            @change="onChangeComposerText"
             :placeholder="writerTextareaPlaceholder"
             :progress="uploadProgress"
             @add-posting="onAddPosting"
@@ -179,9 +178,6 @@ export default {
             this.$emit('change-comment', comment);
             this.$refs.composer.focusTextarea();
         },
-        onChangeComposerText(text) {
-            setBlubberMemory(this.thread, text);
-        },
         onDrop(event) {
             if (!event.dataTransfer?.types.includes('Files')) {
                 return;
@@ -257,6 +253,9 @@ export default {
                 }
             },
             immediate: true,
+        },
+        composerText(text) {
+            setBlubberMemory(this.thread, text);
         }
     }
 };
