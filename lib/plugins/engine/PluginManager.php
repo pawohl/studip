@@ -420,6 +420,18 @@ class PluginManager
             $this->plugins[$id]['name'] = $name;
             $this->plugins[$id]['path'] = $path;
             $this->plugins[$id]['type'] = $type;
+
+            // Delete tool activations if the plugin is no longer a
+            // StandardPlugin
+            if (!in_array(StandardPlugin::class, $type)) {
+                ToolActivation::findEachBySQL(
+                    function (ToolActivation $activation) use ($id) {
+                        $this->setPluginActivated($id, $activation->range_id, false);
+                    },
+                    'plugin_id = ?',
+                    [$id]
+                );
+            }
         } else {
             foreach ($this->plugins as $plugin) {
                 $common_types = array_intersect($type, $plugin['type']);
@@ -452,16 +464,6 @@ class PluginManager
 
             $db->exec("INSERT INTO roles_plugins (roleid, pluginid)
                    SELECT roleid, $id FROM roles WHERE `system` = 'y' AND rolename != 'Nobody'");
-        }
-
-        if (!in_array(StandardPlugin::class, $type)) {
-            ToolActivation::findEachBySQL(
-                function (ToolActivation $activation) use ($id) {
-                    $this->setPluginActivated($id, $activation->range_id, false);
-                },
-                'plugin_id = ?',
-                [$id]
-            );
         }
 
         return $id;
