@@ -17,7 +17,16 @@
                     </button>
                 </li>
             </ul>
-            <quicksearch v-if="quicksearch" :searchtype="quicksearch" name="qs" @input="addRange" :placeholder="$gettext('Suchen')"></quicksearch>
+            <label :for="`editablelist-search-${id}`" class="sr-only">
+                {{ $gettext('Suchen') }}
+            </label>
+            <quicksearch v-if="quicksearch"
+                         :id="`editablelist-search-${id}`"
+                         :searchtype="quicksearch"
+                         name="qs"
+                         @input="addRange"
+                         :placeholder="$gettext('Suchen')"
+            />
         </div>
 
         <label v-if="selectable">
@@ -41,6 +50,8 @@
 </template>
 
 <script>
+let uniqueId = 0;
+
 export default {
     name: 'editable-list',
     emits: ['input', 'items'],
@@ -79,7 +90,8 @@ export default {
         return {
             resort: false, //this is just for triggering the computed property sortedItems to be sorted again
             preventChangeOfQuickselect: false,
-            allItems: this.items ?? []
+            allItems: this.items ?? [],
+            id: uniqueId++,
         };
     },
     methods: {
