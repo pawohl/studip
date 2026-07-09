@@ -93,7 +93,15 @@ class MemcachedCache extends Cache
      */
     public function getStats(): array
     {
-        return $this->memcache->getStats();
+        $stats = $this->memcache->getStats();
+
+        if ($stats === false) {
+            throw new \Exception(
+                'Unable to retrieve Memcached stats: ' . $this->memcache->getResultMessage()
+            );
+        }
+
+        return $stats;
     }
 
     /**
