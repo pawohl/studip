@@ -527,3 +527,16 @@ button.takes-place-status-toggle {
     border: none;
     background: none;
 }
+
+.resource-category-form {
+    .resource-category-form-icon {
+        .resource-category-form-icon-label {
+            display: inline-block;
+            margin-right: 2em;
+
+            .resource-category-form-icon-input {
+                vertical-align: top
+            }
+        }
+    }
+}

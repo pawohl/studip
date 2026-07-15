@@ -794,14 +794,19 @@ class ResourceCategory extends SimpleORMap
      */
     public function getIcon($role = Icon::ROLE_INFO)
     {
-        if ($this->iconnr == 0) {
-            //No special icon
-            return Icon::create('resources', $role);
-        } elseif ($this->iconnr == 1) {
-            return Icon::create('home', $role);
-        } else {
-            //No known icon
-            return Icon::create('resources', $role);
-        }
+        $icons = self::getAvailableIcons();
+        $name = $icons[$this->iconnr] ?? 'resources';
+
+        return Icon::create($name, $role);
+    }
+
+    public static function getAvailableIcons(): array
+    {
+        return [
+            0 => 'resources',
+            1 => 'home',
+            2 => 'institute',
+            3 => 'room',
+        ];
     }
 }

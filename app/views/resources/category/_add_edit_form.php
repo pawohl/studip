@@ -33,11 +33,23 @@
                 </select>
                 <p><?= _('Hinweis: Je nach gewählter Datenklasse werden automatisch weitere Eigenschaften zur Kategorie hinzugefügt.') ?></p>
             </label>
-            <label>
-                <?= _('Icon-Nummer') ?>
-                <input type="number" name="iconnr" value="<?= htmlReady($iconnr) ?>"
-                       min="0" max="4" step="1">
-            </label>
+            <fieldset class="undecorated resource-category-form-icon">
+                <legend>
+                    <?= _('Icon') ?>
+                </legend>
+                    <?php foreach (ResourceCategory::getAvailableIcons() as $value => $icon) : ?>
+                            <label for="iconnr_<?= $value ?>" class="resource-category-form-icon-label">
+                                <input type="radio" 
+                                    id="iconnr_<?= $value ?>" 
+                                    name="iconnr" 
+                                    value="<?= $value ?>"
+                                    class="resource-category-form-icon-input"
+                                    <?= (int)$iconnr === $value ? 'checked' : '' ?>>
+                                <?= Icon::create($icon)->asImg(20, ['aria-hidden' => true]) ?>
+                                <span class="sr-only"><?= htmlReady($icon) ?></span>
+                            </label>
+                    <?php endforeach; ?>
+            </fieldset>
         </fieldset>
         <fieldset class="Properties">
             <legend><?= _('Eigenschaften') ?></legend>
