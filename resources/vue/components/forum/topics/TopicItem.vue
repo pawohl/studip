@@ -114,9 +114,11 @@ const swapTopic = event => {
                                     />
                                 </div>
                             </div>
-                            <p v-if="topic.description">
-                                <small class="line-clamp-3" v-html="topic.description"></small>
-                            </p>
+                            <div
+                                v-if="topic.description"
+                                class="topic-overview__description line-clamp-3"
+                                v-html="topic.description_html">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -241,9 +243,11 @@ const swapTopic = event => {
                                 />
                             </div>
                         </div>
-                        <p>
-                            <small class="line-clamp-3" v-html="topic.description "></small>
-                        </p>
+                        <div
+                            v-if="topic.description"
+                            class="topic-card__description line-clamp-3"
+                            v-html="topic.description_html">
+                        </div>
                     </div>
                     <div>
                         <div v-if="forumConfig.isModerator" class="drag-area">

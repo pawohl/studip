@@ -2,9 +2,9 @@
 
 namespace JsonApi\Schemas\Forum;
 
+use Studip\Markup;
 use JsonApi\Schemas\SchemaProvider;
 use Neomerx\JsonApi\Contracts\Schema\ContextInterface;
-use Neomerx\JsonApi\Schema\Link;
 
 class Topic extends SchemaProvider
 {
@@ -32,7 +32,8 @@ class Topic extends SchemaProvider
     {
         return [
             'name' => $resource->name,
-            'description' => $resource->description,
+            'description' => Markup::markupToHtml($resource->description),
+            'description-html' => formatReady($resource->description),
             'position' => (int) $resource->position,
             'mkdate' => date('c', $resource->mkdate),
             'chdate' => date('c', $resource->chdate)

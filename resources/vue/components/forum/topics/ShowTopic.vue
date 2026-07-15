@@ -17,8 +17,7 @@ defineProps({
         <dd>{{ topic.name }}</dd>
 
         <dt>{{ $gettext('Beschreibung') }}</dt>
-        <dd class="break-word">
-            <p>{{ topic.description }}</p>
+        <dd class="break-word" v-html="topic.description_html">
         </dd>
 
         <template v-if="topic.category">

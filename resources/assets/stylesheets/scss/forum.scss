@@ -299,8 +299,9 @@ $cardMaxWidth: 350px;
             align-items: center;
         }
 
-        p {
+        &__description {
             margin-top: 5px;
+            font-size: smaller;
             color: var(--color--font-secondary);
             word-break: break-word;
             overflow-wrap: break-word;
@@ -433,8 +434,9 @@ $cardMaxWidth: 350px;
             color: var(--color--highlight);
         }
 
-        p {
+        &__description {
             margin-top: 5px;
+            font-size: smaller;
             color: var(--color--font-secondary);
             word-break: break-word;
             overflow-wrap: break-word;
@@ -1276,24 +1278,33 @@ $cardMaxWidth: 350px;
         }
 
         .line-clamp-1 {
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            &,
+            .formatted-content {
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
         }
 
         .line-clamp-2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            &,
+            .formatted-content {
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
         }
 
         .line-clamp-3 {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            &,
+            .formatted-content {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
         }
 
         .nowrap {
