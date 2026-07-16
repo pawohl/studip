@@ -5,7 +5,6 @@ namespace JsonApi\Schemas\Forum;
 use Studip\Markup;
 use JsonApi\Schemas\SchemaProvider;
 use Neomerx\JsonApi\Contracts\Schema\ContextInterface;
-use Neomerx\JsonApi\Schema\Link;
 
 class Topic extends SchemaProvider
 {
