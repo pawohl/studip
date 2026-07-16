@@ -34,6 +34,7 @@ $keyword   = Request::get('keyword');
 $version   = Request::int('version');
 if (!$course_id) {
     // Invalid wiki page.
+    header('Content-Type: text/plain');
     die(sprintf(_('Fehlender URL-Parameter: %s'), 'cid'));
 }
 
@@ -112,6 +113,7 @@ if (!$keyword || $keyword === 'WikiWikiWeb') {
 }
 if (!$page && !$page_version) {
     // Page not found:
+    header('Content-Type: text/plain');
     die(sprintf(_('Die Wikiseite mit dem Schlagwort "%s" wurde nicht gefunden.'), $keyword));
 }
 
