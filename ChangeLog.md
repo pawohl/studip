@@ -1,3 +1,166 @@
+# 17.07.2026 v 6.1.2
+
+https://gitlab.studip.de/studip/studip/-/issues?milestone_title=Stud.IP+6.1.2&state=all
+- Forum: Datum mit Link zum Beitrag versehen [#6062]
+- Feedback-Elemente: Sterne bewerten - GUI kaputt [#6226]
+- Cache-Verwaltung: Klickbare Icons sind schwarz [#6452]
+- Abstand zwischen Pfeil und Titel fehlt im Modulverzeichnis [#6516]
+- Beschreibung der Themen im Forum müssen HTML erlauben [#6629]
+- Unsortierte Auflistung der Veranstaltungen in der Modulsuche des Modulverzeichnisses [#6633]
+- Migration 6.0.41.1 gehört in 6.1 [#6644]
+- Stud.IP Notifications sind unter/hinter Dialog [#6647]
+- Layoutfehler Raumgruppen [#6667]
+- Benutzerverwaltung: Fehler bei "Benutzergruppen manuell eintragen" [#6671]
+- Forum: Aktionen in der Sidebar werden doppelt vorgelesen [#6676]
+- Suche: inaktive Anzeigefilter nicht mehr zu erkennen [#6680]
+- Icon-API ignoriert Attribute aus dem Konstruktor [#6690]
+- Icon::asInput() setzt undefiniertes `alt`-Attribut auf dem `button` [#6691]
+- Labels der Hauptnavigation haben zu wenig Kontrast [#6697]
+- Vue-Komponente StudipIcon reagiert nicht dynamisch auf Änderungen der Properties [#6712]
+
+# 17.07.2026 v 6.0.5
+
+https://gitlab.studip.de/studip/studip/-/issues?milestone_title=Stud.IP+6.0.5&state=all
+- Blubber: „[object Event]“ steht im Eingabefeld [#5787]
+- Anmeldesets: Probleme mit der Regel »Veranstaltungsbezogene Anmeldung« [#5831]
+- Profilbild eines anderen Nutzers setzen setzt das eigene [#5981]
+- Studiengruppen: Angezeigte Anzahl immer 1, Pagination fehlt [#6106]
+- Das direkte Buchen von Wiederholungsterminen endet in einer Fehlermeldung: ResourceBooking::subsequent_time not found. [#6555]
+- JSONAPI: Schema für Avatar definiert einen ungenutzten Include für die Range [#6620]
+- Moderatoren sehen bei Studiengruppen das Icon für den Verwaltungsreiter, können ihn aber nicht aufrufen [#6627]
+- Purifier erlaubt keine Definitionslisten [#6641]
+- Fehler bei der Avatar-Verwaltung in einer Veranstaltung [#6648]
+- Veranstaltungsbezogene Anmeldung: Entfernen einer LV nicht mehr möglich [#6655]
+- Anmeldesets: Suche nach Veranstaltungen zum Zuordnen merkt sich nicht, ob bereits Suchergebnisse gewählt waren [#6669]
+- Sidebar scrollt aus dem sichtbaren Bereich heraus [#6678]
+- Altcha-Widget/Captcha-Input: Probleme bei der Barrierefreiheit [#6687]
+- SQL-Fehler im StudipSemSearchHelper [#6688]
+- Suchfeld in der Kopfzeile hat im Firefox keine Fokus-Markierung [#6713]
+- Redirect nach Logout von StudipAuthSSO Plugins klappt nicht mehr [#6721]
+- Fehlerhafte Darstellung in der globalen Suche [#6731]
+- Fehler beim automatisierten Eintragen von neuen Nutzern [#6746]
+- Benachrichtigungen: Falscher Mouse-Cursor über dem Element [#6750]
+- Cronjob Studiengruppen aufräumen läuft endlos [#6755]
+
+# 16.07.2026 v 5.5.11
+
+https://gitlab.studip.de/studip/studip/-/issues?milestone_title=Stud.IP+5.5.11&state=all
+- JSON-API: Ressourcen enthalten Avatar-URLs, obwohl kein Bild hochgeladen wurde [#6638]
+- Performance-Probleme in den Meta-Angaben von Schemata reduzieren [#6640]
+- Terminvergabe: CSV-Export enthält keine eindeutige Studierendenindentifikation [#6650]
+- Externe Seiten: Fehler bei der Anzeige von News in den Veranstaltungs- und Personendetails [#6682]
+- Courseware-Cronjob läuft in einen fatal-error [#6735]
+- XSS-Schwachstelle im wiki redirection script [#6769]
+
+# 16.07.2026 v 5.4.14
+
+https://gitlab.studip.de/studip/studip/-/issues?milestone_title=Stud.IP+5.4.14&state=all
+- Escape im Aktionsmenü schließt auch den Dialog [#2004]
+- Raumanfragen: Beim Bearbeiten können keine Eigenschaften entfernt werden [#4951]
+- Sprachauswahl überlagert Eingabe bei mehrsprachigem Feld mit `maxlength`-Attribut [#6553]
+- Diverse XSS-Lücken [#6621]
+- Rechteabfragen in `Institute::isEditableByUser()` und `User::isEditableByUser()` sind falsch [#6624]
+- JSONAPI: Message-Schema wirft Fehler bei gelöschten Empfängern [#6628]
+- Gruppen beim Bearbeiten eines Termins unsortiert [#6649]
+- Löschen von Anmelderegeln nicht mehr möglich [#6651]
+- Löschen von Ankündigungen über die Verwaltung im Arbeitsplatz nicht möglich [#6660]
+- Dialog zur Rechtevergabe an Raumgruppen wirft Fehler [#6663]
+- RoomManager: getUserRoomsSqlData prüft Root-Rechte des angemeldeten Users statt des übergebenen Userobjekts [#6677]
+- CLI - Migrate - Erläuterung für "path" variable ist falsch [#6681]
+- Responsive Navigation sollte den Fokus einfangen [#6689]
+- Tooltip zum Konfigurieren des Schnellzugriffs wenig informativ [#6692]
+- `h1` ist auf der Startseite gedoppelt [#6694]
+- `EditableList` fehl Label am Suchfeld [#6696]
+- Tooltips lassen sich nicht manuell schließen [#6700]
+- Tastaturbedienung von `RangeInput` ist kaputt [#6701]
+- Skiplinks-Menü hat keinen Label [#6703]
+- Login-Seite hat keinen (sinnvollen) Titel [#6705]
+- Focus-Markierung bei Hilfe-Icon im Dialag ist abgeschnitten [#6707]
+- data-proxyfor hat kein passendes Label [#6718]
+- Dateibereich: Wording der Aktionen nicht einheitlich [#6740]
+- Plugin-Verwaltung: TypeError: get_class(): Argument #1 must be of type object, null given [#6749]
+- Memcached: getStats() kann TypeError verursachen [#6759]
+
+# 04.06.2026 v 6.1.1
+
+https://gitlab.studip.de/studip/studip/-/issues?milestone_title=Stud.IP+6.1.1&state=all
+- Forum: Kategorien ausblenden blendet nur "Kategorien" in der Sidebar aus [#5920]
+- Forum: Namen der zitierten Person im Zitat ergänzen [#6016]
+- Forum: Uneinheitliches Wording [#6069]
+- Neues Icon für "Antworten" im Forum [#6315]
+- Klappmechanismus der Themen im Ablaufplan inkonsistent [#6505]
+- MVV: Fehler bei der Ausgabe der Prüfebene in der Modulbeschreibung [#6521]
+- MVV: Löschen von Materialen nicht möglich [#6532]
+- Forum: Themenauswahlpflicht bei neuem Diskussionbeitrag [#6542]
+- Stored Cross-Site Scripting (XSS) Schwachstelle im Forum [#6563]
+- Sidebar-Icons schrumpfen [#6564]
+- Forum: Migration von 'THUMBS UP' zu UTF-8 Emoji in der `forum_posting_reactions` [#6582]
+- Responsive Navigation: Bilder werden per URL übergeben [#6604]
+
+# 04.06.2026 v 6.0.4
+
+https://gitlab.studip.de/studip/studip/-/issues?milestone_title=Stud.IP+6.0.4&state=all
+- Termine auf der Übersichtsseite einer Veranstaltung [#6380]
+- VA-Übersichtsseite [#6432]
+- Terminvergabe: Popup bleibt leer bei fehlender Raumangabe [#6497]
+- VA-Übersicht: "Ohne Raum"  bei (oder trotz) freier Ortsangabe [#6506]
+- Verfrühter Aufruf von $gettext bei allow_plaintext_toggle [#6510]
+- Farbgruppierung nur noch für Studiengruppen möglich [#6520]
+- JSON-API: Paginierung in `/courses-of-study` ist kaputt [#6549]
+- Anlegen von Anmeldesets: Das Suchformular verschwindet bei der Suche [#6557]
+- Anlegen von Anmeldesets: Ladeanimation beim Suchen ist an der falschen Stelle [#6558]
+- Formularfelder sind nicht immer auf der gleichen Linie [#6559]
+- Icons in der Sidebar beim langen Labels falsch positioniert [#6565]
+- Build funktioniert mit nodejs >= 23 nicht [#6570]
+- JSON-API: `/courses-of-study` zeigt abgelaufene Studiengänge an [#6571]
+- JSON-API: `/course-of-study-components/{id}/versions` zeigt abgelaufene Versionen an [#6574]
+- JSON-API: Paginierung in `/modules` ist kaputt [#6576]
+- JSON-API: Relation `courses-of-study` an einer Einrichtung ist kaputt [#6578]
+- Relation "news" am Course-Model ist defekt [#6603]
+- Nutzer können Avatare von anderen Nutzern ändern [#6618]
+- Sicherheitslücken in der ZIP-Upload-Funktion für Stock-Images [#6622]
+
+# 04.06.2026 v 5.5.10
+
+https://gitlab.studip.de/studip/studip/-/issues?milestone_title=Stud.IP+5.5.10&state=all
+- Kalender:  ganztägige Termine werden beim Export falsch formatiert [#6431]
+- Kalender springt zur Wochenansicht zurück, wenn man einen Termin in der Tages- oder Monatsansicht angelegt hat [#6493]
+- Der Kalender merkt sich das ausgewählte Datum nicht, wenn ich mir den Kalender einer anderen Person ansehe und dort in den Wochen blättere [#6495]
+- JSON-API: Kategorie eines Kurs-Events wird nicht ausgegeben (seit 5.5) [#6517]
+- Terminkalender: Termin mit jährlicher Wiederholung kann nicht angelegt werden [#6590]
+- JSON-API: Route `/users/{id}/activitystream` ist für das Wiki kaputt [#6616]
+
+# 04.06.2026 v 5.4.13
+
+https://gitlab.studip.de/studip/studip/-/issues?milestone_title=Stud.IP+5.4.13&state=all
+- Zugangsberechtigungen in einer Veranstaltung lassen sich nicht ändern. [#5150]
+- JSON-API: Liste der belegten Veranstaltungen für andere Nutzer abfragbar [#6336]
+- JSONAPI: Include-Paths für Route /courses/{id} funktionieren nicht [#6382]
+- umbenannte Dateien heißen als Download wieder ursprünglich [#6398]
+- JSON-API: Include-Paths für Route /users/{id} funktionieren teilweise nicht [#6421]
+- JSONAPI: verschachtelte Include-Pfade funktionieren nicht [#6429]
+- JSON-API: Untergruppen in Einrichtungen sind nicht erreichbar [#6435]
+- Terminangaben für gelöschte Termine fehlen im Log [#6449]
+- Tippfehler im Methodennamen: JsonApi\Schemas\SchemaProvider::getAllowedAncludePaths [#6454]
+- MVV: Berechtigungen für Studiengangteilabschnitte werden von Version abgeleitet [#6523]
+- TypeError beim Abfragen von $statusgruppe->range [#6525]
+- JSON-API: Auslesen der Kurse eines Dozenten funktioniert nicht [#6534]
+- Username-Ermittlung in OpenID-Authplugin [#6536]
+- Buchungen von nicht zugänglichen Räumen können über den Export von Buchungen einer Raumgruppe exportiert werden [#6538]
+- Nachrichten: Initiale Tags lassen sich nur beim Weiterleiten/Antworten setzen [#6544]
+- Raumverwaltung: Dialog mit den Details zur Buchung zeigt den Buchungstext nicht an, wenn eine nutzende Person eingetragen ist [#6545]
+- Raumanfrage erstellen: Button "Raum auswählen" ist bei einer langen Raumliste nicht mehr sichtbar [#6551]
+- Pipeline schlägt in 5.4 wegen Typbezeichnung fehl [#6567]
+- Externe Seiten: Auswahl der Einrichtungen beim Kopieren ist falsch [#6569]
+- Blubber: Indizes bei vielen Kommentaren nicht ausreichend [#6580]
+- Studiengang::getStartSem() verweist auf nicht vorhandene Property "sem" [#6591]
+- Courseware: Seite "Aufgaben" ist nicht mehr aufrufbar [#6594]
+- NewsWidget: falsches Icon für "als gelesen markieren" [#6597]
+- RCE Lücke im StudIP CourseWizard [#6613]
+- PHP-Warnings beim Ausführen von Cronjob-Tasks [#6614]
+- JSON-API: Fehler bei verschachtelten Include-Pfaden [#6619]
+- JSON-API: Include für Schema ohne Angabe von `$allowedIncludes` funktioniert nicht mehr [#6623]
+
 # 22.04.2026 v 6.1
 
 https://gitlab.studip.de/studip/studip/-/issues?milestone_title=Stud.IP+6.1&state=all
