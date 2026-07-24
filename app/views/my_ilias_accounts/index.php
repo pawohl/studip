@@ -38,31 +38,30 @@
                     <? $actionMenu->addButton(
                             'view',
                             _('Info'),
-                            Icon::create('info-circle', Icon::ROLE_CLICKABLE, [
+                            Icon::create('info-circle', Icon::ROLE_CLICKABLE),
+                            [
                                 'title'        => _('Info'),
                                 'formaction'   => $controller->url_for($module->getRoute('view_tools')),
                                 'data-dialog'  => ''
-                            ])
+                            ]
                     ) ?>
-                    <? if ($module->isAllowed('start')) $actionMenu->addButton(
-                            'start',
+                    <? if ($module->isAllowed('start')) $actionMenu->addLink(
+                            $controller->url_for($module->getRoute('start')),
                             _('In ILIAS anzeigen'),
-                            Icon::create('play', Icon::ROLE_CLICKABLE, [
+                            Icon::create('play', Icon::ROLE_CLICKABLE),
+                            [
                                 'title'        => _('In ILIAS anzeigen'),
-                                'formaction'   => $controller->url_for($module->getRoute('start')),
-                                'formtarget'       => '_blank',
-                                'formrel'          => 'noopener noreferrer'
-                            ])
+                                'target'       => '_blank',
+                            ]
                     ) ?>
-                    <? if ($module->isAllowed('edit')) $actionMenu->addButton(
-                            'edit',
+                    <? if ($module->isAllowed('edit')) $actionMenu->addLink(
+                            $controller->url_for($module->getRoute('edit')),
                             _('In ILIAS bearbeiten'),
-                            Icon::create('edit', Icon::ROLE_CLICKABLE, [
+                            Icon::create('edit', Icon::ROLE_CLICKABLE),
+                            [
                                 'title'        => _('In ILIAS bearbeiten'),
-                                'formaction'   => $controller->url_for($module->getRoute('edit')),
-                                'formtarget'       => '_blank',
-                                'formrel'          => 'noopener noreferrer'
-                            ])
+                                'target'       => '_blank',
+                            ]
                     ) ?>
                     <?= $actionMenu->render() ?>
                 </td>
@@ -113,7 +112,8 @@
                     <? if ($ilias->ilias_config['allow_change_account'] && ($ilias->user->getUserType() === IliasUser::USER_TYPE_CREATED)) $actionMenu->addButton(
                             'new_account',
                             _('Account neu zuordnen'),
-                            Icon::create('person', Icon::ROLE_CLICKABLE, [
+                            Icon::create('person', Icon::ROLE_CLICKABLE),
+                            [
                                 'title'        => _('Account neu zuordnen'),
                                 'formaction'   => $controller->url_for('my_ilias_accounts/new_account/'.$ilias_index),
                                 'data-confirm' =>
@@ -121,27 +121,29 @@
                                     $ilias->getName()
                                 ),
                                 'data-dialog'  => 'size=auto;reload-on-close'
-                            ])
+                            ]
                     ) ?>
                     <? if ($ilias->ilias_config['allow_change_account'] && ($ilias->user->getUserType() === IliasUser::USER_TYPE_ORIGINAL)) $actionMenu->addButton(
                             'change_account',
                             _('Account-Zuordnung aufheben'),
-                            Icon::create('trash', Icon::ROLE_CLICKABLE, [
+                            Icon::create('trash', Icon::ROLE_CLICKABLE),
+                            [
                                 'title'        => _('Account-Zuordnung aufheben'),
                                 'formaction'   => $controller->url_for('my_ilias_accounts/change_account/'.$ilias_index.'/remove'),
                                 'data-confirm' =>
                                     sprintf(_('Möchten Sie wirklich die bestehende Zuordnung aufheben? Sie verlieren dadurch alle mit dem bestehenden Account verbundenen Inhalte und Lernfortschritte im System "%s".'),
                                     $ilias->getName()
                                 )
-                            ])
+                            ]
                     ) ?>
                     <? if ($ilias->user->getUserType() === IliasUser::USER_TYPE_CREATED) $actionMenu->addButton(
                             'update_account',
                             _('Account aktualisieren'),
-                            Icon::create('refresh', Icon::ROLE_CLICKABLE, [
+                            Icon::create('refresh', Icon::ROLE_CLICKABLE),
+                            [
                                 'title'        => _('Account aktualisieren'),
                                 'formaction'   => $controller->url_for('my_ilias_accounts/change_account/'.$ilias_index.'/update')
-                            ])
+                            ]
                     ) ?>
                     <?= $actionMenu->render() ?>
                 </td>

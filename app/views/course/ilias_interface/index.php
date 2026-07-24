@@ -43,42 +43,42 @@
                     <? if (! $module->is_offline) $actionMenu->addButton(
                             'view',
                             _('Info'),
-                            Icon::create('info-circle', Icon::ROLE_CLICKABLE, [
+                            Icon::create('info-circle', Icon::ROLE_CLICKABLE),
+                            [
                                 'title'        => _('Info'),
                                 'formaction'   => $controller->url_for($module->getRoute('view_course')),
                                 'data-dialog'  => 'size=auto'
-                            ])
+                            ]
                     ) ?>
-                    <? if ($module->isAllowed('start')) $actionMenu->addButton(
-                            'start',
+                    <? if ($module->isAllowed('start')) $actionMenu->addLink(
+                            $controller->url_for($module->getRoute('start')),
                             _('In ILIAS anzeigen'),
-                            Icon::create('play', Icon::ROLE_CLICKABLE, [
+                            Icon::create('play', Icon::ROLE_CLICKABLE),
+                            [
                                 'title'        => _('In ILIAS anzeigen'),
-                                'formaction'   => $controller->url_for($module->getRoute('start')),
                                 'target'       => '_blank',
-                                'rel'          => 'noopener noreferrer'
-                            ])
+                            ]
                     ) ?>
-                    <? if ($module->isAllowed('edit')) $actionMenu->addButton(
-                            'edit',
+                    <? if ($module->isAllowed('edit')) $actionMenu->addLink(
+                            $controller->url_for($module->getRoute('edit')),
                             _('In ILIAS bearbeiten'),
-                            Icon::create('edit', Icon::ROLE_CLICKABLE, [
+                            Icon::create('edit', Icon::ROLE_CLICKABLE),
+                            [
                                 'title'        => _('In ILIAS bearbeiten'),
-                                'formaction'   => $controller->url_for($module->getRoute('edit')),
                                 'target'       => '_blank',
-                                'rel'          => 'noopener noreferrer'
-                            ])
+                            ]
                     ) ?>
                     <? if ($edit_permission && $module->isAllowed('delete')) $actionMenu->addButton(
                             'remove',
                             _('Entfernen'),
-                            Icon::create('trash', Icon::ROLE_CLICKABLE, [
+                            Icon::create('trash', Icon::ROLE_CLICKABLE),
+                            [
                                 'title'        => _('Entfernen'),
                                 'formaction'   => $controller->url_for($module->getRoute('remove')),
                                 'data-confirm' => $module->siblings_count < 2 ? sprintf(_('Dies ist die einzige Instanz des Objekts "%s". Durch das Entfernen aus dem Kurs wird das Objekt unwiderruflich gelöscht! Wollen Sie das Objekt wirklich löschen?'), $module->getTitle()) : sprintf(_('Wollen Sie das Objekt "%s" jetzt entfernen?'), $module->getTitle()),
                                 'target'       => '_blank',
                                 'rel'          => 'noopener noreferrer'
-                            ])
+                            ]
                     ) ?>
                     <?= $actionMenu->render() ?>
                 </td>
@@ -106,26 +106,26 @@
             <td><?=_('ILIAS-Kurs')?></td>
                 <td class="actions">
                     <? $actionMenu = ActionMenu::get()->setContext(sprintf(_('Kurs in %s'), $ilias->getName())) ?>
-                    <? $actionMenu->addButton(
-                            'start',
+                    <? $actionMenu->addLink(
+                            $controller->url_for('my_ilias_accounts/redirect/'.$ilias_index.'/start/'.$courses[$ilias_index].'/crs'),
                             _('In ILIAS anzeigen'),
-                            Icon::create('play', Icon::ROLE_CLICKABLE, [
+                            Icon::create('play', Icon::ROLE_CLICKABLE),
+                            [
                                 'title'        => _('In ILIAS anzeigen'),
-                                'formaction'   => $controller->url_for('my_ilias_accounts/redirect/'.$ilias_index.'/start/'.$courses[$ilias_index].'/crs'),
                                 'target'       => '_blank',
-                                'rel'          => 'noopener noreferrer'
-                            ])
+                            ]
                     ) ?>
                     <? if ($edit_permission) $actionMenu->addButton(
                             'remove',
                             _('Entfernen'),
-                            Icon::create('trash', Icon::ROLE_CLICKABLE, [
+                            Icon::create('trash', Icon::ROLE_CLICKABLE),
+                            [
                                 'title'        => _('Entfernen'),
                                 'formaction'   => $controller->url_for('course/ilias_interface/remove_course/'.$ilias_index.'/'.$courses[$ilias_index]),
                                 'data-confirm' => sprintf(_('Verknüpfung zum Kurs in %s entfernen? Hierdurch werden auch die Verknüpfungen zu allen Objekten innerhalb des Kurses entfernt.'), $ilias->getName()),
                                 'target'       => '_blank',
                                 'rel'          => 'noopener noreferrer'
-                            ])
+                            ]
                     ) ?>
                     <?= $actionMenu->render() ?>
                 </td>
