@@ -12,7 +12,7 @@ defineProps({
 
 <template>
     <dl class="use-utility-classes">
-        <dt>{{ $gettext('Title') }}</dt>
+        <dt>{{ $gettext('Titel') }}</dt>
         <dd>{{ category.name }}</dd>
 
         <dt>{{ $gettext('Beschreibung') }}</dt>
