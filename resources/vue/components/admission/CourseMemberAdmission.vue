@@ -151,9 +151,9 @@ export default {
                 this.courseSearch = response.data.attributes.payload.search;
             });
         }
-        STUDIP.jsonapi.withPromises().get('semesters')
+        STUDIP.jsonapi.withPromises().get('semesters', { data: { page: { limit: 150, offset: 0 }}})
             .then(response => {
-                this.semesters = response.data;
+                this.semesters = response.data.reverse();
                 this.searchSemester = response.data.filter(semester => semester.attributes['is-current']).at(0)?.id;
             });
     },
