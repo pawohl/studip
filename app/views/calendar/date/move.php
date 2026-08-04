@@ -2,6 +2,9 @@
 <form class="default" method="post" data-dialog="reload-on-close"
       action="<?= $controller->link_for('calendar/date/move/' . $date->id) ?>">
     <?= CSRFProtection::tokenTag() ?>
+    <? if ($original_date): ?>
+        <input type="hidden" name="original_date" value="<?= htmlReady($original_date->format('Y-m-d')) ?>">
+    <? endif ?>
     <input type="hidden" name="start" value="<?= htmlReady($begin->format(\DateTimeInterface::RFC3339_EXTENDED)) ?>">
     <input type="hidden" name="end" value="<?= htmlReady($end->format(\DateTimeInterface::RFC3339_EXTENDED)) ?>">
     <label>

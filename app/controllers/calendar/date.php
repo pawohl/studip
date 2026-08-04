@@ -693,34 +693,32 @@ class Calendar_DateController extends AuthenticatedController
         }
         $this->end->setTimezone($tz_date->getTimezone());
 
-        //In case the moved event is a repetition event, we must know the original date from where
-        //it was moved from to correctly move the whole date series:
-        $original_date = Request::getDateTime('original_date');
-        $real_begin = new DateTime();
-        $real_begin->setTimestamp($this->date->begin);
-        if (
-            $original_date
-            && $original_date->format('Ymd') !== $real_begin->format('Ymd')
-        ) {
-            //The original date is set. If it differs from the beginning, a repetition date
-            //of a date series has been moved. In this case, the difference of the beginning
-            //and the original date has to be calculated and the begin and end fields have
-            //to be updated.
-            $original_date->setTime(
-                $real_begin->format('H'),
-                $real_begin->format('i'),
-                $real_begin->format('s')
-            );
-            $diff = $real_begin->diff($original_date);
-            $this->begin = $this->begin->sub($diff);
-            $this->end = $this->end->sub($diff);
-        }
-
         if ($this->date->repetition_type !== CalendarDate::REPETITION_SINGLE) {
             PageLayout::setTitle(_('Verschieben eines Termins aus einer Terminserie'));
+            //In case the moved event is a repetition event, we must know the original date from where
+            //it was moved from to correctly move the whole date series:
+            $this->original_date = Request::getDateTime('original_date');
+            if (!$this->original_date) {
+                //Assume that the original date is the start of the date series
+                //as a default:
+                $this->original_date = new DateTime();
+                $this->original_date->setTimestamp($this->date->begin);
+            }
             //Show the dialog to decide what shall be done with the repetition.
             if (Request::submitted('move')) {
                 CSRFProtection::verifyUnsafeRequest();
+
+                //Create a DateTime object for the old start date
+                //and use its time for the original date DateTime object.
+                //Both are required to calculate offsets of moved dates.
+                $date_start = new DateTime();
+                $date_start->setTimestamp($this->date->begin);
+                $this->original_date->setTime(
+                    (int)$date_start->format('H'),
+                    (int)$date_start->format('i'),
+                    (int)$date_start->format('s'),
+                );
+
                 $repetition_handling = Request::get('repetition_handling');
                 $store_old_date = false;
                 if ($repetition_handling === 'create_single_date') {
@@ -730,8 +728,21 @@ class Calendar_DateController extends AuthenticatedController
                     $new_date->setData($this->date->toArray());
                     $new_date->id = $new_date->getNewId();
                     $new_date->unique_id = '';
-                    $new_date->begin = $this->begin->getTimestamp();
-                    $new_date->end = $this->end->getTimestamp();
+
+                    //Calculate the difference between the old and the new start of the date:
+                    $old_date_start = clone $date_start;
+                    //Check if there is an offset between the old start date and the
+                    //original date which holds the date where drag & drop started from:
+                    $old_start_offset    = $this->original_date->diff($date_start);
+                    if ($old_start_offset->days !== false) {
+                        //This is not the first date of the date series.
+                        //We need to calculate the old date of the date in the series.
+                        //to set the exception at the correct date:
+                        $old_date_start = $old_date_start->sub($old_start_offset);
+                    }
+
+                    $new_date->begin     = $this->begin->getTimestamp();
+                    $new_date->end       = $this->end->getTimestamp();
                     $new_date->author_id = $GLOBALS['user']->id;
                     $new_date->editor_id = $GLOBALS['user']->id;
                     $new_date->clearRepetitionFields();
@@ -752,7 +763,7 @@ class Calendar_DateController extends AuthenticatedController
                     if (!$exception) {
                         $exception = new CalendarDateException();
                         $exception->calendar_date_id = $this->date->id;
-                        $exception->date = $this->begin->format('Y-m-d');
+                        $exception->date = $old_date_start->format('Y-m-d');
                         $exception->store();
                     }
                     $this->response->add_header('X-Dialog-Close', '1');
@@ -761,16 +772,23 @@ class Calendar_DateController extends AuthenticatedController
                     $this->date->begin = $this->begin->getTimestamp();
                     if ($this->date->repetition_end && intval($this->date->repetition_end) != pow(2,31) - 1) {
                         //The repetition end date is set to one specific date.
-                        //It must be recalculated from the end date.
-                        $old_end = new DateTime();
-                        $old_end->setTimestamp($this->date->end);
-                        $old_repetition_end = new DateTime();
-                        $old_repetition_end ->setTimestamp($this->date->repetition_end);
-                        $distance = $old_end->diff($old_repetition_end);
-                        $this->date->end = $this->end->getTimestamp();
-                        $new_repetition_end = clone $this->end;
-                        $new_repetition_end = $new_repetition_end->add($distance);
-                        $this->date->repetition_end = $new_repetition_end->getTimestamp();
+                        //Calculate the offset from the new end and the old end
+                        //to check whether the repetition end has to be moved.
+                        $original_end = new DateTime();
+                        $original_end->setTimestamp($this->date->end);
+                        $original_end->setTime(
+                            (int)$this->end->format('H'),
+                            (int)$this->end->format('i'),
+                            (int)$this->end->format('s')
+                        );
+                        $new_end_offset = $this->end->diff($original_end);
+                        if ($new_end_offset->days !== false) {
+                            //The repetition end has to be moved.
+                            $repetition_end = new DateTime();
+                            $repetition_end->setTimestamp($this->date->repetition_end);
+                            $repetition_end = $repetition_end->sub($new_end_offset);
+                            $this->date->repetition_end = $repetition_end->getTimestamp();
+                        }
                     }
                     $this->date->end = $this->end->getTimestamp();
 
