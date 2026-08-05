@@ -137,9 +137,7 @@ export default {
             // Ensure parent / child relation
             let courses = [];
             sorted.forEach(course => {
-                if (!this.isChild(course)) {
-                    courses.push(course);
-                }
+                courses.push(course);
             });
 
             return courses;
