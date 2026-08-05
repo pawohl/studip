@@ -111,6 +111,7 @@ class Course extends SimpleORMap implements Range, PrivacyObject, StudipItem, Fe
         $config['db_table'] = 'seminare';
         $config['has_many']['topics'] = [
             'class_name' => CourseTopic::class,
+            'order_by'   => 'ORDER BY priority',
             'on_delete'  => 'delete',
             'on_store'   => 'store',
         ];
