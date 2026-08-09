@@ -76,9 +76,6 @@
             <button type="submit" class="button accept">
                 {{ $gettext('Speichern') }}
             </button>
-            <button type="reset" class="button" @click.prevent="reset()">
-                {{ $gettext('Zurücksetzen') }}
-            </button>
             <button v-if="dialog"
                     class="button cancel"
                     type="button"
@@ -141,15 +138,6 @@ export default {
         getCoursesForGroup(group) {
             return group.data.map(item => item.ids).flat().map(id => this.courses[id]);
         },
-        reset() {
-            this.courseGroups = Object.values(this.courses).reduce(
-                (all, course) => {
-                    all[course.id] = course.group;
-                    return all;
-                },
-                {}
-            );
-        },
 
         securityHandlerDialog(event) {
             if (
@@ -167,7 +155,14 @@ export default {
     },
     created() {
         this.securityHandler.setPredicate(() => this.isChanged && this.secured);
-        this.reset();
+
+        this.courseGroups = Object.values(this.courses).reduce(
+            (all, course) => {
+                all[course.id] = course.group;
+                return all;
+            },
+            {}
+        );
     },
     mounted() {
         this.dialog = this.$el?.closest('.studip-dialog');
