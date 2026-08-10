@@ -436,7 +436,9 @@ class InstituteCalendarHelper
                     }
                 }
 
+                $room_name = '';
                 $next_single_date = CourseDate::getNextDateByMetadate($cycle_date->metadate_id);
+                // we have a problem if there's no next date, but we still need the room though; maybe hide date?
                 if ($next_single_date) {
                     $room_name = $next_single_date->getRoomNames() ?: _('ohne Raumangabe');
                 }
