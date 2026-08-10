@@ -70,7 +70,7 @@ class BrowseNavigation extends Navigation
             if ($GLOBALS['perm']->have_perm('admin')) {
                 $navigation->addSubNavigation('overlapping', new Navigation(_('Überschneidungsfreiheit'), 'dispatch.php/admin/overlapping'));
                 $navigation->addSubNavigation('schedule', new Navigation(_('Veranstaltungs-Stundenplan'), 'dispatch.php/admin/courseplanning'));
-            } else {
+            } elseif (ArchivedCourseMember::findByUser(User::findCurrent()->id)) {
                 $navigation->addSubNavigation('archive', new Navigation(_('Archivierte Veranstaltungen'), 'dispatch.php/my_courses/archive'));
             }
 
