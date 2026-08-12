@@ -1606,6 +1606,7 @@ class Course_StatusgroupsController extends AuthenticatedController
         $this->search = new MyCoursesSearch('Seminar_id', User::findCurrent()->perms, [
             ':userid' => User::findCurrent()->id,
             ':exclude' => [$this->course_id],
+            ':institutes' => array_column(Institute::getMyInstitutes(), 'Institut_id')
         ]);
 
         $this->response->add_header('X-Dialog-Size', 'medium');
