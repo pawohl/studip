@@ -55,12 +55,12 @@ $enable_news = count($news_entries) > 0;
                     <? endif ?>
                     <? $name_and_title = explode(' - ', $nav->getTitle()) ?>
                     <? if (is_internal_url($url = $nav->getURL())): ?>
-                    <? SkipLinks::addLink($name_and_title[0], URLHelper::getLink($url, ['cancel_login' => 1])) ?>
-                    <a href="<?= URLHelper::getLink($url, ['cancel_login' => 1]) ?>"
-                        <?= arrayToHtmlAttributes($nav->getLinkAttributes()) ?>>
-                        <? else: ?>
+                        <? SkipLinks::addLink($name_and_title[0], URLHelper::getURL($url, ['cancel_login' => 1])) ?>
+                        <a href="<?= URLHelper::getLink($url, ['cancel_login' => 1]) ?>"
+                            <?= arrayToHtmlAttributes($nav->getLinkAttributes()) ?>>
+                    <? else: ?>
                         <a href="<?= htmlReady($url) ?>" target="_blank" rel="noopener noreferrer">
-                            <? endif ?>
+                    <? endif ?>
                             <p class="title"><?= htmlReady($name_and_title[0]) ?></p>
                             <p class="description">
                                 <?= htmlReady(!empty($name_and_title[1]) ? $name_and_title[1] : $nav->getDescription()) ?>
