@@ -1391,7 +1391,7 @@ class Course_MembersController extends AuthenticatedController
             return;
         }
 
-        Navigation::activateItem('/course/members/additional');
+        Navigation::activateItem('/course/main/additional');
 
         // fetch course and aux data
         $course    = Course::findCurrent();
@@ -1419,8 +1419,7 @@ class Course_MembersController extends AuthenticatedController
      */
     public function additional_input_action()
     {
-        // Activate the autoNavi otherwise we dont find this page in navi
-        Navigation::activateItem('/course/members/additional');
+        Navigation::activateItem('/course/main/additional');
 
         // Fetch datafields for the user
         $course = Course::findCurrent();

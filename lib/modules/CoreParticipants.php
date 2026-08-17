@@ -152,10 +152,6 @@ class CoreParticipants extends CorePlugin implements StudipModuleExtended
             $navigation->addSubNavigation('children', new Navigation(_('Teilnehmende in Unterveranstaltungen'), 'dispatch.php/course/grouping/members'));
         }
 
-        if ($course->aux_lock_rule) {
-            $navigation->addSubNavigation('additional', new Navigation(_('Zusatzangaben'), 'dispatch.php/course/members/additional'));
-        }
-
         return count($navigation->getSubNavigation()) > 0 ? ['members' => $navigation] : null;
     }
 
