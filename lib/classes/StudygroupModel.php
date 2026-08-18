@@ -89,9 +89,6 @@ class StudygroupModel
             // Post equivalent notifications to a regular course
             $seminar = Course::find($sem_id);
             NotificationCenter::postNotification(
-                'CourseDidGetMember', $seminar, $accept_user_id
-            );
-            NotificationCenter::postNotification(
                 'CourseDidChangeMember', $seminar, $accept_user_id
             );
             NotificationCenter::postNotification(

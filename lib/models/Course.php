@@ -853,6 +853,7 @@ class Course extends SimpleORMap implements Range, PrivacyObject, StudipItem, Fe
             );
             restoreLanguage();
             StudipLog::log('SEM_USER_DEL', $this->id, $user->id, 'Wurde aus der Veranstaltung entfernt');
+            NotificationCenter::postNotification('UserDidLeaveCourse', $this->id, $user->id);
         } else {
             throw new \Studip\Exception(
                 sprintf(
@@ -1202,6 +1203,8 @@ class Course extends SimpleORMap implements Range, PrivacyObject, StudipItem, Fe
             //Log the event:
             StudipLog::log('SEM_USER_ADD', $this->id, $user->id, $permission_level, 'Wurde in die Veranstaltung eingetragen');
 
+            NotificationCenter::postNotification('UserDidEnterCourse', $this->id, $user->id);
+
             if ($this->parent instanceof Course) {
                 $this->parent->addMember($user, $permission_level, false);
             }
@@ -1435,6 +1438,7 @@ class Course extends SimpleORMap implements Range, PrivacyObject, StudipItem, Fe
         }
 
         StudipLog::log('SEM_USER_DEL', $this->id, $user->id, 'Wurde aus der Veranstaltung entfernt');
+        NotificationCenter::postNotification('UserDidLeaveCourse', $this->id, $user->id);
 
         $this->resetRelation('members');
     }
