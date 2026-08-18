@@ -45,7 +45,9 @@ class Vote extends QuestionnaireQuestion implements QuestionType
         $questiondata['description'] = \Studip\Markup::markAsHtml(
             \Studip\Markup::purifyHtml($questiondata['description'])
         );
-        $questiondata['options'] = array_filter($questiondata['options'] ?? []);
+        $questiondata['options'] = array_values(
+            array_filter($questiondata['options'], fn($option) => trim($option) !== '')
+        );
         return $questiondata;
     }
 
