@@ -1,13 +1,13 @@
 .cw-file-input {
     width: stretch;
-    border: solid thin var(--light-gray-color-40);
+    border: solid thin var(--color--input-field-border);
     font-size: 14px;
     cursor: pointer;
 
     &::file-selector-button {
         font-family: inherit;
         border: none;
-        border-right: solid thin var(--light-gray-color-40);
+        border-right: solid thin var(--color--input-field-border);
         background-color: var(--white);
         padding: 6px 15px;
         margin-right: 10px;
@@ -23,14 +23,14 @@
     }
 }
 .cw-file-input-change {
-    border: solid thin var(--light-gray-color-40);
+    border: solid thin var(--color--input-field-border);
 
     button.button {
         padding: 0.5em 1.5em;
         margin: 0 0 0 -1px;
         line-height: 100%;
         border: none;
-        border-right: solid thin var(--light-gray-color-40);
+        border-right: solid thin var(--color--input-field-border);
     }
 
     span {

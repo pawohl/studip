@@ -41,7 +41,7 @@ form.default {
     input[type=password], input[type=text], input[type=time], input[type=url], input[type=tel],
     textarea, select {
         box-sizing: border-box;
-        border: 1px solid var(--light-gray-color-40);
+        border: 1px solid var(--color--input-field-border);
         border-radius: var(--border-radius-default);
         color: var(--color--font-primary);
         max-width: $max-width-m;
