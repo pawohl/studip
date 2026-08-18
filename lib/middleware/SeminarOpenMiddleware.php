@@ -78,6 +78,34 @@ final class SeminarOpenMiddleware implements MiddlewareInterface
 
         global $user, $perm, $_language_path;
 
+        // Try to select the course or institute given by the parameter 'cid'
+        // in the current request.
+
+        $course_id = (\Request::bool('cancel_login') && (!is_object($user) || $user->id === 'nobody'))
+            ? null
+            : \Request::option('cid');
+
+        // Select the current course or institute if we got one from 'cid' or session.
+        // This also binds Context::getId()
+        // to the URL parameter 'cid' for all generated links.
+        if (isset($course_id)) {
+            try {
+                \Context::set($course_id);
+            } catch (\LoginException $e) {
+                $_SESSION['redirect_after_login'] ??= \Request::url();
+                return $this->response_factory->createResponse(302)
+                    ->withHeader('Location', \URLHelper::getScriptURL('dispatch.php/login'));
+            }
+            unset($course_id);
+        }
+
+        if (\Request::bool('disable_plugins') !== null && ($user->id === 'nobody' || $perm->have_perm('root'))) {
+            // deactivate non-core plugins
+            \PluginManager::getInstance()->setPluginsDisabled(\Request::bool('disable_plugins'));
+        }
+
+        // load the default set of plugins
+        \PluginEngine::loadPlugins();
 
         //INITS
         $seminar_open_redirected = false;
@@ -143,36 +171,6 @@ final class SeminarOpenMiddleware implements MiddlewareInterface
         $_language_path = init_i18n($_SESSION['_language']);
         //force reload of config to get translated data
         include $GLOBALS['STUDIP_BASE_PATH'] . '/config/config.inc.php';
-
-
-        // Try to select the course or institute given by the parameter 'cid'
-        // in the current request.
-
-        $course_id = (\Request::int('cancel_login') && (!is_object($user) || $user->id === 'nobody'))
-            ? null
-            : \Request::option('cid');
-
-        // Select the current course or institute if we got one from 'cid' or session.
-        // This also binds Context::getId()
-        // to the URL parameter 'cid' for all generated links.
-        if (isset($course_id)) {
-            try {
-                \Context::set($course_id);
-            } catch (\LoginException $e) {
-                $_SESSION['redirect_after_login'] ??= \Request::url();
-                return $this->response_factory->createResponse(302)
-                    ->withHeader('Location', \URLHelper::getScriptURL('dispatch.php/login'));
-            }
-            unset($course_id);
-        }
-
-        if (\Request::int('disable_plugins') !== null && ($user->id === 'nobody' || $perm->have_perm('root'))) {
-            // deactivate non-core plugins
-            \PluginManager::getInstance()->setPluginsDisabled(\Request::int('disable_plugins'));
-        }
-
-        // load the default set of plugins
-        \PluginEngine::loadPlugins();
 
         // add navigation item for profile: add modules
         if (\Navigation::hasItem('/profile/edit')) {
