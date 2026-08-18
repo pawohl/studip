@@ -265,11 +265,8 @@ class Tooltip {
         event.stopPropagation();
     }
 
-    #clickHandler(event) {
+    #clickHandler() {
         this.toggle();
-
-        event.preventDefault();
-        event.stopPropagation();
     }
 }
 
