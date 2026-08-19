@@ -301,7 +301,7 @@ class Icon implements JsonSerializable
             [$view_attributes, $size] = [$size, self::SIZE_DEFAULT];
         }
 
-        $attributes = $this->prepareHTMLAttributes(false, $view_attributes);
+        $attributes = $this->prepareHTMLAttributes($size, $view_attributes);
         $attributes['class'] = 'as-link';
         unset($attributes['src']);
 
@@ -397,9 +397,7 @@ class Icon implements JsonSerializable
 
         if ($size !== false) {
             $size = $this->get_size($size);
-            if ($size !== self::SIZE_DEFAULT && $size !== self::SIZE_INLINE) {
-                $html_attributes['style'] = "width: {$size}px; height: {$size}px";
-            }
+            $html_attributes['style'] = "width: {$size}px; height: {$size}px";
         }
 
         $html_attributes['src'] = $this->isStatic() ? $this->shape : $this->get_asset_svg();
