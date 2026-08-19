@@ -15,7 +15,7 @@ class FileInput extends Input
         $template->uploadUrl = $this->attributes['upload_url'];
         $template->multiple = $this->attributes['multiple'] ?? false;
         $template->accept = $this->attributes['accept'] ?? '*/*';
-        $template->required = $this->attributes['required'] ?? false;
+        $template->required = $this->required ?? false;
 
         return $template->render();
     }

@@ -31,6 +31,7 @@
                :accept="accept"
                ref="files"
                class="button"
+               :required="required"
                @change="selectFiles">
         <button v-if="selectedFiles.length > 0"
                 type="button"
