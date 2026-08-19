@@ -435,6 +435,7 @@ class Resources_ExportController extends AuthenticatedController
                     //In this case, the current day starts on the same timestamp as the exported time range.
                     $current_day = $this->begin;
                 }
+                $current_day->setTime(0,0,0);
                 while ($current_day < $interval_end && $current_day < $this->end) {
                     $interval_is_on_weekday = in_array($current_day->format('N'), $this->weekdays);
                     if (!$interval_is_on_weekday) {
