@@ -64,6 +64,7 @@
                 <? endif ?>
                 <? foreach ($abschnitt['modules'] as $modul_id => $modul): ?>
                     <? $displayed_module_name = false ?>
+                    <? $count_modulteile = count($modul['modulTeile']) ?>
                     <? foreach ($modul['modulTeile'] as $modulTeil_id => $modulTeil): ?>
                         <? if (!$displayed_abschnitt_name) : ?>
                             <tr class="table_header header-row">
@@ -86,7 +87,7 @@
                         <? if (!$displayed_module_name) : ?>
                             <? $displayed_module_name = true ?>
                             <tr>
-                                <td<?= count($modul['modulTeile']) > 1 ? ' style="border: none;"' : '' ?>>
+                                <td<?= $count_modulteile-- > 1 ? ' style="border: none;"' : '' ?>>
                                     <? $abschnitt_modul = StgteilabschnittModul::findOneBySQL('`abschnitt_id` = ? AND `modul_id` = ?', [$abschnitt_id, $modul_id]) ?>
                                     <a data-dialog="size=auto"
                                        title="<?= htmlReady($modul['name']) . ' (' . _('Vollständige Modulbeschreibung') . ')' ?>"
@@ -116,7 +117,7 @@
                                 <td colspan="2"><?= htmlReady($modulTeil['name']) ?></td>
                         <? else : ?>
                             <tr>
-                                <td></td>
+                                <td<?= $count_modulteile-- > 1 ? ' style="border: none;"' : '' ?>></td>
                                 <td colspan="2"><?= htmlReady($modulTeil['name']) ?></td>
                         <? endif ?>
                         <? for ($i = 1; $i <= $max_fachsemester; $i++) : ?>
