@@ -341,7 +341,7 @@ class Resources_AjaxController extends AuthenticatedController
         }
 
         $display_requests = $current_user && Request::bool('display_requests');
-        $display_all_requests = Request::bool('display_all_requests');
+        $display_all_requests = $current_user && Request::bool('display_all_requests');
 
         $begin_date = Request::get('start');
         $end_date   = Request::get('end');
