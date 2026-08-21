@@ -150,7 +150,7 @@ class Settings_CategoriesController extends Settings_SettingsController
 
                 if ($category->store()) {
                     $changed = true;
-                    Visibility::renamePrivacySetting("kat_{$category->id}", $category->name->original());
+                    Visibility::renamePrivacySetting("kat_{$category->id}", $category->name);
                 }
             },
             Request::optionArray('ids')
