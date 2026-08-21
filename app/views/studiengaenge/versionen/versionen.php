@@ -52,30 +52,31 @@
                         <? $actionMenu->addButton(
                             'copy',
                             _('Version kopieren'),
-                            Icon::create(
-                                'files',
-                                Icon::ROLE_CLICKABLE,
-                                ['title'        => _('Version kopieren'),
-                                 'formaction'   => $controller->action_url('copy_version/' . $version->id),
-                                 'data-confirm' => sprintf(
-                                     _('Wollen Sie wirklich die Version "%s" des Studiengangteils kopieren?'),
-                                     $version->getDisplayName())
-                                ]
-                            ))
+                            Icon::create('files'),
+                            [
+                                'title'        => _('Version kopieren'),
+                                'formaction'   => $controller->action_url('copy_version/' . $version->id),
+                                'data-confirm' => sprintf(
+                                    _('Wollen Sie wirklich die Version "%s" des Studiengangteils kopieren?'),
+                                    $version->getDisplayName()
+                                )
+                            ]
+                        )
                         ?>
                     <? endif; ?>
                     <? if ($perm->havePermCreate()) : ?>
                         <? $actionMenu->addButton(
                             'delete',
                             _('Version löschen'),
-                            Icon::create('trash', Icon::ROLE_CLICKABLE,
-                                ['title'        => _('Version löschen'),
-                                 'formaction'   => $controller->action_url('delete_version/' . $version->id),
-                                 'data-confirm' => sprintf(
-                                     _('Wollen Sie wirklich die Version "%s" des Studiengangteils löschen?'),
-                                     $version->getDisplayName())
-                                ]
-                            ))
+                            Icon::create('trash'),
+                            [
+                                'title'        => _('Version löschen'),
+                                'formaction'   => $controller->action_url('delete_version/' . $version->id),
+                                'data-confirm' => sprintf(
+                                    _('Wollen Sie wirklich die Version "%s" des Studiengangteils löschen?'),
+                                    $version->getDisplayName())
+                            ]
+                        )
                         ?>
                     <? endif; ?>
                     <?= $actionMenu->render() ?>

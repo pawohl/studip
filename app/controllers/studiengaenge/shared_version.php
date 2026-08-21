@@ -222,6 +222,7 @@ abstract class SharedVersionController extends MVVController
         if (!$version) {
              throw new Trails\Exception(404, _('Unbekannte Version'));
         }
+        $stgteil_id = $version->stgteil_id;
         if (Request::isPost()) {
             CSRFProtection::verifyUnsafeRequest();
             PageLayout::postSuccess(sprintf(
@@ -230,7 +231,7 @@ abstract class SharedVersionController extends MVVController
             ));
             $version->delete();
         }
-        $this->redirect($this->action_url('index'));
+        $this->redirect($this->action_url('details/' . $stgteil_id));
     }
 
     public function abschnitt_action($abschnitt_id = null)
@@ -688,7 +689,7 @@ abstract class SharedVersionController extends MVVController
                 ));
             }
         }
-        $this->redirect($this->action_url('index'));
+        $this->redirect($this->action_url('details/' . $version->stgteil_id));
     }
 
     /**
