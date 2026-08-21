@@ -131,15 +131,6 @@ class RoomManagement_PlanningController extends AuthenticatedController
             return;
         }
 
-        //Generate the resources array for the fullcalendar scheduler plugin:
-        $this->scheduler_resources = [];
-        foreach ($rooms as $room) {
-            $this->scheduler_resources[] = [
-                'id'          => $room->id,
-                'title'       => $room->name
-            ];
-        }
-
         $current_user = User::findCurrent();
 
         $room_c = count($rooms);
@@ -152,6 +143,10 @@ class RoomManagement_PlanningController extends AuthenticatedController
             ResourceBooking::TYPE_RESERVATION,
             ResourceBooking::TYPE_LOCK,
         ];
+
+        //Generate the resources array for the Fullcalendar scheduler plugin
+        //in the following loop:
+        $this->scheduler_resources = [];
 
         foreach ($rooms as $room) {
             if ($room->userHasRequestRights($current_user)) {
@@ -179,6 +174,14 @@ class RoomManagement_PlanningController extends AuthenticatedController
                     )
                 );
             }
+
+            //Add the room to the Fullcalendar resources data:
+            $this->scheduler_resources[] = [
+                'id'          => $room->id,
+                'title'       => $room->name,
+                'parent_name' => $room->building->name,
+                'url'         => $room->getActionURL('booking_plan')
+            ];
         }
 
         $this->all_rooms_booking_rights = ($room_c == $booking_rights_c);
@@ -432,17 +435,6 @@ class RoomManagement_PlanningController extends AuthenticatedController
             return;
         }
 
-        //Generate the resources array for the fullcalendar scheduler plugin:
-        $this->scheduler_resources = [];
-        foreach ($room_ids as $room_id) {
-            $room = Room::find($room_id);
-            $this->scheduler_resources[] = [
-                'id' => $room->id,
-                'parent_name' => $room->building->name,
-                'title' => $room->name
-            ];
-        }
-
         $current_user = User::findCurrent();
 
         $room_c = count($rooms);
@@ -454,6 +446,10 @@ class RoomManagement_PlanningController extends AuthenticatedController
             ResourceBooking::TYPE_RESERVATION,
             ResourceBooking::TYPE_LOCK,
         ];
+
+        //Generate the resources array for the Fullcalendar scheduler plugin
+        //in the following loop:
+        $this->scheduler_resources = [];
 
         foreach ($rooms as $room) {
             if ($room->userHasBookingRights($current_user)) {
@@ -470,6 +466,14 @@ class RoomManagement_PlanningController extends AuthenticatedController
             if (!$room->bookingPlanVisibleForUser($current_user)) {
                 throw new AccessDeniedException();
             }
+
+            //Add the room to the Fullcalendar resources data:
+            $this->scheduler_resources[] = [
+                'id'          => $room->id,
+                'title'       => $room->name,
+                'parent_name' => $room->building->name,
+                'url'         => $room->getActionURL('booking_plan')
+            ];
         }
 
         $all_rooms_requestable = ($room_c == $requestable_rooms_c);

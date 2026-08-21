@@ -101,6 +101,15 @@
                     </div>
                 </div>
             </template>
+            <template v-slot:resourceLabelContent="arg">
+                <template v-if="arg.resource.extendedProps['url']">
+                    <a :href="arg.resource.extendedProps['url']">
+                        {{ arg.resource.title }}
+                        <StudipIcon shape="link-intern" class="text-bottom studip-icon-inline"></StudipIcon>
+                    </a>
+                </template>
+                <span v-else>{{ arg.resource.title }}</span>
+            </template>
         </FullCalendar>
     </section>
 </template>
