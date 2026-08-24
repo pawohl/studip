@@ -106,6 +106,7 @@ class EventData
             'color' => $this->background_colour,
             'borderColor' => $this->border_colour,
             'editable' => $this->editable,
+            'resourceEditable' => $this->editable,
             'studip_weekday_begin' => $this->begin->format('N'),
             'studip_weekday_end' => $this->end->format('N'),
             'studip_object_class' => $this->object_class,
