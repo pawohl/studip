@@ -277,13 +277,16 @@ class CourseDate extends SimpleORMap implements PrivacyObject, Event
      * @param int $preparation_time The preparation time for the booking.
      * @param int $subsequent_time The time after the booking for cleaning up
      *     or similar tasks.
+     * @param string $booking_internal_comment The internal comment that shall
+     *     be set for the room booking. Defaults to an empty string.
      *
      * @return bool True, if the booking succeeded, false otherwise.
      */
     public function bookRoom(
         Room $room,
         int $preparation_time = 0,
-        int $subsequent_time  = 0
+        int $subsequent_time  = 0,
+        string $booking_internal_comment = ''
     ) : bool
     {
         //Check the permissions: Is the current user allowed to book the room?
@@ -304,7 +307,7 @@ class CourseDate extends SimpleORMap implements PrivacyObject, Event
             null,
             $preparation_time,
             '',
-            '',
+            $booking_internal_comment,
             ResourceBooking::TYPE_NORMAL,
             false,
             '',

@@ -637,10 +637,15 @@ class Course_TimesroomsController extends AuthenticatedController
             NotificationCenter::postNotification('CourseDidChangeSchedule', $this->course);
         }
 
-        // Set Rooms
+        //Collect the old room-IDs and the internal comments of the bookings.
+        //In the event that a booking for a room is renewed, the comment can be reused for the new booking.
         $old_room_ids = [];
+        $booking_internal_comments = [];
         foreach ($termin->room_bookings as $booking) {
             $old_room_ids[] = $booking->resource_id;
+            if ($booking->internal_comment) {
+                $booking_internal_comments[$booking->resource_id] = $booking->internal_comment;
+            }
         }
 
         if ((Request::option('room') == 'room') || Request::option('room') == 'nochange') {
@@ -709,10 +714,15 @@ class Course_TimesroomsController extends AuthenticatedController
                         if (in_array($room->id, $old_room_ids)) {
                             $unbooked_room_ids = array_diff($unbooked_room_ids, [$room->id]);
                         }
+                        //Check if the previously collected internal comment of the old room booking can be reused.
+                        $internal_comment = '';
+                        if (array_key_exists($room->id, $booking_internal_comments)) {
+                            $internal_comment = $booking_internal_comments[$room->id];
+                        }
                         $failure = false;
                         if ($room instanceof Room) {
                             try {
-                                $failure = !$termin->bookRoom($room, $preparation_time, $subsequent_time);
+                                $failure = !$termin->bookRoom($room, $preparation_time, $subsequent_time, $internal_comment);
                             } catch (ResourceBookingException|ResourceBookingOverlapException $e) {
                                 $course = $e->getRange();
                                 $message_links = [];
@@ -795,8 +805,13 @@ class Course_TimesroomsController extends AuthenticatedController
                     );
                 } elseif ($preparation_time_changed || $subsequent_time_changed) {
                     foreach ($rooms as $room) {
+                        //Check if the previously collected internal comment of the old room booking can be reused.
+                        $internal_comment = '';
+                        if (array_key_exists($room->id, $booking_internal_comments)) {
+                            $internal_comment = $booking_internal_comments[$room->id];
+                        }
                         if ($room instanceof Room) {
-                            $termin->bookRoom($room, $preparation_time * 60, $subsequent_time * 60);
+                            $termin->bookRoom($room, $preparation_time * 60, $subsequent_time * 60, $internal_comment);
                         }
                     }
                 }
@@ -1316,12 +1331,26 @@ class Course_TimesroomsController extends AuthenticatedController
                         continue;
                     }
                     if (!empty($room_ids)) {
+                        //Collect the internal booking comments for the booked rooms before deleting them:
+                        $booking_internal_comments = [];
+                        foreach ($singledate->room_bookings as $booking) {
+                            if ($booking->internal_comment) {
+                                $booking_internal_comments[$booking->resource_id] = $booking->internal_comment;
+                            }
+                        }
+
                         //Delete all existing bookings for the date:
                         ResourceBooking::deleteBySQL('`range_id` = :date_id',['date_id' => $singledate->id]);
                         foreach ($rooms as $room) {
+                            //Check if the previously collected internal comment of the old room booking can be reused:
+                            $internal_comment = '';
+                            if (array_key_exists($room->id, $booking_internal_comments)) {
+                                $internal_comment = $booking_internal_comments[$room->id];
+                            }
+
                             $failure = false;
                             try {
-                                $failure = !$singledate->bookRoom($room, $preparation_time, $subsequent_time);
+                                $failure = !$singledate->bookRoom($room, $preparation_time, $subsequent_time, $internal_comment);
                             } catch (ResourceBookingException $e) {
                                 $error_messages[] = sprintf(
                                     _('Der angegebene Raum konnte für den Termin %1$s nicht gebucht werden: %2$s'),
