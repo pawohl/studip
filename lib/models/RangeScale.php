@@ -40,7 +40,9 @@ class RangeScale extends QuestionnaireQuestion implements QuestionType
         $questiondata['description'] = \Studip\Markup::markAsHtml(
             \Studip\Markup::purifyHtml($questiondata['description'])
         );
-        $questiondata['statements'] = array_filter($questiondata['statements'] ?? []);
+        $questiondata['statements'] = array_values(
+            array_filter($questiondata['statements'], fn($option) => trim($option) !== '')
+        );
         return $questiondata;
     }
 
