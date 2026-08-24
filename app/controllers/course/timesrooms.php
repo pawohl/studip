@@ -641,11 +641,15 @@ class Course_TimesroomsController extends AuthenticatedController
         //In the event that a booking for a room is renewed, the comment can be reused for the new booking.
         $old_room_ids = [];
         $booking_internal_comments = [];
+        $sole_internal_comment   = '';
         foreach ($termin->room_bookings as $booking) {
             $old_room_ids[] = $booking->resource_id;
             if ($booking->internal_comment) {
                 $booking_internal_comments[$booking->resource_id] = $booking->internal_comment;
             }
+        }
+        if (count($booking_internal_comments) === 1) {
+            $sole_internal_comment = reset($booking_internal_comments);
         }
 
         if ((Request::option('room') == 'room') || Request::option('room') == 'nochange') {
@@ -715,8 +719,8 @@ class Course_TimesroomsController extends AuthenticatedController
                             $unbooked_room_ids = array_diff($unbooked_room_ids, [$room->id]);
                         }
                         //Check if the previously collected internal comment of the old room booking can be reused.
-                        $internal_comment = '';
-                        if (array_key_exists($room->id, $booking_internal_comments)) {
+                        $internal_comment = $sole_internal_comment;
+                        if (!$sole_internal_comment && array_key_exists($room->id, $booking_internal_comments)) {
                             $internal_comment = $booking_internal_comments[$room->id];
                         }
                         $failure = false;
@@ -806,8 +810,8 @@ class Course_TimesroomsController extends AuthenticatedController
                 } elseif ($preparation_time_changed || $subsequent_time_changed) {
                     foreach ($rooms as $room) {
                         //Check if the previously collected internal comment of the old room booking can be reused.
-                        $internal_comment = '';
-                        if (array_key_exists($room->id, $booking_internal_comments)) {
+                        $internal_comment = $sole_internal_comment;
+                        if (!$sole_internal_comment && array_key_exists($room->id, $booking_internal_comments)) {
                             $internal_comment = $booking_internal_comments[$room->id];
                         }
                         if ($room instanceof Room) {
@@ -1333,18 +1337,22 @@ class Course_TimesroomsController extends AuthenticatedController
                     if (!empty($room_ids)) {
                         //Collect the internal booking comments for the booked rooms before deleting them:
                         $booking_internal_comments = [];
+                        $sole_internal_comment     = '';
                         foreach ($singledate->room_bookings as $booking) {
                             if ($booking->internal_comment) {
                                 $booking_internal_comments[$booking->resource_id] = $booking->internal_comment;
                             }
+                        }
+                        if (count($booking_internal_comments) === 1) {
+                            $sole_internal_comment = reset($booking_internal_comments);
                         }
 
                         //Delete all existing bookings for the date:
                         ResourceBooking::deleteBySQL('`range_id` = :date_id',['date_id' => $singledate->id]);
                         foreach ($rooms as $room) {
                             //Check if the previously collected internal comment of the old room booking can be reused:
-                            $internal_comment = '';
-                            if (array_key_exists($room->id, $booking_internal_comments)) {
+                            $internal_comment = $sole_internal_comment;
+                            if (!$sole_internal_comment && array_key_exists($room->id, $booking_internal_comments)) {
                                 $internal_comment = $booking_internal_comments[$room->id];
                             }
 
