@@ -502,18 +502,18 @@ export default defineComponent({
             }
         },
         handleEventClick: function(event_data: EventClickArg) {
-            if (!event_data.event.extendedProps.studip_view_urls
-                || !event_data.event.extendedProps.studip_view_urls.show) {
-                //Nothing to do.
+            const urls = event_data.event.extendedProps?.studip_view_urls;
+            const targetUrl = urls?.edit || urls?.show;
+
+            if (!targetUrl) {
+                // Nothing to do.
                 return;
             }
-            //Load the dialog:
-            Dialog.fromURL(
-                event_data.event.extendedProps.studip_view_urls.show,
-                {
-                    size: this.dialogSize
-                }
-            );
+
+            // Load the dialog:
+            Dialog.fromURL(targetUrl, {
+                size: this.dialogSize
+            });
         },
         handleEventDrop: function(drop_arg: EventDropArg) {
             if (!this.calendar_options.editable || !drop_arg.event.startEditable
