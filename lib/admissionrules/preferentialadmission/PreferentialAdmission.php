@@ -399,7 +399,11 @@ class PreferentialAdmission extends AdmissionRule
                 $condition = new UserFilter();
                 foreach ($con['attributes']['fields'] as $field) {
                     $classname = $field['attributes']['type'];
-                    $obj = new $classname();
+                    if (!empty($field['attributes']['typeparam'])) {
+                        $obj = new $classname($field['attributes']['typeparam']);
+                    } else {
+                        $obj = new $classname();
+                    }
                     $obj->setCompareOperator($field['attributes']['compare-operator']);
                     $obj->setValue($field['attributes']['value']);
                     $condition->addField($obj);
@@ -541,14 +545,26 @@ class PreferentialAdmission extends AdmissionRule
         foreach ($this->getConditions() as $one) {
             $fields = [];
             foreach ($one->getFields() as $field) {
-                $fields[] = [
-                    'attributes' => [
-                        'type' => get_class($field),
-                        'id' => $field->getId(),
-                        'compare-operator' => $field->getCompareOperator(),
-                        'value' => $field->getValue()
-                    ]
-                ];
+                if (property_exists($field, 'datafield_id')) {
+                    $fields[] = [
+                        'attributes' => [
+                            'type' => get_class($field),
+                            'typeparam' => $field->datafield_id,
+                            'id' => $field->getId(),
+                            'compare-operator' => $field->getCompareOperator(),
+                            'value' => $field->getValue()
+                        ]
+                    ];
+                } else {
+                    $fields[] = [
+                        'attributes' => [
+                            'type' => get_class($field),
+                            'id' => $field->getId(),
+                            'compare-operator' => $field->getCompareOperator(),
+                            'value' => $field->getValue()
+                        ]
+                    ];
+                }
             }
 
             $conditions[] = [
