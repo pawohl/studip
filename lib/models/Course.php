@@ -1209,7 +1209,9 @@ class Course extends SimpleORMap implements Range, PrivacyObject, StudipItem, Fe
                 $this->parent->addMember($user, $permission_level, false);
             }
 
-            if ($send_mail) {
+            //Send a mail if this is requested and the user is not added with dozent permissions.
+            //Lecturers shall not be informed when they are added to a course to prevent confusion.
+            if ($send_mail && ($permission_level !== 'dozent' )) {
                 setTempLanguage($user->id);
                 $body = '';
                 $subject = '';
