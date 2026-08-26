@@ -531,24 +531,40 @@ class Institute_MembersController extends AuthenticatedController
         $members = $this->institute->members;
         $result = [];
 
+        $addToResult = function (InstituteMember $member, ?string $groupName) use (&$result) {
+            $result[] = [
+                'Einrichtung'        => $this->institute->name,
+                'Fakultät'           => $this->institute->faculty->name,
+                'Gruppe'             => $groupName ?? _('keiner Funktion zugeordnet'),
+                'Titel'              => $member->title_front,
+                'Vorname'            => $member->vorname,
+                'Nachname'           => $member->nachname,
+                'Titel nachgestellt' => $member->title_rear,
+                'Telefon'            => $member->telefon,
+                'Raum'               => $member->raum,
+                'Sprechzeiten'       => $member->sprechzeiten,
+                'Email'              => $member->email,
+            ];
+        };
+
+        $processed = [];
         foreach ($groups as $group) {
             foreach ($group->members as $member) {
                 $inst_member = $members->findOneBy('user_id', $member->user_id);
-                $result[] = [
-                    'Einrichtung'        => $this->institute->name,
-                    'Fakultät'           => $this->institute->faculty->name,
-                    'Gruppe'             => $group->getFullName(),
-                    'Titel'              => $member->title_front,
-                    'Vorname'            => $member->Vorname,
-                    'Nachname'           => $member->Nachname,
-                    'Titel nachgestellt' => $member->title_rear,
-                    'Telefon'            => $inst_member->Telefon,
-                    'Raum'               => $inst_member->raum,
-                    'Sprechzeiten'       => $inst_member->sprechzeiten,
-                    'Email'              => $member->Email,
-                ];
+
+                $addToResult($inst_member, $group->getFullName());
+
+                if (!in_array($member->user_id, $processed)) {
+                    $processed[] = $member->user_id;
+                }
             }
         }
+
+        $members->filter(function (InstituteMember $member) use ($processed) {
+            return !in_array($member->user_id, $processed);
+        })->each(function (InstituteMember $member) use ($addToResult) {
+            $addToResult($member, null);
+        });
 
         $filename = FileManager::cleanFileName(_('Mitarbeitendenexport') . ' ' . $this->institute->name . ' ' . $this->institute->faculty->name . '.' . $export_format);
 
