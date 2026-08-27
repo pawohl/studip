@@ -193,6 +193,15 @@ a.link-extern {
     display: inline;
 }
 
+.studip-icon {
+    width: var(--icon-size-default);
+    height: var(--icon-size-default);
+}
+
+.studip-icon-inline {
+    width: var(--icon-size-inline);
+    height: var(--icon-size-inline);
+}
 
 #context-title {
     font-size: 24px;
