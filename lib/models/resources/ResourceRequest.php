@@ -1276,9 +1276,9 @@ class ResourceRequest extends SimpleORMap implements PrivacyObject, Studip\Calen
                 ];
             }
             if ($with_range) {
+                $booked_rooms = [];
+                $booking_ids  = [];
                 if ($this->date->room_bookings) {
-                    $booked_rooms = [];
-                    $booking_ids  = [];
                     foreach ($this->date->room_bookings as $booking) {
                         $booked_rooms[] = $booking->resource_id;
                         $booking_ids[]  = $booking->id;
@@ -1308,10 +1308,10 @@ class ResourceRequest extends SimpleORMap implements PrivacyObject, Studip\Calen
                     ];
                 }
                 if ($with_range) {
-                    if ($this->date->room_bookings) {
-                        $booked_rooms = [];
-                        $booking_ids  = [];
-                        foreach ($this->date->room_bookings as $booking) {
+                    $booked_rooms = [];
+                    $booking_ids  = [];
+                    if ($date->room_bookings) {
+                        foreach ($date->room_bookings as $booking) {
                             $booked_rooms[] = $booking->resource_id;
                             $booking_ids[]  = $booking->id;
                         }
@@ -1344,10 +1344,10 @@ class ResourceRequest extends SimpleORMap implements PrivacyObject, Studip\Calen
                         ];
                     }
                     if ($with_range) {
-                        if ($this->date->room_bookings) {
-                            $booked_rooms = [];
-                            $booking_ids  = [];
-                            foreach ($this->date->room_bookings as $booking) {
+                        $booked_rooms = [];
+                        $booking_ids  = [];
+                        if ($date->room_bookings) {
+                            foreach ($date->room_bookings as $booking) {
                                 $booked_rooms[] = $booking->resource_id;
                                 $booking_ids[]  = $booking->id;
                             }
