@@ -2078,7 +2078,7 @@ class Vips_SheetsController extends AuthenticatedController
                 if ($block->block_type === 'test') {
                     $payload = json_decode($block->payload, true);
 
-                    if ($payload['assignment']) {
+                    if (!empty($payload['assignment'])) {
                         $result[] = $payload['assignment'];
                     }
                 }
