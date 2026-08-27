@@ -14,6 +14,9 @@
  * @category    Stud.IP
  */
 
+use GuzzleHttp\Psr7\Uri;
+use GuzzleHttp\Psr7\UriResolver;
+
 /**
  * The FileManager class contains methods that faciliate the management of files
  * and folders. Furthermore its methods perform necessary additional checks
@@ -1650,11 +1653,16 @@ class FileManager
 
         // Weg über einen Locationheader:
         $location_header = $header['Location'] ?? $header['location'] ?? null;
-        if (in_array($header['response_code'], [300, 301, 302, 303, 305, 307]) && $location_header) {
-            if (mb_strpos($location_header, 'http') !== 0) {
-                $location_header = $url_parts['scheme'] . '://' . $url_parts['host'] . '/' . $location_header;
-            }
-            $header = self::fetchURLMetadata($location_header, $level + 1);
+        if (
+            in_array($header['response_code'], [300, 301, 302, 303, 305, 307, 308])
+            && $location_header
+        ) {
+            $location = UriResolver::resolve(
+                new Uri($url),
+                new Uri($location_header)
+            );
+
+            $header = self::fetchURLMetadata((string) $location, $level + 1);
         }
         return $header;
     }
