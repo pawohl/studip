@@ -1445,10 +1445,10 @@ class Resources_RoomRequestController extends AuthenticatedController
         $booked_rooms = [];
         foreach($this->request_time_intervals as $key => $data) {
             foreach ($data['intervals'] as $timeslot) {
-                if (!empty($timeslot['booked_room']) && !isset($booked_rooms[$timeslot['booked_room']])) {
-                    $room = Room::find($timeslot['booked_room']);
-                    if ($room) {
-                        $booked_rooms[$timeslot['booked_room']] = $room;
+                if (!empty($timeslot['booked_rooms'])) {
+                    $rooms = Room::findMany($timeslot['booked_rooms']);
+                    if ($rooms) {
+                        $booked_rooms = array_merge($booked_rooms, $rooms);
                     }
                 }
             }
