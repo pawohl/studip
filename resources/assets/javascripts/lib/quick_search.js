@@ -127,7 +127,7 @@ const QuickSearch = {
 
             if (jQuery('#' + name + '_frame').length) {
                 // trigger search on button click
-                jQuery('#' + name + '_frame input[type="submit"]').click(function(e) {
+                jQuery('#' + name + '_frame button[type="submit"]').click(function(e) {
                     e.preventDefault();
                     QuickSearch.triggerSearch(name);
                 });
