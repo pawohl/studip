@@ -323,13 +323,14 @@ export default defineComponent({
                 //Invalid date format.
                 return;
             }
-            const date = new Date();
-            date.setFullYear(parseInt(date_parts[2]));
-            date.setMonth(parseInt(date_parts[1]) - 1);
-            date.setDate(parseInt(date_parts[0]));
-            date.setHours(12);
-            date.setMinutes(0);
-            date.setSeconds(0);
+            const date = new Date(
+                parseInt(date_parts[2]),
+                parseInt(date_parts[1]) - 1,
+                parseInt(date_parts[0]),
+                12,
+                0,
+                0
+            );
             this.calendar_api.gotoDate(date);
         },
         startColourDragging(event: DragEvent) {
