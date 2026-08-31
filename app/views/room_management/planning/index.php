@@ -33,6 +33,7 @@
         _('Belegungsplan'),
         [
             'resources' => $scheduler_resources,
+            'resourceOrder' => 'order',
             'resourceLabelText' => _('Raum'),
             'editable' => true,
             'selectable' => $all_rooms_booking_rights,

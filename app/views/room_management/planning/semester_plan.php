@@ -40,6 +40,7 @@
         _('Semesterplan'),
         [
             'resources' => $scheduler_resources,
+            'resourceOrder' => 'order',
             'resourceLabelText' => _('Raum'),
             'slotMinTime' => ($min_time),
             'slotMaxTime' => ($max_time),

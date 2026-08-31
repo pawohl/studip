@@ -117,8 +117,14 @@ class RoomManagement_PlanningController extends AuthenticatedController
                 PageLayout::setTitle(
                     $clipboard->name . ': ' . _('Raumgruppen-Belegungsplan')
                 );
-                $room_ids = $clipboard->getAllRangeIds('Room');
-                $rooms = Room::findMany($room_ids, 'ORDER BY name');
+
+                $rooms = [];
+                $items = $clipboard->getContent();  // this is how the clipboard sorts the items
+                foreach ($items as $item) {
+                    if ($item['range_type'] === 'Room') {
+                        $rooms[] = Room::find($item['range_id']);
+                    }
+                }
             } else {
                 $this->no_clipboard = true;
                 return;
@@ -147,6 +153,7 @@ class RoomManagement_PlanningController extends AuthenticatedController
         //Generate the resources array for the Fullcalendar scheduler plugin
         //in the following loop:
         $this->scheduler_resources = [];
+        $order = 0;
 
         foreach ($rooms as $room) {
             if ($room->userHasRequestRights($current_user)) {
@@ -180,8 +187,10 @@ class RoomManagement_PlanningController extends AuthenticatedController
                 'id'          => $room->id,
                 'title'       => $room->name,
                 'parent_name' => $room->building->name,
-                'url'         => $room->getActionURL('booking_plan')
+                'url'         => $room->getActionURL('booking_plan'),
+                'order'       => $order
             ];
+            $order++;
         }
 
         $this->all_rooms_booking_rights = ($room_c == $booking_rights_c);
@@ -421,8 +430,15 @@ class RoomManagement_PlanningController extends AuthenticatedController
                 PageLayout::setTitle(
                     $clipboard->name . ': ' . _('Raumgruppen-Semester-Belegungsplan')
                 );
-                $room_ids = $clipboard->getAllRangeIds('Room');
-                $rooms = Room::findMany($room_ids);
+
+                $rooms = [];
+                $items = $clipboard->getContent();  // this is how the clipboard sorts the items
+                foreach ($items as $item) {
+                    if ($item['range_type'] === 'Room') {
+                        $rooms[] = Room::find($item['range_id']);
+                    }
+                }
+
             } else {
                 $this->no_clipboard = true;
                 return;
@@ -450,6 +466,7 @@ class RoomManagement_PlanningController extends AuthenticatedController
         //Generate the resources array for the Fullcalendar scheduler plugin
         //in the following loop:
         $this->scheduler_resources = [];
+        $order = 0;
 
         foreach ($rooms as $room) {
             if ($room->userHasBookingRights($current_user)) {
@@ -472,8 +489,10 @@ class RoomManagement_PlanningController extends AuthenticatedController
                 'id'          => $room->id,
                 'title'       => $room->name,
                 'parent_name' => $room->building->name,
-                'url'         => $room->getActionURL('booking_plan')
+                'url'         => $room->getActionURL('booking_plan'),
+                'order'       => $order
             ];
+            $order++;
         }
 
         $all_rooms_requestable = ($room_c == $requestable_rooms_c);
