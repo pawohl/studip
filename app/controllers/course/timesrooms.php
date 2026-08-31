@@ -577,8 +577,8 @@ class Course_TimesroomsController extends AuthenticatedController
         $subsequent_time_changed = false;
         $first_booking = reset($termin->room_bookings);
         if ($first_booking) {
-            $preparation_time_changed = $first_booking->preparation_time !== $preparation_time * 60 ;
-            $subsequent_time_changed  = $first_booking->subsequent_time !== $subsequent_time * 60 ;
+            $preparation_time_changed = $first_booking->preparation_time != $preparation_time * 60 ;
+            $subsequent_time_changed  = $first_booking->subsequent_time != $subsequent_time * 60 ;
         }
         if ($time_changed) {
             if ($termin->metadate_id != '') {
