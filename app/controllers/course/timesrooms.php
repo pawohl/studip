@@ -704,7 +704,7 @@ class Course_TimesroomsController extends AuthenticatedController
                 foreach ($resources as $resource) {
                     $rooms[] = $resource->getDerivedClassInstance();
                 }
-                if ($time_changed || $preparation_time_changed) {
+                if ($time_changed || $preparation_time_changed || $subsequent_time_changed) {
                     //Remove the old bookings first.
                     ResourceBooking::deleteBySQL(
                         '`range_id` = :date_id AND `resource_id` IN ( :room_ids )',
