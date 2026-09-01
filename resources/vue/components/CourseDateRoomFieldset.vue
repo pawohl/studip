@@ -17,8 +17,7 @@
                 {{ $gettext('Raum auswählen') }}
             </label>
             <span class="flex-row">
-                <StudipSelect v-if="allow_multiple_room_bookings"
-                              v-model="selected_room_list"
+                <StudipSelect v-model="selected_room_list"
                               :no_options_text="$gettext('Kein Raum verfügbar')"
                               :options="available_rooms"
                               multiple
@@ -28,15 +27,6 @@
                         <input type="hidden" name="room_ids[]" :value="id">
                     </template>
                 </StudipSelect>
-                <select v-if="!allow_multiple_room_bookings"
-                        name="room_ids[]"
-                        style="flex-grow: 2"
-                        v-model="selected_room_list">
-                    <option v-for="room of available_rooms" :key="room.id"
-                            :value="room.id" :selected="selected_room_list.includes(room.id)">
-                        {{ room.label }}
-                    </option>
-                </select>
                 <studip-icon v-if="show_ajax_indicator" shape="reload" role="info"></studip-icon>
             </span>
             <section v-if="selected_room_option === 'room' && available_rooms.length > 0 && Object.keys(visible_info_texts).length > 0">
@@ -273,6 +263,22 @@ export default {
             }
             this.show_ajax_indicator = false;
         },
+        reviewSelectedRooms() {
+            if (this.allow_multiple_room_bookings) {
+                //Nothing to review here, since the user may book multiple rooms.
+                return;
+            }
+            //In case code execution reaches this point, the user is not allowed
+            //to book multiple rooms. This requires a review of the
+            //selected room list.
+            if (this.selected_room_list.length > 1) {
+                //Remove all items until the last which is the most recently
+                //added room.
+                let processed_new_list = [];
+                processed_new_list.push(this.selected_room_list.at(-1));
+                this.selected_room_list = processed_new_list;
+            }
+        }
     },
     computed: {
         visible_info_texts() {
@@ -304,6 +310,13 @@ export default {
             if (this.selected_room_option === 'room') {
                 this.getAvailableRooms();
             }
+        },
+        selected_room_list(new_list, old_list) {
+            if (old_list === new_list) {
+                //Do nothing.
+                return;
+            }
+            this.reviewSelectedRooms();
         }
     }
 }
