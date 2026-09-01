@@ -21,7 +21,8 @@
                               :no_options_text="$gettext('Kein Raum verfügbar')"
                               :options="available_rooms"
                               multiple
-                              style="flex-grow: 2">
+                              style="flex-grow: 2"
+                              @click="selected_room_option = 'room'">
                     <template #selected-option="{id, label}">
                         <span>{{ label }}</span>
                         <input type="hidden" name="room_ids[]" :value="id">
