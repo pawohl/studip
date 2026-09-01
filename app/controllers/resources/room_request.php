@@ -1519,6 +1519,12 @@ class Resources_RoomRequestController extends AuthenticatedController
             $warnings = [];
             $bookings = [];
 
+            //We must collect information about which rooms are booked
+            //for which course date in the following loop.
+            //We use this information to delete all bookings for the
+            //course dates that are not in the array.
+            $booked_rooms_ids_for_dates = [];
+
             foreach ($this->selected_rooms as $range_str => $room_id) {
                 //Get room and check room permissions:
                 $room = Resource::find($room_id);
@@ -1572,6 +1578,15 @@ class Resources_RoomRequestController extends AuthenticatedController
                         $room_ids[] = $booking->resource_id;
                     }
 
+                    if (!array_key_exists($course_date->id, $booked_rooms_ids_for_dates)) {
+                        $booked_rooms_ids_for_dates[$course_date->id] = [];
+                    }
+                    if (in_array($room_id, $room_ids)) {
+                        //The current room is already booked for the course
+                        //date and shall remain booked for it.
+                        $booked_rooms_ids_for_dates[$course_date->id][] = $room_id;
+                    }
+
                     if (empty($room_ids) || !in_array($room_id, $room_ids)) {
                         try {
                             $booking = $room->createBooking(
@@ -1596,6 +1611,10 @@ class Resources_RoomRequestController extends AuthenticatedController
                             );
                             if ($booking instanceof ResourceBooking) {
                                 $bookings[] = $booking;
+
+                                //Note the booking in the array for booked rooms:
+                                $booked_rooms_ids_for_dates[$course_date->id][] = $room_id;
+
                                 if (!empty($this->booked_room_infos[$room->id])) {
                                     if ($this->booked_room_infos[$room->id]['first_booking_date'] > $booking->begin) {
                                         $this->booked_room_infos[$room->id]['first_booking_date'] = $booking->begin;
@@ -1632,6 +1651,16 @@ class Resources_RoomRequestController extends AuthenticatedController
                             foreach ($date->room_bookings as $booking) {
                                 $room_ids[] = $booking->resource_id;
                             }
+
+                            if (!array_key_exists($date->id, $booked_rooms_ids_for_dates)) {
+                                $booked_rooms_ids_for_dates[$date->id] = [];
+                            }
+                            if (in_array($room_id, $room_ids)) {
+                                //The current room is already booked for the course
+                                //date and shall remain booked for it.
+                                $booked_rooms_ids_for_dates[$date->id][] = $room_id;
+                            }
+
                             if (empty($room_ids) || !in_array($room_id, $room_ids)) {
                                 try {
                                     $booking = $room->createBooking(
@@ -1656,6 +1685,9 @@ class Resources_RoomRequestController extends AuthenticatedController
                                     );
                                     if ($booking instanceof ResourceBooking) {
                                         $bookings[] = $booking;
+
+                                        //Note the booking in the array for booked rooms:
+                                        $booked_rooms_ids_for_dates[$date->id][] = $room_id;
                                     }
                                 } catch (ResourceBookingException $e) {
                                     $overlap_messages[] = $e->getMessage();
@@ -1737,23 +1769,31 @@ class Resources_RoomRequestController extends AuthenticatedController
                     $warnings
                 );
                 $this->show_force_resolve_button = true;
-            } else if (!$save_only) {
-                //No errors: We can close the request.
-
-                $success = $this->request->closeRequest(
-                    $this->notification_settings == 'creator_and_lecturers',
-                    $bookings
-                );
-
-                if ($success) {
-                    $this->show_form = false;
-                    PageLayout::postSuccess(
-                        _('Die Anfrage wurde aufgelöst!')
+            } else {
+                //No errors: We can delete old bookings that have been removed
+                foreach ($booked_rooms_ids_for_dates as $date_id => $room_ids) {
+                    ResourceBooking::deleteBySQL(
+                        '`range_id` = :date_id AND `resource_id` NOT IN ( :room_ids )',
+                        ['date_id' => $date_id, 'room_ids' => $room_ids]
                     );
-                } else {
-                    PageLayout::postWarning(
-                        _('Die Anfrage wurde aufgelöst, konnte aber nicht geschlossen werden!')
+                }
+                if (!$save_only) {
+                    //Close the request.
+                    $success = $this->request->closeRequest(
+                        $this->notification_settings == 'creator_and_lecturers',
+                        $bookings
                     );
+    
+                    if ($success) {
+                        $this->show_form = false;
+                        PageLayout::postSuccess(
+                            _('Die Anfrage wurde aufgelöst!')
+                        );
+                    } else {
+                        PageLayout::postWarning(
+                            _('Die Anfrage wurde aufgelöst, konnte aber nicht geschlossen werden!')
+                        );
+                    }
                 }
             }
 
