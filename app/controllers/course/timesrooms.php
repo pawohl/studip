@@ -362,18 +362,14 @@ class Course_TimesroomsController extends AuthenticatedController
             //Collect all room bookings:
             $booked_rooms    = [];
             $separable_rooms = [];
+            $rooms_without_booking_permissions = [];
             if ($this->date->room_bookings) {
                 foreach ($this->date->room_bookings as $booking) {
                     $room = $booking->resource;
                     if ($room instanceof Resource) {
                         $room = $room->getDerivedClassInstance();
                         if (!$room->userHasBookingRights(User::findCurrent())) {
-                            PageLayout::postWarning(
-                                studip_interpolate(
-                                    _('Die Buchung des Raumes %{room_name} zu diesem Termin wird bei der Verlängerung des Zeitbereiches gelöscht, da sie keine Buchungsrechte an dem Raum haben!'),
-                                    ['room_name' => htmlReady($room->name)]
-                                )
-                            );
+                            $rooms_without_booking_permissions[$room->id] = $room->name;
                         }
                         //Check if the room is part of a separable room:
                         if (count($room->separable_room)) {
@@ -450,6 +446,20 @@ class Course_TimesroomsController extends AuthenticatedController
                     }
                     $this->selected_room_ids[] = $room_data;
                 }
+            }
+            if (count($rooms_without_booking_permissions) === 1) {
+                PageLayout::postWarning(
+                    studip_interpolate(
+                        _('Die Buchung des Raumes %{room_name} zu diesem Termin wird bei der Verlängerung des Zeitbereiches gelöscht, da sie keine Buchungsrechte an dem Raum haben!'),
+                        ['room_name' => htmlReady(reset($rooms_without_booking_permissions))]
+                    )
+                );
+            } elseif (count($rooms_without_booking_permissions) > 0) {
+                asort($rooms_without_booking_permissions);
+                PageLayout::postWarning(
+                    _('Die Buchungen folgender Räume zu diesem Termin werden bei der Verlängerung des Zeitbereiches gelöscht, da sie keine Buchungsrechte an den Räumen haben:'),
+                    array_map('htmlReady', $rooms_without_booking_permissions)
+                );
             }
         }
 
