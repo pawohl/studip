@@ -138,6 +138,12 @@ class Factory
             $cache = self::instantiateCache($class, $args);
         } catch (\Exception $e) {
             error_log(__METHOD__ . ': ' . $e->getMessage());
+
+            if ($GLOBALS['CACHE_EXIT_ON_FAILURE']) {
+                header('HTTP/1.1 500 Internal Server Error');
+                die(_('Momentan ist das Stud.IP System nicht erreichbar, bitte versuchen Sie es später noch einmal.'));
+            }
+
             PageLayout::addBodyElements(MessageBox::error(__METHOD__ . ': ' . $e->getMessage()));
 
             $class = self::DEFAULT_CACHE_CLASS;

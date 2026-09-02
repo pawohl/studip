@@ -70,6 +70,10 @@ $CACHING_ENABLE = $_ENV['STUDIP_CACHING_ENABLE'] ?? true;
 $CACHING_FILECACHE_PATH = $TMP_PATH . '/studip_cache';
 $CACHE_IS_SESSION_STORAGE = $_ENV['STUDIP_CACHE_IS_SESSION_STORAGE'] ?? false; //store session data in cache
 
+// Exit code execution on cache failure and display "try again later"-message instead
+// Usefull when having sessions in cache and sessions should persist over cache failures.
+$CACHE_EXIT_ON_FAILURE = false;
+
 $SESSION_OPTIONS = [];
 $SESSION_OPTIONS['lifetime'] = 7200; // session lifetime in seconds
 
