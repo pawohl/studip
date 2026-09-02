@@ -18,6 +18,7 @@
                 <col style="width: 5%;">
                 <col style="width: 5%;">
                 <col style="width: 5%;">
+                <col style="width: 5%;">
             </colgroup>
 
             <thead>
@@ -26,6 +27,7 @@
                     <th><?= _('URL der Anwendung') ?></th>
                     <th><?= _('Consumer-Key') ?></th>
                     <th><?= _('LTI-Version') ?></th>
+                    <th><?= _('Client-ID') ?></th>
                     <th><?= _('Deployment-ID') ?></th>
                     <th><?= _('Deep Links') ?></th>
                     <th><?= _('Links') ?></th>
@@ -48,6 +50,7 @@
                         </td>
                         <td><?= htmlReady($tool->consumer_key) ?></td>
                         <td><?= htmlReady($tool->getLtiVersionString()) ?></td>
+                        <td><?= htmlReady($tool->id) ?></td>
                         <td>
                             <?
                             //Each tool should only have one deployment-ID:
