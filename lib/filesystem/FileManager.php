@@ -1582,6 +1582,8 @@ class FileManager
                             break;
                         }
                     }
+                    stream_context_set_option($socket, 'ssl', 'SNI_enabled', true);
+                    stream_context_set_option($socket, 'ssl', 'peer_name', $host);
                     stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT);
                 }
             }
