@@ -16,7 +16,7 @@
             <div v-if="ungrouped?.length > 0"
                  role="list">
                 <div v-for="(filter, index) in ungrouped"
-                     :key="index"
+                     :key="filter.attributes.provisional_id"
                      class="admission-condition"
                      role="listitem">
                     <p v-if="ungrouped.length > 1 && index >= 1">
@@ -28,7 +28,7 @@
                     <label v-else class="undecorated">
                         <input type="checkbox"
                                v-model="selectedFilters"
-                               :value="filter.id">
+                               :value="filter.attributes.provisional_id">
                         <span v-html="filter.attributes.text"></span>
                     </label>
                     <a @click.prevent="editFilter(index)"
@@ -48,6 +48,9 @@
             </div>
             <div v-if="groups?.length > 0"
                  role="list">
+                <h3>
+                    {{ $gettext('Kontingente') }}
+                </h3>
                 <div v-for="(group, index) in groups"
                      :key="index"
                      class="admission-contingent"
@@ -193,11 +196,11 @@ export default {
                 id: null,
                 quota: Math.max(setQuotas, 0),
                 conditions: this.ungrouped.filter(element => {
-                    return this.selectedFilters.includes(element.id);
+                    return this.selectedFilters.includes(element.attributes.provisional_id);
                 })
             });
             this.ungrouped = this.ungrouped.filter(element => {
-                return !this.selectedFilters.includes(element.id);
+                return !this.selectedFilters.includes(element.attributes.provisional_id);
             });
             this.selectedFilters = [];
         },

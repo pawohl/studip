@@ -357,8 +357,8 @@ class ConditionalAdmission extends AdmissionRule
         }
 
         foreach ($data['grouped-conditions'] as $group) {
-            if ($group['id'] === '') {
-                $id = $group['id'] ?: md5(uniqid('conditiongroups' . microtime(), true));
+            if (!$group['id']) {
+                $id = md5(uniqid('conditiongroups' . microtime(), true));
             }
 
             $this->conditiongroups[$id] = [];

@@ -30,6 +30,7 @@ class UserFilter extends SchemaProvider
 
         $resource->show_user_count = true;
         return [
+            'provisional_id' => $resource->getId() ?: $resource->generateId('admissionrules'),
             'text' => $resource->toString(),
             'fields' => $fields
         ];
