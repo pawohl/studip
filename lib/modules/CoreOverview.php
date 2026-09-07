@@ -11,71 +11,14 @@
 
 class CoreOverview extends CorePlugin implements StudipModuleExtended
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getIconNavigation($course_id, $last_visit, $user_id)
-    {
-        $sql = "SELECT COUNT(nw.news_id) AS count,
-                       COUNT(IF((nw.chdate > IFNULL(b.visitdate, :threshold) AND nw.user_id !=:user_id), nw.news_id, NULL)) AS neue
-                FROM news_range AS a
-                LEFT JOIN news AS nw
-                  ON a.news_id = nw.news_id
-                     AND UNIX_TIMESTAMP() BETWEEN date AND date + expire
-                LEFT JOIN object_user_visits AS b
-                  ON b.object_id = a.news_id
-                     AND b.user_id = :user_id
-                     AND b.plugin_id = :plugin_id
-                WHERE a.range_id = :course_id
-                GROUP BY a.range_id";
-
-        $statement = DBManager::get()->prepare($sql);
-        $statement->bindValue(':user_id', $user_id);
-        $statement->bindValue(':course_id', $course_id);
-        $statement->bindValue(':threshold', object_get_visit_threshold());
-        $statement->bindValue(':plugin_id', $this->getPluginId());
-        $statement->execute();
-        $result = $statement->fetch(PDO::FETCH_ASSOC);
-        if (!$result) {
-            return null;
-        }
-
-        $nav = new Navigation(_('Ankündigungen'), '');
-        if ($result['neue']) {
-            $nav->setURL('?new_news=true');
-            $nav->setImage(Icon::create('news', Icon::ROLE_ATTENTION, [
-                'title' => sprintf(
-                    ngettext(
-                        '%1$d Ankündigung, %2$d neue',
-                        '%1$d Ankündigungen, %2$d neue',
-                        $result['count']
-                    ),
-                    $result['count'],
-                    $result['neue']
-                )
-            ]));
-            $nav->setBadgeNumber($result['neue']);
-        } elseif ($result['count']) {
-            $nav->setImage(Icon::create('news'));
-            $nav->setLinkAttributes([
-                'title' => sprintf(
-                    ngettext(
-                        '%d Ankündigung',
-                        '%d Ankündigungen',
-                        $result['count']
-                    ),
-                    $result['count']
-                )
-            ]);
-        }
-        return $nav;
-    }
+    use IconNavigationTrait;
 
     public function getManyIconNavigation(array $course_ids, ?string $user_id = null): array
     {
         $sql = "SELECT news_r.range_id,
                        COUNT(news.news_id) AS count,
-                       COUNT(IF((news.chdate > IFNULL(b.visitdate, :threshold) AND news.user_id !=:user_id), news.news_id, NULL)) AS neue
+                       COUNT(IF((news.chdate > IFNULL(b.visitdate, :threshold) AND news.user_id !=:user_id), news.news_id, NULL)) AS neue,
+                       IF(i.Institut_id IS NULL, 'course', 'institute') AS type
                 FROM news_range AS news_r
                 JOIN news
                   ON news_r.news_id = news.news_id
@@ -84,6 +27,8 @@ class CoreOverview extends CorePlugin implements StudipModuleExtended
                   ON b.object_id = news_r.news_id
                      AND b.user_id = :user_id
                      AND b.plugin_id = :plugin_id
+                LEFT JOIN Institute AS i
+                  ON i.Institut_id = news_r.range_id
                 WHERE news_r.range_id IN (:course_ids)
                 GROUP BY news_r.range_id";
         $results = DBManager::get()->fetchAll($sql, [
@@ -95,9 +40,9 @@ class CoreOverview extends CorePlugin implements StudipModuleExtended
 
         $navs = [];
         foreach ($results as $result) {
-            $nav = new Navigation(_('Ankündigungen'), '');
-            if ($result['neue']) {
-                $nav->setURL('?new_news=true');
+            $nav = new Navigation(_('Ankündigungen'), "dispatch.php/{$result['type']}/overview");
+            if ($result['neue'] > 0) {
+                $nav->setURL("dispatch.php/{$result['type']}/overview?new_news=true");
                 $nav->setImage(Icon::create('news', Icon::ROLE_ATTENTION));
                 $nav->setLinkAttributes([
                     'title' => sprintf(
@@ -111,7 +56,7 @@ class CoreOverview extends CorePlugin implements StudipModuleExtended
                     )
                 ]);
                 $nav->setBadgeNumber($result['neue']);
-            } elseif ($result['count']) {
+            } elseif ($result['count'] > 0) {
                 $nav->setImage(Icon::create('news'));
                 $nav->setLinkAttributes([
                     'title' => sprintf(
