@@ -98,6 +98,14 @@ class StudipResponse extends Trails\Response
     function add_header($key, $value)
     {
         $this->psr_response = $this->psr_response->withHeader($key, $value);
+
+        if (
+            strcasecmp($key, 'location') === 0
+            && $this->psr_response->getStatusCode() === 200
+        ) {
+            $this->set_status(302);
+        }
+
         return $this;
     }
 }
