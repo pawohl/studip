@@ -38,6 +38,7 @@ class MyRealmModel
     {
         $count = 0;
         $neue  = 0;
+        $type  = get_object_type($object_id, ['sem']) === 'sem' ? 'course' : 'institute';
 
         $statusgruppen = Statusgruppen::findByRange_id($object_id);
         if (!$GLOBALS['perm']->have_studip_perm("tutor", $object_id)) {
@@ -93,7 +94,10 @@ class MyRealmModel
         }
 
         if ($neue || $count > 0) {
-            $nav = new Navigation('vote', '#vote');
+            $nav = new Navigation(
+                'vote',
+                "dispatch.php/{$type}/overview#vote"
+            );
             if ($neue) {
                 $nav->setImage(Icon::create('vote', Icon::ROLE_ATTENTION, [
                     'title' => sprintf(
@@ -384,6 +388,7 @@ class MyRealmModel
             $sem_courses,
             User::findCurrent()->id
         );
+
         foreach ($sem_courses as $index => $courses) {
             foreach ($courses as $c_id => $course) {
                 if (!empty($navs[$c_id])) {
@@ -529,18 +534,14 @@ class MyRealmModel
                 }
             }
         }
+
         // -- 2. Fetch the Navigation per StudipModule
         $all_course_ids = array_keys($all_courses);
         $visits = get_objects_visits($all_course_ids, 0, null, null, array_keys($activated_tools));
         foreach ($activated_tools as $plugin_id => $plugin_data) {
             $c_ids = $plugin_data['courses'];
             if ($c_ids) {
-                if ($plugin_id === -1) {
-                    foreach ($c_ids as $c_id) {
-                        // TODO testing vote need to be done
-                        $navigation[$c_id][$plugin_id] = self::checkVote($all_courses[$c_id], $user_id, $c_id);
-                    }
-                } elseif ($plugin_data['studip_module'] instanceof StudipModuleExtended) {
+                if ($plugin_data['studip_module'] instanceof StudipModuleExtended) {
                     $fetched_navs = $plugin_data['studip_module']->getManyIconNavigation($c_ids, $user_id);
                     foreach ($fetched_navs as $fetched_c_id => $fetched_nav) {
                         $navigation[$fetched_c_id][$plugin_id] = $fetched_nav;
@@ -552,6 +553,16 @@ class MyRealmModel
                             $visits[$c_id][$plugin_id]['visitdate'],
                             $user_id
                         );
+                    }
+                }
+
+                if ($plugin_data['studip_module'] instanceof CoreOverview) {
+                    foreach ($c_ids as $c_id) {
+                        // TODO testing vote need to be done
+                        $voteNavigation = self::checkVote($all_courses[$c_id], $user_id, $c_id);
+                        if ($voteNavigation) {
+                            $navigation[$c_id][] = $voteNavigation;
+                        }
                     }
                 }
             }
