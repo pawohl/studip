@@ -1691,29 +1691,6 @@ class Course extends SimpleORMap implements Range, PrivacyObject, StudipItem, Fe
             );
         }
 
-        //Check the course set and if the user is on an admission list:
-
-        if ($course_set = $this->getCourseSet()) {
-            $info = new \Studip\EnrolmentInformation('');
-            $info->setCodeword('course_set');
-            // Nobody can never enroll when there is a course set present.
-            $info->setEnrolmentAllowed('nobody' !== $GLOBALS['user']->id);
-            $message = _('Die Anmeldung zu dieser Veranstaltung folgt bestimmten Regeln.');
-            $priority = AdmissionPriority::getPrioritiesByUser($course_set->getId(), $user_id);
-            if (!empty($priority[$this->id])) {
-                if ($course_set->hasAdmissionRule('LimitedAdmission')) {
-                    $message .= ' ' . sprintf(
-                            _('Sie stehen auf der Anmeldeliste für die automatische Platzverteilung der Veranstaltung mit der Priorität %u.'),
-                            $priority[$this->id]
-                        );
-                } else {
-                    $message .= ' ' . _('Sie stehen auf der Anmeldeliste für die automatische Platzverteilung der Veranstaltung.');
-                }
-            }
-            $info->setMessage($message);
-            return $info;
-        }
-
         if ($this->lesezugriff == '0' && Config::get()->ENABLE_FREE_ACCESS && !$GLOBALS['perm']->get_studip_perm($this->id, $user_id)) {
             return new \Studip\EnrolmentInformation(
                 _('Für diese Veranstaltung ist keine Anmeldung erforderlich.'),
@@ -1803,6 +1780,29 @@ class Course extends SimpleORMap implements Range, PrivacyObject, StudipItem, Fe
                     false
                 );
             }
+        }
+
+        //Check the course set and if the user is on an admission list:
+        $course_set = $this->getCourseSet();
+        if ($course_set) {
+            $info = new \Studip\EnrolmentInformation(
+                _('Die Anmeldung zu dieser Veranstaltung folgt bestimmten Regeln.'),
+                \Studip\Information::INFO,
+                'course_set',
+                true
+            );
+            $priority = AdmissionPriority::getPrioritiesByUser($course_set->getId(), $user_id);
+            if (!empty($priority[$this->id])) {
+                if ($course_set->hasAdmissionRule('LimitedAdmission')) {
+                    $info->setMessage(sprintf(
+                        _('Sie stehen auf der Anmeldeliste für die automatische Platzverteilung der Veranstaltung mit der Priorität %u.'),
+                        $priority[$this->id]
+                    ));
+                } else {
+                    $info->setMessage(_('Sie stehen auf der Anmeldeliste für die automatische Platzverteilung der Veranstaltung.'));
+                }
+            }
+            return $info;
         }
 
         //In all other cases, enrolment is allowed.
