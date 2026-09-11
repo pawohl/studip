@@ -300,6 +300,9 @@ class Calendar_ScheduleController extends AuthenticatedController
                 if ($room_name) {
                     $event_title .= "\n" . $room_name;
                 }
+                if ($cycle_date->description) {
+                    $event_title .= sprintf(' (%s)', $cycle_date->description);
+                }
 
                 $event_icon = 'seminar';
                 if ($schedule_course && !$course_membership) {
