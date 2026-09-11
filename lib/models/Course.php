@@ -1364,9 +1364,18 @@ class Course extends SimpleORMap implements Range, PrivacyObject, StudipItem, Fe
             //The other way around: This course has child courses and because the user
             //has been removed from this course, they shall also be removed from all
             //child courses.
-            foreach ($this->children as $child) {
-                $child->deleteMember($user);
-            }
+            CourseMember::findEachBySql(
+                function (CourseMember $membership) use ($user) {
+                    $membership->course->deleteMember($user);
+                },
+                'JOIN `seminare` USING (`seminar_id`)
+                 WHERE `user_id` = :user_id
+                   AND `parent_course` = :this_course_id',
+                [
+                    'user_id'        => $user->id,
+                    'this_course_id' => $this->id
+                ]
+            );
         }
 
         if ($send_mail) {
