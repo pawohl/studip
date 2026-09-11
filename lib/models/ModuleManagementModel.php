@@ -708,7 +708,7 @@ abstract class ModuleManagementModel extends SimpleORMap implements ModuleManage
     {
         $content_languages = Config::get()->CONTENT_LANGUAGES;
         if (empty($content_languages[$language])) {
-            $language = Config::get()->DEFAULT_LANGUAGE;
+            $language = I18NString::getDefaultLanguage();
         }
         setLocaleEnv($language);
         I18NString::setContentLanguage($language);
