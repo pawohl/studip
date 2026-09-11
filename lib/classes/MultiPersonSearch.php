@@ -95,7 +95,7 @@ class MultiPersonSearch {
     public function saveAddedUsersToSession() {
         $addedUsers = [];
         foreach (Request::optionArray($this->name . '_selectbox') as $selected) {
-            if (!in_array($selected, $_SESSION['multipersonsearch'][$this->name]['defaultSelectedUsersIDs'])) {
+            if (!in_array($selected, $this->defaultSelectedUsersIDs)) {
                 $addedUsers[] = $selected;
             }
         }
