@@ -55,6 +55,7 @@ article.studip {
             > a {
                 > img,
                 > svg {
+                    flex: none;
                     margin-right: 5px;
                 }
             }
