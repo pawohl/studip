@@ -749,7 +749,7 @@ class Studiengang extends ModuleManagementModelTreeItem
      */
     public function getStartSem()
     {
-        return Semester::find($this->sem);
+        return Semester::find($this->start);
     }
 
     /**
