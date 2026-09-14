@@ -61,9 +61,7 @@ class StudipLog
         }
 
         // automagically set current user as agent
-        if (!$user_id) {
-            $user_id = $GLOBALS['user']->id;
-        }
+        $user_id ??= $GLOBALS['user']->id ?? 'nobody';
 
         $log_action = LogAction::findOneByName($action_name);
         if (!$log_action) {
