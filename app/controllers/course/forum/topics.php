@@ -46,6 +46,8 @@ class Course_Forum_TopicsController extends Forum\BaseController
             );
         }
 
+        $metadata = $topic->getMetadata();
+
         $this->render_vue_app(
             Studip\VueApp::create('forum/topics/Show')
                 ->withProps([
@@ -53,9 +55,9 @@ class Course_Forum_TopicsController extends Forum\BaseController
                     'category' => $topic->category ? $topic->category->transformData() : [],
                     'userSubscription' => $user_subscription ? $user_subscription->toRawArray() : [],
                     'metadata' => [
-                        'postings_count' => (int) $topic->metadata['postings_count'],
-                        'users_count' => (int) $topic->metadata['users_count'],
-                        'recent_activity' => date('c', $topic->metadata['recent_activity'])
+                        'postings_count' => (int) $metadata['postings_count'],
+                        'users_count' => (int) $metadata['users_count'],
+                        'recent_activity' => date('c', $metadata['recent_activity'])
                     ]
                 ])
         );

@@ -52,7 +52,7 @@ class Topic extends SimpleORMap
         ];
 
         $config['additional_fields']['users']['get'] = 'getUsers';
-        $config['additional_fields']['metadata']['get'] = 'getMetaData';
+
         $config['registered_callbacks']['after_delete'][] = 'onDelete';
 
         parent::configure($config);
@@ -136,13 +136,7 @@ class Topic extends SimpleORMap
                                AND fpr.user_id = :user_id
                             WHERE fd2.topic_id = :topic_id
                         ) AS 'user_read_index',
-                        (
-                            SELECT
-                                COUNT(DISTINCT fp.posting_id)
-                            FROM forum_postings fp
-                            JOIN `forum_discussions` fd USING (discussion_id)
-                            WHERE fd.topic_id = :topic_id AND fp.user_id != :user_id
-                        ) AS 'others_postings_count'
+                        COALESCE(SUM(`forum_postings`.`user_id` != :user_id), 0) AS 'others_postings_count'
                     FROM `forum_discussions`
                     LEFT JOIN `forum_postings` USING (`discussion_id`)
                     WHERE `forum_discussions`.`topic_id` = :topic_id",

@@ -71,7 +71,6 @@ class Discussion extends SimpleORMap
         $config['additional_fields']['tags']['get'] = 'getTags';
         $config['additional_fields']['users']['get'] = 'getUsers';
         $config['additional_fields']['members']['get'] = 'getMembers';
-        $config['additional_fields']['metadata']['get'] = 'getMetaData';
 
         $config['registered_callbacks']['after_create'][] = 'onCreate';
         $config['registered_callbacks']['after_delete'][] = 'onDelete';
@@ -254,24 +253,14 @@ class Discussion extends SimpleORMap
                             COUNT(`posting_id`) 'postings_count',
                             MAX(`mkdate`) 'recent_activity',
                             (
-                                SELECT
-                                    `read_index`
+                                SELECT `read_index`
                                 FROM `forum_posting_reads`
                                 WHERE `discussion_id` = :discussion_id AND `user_id` = :user_id
                             ) 'user_read_index',
-                            (
-                                SELECT
-                                    COUNT(DISTINCT posting_id)
-                                FROM forum_postings
-                                WHERE discussion_id = :discussion_id AND mkdate > :last_visit AND `user_id` != :user_id
-                            ) AS 'recent_postings_count',
-                            (
-                                SELECT
-                                    COUNT(DISTINCT posting_id)
-                                FROM forum_postings
-                                WHERE discussion_id = :discussion_id AND `user_id` != :user_id
-                            ) AS 'others_postings_count'
-                        FROM `forum_postings` WHERE `discussion_id` = :discussion_id",
+                            SUM(`mkdate` > :last_visit AND `user_id` != :user_id) AS 'recent_postings_count',
+                            SUM(`user_id` != :user_id) AS 'others_postings_count'
+                        FROM `forum_postings`
+                        WHERE `discussion_id` = :discussion_id",
             [
                 'discussion_id' => $this->discussion_id,
                 'user_id' => $user_id,

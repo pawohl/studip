@@ -30,14 +30,16 @@ class Course_Forum_CategoriesController extends Forum\BaseController
 
         PageLayout::setTitle($category->name);
 
+        $metadata = $category->getMetadata();
+
         $this->render_vue_app(
             Studip\VueApp::create('forum/categories/Show')
                 ->withProps([
                     'category' => $category->transformData(),
                     'metadata' => [
-                        'postings_count' => (int) $category->metadata['postings_count'],
-                        'users_count' => (int) $category->metadata['users_count'],
-                        'recent_activity' => $category->metadata['recent_activity'] ? date('c', $category->metadata['recent_activity']) : null
+                        'postings_count' => (int) $metadata['postings_count'],
+                        'users_count' => (int) $metadata['users_count'],
+                        'recent_activity' => $metadata['recent_activity'] ? date('c', $metadata['recent_activity']) : null
                     ]
             ])
         );
