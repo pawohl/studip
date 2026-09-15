@@ -82,6 +82,13 @@
 
     <footer>
         <?= Studip\Button::createAccept(_('Prüfen')) ?>
+    <? if ($secret->type === 'email'): ?>
+        <?= Studip\Button::create(
+            _('Token erneut zusenden'),
+            'resend-token',
+            ['formnovalidate' => '']
+        ) ?>
+    <? endif; ?>
     <? if ($global && !$secret->confirmed): ?>
         <?= Studip\LinkButton::createCancel(
             _('Abbrechen'),

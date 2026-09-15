@@ -127,7 +127,10 @@ final class TwoFactorAuth
         }
 
         // TODO: AJAX?
-        if (Request::isXhr()) {
+        if (
+            Request::isXhr()
+            || match_route('dispatch.php/logout')
+        ) {
             return;
         }
 
@@ -204,6 +207,8 @@ final class TwoFactorAuth
      */
     private function showConfirmationScreen(string $text = '', array $data = [])
     {
+        PageLayout::setTitle(_('Zwei-Faktor-Authentifizierung'));
+
         $data = array_merge(['global' => false], $data);
 
         $_SESSION[self::SESSION_DATA] = array_merge($data, [
@@ -215,6 +220,7 @@ final class TwoFactorAuth
             if (
                 !isset($_SESSION[self::SESSION_TOKEN_SENT])
                 || $_SESSION[self::SESSION_TOKEN_SENT] < time()
+                || Request::submitted('resend-token')
             ) {
                 StudipMail::sendMessage(
                     $this->secret->user->email,
@@ -294,6 +300,7 @@ final class TwoFactorAuth
             || !Request::submitted('tfa-nonce')
             || !isset($_SESSION[self::SESSION_DATA])
             || !is_array($_SESSION[self::SESSION_DATA])
+            || Request::submitted('resend-token')
         ) {
             return;
         }
