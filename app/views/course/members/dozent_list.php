@@ -26,8 +26,8 @@
     <thead>
         <tr class="sortable">
             <th><p class="sr-only"><?= _('Nummer') ?></p></th>
-            <th <? if ($sort_by === 'nachname' && $sort_status === 'dozent') printf('class="sort%s"', $order); ?>>
-                <? $order = $sort_status !== 'dozent' ? 'desc' : $order; ?>
+            <th <? if ($sort_by === 'nachname' && ($sort_status ?: 'dozent') === 'dozent') printf('class="sort%s"', $order); ?>>
+                <? $order = ($sort_status ?: 'dozent') !== 'dozent' ? 'desc' : $order; ?>
                 <a href="<?= URLHelper::getLink(sprintf(
                     '?sortby=nachname&sort_status=dozent&order=%s&toggle=%s',
                     $order, $sort_by === 'nachname'

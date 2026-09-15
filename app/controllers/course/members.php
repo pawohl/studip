@@ -94,7 +94,7 @@ class Course_MembersController extends AuthenticatedController
     {
         $course             = Course::find($this->course_id);
         $this->sort_by      = Request::option('sortby', 'nachname');
-        $this->order        = Request::option('order', 'desc');
+        $this->order        = Request::option('order', 'asc');
         $this->sort_status  = Request::get('sort_status', '');
 
         Navigation::activateItem('/course/members/view');

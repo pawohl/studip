@@ -44,8 +44,8 @@
                 </th>
             <? endif ?>
                 <th><p class="sr-only"><?= _('Nummer') ?></p></th>
-                <th <? if ($sort_by === 'nachname' && $sort_status === 'user') printf('class="sort%s"', $order); ?>>
-                    <? $order = $sort_status !== 'user' ? 'desc' : $order; ?>
+                <th <? if ($sort_by === 'nachname' && ($sort_status ?: 'user') === 'user') printf('class="sort%s"', $order); ?>>
+                    <? $order = ($sort_status ?: 'user') !== 'user' ? 'desc' : $order; ?>
                     <a href="<?= URLHelper::getLink(sprintf(
                         '?sortby=nachname&sort_status=user&order=%s&toggle=%s#users',
                         $order,
