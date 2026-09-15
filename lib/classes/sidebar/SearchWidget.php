@@ -138,6 +138,9 @@ class SearchWidget extends SidebarWidget
         foreach ($this->needles as $index => $needle) {
             if ($needle['quick_search']) {
                 $quick_search = QuickSearch::get($needle['name'], $needle['quick_search']);
+                if ($needle['value']) {
+                    $quick_search->defaultValue(null, $needle['value']);
+                }
                 if ($needle['js_func'] !== null) {
                     $quick_search->fireJSFunctionOnSelect($needle['js_func']);
                 }

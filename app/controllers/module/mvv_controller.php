@@ -285,7 +285,7 @@ abstract class MVVController extends AuthenticatedController
      * Sets info messages with number of hits to page layout.
      *
      * @see ModuleManagementModel::findBySearchTerm()
-     * @param string $class_name The name of an mvv object class.
+     * @param class-string<ModuleManagementModelTreeItem> $class_name The name of an mvv object class.
      * @param string $search_term The search term.
      * @param string $search_id The id of an mvv object selected in quicksearch.
      * @param array $filter An array with filter options feeded to search
@@ -312,6 +312,7 @@ abstract class MVVController extends AuthenticatedController
             } else {
                 $search_term = $search_term ?: $this->search_term;
                 $filter      = $filter ?? [];
+
                 if ($search_term) {
                     $this->search_result =
                         $class_name::findBySearchTerm($search_term, $filter)->pluck('id');
@@ -335,6 +336,7 @@ abstract class MVVController extends AuthenticatedController
                 }
             }
         }
+
         $this->sessSet('search_term', $this->search_term);
     }
 
@@ -342,7 +344,7 @@ abstract class MVVController extends AuthenticatedController
      * Returns the current search result of the given class. The search result
      * is an array of object ids.
      *
-     * @param string The class name of the found objects.
+     * @param class-string<ModuleManagementModel $class_name The class name of the found objects.
      * @return array Array of search results.
      */
     protected function getSearchResult($class_name)
@@ -419,9 +421,7 @@ abstract class MVVController extends AuthenticatedController
      */
     protected function sessGet($key, $default = null)
     {
-        return (isset($_SESSION[$this->session_key][$key])
-            ? $_SESSION[$this->session_key][$key]
-            : $default);
+        return $_SESSION[$this->session_key][$key] ?? $default;
     }
 
     /**
