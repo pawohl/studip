@@ -39,6 +39,11 @@ class CourseDateList implements Stringable
      */
     protected array $cancelled_dates = [];
 
+    public function __construct(
+        protected Course $course
+    ) {
+    }
+
     public function addRegularDate(SeminarCycleDate $regular_date)
     {
         $this->regular_dates[] = $regular_date;
@@ -183,7 +188,7 @@ class CourseDateList implements Stringable
         bool $with_cancelled_dates = false
     ) : string {
         if ($this->isEmpty()) {
-            return _('Die Zeiten der Veranstaltung stehen nicht fest.');
+            return ((string) $this->course->ort) ?: _('Die Zeiten der Veranstaltung stehen nicht fest.');
         }
 
         if ($group_by_rooms) {
@@ -198,12 +203,12 @@ class CourseDateList implements Stringable
                 }
                 if ($room_name) {
                     if (!array_key_exists($room_name, $grouped_dates)) {
-                        $grouped_dates[$room_name] = new CourseDateList();
+                        $grouped_dates[$room_name] = new CourseDateList($this->course);
                     }
                     $grouped_dates[$room_name]->addRegularDate($regular_date);
                 } else {
                     if (!array_key_exists(_('Ohne Raum'), $grouped_dates)) {
-                        $grouped_dates[_('Ohne Raum')] = new CourseDateList();
+                        $grouped_dates[_('Ohne Raum')] = new CourseDateList($this->course);
                     }
                     $grouped_dates[_('Ohne Raum')]->addRegularDate($regular_date);
                 }
@@ -212,12 +217,12 @@ class CourseDateList implements Stringable
                 $room_names = $date->getRoomNames();
                 if ($room_names) {
                     if (!array_key_exists($room_names, $grouped_dates)) {
-                        $grouped_dates[$room_names] = new CourseDateList();
+                        $grouped_dates[$room_names] = new CourseDateList($this->course);
                     }
                     $grouped_dates[$room_names]->addSingleDate($date);
                 } else {
                     if (!array_key_exists(_('Ohne Raum'), $grouped_dates)) {
-                        $grouped_dates[_('Ohne Raum')] = new CourseDateList();
+                        $grouped_dates[_('Ohne Raum')] = new CourseDateList($this->course);
                     }
                     $grouped_dates[_('Ohne Raum')]->addSingleDate($date);
                 }
@@ -225,7 +230,7 @@ class CourseDateList implements Stringable
             if ($with_cancelled_dates) {
                 foreach ($this->cancelled_dates as $date) {
                     if (!array_key_exists(_('Ohne Raum'), $grouped_dates)) {
-                        $grouped_dates[_('Ohne Raum')] = new CourseDateList();
+                        $grouped_dates[_('Ohne Raum')] = new CourseDateList($this->course);
                     }
                     $grouped_dates[_('Ohne Raum')]->addCancelledDate($date);
                 }

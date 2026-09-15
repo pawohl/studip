@@ -1910,7 +1910,7 @@ class Course extends SimpleORMap implements Range, PrivacyObject, StudipItem, Fe
         $all_dates_of_course = !$start_semester && !$end_semester;
 
         if ($all_dates_of_course) {
-            $collection = new CourseDateList();
+            $collection = new CourseDateList($this);
             foreach ($this->cycles as $regular_date) {
                 $collection->addRegularDate($regular_date);
             }
@@ -1927,7 +1927,7 @@ class Course extends SimpleORMap implements Range, PrivacyObject, StudipItem, Fe
             return $collection;
         } else {
             if (!$start_semester) {
-                return new CourseDateList();
+                return new CourseDateList($this);
             }
             $beginning = $start_semester->beginn;
             $end = $start_semester->ende;
@@ -1941,7 +1941,7 @@ class Course extends SimpleORMap implements Range, PrivacyObject, StudipItem, Fe
                 $end = $end_semester->ende;
             }
 
-            $collection = new CourseDateList();
+            $collection = new CourseDateList($this);
 
             SeminarCycleDate::findEachBySQL(
                 function ($date) use ($collection) {
