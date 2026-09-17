@@ -59,7 +59,10 @@ class iCalController extends StudipController
                   . $ical_export->exportCourseDates($user_id, $start, $end)
                   . $ical_export->exportCourseExDates($user_id, $start, $end);
             $content = $ical_export->writeHeader() . $ical . $ical_export->writeFooter();
-            if (mb_stripos($_SERVER['HTTP_USER_AGENT'], 'google-calendar') !== false) {
+            if (
+                isset($_SERVER['HTTP_USER_AGENT'])
+                && mb_stripos($_SERVER['HTTP_USER_AGENT'], 'google-calendar') !== false
+            ) {
                 $content = str_replace(['CLASS:PRIVATE','CLASS:CONFIDENTIAL'], 'CLASS:PUBLIC', $content);
             }
             $this->response->add_header('Content-Type', 'text/calendar;charset=utf-8');
