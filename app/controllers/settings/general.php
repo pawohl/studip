@@ -70,11 +70,14 @@ class Settings_GeneralController extends Settings_SettingsController
             $this->config->store('RESOURCES_CONFIRM_PLAN_DRAG_AND_DROP', Request::int('resources_confirm_plan_drag_and_drop'));
         }
 
-        if (Request::int('personal_notifications_activated')) {
-            PersonalNotifications::activate($this->user->id);
-        } else {
-            PersonalNotifications::deactivate($this->user->id);
+        if (Config::get()->getValue('PERSONAL_NOTIFICATIONS_ACTIVATED')) {
+            if (Request::int('personal_notifications_activated')) {
+                PersonalNotifications::activate($this->user->id);
+            } else {
+                PersonalNotifications::deactivate($this->user->id);
+            }
         }
+
         $this->config->store('SYSTEM_NOTIFICATIONS_PLACEMENT', Request::get('system_notifications_placement'));
 
         PageLayout::postSuccess(_('Die Einstellungen wurden gespeichert.'));

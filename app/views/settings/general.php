@@ -73,6 +73,7 @@ $start_pages = [
     <fieldset>
         <legend><?= _('Benachrichtigungen') ?></legend>
 
+    <? if (Config::get()->getValue('PERSONAL_NOTIFICATIONS_ACTIVATED')): ?>
         <label>
             <input type="checkbox" name="personal_notifications_activated"
                    aria-describedby="personal_notifications_activated_description" value="1"
@@ -82,6 +83,7 @@ $start_pages = [
                 .'Sie gibt. Die Benachrichtigungen werden auch angezeigt, wenn Sie nicht die '
                 .'Seite neuladen.')) ?>
         </label>
+    <? endif; ?>
 
         <label>
             <?= _('Platzierung von Systembenachrichtigungen im Browserfenster') ?>
