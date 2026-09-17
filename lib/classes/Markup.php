@@ -281,12 +281,12 @@ class Markup
             em
             figure[class|style]
             figcaption
-            h1
-            h2
-            h3
-            h4
-            h5
-            h6
+            h1[style]
+            h2[style]
+            h3[style]
+            h4[style]
+            h5[style]
+            h6[style]
             hr
             i
             iframe[src|class]
