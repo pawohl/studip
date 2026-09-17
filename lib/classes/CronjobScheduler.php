@@ -263,15 +263,15 @@ class CronjobScheduler
             $log->exception   = null;
             $log->duration    = -1;
 
+            // Start capturing output and measuring duration
+            ob_start();
             $start_time = microtime(true);
+
             try {
                 // Skip schedules with missing task classes
                 if (!$schedule->task->valid) {
                     throw new Exception(_('Die Klasse für den Cronjob-Task konnte nicht gefunden werden'));
                 }
-
-                // Start capturing output and measuring duration
-                ob_start();
 
                 $schedule->execute();
             } catch (Exception $e) {
