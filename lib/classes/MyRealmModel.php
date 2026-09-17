@@ -381,6 +381,10 @@ class MyRealmModel
 
         // Now sort children directly under their parent.
         foreach ($children as $parent => $kids) {
+            // parent may be missing from the user's list (e.g. studygroup linked to a course the user is not in)
+            if (!isset($semester_assign[$parent])) {
+                continue;
+            }
             $sem_courses[$semester_assign[$parent]][$parent]['children'] = $kids;
         }
 
