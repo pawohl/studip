@@ -398,6 +398,20 @@ class MyRealmModel
                 if (!empty($navs[$c_id])) {
                     $sem_courses[$index][$c_id] = array_merge($course, $navs[$c_id]);
                 }
+
+                if (empty($course['children'])) {
+                    continue;
+                }
+
+                foreach ($course['children'] as $index2 => $child_course) {
+                    $child_id = $child_course['seminar_id'];
+                    if (!empty($navs[$child_id])) {
+                        $sem_courses[$index][$c_id]['children'][$index2] = array_merge(
+                            $child_course,
+                            $navs[$child_id]
+                        );
+                    }
+                }
             }
         }
 
