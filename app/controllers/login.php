@@ -108,7 +108,7 @@ class LoginController extends AuthenticatedController
 
         $this->news_entries = [];
         if (Config::get()->getValue('LOGIN_NEWS_VISIBILITY')) {
-            $news_entries = StudipNews::GetNewsByRange('login', true);
+            $news_entries = StudipNews::GetNewsByRange('login', true, true);
             $this->news_entries = array_values($news_entries);
         }
 
