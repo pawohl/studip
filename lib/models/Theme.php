@@ -67,8 +67,13 @@
                     && $theme->isFieldDirty('values')
                 )
             ) {
-                self::loadActiveThemes(true);
-                self::getThemeAsset()->writeContent(self::getActiveCSS());
+                self::regenerateCSS();
+            }
+        };
+
+        $config['registered_callbacks']['after_delete'][] = function (Theme $theme): void {
+            if ($theme->active) {
+                self::regenerateCSS();
             }
         };
 
@@ -105,12 +110,19 @@
     public static function getDownloadURL(): string
     {
         $asset = self::getThemeAsset();
-        return URLHelper::getLink(
+        return URLHelper::getURL(
             "assets.php/css/{$asset->id}#{$asset->filename}",
             ['v' => $asset->chdate],
             true
         );
+    }
 
+    private static function regenerateCSS(): void
+    {
+        self::getThemeAsset()->delete();
+
+        self::loadActiveThemes(true);
+        self::getThemeAsset()->writeContent(self::getActiveCSS());
     }
 
     public static function getActiveCSS(): string

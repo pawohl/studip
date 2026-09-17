@@ -45,7 +45,7 @@ $app->get('/{type:js|css}/{id}', function (ServerRequestInterface $request, Resp
         $response->getBody()->write($asset->getContent());
 
         $response = $response->withHeader('Content-Type', $args['type'] === 'css' ? 'text/css' : 'application/javascript');
-        $response = $response->withHeader('Content-Length', $model->size);
+        $response = $response->withHeader('Content-Length', $model->size ?? 0);
 
         // Store cache information
         if (Studip\ENV !== 'development') {

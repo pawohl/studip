@@ -34,13 +34,17 @@ class ThemesUpdate extends JsonApiController
         if (self::arrayGet($json, 'data.attributes.active') === true) {
             $activeThemes = \Theme::getActiveThemes();
             foreach ($activeThemes as $theme) {
-                if ($theme->id !== $resource->id && $theme->type === $resource->type) {
+                if (
+                    $theme->id !== $resource->id
+                    && $theme->type === $resource->type
+                ) {
                     $theme->active = false;
                     $theme->store();
-                    $resource->active = true;
-                    $resource->store();
                 }
             }
+
+            $resource->active = true;
+            $resource->store();
         }
 
         return $this->getContentResponse($resource);
@@ -76,7 +80,7 @@ class ThemesUpdate extends JsonApiController
                 $resource->$sormKey = $val;
             }
         }
-        
+
         $resource->store();
 
         return $resource;
