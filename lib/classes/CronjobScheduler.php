@@ -263,6 +263,7 @@ class CronjobScheduler
             $log->exception   = null;
             $log->duration    = -1;
 
+            $start_time = microtime(true);
             try {
                 // Skip schedules with missing task classes
                 if (!$schedule->task->valid) {
@@ -271,21 +272,10 @@ class CronjobScheduler
 
                 // Start capturing output and measuring duration
                 ob_start();
-                $start_time = microtime(true);
 
                 $schedule->execute();
-
-                // Actually capture output and duration
-                $end_time = microtime(true);
-                $output = ob_get_clean();
-
-                // Complete log
-                $log->output    = $output;
-                $log->duration  = $end_time - $start_time;
-                $log->store();
             } catch (Exception $e) {
                 $log->exception = $e;
-                $log->store();
 
                 // Deactivate schedule
                 $schedule->deactivate();
@@ -306,6 +296,15 @@ class CronjobScheduler
                 URLHelper::setBaseURL($old);
 
                 $this->sendMailToRoots($subject, $message);
+            } finally {
+                // Actually capture output and duration
+                $end_time = microtime(true);
+                $output = ob_get_clean();
+
+                // Complete log
+                $log->output    = $output;
+                $log->duration  = $end_time - $start_time;
+                $log->store();
             }
         }
 
