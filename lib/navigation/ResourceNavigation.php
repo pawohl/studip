@@ -99,7 +99,7 @@ class ResourceNavigation extends Navigation
             );
             $overview_navigation->addSubNavigation('buildings', $sub_navigation);
             $sub_navigation = new Navigation(
-                _('Räume'),
+                _('Räume und Raumgruppen'),
                 'dispatch.php/room_management/overview/rooms'
             );
             $overview_navigation->addSubNavigation('rooms', $sub_navigation);
