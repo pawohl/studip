@@ -373,8 +373,10 @@ class QuestionnaireController extends AuthenticatedController
             $user = User::find($user_id);
             if ($user) {
                 $csv_line = [$key + 1, $user['username'], $user['Nachname'], $user['Vorname'], $user['Email'], date("d.m.Y H:i:s", $timestamps[$user_id])];
-            } else {
+            } elseif ($this->questionnaire->anonymous) {
                 $csv_line = [$key + 1, $user_id, '', '', ''];
+            } else {
+                $csv_line = [$key + 1, $user_id, '', '', '', ''];
             }
 
             foreach ($results as $result) {
