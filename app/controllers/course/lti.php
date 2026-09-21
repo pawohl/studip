@@ -149,8 +149,7 @@ class Course_LtiController extends StudipController
         $this->global_tool_deployments = LtiDeployment::findBySQL(
             "JOIN `lti_tools`
             ON `lti_deployments`.`tool_id` = `lti_tools`.`id`
-            WHERE
-            `lti_deployments`.`purpose` = 'general'
+            WHERE `lti_deployments`.`purpose` = 'general'
             AND `lti_tools`.`range_id` IN (:range_ids)
             ORDER BY `lti_tools`.`name` ASC",
             [
