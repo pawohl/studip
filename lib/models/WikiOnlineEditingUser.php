@@ -19,8 +19,8 @@
  * @property bool $editing_request database column
  * @property int $chdate database column
  * @property int $mkdate database column
- * @property WikiPage $page 
- * @property User $user 
+ * @property WikiPage $page
+ * @property User $user
  */
 class WikiOnlineEditingUser extends SimpleORMap
 {
@@ -43,10 +43,11 @@ class WikiOnlineEditingUser extends SimpleORMap
     public static function purge(WikiPage $page): void
     {
         WikiOnlineEditingUser::deleteBySQL(
-            '`page_id` = :page_id AND `chdate` < UNIX_TIMESTAMP() - :threshold',
+            '`page_id` = :page_id AND `chdate` < :now - :threshold',
             [
                 'page_id'   => $page->id,
-                'threshold' => self::$threshold
+                'threshold' => self::$threshold,
+                'now' => time()
             ]
         );
     }
