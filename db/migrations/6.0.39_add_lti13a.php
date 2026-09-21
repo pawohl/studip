@@ -59,48 +59,43 @@ class AddLti13a extends Migration
 
         //Create LTI tool instances for the old LTI 1.0/1.1 tools
         //that have been configured directly in a course:
-        $stmt = $db->prepare(
-            "SELECT `id`, `course_id`, `tool_id`, `title`, `options`
-            FROM `lti_deployments`
-            WHERE `tool_id` = '0'"
+        $rows = $db->fetchAll(
+                "SELECT `id`, `course_id`, `title`, `launch_url`, `options`
+                 FROM `lti_deployments`
+                 WHERE `tool_id` = 0"
         );
-        $update_stmt = $db->prepare(
-            "UPDATE `lti_deployments`
-            SET `tool_id` = :new_tool_id,
-            `options` = :new_options
-            WHERE `id` = :deployment_id"
-        );
+
         $create_tool_stmt = $db->prepare(
             "INSERT INTO `lti_tools`
-            (`id`, `range_id`, `name`, `launch_url`, `consumer_key`, `consumer_secret`,
-            `custom_parameters`, `send_lis_person`, `lti_version`,
-            `mkdate`, `chdate`)
-            VALUES
-            (:id, :range_id, :name, :launch_url, :consumer_key, :consumer_secret,
-            :custom_parameters, :send_lis_person, '1.1',
-            UNIX_TIMESTAMP(), UNIX_TIMESTAMP())"
+            (`range_id`, `name`, `launch_url`, `consumer_key`, `consumer_secret`,
+             `custom_parameters`, `send_lis_person`, `lti_version`, `mkdate`, `chdate`)
+         VALUES
+            (:range_id, :name, :launch_url, :consumer_key, :consumer_secret,
+             :custom_parameters, :send_lis_person, '1.1', UNIX_TIMESTAMP(), UNIX_TIMESTAMP())"
         );
-        $new_tool_id_stmt = $db->prepare("SELECT MAX(`id`) + 1 FROM `lti_tools`");
-        $stmt->execute();
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            if (empty($row['id']) || empty($row['title']) || empty($row['options'])) {
-                //That tool cannot be migrated.
-                continue;
+        $update_deployment_stmt = $db->prepare(
+            "UPDATE `lti_deployments`
+             SET `tool_id` = :new_tool_id, `options` = :new_options
+             WHERE `id` = :deployment_id"
+        );
+
+        foreach ($rows as $row) {
+            $options = json_decode($row['options'] ?? '', true);
+            if (!is_array($options)) {
+                $options = [];
             }
-            //Create a new tool and migrate the data from the options field:
-            $options = json_decode($row['options'], true);
-            $new_tool_id_stmt->execute();
-            $new_tool_id = $new_tool_id_stmt->fetchColumn();
-            $success = $create_tool_stmt->execute([
-                'id'           => $new_tool_id,
-                'range_id'     => $row['course_id'],
-                'name'         => $row['title'],
-                'launch_url'   => $row['launch_url'] ?? '',
-                'consumer_key' => $options['consumer_key'] ?? '',
-                'consumer_secret' => $options['consumer_secret'] ?? '',
+
+            $create_tool_stmt->execute([
+                'range_id'          => $row['course_id'],
+                'name'              => $row['title'],
+                'launch_url'        => $row['launch_url'] ?? '',
+                'consumer_key'      => $options['consumer_key'] ?? '',
+                'consumer_secret'   => $options['consumer_secret'] ?? '',
                 'custom_parameters' => $options['custom_parameters'] ?? '',
-                'send_lis_person'   => $options['send_lis_person'] ?? '0',
+                'send_lis_person'   => (int) ($options['send_lis_person'] ?? 0),
             ]);
+            $new_tool_id = (int) $db->lastInsertId();
+
             unset(
                 $options['launch_url'],
                 $options['consumer_key'],
@@ -108,24 +103,23 @@ class AddLti13a extends Migration
                 $options['custom_parameters'],
                 $options['send_lis_person']
             );
-            if ($success) {
-                $update_stmt->execute([
-                    'new_tool_id'   => $new_tool_id,
-                    'new_options'   => json_encode($options ?? []),
-                    'deployment_id' => $row['id']
-                ]);
-            }
+
+            $update_deployment_stmt->execute([
+                'new_tool_id'   => $new_tool_id,
+                'new_options'   => json_encode($options),
+                'deployment_id' => $row['id'],
+            ]);
         }
 
         $db->exec(
-            "CREATE TABLE IF NOT EXISTS lti_tool_privacy_settings (
-                tool_id INT(11) NOT NULL,
-                user_id CHAR(32) COLLATE latin1_bin NOT NULL,
-                accepted TINYINT(1) NOT NULL DEFAULT 0,
-                allowed_optional_fields VARCHAR(256) NOT NULL DEFAULT '',
-                mkdate INT(11) NOT NULL DEFAULT 0,
-                chdate INT(11) NOT NULL DEFAULT 0,
-                PRIMARY KEY (tool_id, user_id)
+            "CREATE TABLE IF NOT EXISTS `lti_tool_privacy_settings` (
+                `tool_id` INT(11) NOT NULL,
+                `user_id` CHAR(32) COLLATE latin1_bin NOT NULL,
+                `accepted` TINYINT(1) NOT NULL DEFAULT 0,
+                `allowed_optional_fields` VARCHAR(256) NOT NULL DEFAULT '',
+                `mkdate` INT(11) NOT NULL DEFAULT 0,
+                `chdate` INT(11) NOT NULL DEFAULT 0,
+                PRIMARY KEY (`tool_id`, `user_id`)
             )"
         );
     }
