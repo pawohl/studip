@@ -24,15 +24,21 @@ class AdmissionRulesUpdate extends JsonApiController
         $json = $this->validate($request);
         $user = $this->getUser($request);
 
-        if (!Authority::canEditAdmissionRules($user)) {
-            throw new AuthorizationFailedException();
-        }
-
         [$type, $id] = explode('_', $args['id']);
 
         $rule = \AdmissionRule::getRule($type, $id);
+
         if (!$rule) {
             throw new RecordNotFoundException();
+        }
+
+        $courseSetId = \DBManager::get()->fetchColumn(
+            "SELECT `set_id` FROM `courseset_rule` WHERE `rule_id` = :rule AND `type` = :type",
+            ['rule' => $rule->getId(), 'type' => get_class($rule)]
+        );
+
+        if (!Authority::canEditAdmissionRules($user, $courseSetId)) {
+            throw new AuthorizationFailedException();
         }
 
         $payload = self::arrayGet($json, 'data.attributes.payload');

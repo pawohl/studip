@@ -20,11 +20,11 @@ class CourseSetsCreate extends JsonApiController
      */
     public function __invoke(Request $request, Response $response, $args)
     {
-        if (!Authority::canCreateCourseSet($this->getUser($request))) {
+        $json = $this->validate($request);
+
+        if (!Authority::canCreateCourseSets($this->getUser($request), self::arrayGet($json, 'data.attributes'))) {
             throw new AuthorizationFailedException();
         }
-
-        $json = $this->validate($request);
 
         $cs = new \CourseSet();
         $cs->setName(self::arrayGet($json, 'data.attributes.name'));

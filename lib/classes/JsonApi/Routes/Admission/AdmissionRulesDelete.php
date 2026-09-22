@@ -20,15 +20,20 @@ class AdmissionRulesDelete extends JsonApiController
     {
         $user = $this->getUser($request);
 
-        if (!Authority::canEditAdmissionRules($user)) {
-            throw new AuthorizationFailedException();
-        }
-
         [$type, $id] = explode('_', $args['id']);
 
         $rule = \AdmissionRule::getRule($type, $id);
+        $courseSetId = \DBManager::get()->fetchColumn(
+            "SELECT `set_id` FROM `courseset_rule` WHERE `rule_id` = :rule AND `type` = :type",
+            ['rule' => $rule->getId(), 'type' => get_class($rule)]
+        );
+
         if (!$rule) {
             throw new RecordNotFoundException();
+        }
+
+        if (!Authority::canEditAdmissionRules($user, $courseSetId)) {
+            throw new AuthorizationFailedException();
         }
 
         $rule->delete();
