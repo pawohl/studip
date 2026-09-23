@@ -295,7 +295,9 @@ class MyRealmModel
         $courses2 = $courses;
         foreach ($courses2 as $course) {
             foreach ($course->studygroups as $studygroup) {
-                $courses[] = $studygroup;
+                if ($GLOBALS['perm']->have_studip_perm('user', $studygroup->id)) {
+                    $courses[] = $studygroup;
+                }
             }
         }
         $courses = $courses2;
