@@ -50,20 +50,24 @@ class CourseMember extends SchemaProvider
     {
         $relationships = [];
 
-        $course = \Course::build(['id' => $membership['seminar_id']], false);
+        $course = $this->shouldInclude($context, self::REL_COURSE)
+            ? $membership->course
+            : \Course::build(['id' => $membership['seminar_id']], false);
         $relationships[self::REL_COURSE] = [
             self::RELATIONSHIP_LINKS => [
                 Link::RELATED => $this->createLinkToResource($course)
             ],
-            self::RELATIONSHIP_DATA => $membership->course,
+            self::RELATIONSHIP_DATA => $course,
         ];
 
-        $user = \User::build(['id' => $membership['user_id']], false);
+        $user = $this->shouldInclude($context, self::REL_USER)
+            ? $membership->user
+            : \User::build(['id' => $membership['user_id']], false);
         $relationships[self::REL_USER] = [
             self::RELATIONSHIP_LINKS => [
                 Link::RELATED => $this->createLinkToResource($user)
             ],
-            self::RELATIONSHIP_DATA => $membership->user,
+            self::RELATIONSHIP_DATA => $user,
         ];
 
         return $relationships;
