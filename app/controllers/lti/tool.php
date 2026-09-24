@@ -1,5 +1,7 @@
 <?php
 
+use Studip\Markup;
+
 class Lti_ToolController extends AuthenticatedController
 {
     public function before_filter(&$action, &$args)
@@ -98,6 +100,7 @@ class Lti_ToolController extends AuthenticatedController
         //Note: $this->tool is created in the before_filter.
         $new_tool                          = $this->tool->isNew();
         $this->tool->name                  = trim(Request::get('name'));
+        $this->tool->description           = Markup::purifyHtml(Markup::markAsHtml(Request::get('description')));
         $this->tool->launch_url            = trim(Request::get('launch_url'));
         $this->tool->terms_of_use_url      = trim(Request::get('terms_of_use_url'));
         $this->tool->privacy_policy_url    = trim(Request::get('privacy_policy_url'));

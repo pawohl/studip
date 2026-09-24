@@ -15,6 +15,7 @@ use OAT\Library\Lti1p3Core\Tool\Tool;
  *
  * @property int $id database column
  * @property string $name database column
+ * @property ?string $description database column
  * @property string $launch_url database column
  * @property string $consumer_key database column
  * @property string $consumer_secret database column

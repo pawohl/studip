@@ -14,7 +14,7 @@
     </label>
     <label>
         <?= _('Beschreibung') ?>
-        <textarea name="description" class="wysiwyg"><?= wysiwygReady($link->description ?? '') ?></textarea>
+        <textarea name="description" class="wysiwyg"><?= wysiwygReady($link->description ?? $tool->description ?? '') ?></textarea>
     </label>
     <label>
         <?= _('Datenschutzhinweise') ?>
