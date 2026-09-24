@@ -397,15 +397,16 @@ class InstituteCalendarHelper
 
                 $move_url = URLHelper::getURL('dispatch.php/admin/courseplanning/move_event/' . $cycle_date->id);
                 $name = $course->getFullName('number-name');
+                $now = new DateTime();
 
                 if ($start_time != $cycle_date['start_time'] && $end_time != $cycle_date['end_time']) {
-                    $start = self::iso8601date(strtotime($day_offset . ' days'), $cycle_date['start_time']);
-                    $end = self::iso8601date(strtotime($day_offset . ' days'), $cycle_date['end_time']);
+                    $start = self::iso8601date(strtotime($day_offset . ' days'), $cycle_date['start_time'], $now->format('P'));
+                    $end = self::iso8601date(strtotime($day_offset . ' days'), $cycle_date['end_time'], $now->format('P'));
                     $backgroundcolor = '#6c737a';
                     $textcolor = '#ffffff';
                 } else {
-                    $start = self::iso8601date(strtotime($day_offset . ' days'), $start_time);
-                    $end = self::iso8601date(strtotime($day_offset . ' days'), $end_time);
+                    $start = self::iso8601date(strtotime($day_offset . ' days'), $start_time, $now->format('P'));
+                    $end = self::iso8601date(strtotime($day_offset . ' days'), $end_time, $now->format('P'));
 
                     $backgroundcolor = null;
                     if (array_key_exists($cycle_date->id, $event_colors)) {
@@ -549,14 +550,16 @@ class InstituteCalendarHelper
         $move_url = URLHelper::getURL('dispatch.php/admin/courseplanning/move_event/' . $cycle_date->id);
         $name = $course->getFullName('number-name');
 
+        $now = new DateTime();
+
         if ($start_time != $cycle_date['start_time'] && $end_time != $cycle_date['end_time']) {
-            $start = self::iso8601date(strtotime($day_offset . ' days'), $cycle_date['start_time']);
-            $end = self::iso8601date(strtotime($day_offset . ' days'), $cycle_date['end_time']);
+            $start = self::iso8601date(strtotime($day_offset . ' days'), $cycle_date['start_time'], $now->format('P'));
+            $end = self::iso8601date(strtotime($day_offset . ' days'), $cycle_date['end_time'], $now->format('P'));
             $backgroundcolor = '#6c737a';
             $textcolor = '#ffffff';
         } else {
-            $start = self::iso8601date(strtotime($day_offset . ' days'), $start_time);
-            $end = self::iso8601date(strtotime($day_offset . ' days'), $end_time);
+            $start = self::iso8601date(strtotime($day_offset . ' days'), $start_time, $now->format('P'));
+            $end = self::iso8601date(strtotime($day_offset . ' days'), $end_time, $now->format('P'));
 
             $backgroundcolor = null;
             if (array_key_exists($cycle_date->id, $event_colors)) {

@@ -345,12 +345,17 @@ class Admin_CourseplanningController extends AuthenticatedController
     {
         $start       = Request::getDateTime('start', DateTimeInterface::RFC3339_EXTENDED);
         $end         = Request::getDateTime('end', DateTimeInterface::RFC3339_EXTENDED);
+        $now         = new DateTime();
         $success     = false;
         $cycle_start = null;
         $cycle_end   = null;
         $course      = Course::find($course_id);
 
         if ($course && $this->semester && $start && $end) {
+            //$start and $end are in UTC/Zulu timezone. Their values have to be converted
+            //to the timezone of the server to get correct results.
+            $start->setTimezone($now->getTimezone());
+            $end->setTimezone($now->getTimezone());
             if (count($course->semesters) > 1) {
                 //The course spans over more than one semester.
                 $start_weeks = $course->start_semester->getStartWeeks($course->end_semester);
