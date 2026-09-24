@@ -107,9 +107,10 @@
                            group="questions"
                            class="questions_container questions"
                            item-key="id"
+                           tag="ul"
                 >
                     <template #item="{ element }">
-                        <div @mouseenter="hoverTab = element.id"
+                        <li @mouseenter="hoverTab = element.id"
                              @mouseleave="hoverTab = null"
                              :class="{
                                  active: activeTab === element.id || activeTab === 'meta_' + element.id,
@@ -141,7 +142,7 @@
                                                 @moveup="moveQuestionUp(element.id)"
                                                 @movedown="moveQuestionDown(element.id)"
                                                 @delete="deleteQuestion(element.id)"></studip-action-menu>
-                        </div>
+                        </li>
                     </template>
                 </draggable>
                 <a :class="activeTab === 'add_question' ? 'add_question active' : 'add_question'"

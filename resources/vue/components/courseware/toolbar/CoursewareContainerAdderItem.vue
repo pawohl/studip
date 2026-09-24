@@ -1,5 +1,5 @@
 <template>
-    <div class="cw-containeradder-item-wrapper">
+    <li class="cw-containeradder-item-wrapper">
         <span class="cw-sortable-handle cw-sortable-handle-containeradder"></span>
         <button class="cw-containeradder-item" :class="['cw-containeradder-item-' + type]" @click.prevent="addNewContainer">
             <div class="cw-containeradder-item-content">
@@ -11,7 +11,7 @@
                 </p>
             </div>
         </button>
-    </div>
+    </li>
 </template>
 <script>
 import containerMixin from '@/vue/mixins/courseware/container';
@@ -39,7 +39,7 @@ export default {
                 type: this.type,
                 colspan: this.colspan,
                 sections: {
-                    firstSection: this.firstSection, 
+                    firstSection: this.firstSection,
                     secondSection: this.secondSection
                 },
                 newPosition: null

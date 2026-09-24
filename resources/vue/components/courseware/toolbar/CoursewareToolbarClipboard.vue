@@ -234,13 +234,13 @@ export default {
         },
         dropNewContainer(e) {
             // if the container is dropped back to its original list, do nothing / cancel the operation
-            if (e.to.className === 'cw-containeradder-item-list' || e.to.className === 'cw-element-inserter-wrapper') {
+            if (e.to.className === 'cw-containeradder-items' || e.to.className === 'cw-element-inserter-wrapper') {
                 this.isDragging = false;
                 return;
             }
 
             const clipboard = { id: e.item.dataset.elementId, attributes: { 'object-type': e.item.dataset.elementType } };
-            this.insertItem(clipboard, e.newIndex);           
+            this.insertItem(clipboard, e.newIndex);
         },
     },
 };

@@ -4,6 +4,7 @@
     grid-auto-rows: auto;
     grid-gap: 4px;
     margin-bottom: 8px;
+    padding-inline-start: unset;
 
     .cw-blockadder-item-wrapper {
         display: flex;
@@ -47,7 +48,7 @@
             }
             .cw-blockadder-item-description {
                 display: inline-block;
-                margin: 0 0 4px;   
+                margin: 0 0 4px;
             }
 
             &:hover {
@@ -94,7 +95,7 @@
         color: var(--color--highlight);
         cursor: pointer;
 
-        
+
         @each $item, $icon in $containeradder-items {
             &.cw-containeradder-item-#{$item} {
                 @include icon(before, $icon, $size: $containeradder-icon-size);

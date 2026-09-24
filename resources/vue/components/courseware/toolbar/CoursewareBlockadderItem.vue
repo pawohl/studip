@@ -1,5 +1,5 @@
 <template>
-    <div class="cw-blockadder-item-wrapper">
+    <li class="cw-blockadder-item-wrapper">
         <span class="cw-sortable-handle cw-sortable-handle-blockadder"></span>
         <button class="cw-blockadder-item" :class="['cw-blockadder-item-' + type]" @click.prevent="addBlock">
             <header class="cw-blockadder-item-title">
@@ -16,7 +16,7 @@
         >
             <studip-icon :shape="blockTypeIsFav ? 'star' : 'star-empty'" />
         </button>
-    </div>
+    </li>
 </template>
 
 <script>

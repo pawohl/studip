@@ -142,6 +142,8 @@ progress.assignment {
     flex-wrap: wrap;
     justify-content: space-between;
     max-width: 50em;
+    padding-inline-start: unset;
+    list-style-type: none;
 }
 
 .exercise_type {
@@ -527,7 +529,7 @@ table.default input.small_input {
 .vs__dropdown-option small {
     margin-left: 20px;
 }
- 
+
 .cw-exercise-header {
     display: flex;
     height: 20px;

@@ -56,7 +56,7 @@
                 <draggable
                     v-if="filteredBlockTypes.length > 0"
                     class="cw-blockadder-item-list"
-                    tag="div"
+                    tag="ul"
                     role="listbox"
                     v-model="filteredBlockTypes"
                     handle=".cw-sortable-handle-blockadder"

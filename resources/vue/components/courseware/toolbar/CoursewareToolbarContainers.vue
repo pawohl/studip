@@ -22,8 +22,8 @@
             </template>
         </div>
         <draggable
-            class="cw-containeradder-item-list"
-            tag="div"
+            class="cw-containeradder-items"
+            tag="ul"
             role="listbox"
             v-model="containerTypes"
             handle=".cw-sortable-handle-containeradder"
@@ -124,7 +124,7 @@ export default {
         },
         dropNewContainer(e) {
             // if the container is dropped back to its original list, do nothing / cancel the operation
-            if (e.to.className === 'cw-containeradder-item-list' || e.to.className === 'cw-element-inserter-wrapper') {
+            if (e.to.className === 'cw-containeradder-items' || e.to.className === 'cw-element-inserter-wrapper') {
                 this.isDragging = false;
                 return;
             }
@@ -139,7 +139,7 @@ export default {
                 newPosition: e.newIndex
             };
             this.addContainer(data);
-            
+
         },
     }
 };

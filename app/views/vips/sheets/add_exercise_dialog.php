@@ -13,8 +13,9 @@
             <?= _('Aufgabentyp auswählen') ?>
         </legend>
 
-        <div class="exercise_types">
+        <ul class="exercise_types">
             <? foreach ($exercise_types as $type => $entry): ?>
+            <li>
                 <button class="exercise_type" name="exercise_type" value="<?= htmlReady($type) ?>">
                     <?= $type::getTypeIcon()->asImg(40) ?>
                     <div class="exercise_type_description">
@@ -22,7 +23,8 @@
                         <span><?= htmlReady($type::getTypeDescription()) ?></span>
                     </div>
                 </button>
+            </li>
             <? endforeach ?>
-        </div>
+        </ul>
     </fieldset>
 </form>

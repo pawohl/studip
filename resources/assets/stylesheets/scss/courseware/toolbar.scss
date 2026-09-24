@@ -56,11 +56,11 @@
                     border-radius: 0;
                 }
             }
-    
+
             .cw-block-search {
                 width: inherit;
             }
-    
+
             .cw-toolbar-tool-header {
                 border-bottom: solid thin var(--color--content-box-border);
                 margin-bottom: 8px;
@@ -68,18 +68,20 @@
             }
 
         }
-        
+
         .cw-toolbar-containers {
             position: relative;
             height: 100%;
 
-            .cw-containeradder-item-list {
-                height: calc(100% - 120px);
+            .cw-containeradder-items {
+                list-style-type: none;
                 overflow-y: auto;
                 padding-right: 10px;
+                height: calc(100% - 120px);
+                padding-inline-start: unset;
             }
         }
-        
+
         .cw-toolbar-clipboard {
             .cw-collapsible {
                 margin-bottom: 4px;
@@ -106,7 +108,7 @@
         padding: 2px 8px 0 8px;
         border: none;
         background-color: var(--color--global-background);
-        color: var(--color--highlight);   
+        color: var(--color--highlight);
         cursor: pointer;
         border-bottom: solid 2px transparent;
 
