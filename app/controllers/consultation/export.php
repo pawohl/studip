@@ -38,7 +38,8 @@ class Consultation_ExportController extends ConsultationController
         }
 
 
-        $data = [];
+        $data = [$headers];
+
         $blocks = ConsultationBlock::findByRange($this->range, 'ORDER BY start ASC', $expired);
         foreach ($blocks as $block) {
             foreach ($block->slots as $slot) {
@@ -63,7 +64,7 @@ class Consultation_ExportController extends ConsultationController
         }
 
         $this->render_csv(
-            array_merge($headers, $data),
+            $data,
             'Terminvergabe-Anmeldungen-' . date('Ymd') . '.csv'
         );
     }
