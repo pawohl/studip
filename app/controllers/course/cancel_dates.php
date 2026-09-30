@@ -53,7 +53,10 @@ class Course_CancelDatesController extends AuthenticatedController
     {
         CSRFProtection::verifyUnsafeRequest();
         $msg = '';
+        $cancelled_dates = [];
+
         foreach ($this->dates as $date) {
+            $cancelled_dates[] = $date->getFullName();
             $ex_date = $date->cancelDate();
             if ($ex_date) {
                 $ex_date->content = Request::get('cancel_dates_comment');
@@ -66,9 +69,11 @@ class Course_CancelDatesController extends AuthenticatedController
                 $msg = _('Alle Teilnehmenden wurden benachrichtigt.');
             }
         }
-        PageLayout::postSuccess(_('Folgende Termine wurden abgesagt') . ($msg ? ' (' . $msg . '):' : ':'), array_map(function ($d) {
-            return $d->getFullName();
-        }, $this->dates));
+
+        PageLayout::postSuccess(
+            _('Folgende Termine wurden abgesagt') . ($msg ? ' (' . $msg . '):' : ':'),
+            array_map('htmlReady', $cancelled_dates)
+        );
 
         $this->redirect($this->url_for('course/dates'));
     }
