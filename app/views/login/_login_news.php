@@ -23,7 +23,7 @@
 
 <? if (!empty($news_entries)) : ?>
 <script>
-    const entries = <?= json_encode($news_entries) ?>;
+    const entries = <?= json_encode(array_map(fn($entry) => $entry->toArray('news_id'), $news_entries)) ?>;
     let currentEntryId = entries[0]['news_id'];
     const first = document.getElementById("login-news-<?= htmlReady($news_entries[0]['news_id']) ?>");
     first.classList.remove('hidden');
@@ -44,7 +44,7 @@ function setTeaserById(id) {
     });
 
     currentEntryId = id;
-    
+
     document.querySelectorAll('.login-news').forEach(el => {
         el.classList.add('hidden');
     });
