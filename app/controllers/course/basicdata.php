@@ -297,7 +297,7 @@ class Course_BasicdataController extends AuthenticatedController
         $this->tutor_is_locked = LockRules::Check($this->course_id, 'tutor');
 
         //Dritter Reiter: Personal
-        $this->dozenten = $course->getMembersWithStatus('dozent');
+        $this->dozenten = $course->getMembersWithStatus('dozent', true);
         $instUsers = new SimpleCollection(InstituteMember::findByInstituteAndStatus($course->institut_id, 'dozent'));
         $this->lecturersOfInstitute = $instUsers->pluck('user_id');
 
@@ -332,7 +332,7 @@ class Course_BasicdataController extends AuthenticatedController
 
             $this->deputy_title = get_title_for_status('deputy', 1, $course->status);
         }
-        $this->tutoren = $course->getMembersWithStatus('tutor');
+        $this->tutoren = $course->getMembersWithStatus('tutor', true);
 
         $this->tutorUserSearch = new PermissionSearch(
             $search_template,
@@ -408,7 +408,10 @@ class Course_BasicdataController extends AuthenticatedController
             if (Deputy::isDeputy($GLOBALS['user']->id, $this->course_id)) {
                 $newstatus = 'dozent';
                 $text = _('Lehrende werden');
-            } else if (in_array($GLOBALS['user']->id, array_keys($this->dozenten)) && count($this->dozenten) > 1) {
+            } else if (
+                $this->dozenten->findOneBy('user_id', $GLOBALS['user']->id)
+                && count($this->dozenten) > 1
+            ) {
                 $newstatus = 'deputy';
                 $text = _('Vertretung werden');
             } else {

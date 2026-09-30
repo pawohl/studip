@@ -12,6 +12,11 @@ use Studip\Button, Studip\LinkButton;
  */
 
 $dialog_attr = Request::isXhr() ? ' data-dialog="size=50%"' : '';
+
+/**
+ * @var SimpleORMapCollection<CourseMember> $dozenten
+ * @var CourseMember[] $tutoren
+ */
 ?>
 
 <form name="course-details" name="details" method="post" action="<?= $controller->link_for('course/basicdata/set', $course_id) ?>" <?= $dialog_attr ?> class="default collapsable">
@@ -87,7 +92,7 @@ $dialog_attr = Request::isXhr() ? ' data-dialog="size=50%"' : '';
                     <?= MultiPersonSearch::get('add_member_dozent' . $course_id)
                             ->setTitle(_('Mehrere Lehrende hinzufügen'))
                             ->setSearchObject($dozentUserSearch)
-                            ->setDefaultSelectedUser(array_keys($dozenten))
+                            ->setDefaultSelectedUser($dozenten->pluck('user_id'))
                             ->setDataDialogStatus(Request::isXhr())
                             ->setJSFunctionOnSubmit(Request::isXhr() ? 'jQuery(this).closest(".ui-dialog-content").dialog("close");' : false)
                             ->setExecuteURL($controller->url_for('course/basicdata/add_member/' . $course_id))
@@ -112,37 +117,38 @@ $dialog_attr = Request::isXhr() ? ' data-dialog="size=50%"' : '';
                     </td>
                 </tr>
         <? else: ?>
-            <? foreach (array_values($dozenten) as $num => $dozent) : ?>
+            <? foreach ($dozenten as $num => $dozent) : ?>
                 <tr>
                     <td>
-                        <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $dozent['username']) ?>">
-                            <?= Avatar::getAvatar($dozent['user_id'], $dozent['username'])->getImageTag(Avatar::SMALL) ?>
+                        <a href="<?= URLHelper::getLink('dispatch.php/profile', ['username' => $dozent->username]) ?>">
+                            <?= Avatar::getAvatar($dozent->user_id, $dozent->username)->getImageTag(Avatar::SMALL) ?>
                         </a>
                     </td>
                     <td>
-                        <?= get_fullname($dozent['user_id'], 'full_rev', true) . ' (' . $dozent['username'] . ')' ?>
+                        <?= htmlReady($dozent->user->getFullName('full_rev')) ?>
+                        (<?= htmlReady($dozent->username) ?>)
                     </td>
                     <td>
                     <? if ($perm_dozent && !$dozent_is_locked): ?>
-                        <input value="<?= htmlReady($dozent['label']) ?>" type="text" name="label[<?= htmlReady($dozent['user_id']) ?>]" title="<?= _('Die Funktion, die die Person in der Veranstaltung erfüllt.') ?>">
+                        <input value="<?= htmlReady($dozent->label) ?>" type="text" name="label[<?= htmlReady($dozent->user_id) ?>]" title="<?= _('Die Funktion, die die Person in der Veranstaltung erfüllt.') ?>">
                     <? else : ?>
-                        <?= htmlReady($dozent['label']) ?>
+                        <?= htmlReady($dozent->label) ?>
                     <? endif ?>
                     </td>
                     <td class="actions">
                 <? if ($perm_dozent && !$dozent_is_locked): ?>
                     <? if ($num > 0) : ?>
-                        <button class="as-link" formaction="<?= $controller->link_for('course/basicdata/priorityupfor', $course_id, $dozent['user_id'], 'dozent') ?>" <?= $dialog_attr ?>>
+                        <button class="as-link" formaction="<?= $controller->link_for('course/basicdata/priorityupfor', $course_id, $dozent->user_id, 'dozent') ?>" <?= $dialog_attr ?>>
                             <?= Icon::create('arr_2up', Icon::ROLE_SORT)->asImg(['class' => 'middle']) ?>
                         </button>
                     <? endif; ?>
                     <? if ($num < count($dozenten) - 1): ?>
-                        <button class="as-link" formaction="<?= $controller->link_for('course/basicdata/prioritydownfor', $course_id, $dozent['user_id'], 'dozent') ?>" <?= $dialog_attr ?>>
+                        <button class="as-link" formaction="<?= $controller->link_for('course/basicdata/prioritydownfor', $course_id, $dozent->user_id, 'dozent') ?>" <?= $dialog_attr ?>>
                             <?= Icon::create('arr_2down', Icon::ROLE_SORT)->asImg(['class' => 'middle']) ?>
                         </button>
                     <? endif; ?>
                         <?= Icon::create('trash')->asInput([
-                            'formaction'   => $controller->url_for('course/basicdata/deletedozent', $course_id, $dozent['user_id']),
+                            'formaction'   => $controller->url_for('course/basicdata/deletedozent', $course_id, $dozent->user_id),
                             'data-confirm' => _('Soll die Person wirklich entfernt werden?'),
                         ]) ?>
                 <? endif; ?>
@@ -223,7 +229,7 @@ $dialog_attr = Request::isXhr() ? ' data-dialog="size=50%"' : '';
                 <?= MultiPersonSearch::get('add_member_tutor' . $course_id)
                         ->setTitle(_('Mehrere TutorInnen hinzufügen'))
                         ->setSearchObject($tutorUserSearch)
-                        ->setDefaultSelectedUser(array_merge(array_keys($dozenten), array_keys($tutoren)))
+                        ->setDefaultSelectedUser(array_merge($dozenten->pluck('user_id'), $tutoren->pluck('user_id')))
                         ->setDataDialogStatus(Request::isXhr())
                         ->setJSFunctionOnSubmit(Request::isXhr() ? 'jQuery(this).closest(".ui-dialog-content").dialog("close");' : false)
                         ->setExecuteURL($controller->url_for('course/basicdata/add_member/' . $course_id . '/tutor'))
@@ -249,37 +255,38 @@ $dialog_attr = Request::isXhr() ? ' data-dialog="size=50%"' : '';
                     </td>
                 </tr>
         <? else: ?>
-            <? foreach (array_values($tutoren) as $num => $tutor): ?>
+            <? foreach ($tutoren as $num => $tutor): ?>
                 <tr>
                     <td>
-                        <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $tutor['username']) ?>">
-                            <?= Avatar::getAvatar($tutor['user_id'], $tutor['username'])->getImageTag(Avatar::SMALL) ?>
+                        <a href="<?= URLHelper::getLink('dispatch.php/profile', ['username' => $tutor->username]) ?>">
+                            <?= Avatar::getAvatar($tutor->user_id, $tutor->username)->getImageTag(Avatar::SMALL) ?>
                         </a>
                     </td>
                     <td>
-                        <?= get_fullname($tutor['user_id'], 'full_rev', true) . ' (' . $tutor['username'] . ')' ?>
+                        <?= htmlReady($tutor->user->getFullName('full_rev')) ?>
+                        (<?= htmlReady($tutor->username) ?>)
                     </td>
                     <td>
                     <? if ($perm_dozent && !$tutor_is_locked): ?>
-                        <input value="<?= htmlReady($tutor['label']) ?>" type="text" name="label[<?= htmlReady($tutor['user_id']) ?>]" title="<?= _('Die Funktion, die die Person in der Veranstaltung erfüllt.') ?>">
+                        <input value="<?= htmlReady($tutor->label) ?>" type="text" name="label[<?= htmlReady($tutor->user_id) ?>]" title="<?= _('Die Funktion, die die Person in der Veranstaltung erfüllt.') ?>">
                     <? else: ?>
-                        <?= htmlReady($tutor['label']) ?>
+                        <?= htmlReady($tutor->label) ?>
                     <? endif; ?>
                     </td>
                     <td class="actions">
                 <? if ($perm_dozent && !$tutor_is_locked): ?>
                     <? if ($num > 0) : ?>
-                        <button class="as-link" formaction="<?= $controller->link_for('course/basicdata/priorityupfor', $course_id, $tutor['user_id'], 'tutor') ?>" <?= $dialog_attr ?>>
+                        <button class="as-link" formaction="<?= $controller->link_for('course/basicdata/priorityupfor', $course_id, $tutor->user_id, 'tutor') ?>" <?= $dialog_attr ?>>
                             <?= Icon::create('arr_2up', Icon::ROLE_SORT)->asImg(['class' => 'middle']) ?>
                         </button>
                     <? endif; ?>
                     <? if ($num < count($tutoren) - 1) : ?>
-                        <button class="as-link" formaction="<?= $controller->link_for('course/basicdata/prioritydownfor', $course_id, $tutor['user_id'], 'tutor') ?>" <?= $dialog_attr ?>>
+                        <button class="as-link" formaction="<?= $controller->link_for('course/basicdata/prioritydownfor', $course_id, $tutor->user_id, 'tutor') ?>" <?= $dialog_attr ?>>
                             <?= Icon::create('arr_2down', Icon::ROLE_SORT)->asImg(['class' => 'middle']) ?>
                         </button>
                     <? endif; ?>
                         <?= Icon::create('trash')->asInput([
-                            'formaction'   => $controller->url_for('course/basicdata/deletetutor', $course_id, $tutor['user_id']),
+                            'formaction'   => $controller->url_for('course/basicdata/deletetutor', $course_id, $tutor->user_id),
                             'data-confirm' => _('Soll die Person wirklich entfernt werden?'),
                         ]) ?>
                 <? endif; ?>
