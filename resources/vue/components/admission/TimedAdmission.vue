@@ -31,11 +31,11 @@ export default {
     props: {
         start: {
             type: Number,
-            default: 0
+            default: null
         },
         end: {
             type: Number,
-            default: 0
+            default: null
         },
         message: {
             type: String,
@@ -45,8 +45,8 @@ export default {
     data() {
         return {
             messageText: this.message || this.$gettext('Die Anmeldung ist nur innerhalb des angegebenen Zeitraums möglich.'),
-            startTime: this.start !== 0 ? this.start : Math.floor(Date.now() / 1000),
-            endTime: this.end !== 0 ? this.end : Math.floor(Date.now() / 1000 + 7 * 86400)
+            startTime: this.start,
+            endTime: this.end,
         }
     },
     computed: {
@@ -68,14 +68,11 @@ export default {
             this.endTime = data.attributes.payload['endtime'];
         },
         validate() {
-            if (this.startTime < 0) {
-                this.invalidData.push(this.$gettext('Bitte geben Sie eine gültige Startzeit an.'));
-            }
-            if (this.endTime < 0) {
-                this.invalidData.push(this.$gettext('Bitte geben Sie eine gültige Endzeit an.'));
-            }
-            if (this.endTime <= this.startTime) {
+            if (this.startTime && this.endTime && this.endTime <= this.startTime) {
                 this.invalidData.push(this.$gettext('Die Endzeit muss nach der Startzeit liegen.'));
+            }
+            if (!this.startTime && !this.endTime) {
+                this.invalidData.push(this.$gettext('Bitte geben Sie entweder ein Start- oder Enddatum an.'));
             }
 
             return this.invalidData.length === 0;
