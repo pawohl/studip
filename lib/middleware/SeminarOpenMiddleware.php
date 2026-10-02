@@ -104,9 +104,6 @@ final class SeminarOpenMiddleware implements MiddlewareInterface
             \PluginManager::getInstance()->setPluginsDisabled(\Request::bool('disable_plugins'));
         }
 
-        // load the default set of plugins
-        \PluginEngine::loadPlugins();
-
         //INITS
         $seminar_open_redirected = false;
         $user_did_login = false;
@@ -159,7 +156,15 @@ final class SeminarOpenMiddleware implements MiddlewareInterface
                 $_SESSION['forced_language'] = null;
                 $user_did_login = true;
             }
+        }
 
+        // init of output via I18N
+        $_language_path = init_i18n($_SESSION['_language']);
+
+        // load the default set of plugins
+        \PluginEngine::loadPlugins();
+
+        if (is_object($user) && $user->id !== 'nobody') {
             \TwoFactorAuth::get()->secureSession();
         }
 
@@ -167,8 +172,6 @@ final class SeminarOpenMiddleware implements MiddlewareInterface
             \PageLayout::addStylesheet('accessibility.css');
         }
 
-        // init of output via I18N
-        $_language_path = init_i18n($_SESSION['_language']);
         //force reload of config to get translated data
         include $GLOBALS['STUDIP_BASE_PATH'] . '/config/config.inc.php';
 
