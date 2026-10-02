@@ -616,7 +616,7 @@ class SimpleORMap implements ArrayAccess, Countable, IteratorAggregate
                     if ($current->id !== null) {
                         $existing = $record->{$relation}->find($current->id);
                         if ($existing) {
-                            $existing->setData($current);
+                            $existing->mergeRelatedRecord($current);
                         } else {
                             $record->{$relation}->append($current);
                         }
@@ -1631,7 +1631,7 @@ class SimpleORMap implements ArrayAccess, Countable, IteratorAggregate
                                  $new_ids[] = $current->id;
                                  $existing = $this->{$field}->find($current->id);
                                  if ($existing) {
-                                     $existing->setData($current);
+                                     $existing->mergeRelatedRecord($current);
                                  } else {
                                      $this->{$field}->append($current);
                                  }
@@ -1652,6 +1652,30 @@ class SimpleORMap implements ArrayAccess, Countable, IteratorAggregate
          }
          return $ret;
      }
+
+    /**
+     * Merge another instance of a related record, including initialized relations.
+     * Uninitialized relations must not discard pending changes on this instance.
+     */
+    protected function mergeRelatedRecord(SimpleORMap $record): void
+    {
+        $this->setData($record);
+        if ($this === $record) {
+            return;
+        }
+
+        foreach ($record->relations as $name => $relation) {
+            if ($relation instanceof SimpleORMapCollection) {
+                // Copy both active and deleted records
+                $this->initRelation($name);
+                $collection = $this->relations[$name];
+                $collection->exchangeArray($relation->getArrayCopy());
+                $collection->getDeleted()->exchangeArray($relation->getDeleted()->getArrayCopy());
+            } elseif ($relation !== null) {
+                $this->setValue($name, $relation);
+            }
+        }
+    }
 
     /**
      * magic method for dynamic properties
