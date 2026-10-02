@@ -93,7 +93,7 @@ msgid ""
 "Möglichkeit die Filter weiter ein."
 msgstr "%{ n } courses match your filter. Please restrict the filters further."
 
-#: resources/vue/components/EditableList.vue:66
+#: resources/vue/components/EditableList.vue:67
 msgid "%{ name } löschen"
 msgstr "Delete %{ name }"
 
@@ -345,7 +345,7 @@ msgid_plural "%{length} Seiten"
 msgstr[0] "%{length} page"
 msgstr[1] "%{length} pages"
 
-#: resources/vue/components/RangeInput.vue:23
+#: resources/vue/components/RangeInput.vue:27
 msgid "%{myValue} von %{max}"
 msgstr "%{myValue} of %{max}"
 
@@ -367,11 +367,11 @@ msgstr "Edit %{name}"
 msgid "%{number} Dateien gewählt"
 msgstr "%{number} files selected"
 
-#: resources/vue/apps/admission/ConfigureCourseSet.vue:314
+#: resources/vue/apps/admission/ConfigureCourseSet.vue:316
 msgid "%{number} Personen werden bevorzugt"
 msgstr "%{number} users receive preferential treatment"
 
-#: resources/vue/apps/admission/ConfigureCourseSet.vue:313
+#: resources/vue/apps/admission/ConfigureCourseSet.vue:315
 msgid "%{number} Personen werden nachrangig eingetragen"
 msgstr "%{number} users are registered with low priority"
 
@@ -449,8 +449,8 @@ msgstr "2nd subtitle"
 #: resources/vue/apps/forum/discussions/Edit.vue:267
 #: resources/vue/apps/forum/discussions_types/Edit.vue:88
 #: resources/vue/apps/forum/topics/Edit.vue:145
-#: resources/vue/apps/my-courses/ColorGroupSelector.vue:139
-#: resources/vue/apps/questionnaires/QuestionnaireEditor.vue:318
+#: resources/vue/apps/my-courses/ColorGroupSelector.vue:134
+#: resources/vue/apps/questionnaires/QuestionnaireEditor.vue:319
 #: resources/vue/apps/short-urls/ShortUrlLink.vue:32
 #: resources/vue/components/StudipUserFilter.vue:24
 #: resources/vue/components/admission/AdmissionRuleConfig.vue:14
@@ -794,6 +794,11 @@ msgstr "Remove all blocks from the clipboard"
 msgid "Alle Diskussionen"
 msgstr "General discussion"
 
+#: resources/assets/javascripts/bootstrap/studip_helper_attributes.js:18
+#, fuzzy
+msgid "Alle Einträge auswählen"
+msgstr "Select all rule types"
+
 #: resources/assets/javascripts/bootstrap/multi_select.js:8
 #: resources/assets/javascripts/lib/multi_person_search.js:37
 #: resources/assets/javascripts/lib/multi_select.js:27
@@ -1048,8 +1053,8 @@ msgstr "Annotations for the page"
 msgid "anonym"
 msgstr "anonymous"
 
-#: resources/vue/components/forum/posts/Post.vue:99
-#: resources/vue/components/forum/posts/Post.vue:127
+#: resources/vue/components/forum/posts/Post.vue:101
+#: resources/vue/components/forum/posts/Post.vue:134
 #: resources/vue/components/forum/posts/PostCreateForm.vue:54
 #: resources/vue/components/forum/posts/PostEditForm.vue:38
 msgid "Anonym"
@@ -1125,12 +1130,12 @@ msgstr "Number of surveys"
 #: resources/vue/components/forum/categories/ShowCategory.vue:18
 #: resources/vue/components/forum/discussions/DiscussionIndex.vue:123
 #: resources/vue/components/forum/discussions/DiscussionIndex.vue:288
-#: resources/vue/components/forum/topics/ShowTopic.vue:24
-#: resources/vue/components/forum/topics/TopicItem.vue:150
-#: resources/vue/components/forum/topics/TopicItem.vue:208
-#: resources/vue/components/forum/topics/TopicItem.vue:216
-#: resources/vue/components/forum/topics/TopicItem.vue:326
-#: resources/vue/components/forum/topics/TopicItem.vue:335
+#: resources/vue/components/forum/topics/ShowTopic.vue:25
+#: resources/vue/components/forum/topics/TopicItem.vue:148
+#: resources/vue/components/forum/topics/TopicItem.vue:206
+#: resources/vue/components/forum/topics/TopicItem.vue:214
+#: resources/vue/components/forum/topics/TopicItem.vue:325
+#: resources/vue/components/forum/topics/TopicItem.vue:334
 #: resources/vue/components/forum/topics/TopicsIndex.vue:182
 #, fuzzy
 msgid "Anzahl der Beiträge"
@@ -1141,10 +1146,10 @@ msgstr "Number of entries"
 #: resources/vue/components/forum/categories/CategoryItem.vue:180
 #: resources/vue/components/forum/categories/CategoryItem.vue:181
 #: resources/vue/components/forum/categories/ShowCategory.vue:16
-#: resources/vue/components/forum/topics/ShowTopic.vue:22
-#: resources/vue/components/forum/topics/TopicItem.vue:140
-#: resources/vue/components/forum/topics/TopicItem.vue:184
-#: resources/vue/components/forum/topics/TopicItem.vue:185
+#: resources/vue/components/forum/topics/ShowTopic.vue:23
+#: resources/vue/components/forum/topics/TopicItem.vue:138
+#: resources/vue/components/forum/topics/TopicItem.vue:182
+#: resources/vue/components/forum/topics/TopicItem.vue:183
 #: resources/vue/components/forum/topics/TopicsIndex.vue:154
 #, fuzzy
 msgid "Anzahl der Diskussionen"
@@ -1163,12 +1168,12 @@ msgstr "Number of participants"
 #: resources/vue/apps/forum/topics/Show.vue:58
 #: resources/vue/apps/forum/topics/Show.vue:59
 #: resources/vue/apps/forum/topics/Show.vue:67
-#: resources/vue/components/forum/topics/ShowTopic.vue:26
-#: resources/vue/components/forum/topics/TopicItem.vue:128
-#: resources/vue/components/forum/topics/TopicItem.vue:192
-#: resources/vue/components/forum/topics/TopicItem.vue:200
-#: resources/vue/components/forum/topics/TopicItem.vue:312
-#: resources/vue/components/forum/topics/TopicItem.vue:321
+#: resources/vue/components/forum/topics/ShowTopic.vue:27
+#: resources/vue/components/forum/topics/TopicItem.vue:126
+#: resources/vue/components/forum/topics/TopicItem.vue:190
+#: resources/vue/components/forum/topics/TopicItem.vue:198
+#: resources/vue/components/forum/topics/TopicItem.vue:311
+#: resources/vue/components/forum/topics/TopicItem.vue:320
 #, fuzzy
 msgid "Anzahl der Teilnehmenden am Thema"
 msgstr "Number of participants"
@@ -1554,8 +1559,8 @@ msgstr "cancel selection"
 msgid "Auswahl des externen Tools"
 msgstr "External tool selection"
 
-#: resources/vue/components/forum/posts/Post.vue:174
-#: resources/vue/components/forum/posts/Post.vue:175
+#: resources/vue/components/forum/posts/Post.vue:186
+#: resources/vue/components/forum/posts/Post.vue:187
 #, fuzzy
 msgid "Auswahl zitieren und antworten"
 msgstr "Amount of answers"
@@ -1691,8 +1696,8 @@ msgstr "modified"
 msgid "Bearbeitet"
 msgstr "Edited"
 
-#: resources/vue/components/forum/posts/Post.vue:109
-#: resources/vue/components/forum/posts/Post.vue:137
+#: resources/vue/components/forum/posts/Post.vue:115
+#: resources/vue/components/forum/posts/Post.vue:148
 #, fuzzy
 msgid "Bearbeitet: "
 msgstr "Edited:"
@@ -1742,7 +1747,7 @@ msgid "Bearbeitungszeitraum in Tagen:"
 msgstr "Processing time in days:"
 
 #: resources/vue/components/StudipUserFilter.vue:102
-#: resources/vue/components/admission/ConditionalAdmission.vue:161
+#: resources/vue/components/admission/ConditionalAdmission.vue:162
 #: resources/vue/components/admission/PreferentialAdmission.vue:74
 msgid "Bedingung hinzufügen"
 msgstr "Add condition"
@@ -1797,8 +1802,8 @@ msgstr ""
 msgid "Beim Veröffentlichen der Seite ist ein Fehler aufgetreten."
 msgstr "An error occurred while publishing the page."
 
-#: resources/vue/components/forum/posts/Post.vue:224
-#: resources/vue/components/forum/posts/Post.vue:225
+#: resources/vue/components/forum/posts/Post.vue:236
+#: resources/vue/components/forum/posts/Post.vue:237
 msgid "Beitrag bearbeiten"
 msgstr "Edit posting"
 
@@ -1807,13 +1812,13 @@ msgid "Beitrag erstellen"
 msgstr "Write posting"
 
 #: resources/vue/components/courseware/blocks/CoursewareBlubberComment.vue:146
-#: resources/vue/components/forum/posts/Post.vue:240
-#: resources/vue/components/forum/posts/Post.vue:241
+#: resources/vue/components/forum/posts/Post.vue:252
+#: resources/vue/components/forum/posts/Post.vue:253
 msgid "Beitrag löschen"
 msgstr "Delete post"
 
-#: resources/vue/components/forum/posts/Post.vue:254
-#: resources/vue/components/forum/posts/Post.vue:255
+#: resources/vue/components/forum/posts/Post.vue:266
+#: resources/vue/components/forum/posts/Post.vue:267
 msgid "Beitrag weiterleiten"
 msgstr "Forward posting"
 
@@ -1874,7 +1879,7 @@ msgstr ""
 "the file is permitted. When uploading, the information represents a decision "
 "guidance, so that you can be sure that the file may actually be provided."
 
-#: resources/vue/components/form_inputs/FileUpload.vue:68
+#: resources/vue/components/form_inputs/FileUpload.vue:69
 msgid "Bereits hochgeladen:"
 msgstr "Already uploaded:"
 
@@ -2206,14 +2211,6 @@ msgstr "Please specify a date."
 msgid "Bitte geben Sie eine Beschreibung ein."
 msgstr "Please enter a description."
 
-#: resources/vue/components/admission/TimedAdmission.vue:51
-msgid "Bitte geben Sie eine gültige Endzeit an."
-msgstr "Please specify a valid end time."
-
-#: resources/vue/components/admission/TimedAdmission.vue:48
-msgid "Bitte geben Sie eine gültige Startzeit an."
-msgstr "Please enter a valid start time."
-
 #: resources/vue/components/courseware/blocks/CoursewareIframeBlock.vue:134
 msgid "Bitte geben Sie eine gültige URL ein."
 msgstr "Please enter a valid URL."
@@ -2244,6 +2241,10 @@ msgstr "Please enter a title for the new page."
 msgid "Bitte geben Sie einen Titel für die Seite ein."
 msgstr "Please enter a title for this page."
 
+#: resources/vue/components/admission/TimedAdmission.vue:51
+msgid "Bitte geben Sie entweder ein Start- oder Enddatum an."
+msgstr "Start or End date required."
+
 #: resources/vue/components/admission/PreferentialAdmission.vue:76
 msgid ""
 "Bitte geben Sie mindestens eine Auswahlbedingung an oder bevorzugen Sie "
@@ -2256,7 +2257,7 @@ msgstr ""
 msgid "Bitte geben Sie mindestens eine Auswahlbedingung an."
 msgstr "Please specify at least one selection condition."
 
-#: resources/vue/components/admission/CourseMemberAdmission.vue:53
+#: resources/vue/components/admission/CourseMemberAdmission.vue:55
 msgid "Bitte geben Sie mindestens eine Veranstaltung an."
 msgstr "Please specify at least one course."
 
@@ -3008,7 +3009,7 @@ msgstr "The editing time has not yet begun."
 msgid "Die Bearbeitungszeit ist beendet."
 msgstr "The editing time has ended."
 
-#: resources/assets/javascripts/bootstrap/studip_helper_attributes.js:275
+#: resources/assets/javascripts/bootstrap/studip_helper_attributes.js:285
 msgid "Die beiden Werte \"$1\" und \"$2\" stimmen nicht überein. "
 msgstr "Both values \"$1\" and \"$2\" are not identical. "
 
@@ -3062,7 +3063,7 @@ msgstr ""
 msgid "Die Endzeit liegt vor der Startzeit!"
 msgstr "The end time lies before the start time!"
 
-#: resources/vue/components/admission/TimedAdmission.vue:54
+#: resources/vue/components/admission/TimedAdmission.vue:48
 msgid "Die Endzeit muss nach der Startzeit liegen."
 msgstr "The end time may not be earlier than the start time!"
 
@@ -3361,7 +3362,7 @@ msgstr "This course"
 msgid "Diese Veranstaltung gehört zur Farbgruppe %{group}"
 msgstr "This course belongs to the colour group %{group}."
 
-#: resources/vue/components/StudipDialog.vue:88
+#: resources/vue/components/StudipDialog.vue:90
 msgid "Diesen Dialog schließen"
 msgstr "Close this dialog"
 
@@ -3464,7 +3465,7 @@ msgstr "This field must be selected."
 msgid "Dieses Formular enthält Pflichtfelder."
 msgstr "This form contains mandatory fields."
 
-#: resources/vue/components/EditableList.vue:95
+#: resources/vue/components/EditableList.vue:101
 msgid "Direkt auswählen ..."
 msgstr "Directy select ..."
 
@@ -3507,7 +3508,7 @@ msgid "Diskussion schließen, keine weiteren Beiträge zulassen"
 msgstr ""
 
 #: resources/vue/apps/forum/categories/Index.vue:193
-#: resources/vue/components/forum/topics/TopicItem.vue:186
+#: resources/vue/components/forum/topics/TopicItem.vue:184
 #: resources/vue/components/forum/topics/TopicsIndex.vue:162
 #, fuzzy
 msgid "Diskussionen"
@@ -3709,9 +3710,9 @@ msgstr "One file selected"
 msgid "Eine Diskussion starten"
 msgstr "Start new search"
 
-#: resources/vue/apps/responsive/ResponsiveNavigation.vue:197
-#: resources/vue/apps/responsive/ResponsiveNavigation.vue:198
-#: resources/vue/apps/responsive/ResponsiveNavigation.vue:207
+#: resources/vue/apps/responsive/ResponsiveNavigation.vue:202
+#: resources/vue/apps/responsive/ResponsiveNavigation.vue:203
+#: resources/vue/apps/responsive/ResponsiveNavigation.vue:212
 msgid "Eine Ebene höher"
 msgstr "One layer above"
 
@@ -3835,6 +3836,10 @@ msgstr "Settings"
 msgid "Einstellungen ändern"
 msgstr "Change settings"
 
+#: resources/assets/javascripts/bootstrap/studip_helper_attributes.js:24
+msgid "Eintrag auswählen"
+msgstr "Select entry"
+
 #: resources/vue/components/courseware/layouts/CoursewareTalkBubble.vue:66
 msgid "Eintrag löschen"
 msgstr "Delete entry"
@@ -3843,7 +3848,7 @@ msgstr "Delete entry"
 msgid "Einzeltermin"
 msgstr "Single date"
 
-#: resources/vue/apps/questionnaires/QuestionnaireEditor.vue:312
+#: resources/vue/apps/questionnaires/QuestionnaireEditor.vue:313
 msgid "Element hinzufügen"
 msgstr "Add element"
 
@@ -4052,7 +4057,7 @@ msgid "Erstellt"
 msgstr "Created"
 
 #: resources/vue/components/forum/categories/ShowCategory.vue:33
-#: resources/vue/components/forum/topics/ShowTopic.vue:39
+#: resources/vue/components/forum/topics/ShowTopic.vue:40
 msgid "Erstellt am"
 msgstr "Created on"
 
@@ -4169,7 +4174,7 @@ msgstr "An error occurred! The recording could not be saved."
 
 #: resources/assets/javascripts/bootstrap/forms.js:293
 #: resources/assets/javascripts/lib/dialog.js:217
-#: resources/vue/apps/admission/ConfigureCourseSet.vue:158
+#: resources/vue/apps/admission/ConfigureCourseSet.vue:160
 #: resources/vue/apps/massmail/MassMailMessagesList.vue:45
 #: resources/vue/components/form_inputs/UserFilterInput.vue:73
 #: resources/vue/mixins/courseware/clipboard.js:9
@@ -4855,8 +4860,8 @@ msgstr "Free"
 msgid "Frei bearbeitbar"
 msgstr "Freely editable"
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:154
-#: resources/vue/components/CourseDateRoomFieldset.vue:162
+#: resources/vue/components/CourseDateRoomFieldset.vue:133
+#: resources/vue/components/CourseDateRoomFieldset.vue:141
 msgid "Freie Ortsangabe (keine Raumbuchung)"
 msgstr "Location (no room booking)"
 
@@ -4974,7 +4979,7 @@ msgstr ""
 msgid "Geben Sie mindestens %{min} Zeichen ein."
 msgstr "Please enter at least %{min} characters."
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:50
+#: resources/vue/components/CourseDateRoomFieldset.vue:49
 msgid "Gebuchte Räume"
 msgstr "Booked rooms"
 
@@ -5045,12 +5050,6 @@ msgstr "closed"
 #: resources/vue/apps/massmail/MassMailMessagesList.vue:111
 msgid "Geschützt"
 msgstr "Protected"
-
-#: resources/vue/components/form_inputs/CaptchaInput.vue:31
-msgid ""
-"Geschützt von <a href=\"https://altcha.org/\" target=\"_blank\">ALTCHA</a>"
-msgstr ""
-"Protected by <a href=\"https://altcha.org/\" target=\"_blank\">ALTCHA</a>"
 
 #: resources/vue/components/courseware/blocks/CoursewareTypewriterBlock.vue:58
 msgid "Geschwindigkeit"
@@ -5373,7 +5372,7 @@ msgstr "Background type"
 msgid "Hinweis"
 msgstr "Hint"
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:105
+#: resources/vue/components/CourseDateRoomFieldset.vue:84
 #, fuzzy
 msgid "Hinweise zu teilbaren Räumen"
 msgstr "%s: Separable rooms"
@@ -5425,14 +5424,10 @@ msgstr "Charcoal"
 msgid "horizontal spiegeln"
 msgstr "mirror horizontally"
 
-#: resources/vue/components/MemcachedCacheConfig.vue:30
+#: resources/vue/components/MemcachedCacheConfig.vue:33
 #: resources/vue/components/RedisCacheConfig.vue:11
 msgid "Hostname"
 msgstr "Host name"
-
-#: resources/vue/components/form_inputs/CaptchaInput.vue:32
-msgid "Ich bin kein Bot"
-msgstr "I am not a bot"
 
 #: resources/vue/apps/forum/discussions_types/Edit.vue:53
 #: resources/vue/apps/forum/discussions_types/Index.vue:54
@@ -5493,7 +5488,7 @@ msgstr "Your request has been submitted."
 
 #: resources/assets/javascripts/bootstrap/data_secure.js:146
 #: resources/assets/javascripts/lib/overlay.js:71
-#: resources/vue/apps/my-courses/ColorGroupSelector.vue:66
+#: resources/vue/apps/my-courses/ColorGroupSelector.vue:57
 msgid "Ihre Eingaben wurden bislang noch nicht gespeichert."
 msgstr "Your input has not been saved yet."
 
@@ -5514,11 +5509,11 @@ msgid ""
 "Im gewählten Semester stehen keine Veranstaltungen zur Auswahl zur Verfügung."
 msgstr "No courses are available for selection in the selected semester."
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:36
+#: resources/vue/components/CourseDateRoomFieldset.vue:35
 msgid "Im gewählten Zeitbereich sind keine buchbaren Räume verfügbar."
 msgstr ""
 
-#: resources/vue/apps/StudipCalendar.vue:71
+#: resources/vue/apps/StudipCalendar.vue:73
 #, fuzzy
 msgid ""
 "Im unteren Bereich können Sie bis zu 4 Farben frei wählen und diese via Drag "
@@ -5655,7 +5650,7 @@ msgstr ""
 "In this peer review process, the pairings are distributed manually before "
 "the processing period begins."
 
-#: resources/vue/apps/StudipCalendar.vue:91
+#: resources/vue/apps/StudipCalendar.vue:93
 msgid "Individuelle Druckansicht drucken"
 msgstr "Print individual booking plan"
 
@@ -5884,11 +5879,11 @@ msgstr "Interaction"
 msgid "Intern"
 msgstr "Internal"
 
-#: resources/vue/apps/questionnaires/QuestionnaireEditor.vue:283
+#: resources/vue/apps/questionnaires/QuestionnaireEditor.vue:284
 msgid "Internen Namen nicht speichern"
 msgstr "Do not save internal name"
 
-#: resources/vue/apps/questionnaires/QuestionnaireEditor.vue:274
+#: resources/vue/apps/questionnaires/QuestionnaireEditor.vue:275
 msgid "Internen Namen speichern"
 msgstr "Save internal name"
 
@@ -5970,7 +5965,7 @@ msgstr "Every day"
 msgid "Jetzt"
 msgstr "Now"
 
-#: resources/vue/components/form_inputs/FileUpload.vue:63
+#: resources/vue/components/form_inputs/FileUpload.vue:64
 msgid "Jetzt hochladen"
 msgstr "Upload now"
 
@@ -6032,7 +6027,7 @@ msgid "Karussell"
 msgstr "Carousel"
 
 #: resources/vue/apps/forum/topics/Edit.vue:95
-#: resources/vue/components/forum/topics/ShowTopic.vue:18
+#: resources/vue/components/forum/topics/ShowTopic.vue:19
 msgid "Kategorie"
 msgstr "Category"
 
@@ -6079,11 +6074,11 @@ msgstr "No suitable element for the full screen mode."
 msgid "Kein Peer-Review abgegeben"
 msgstr "No peer review provided"
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:177
+#: resources/vue/components/CourseDateRoomFieldset.vue:156
 msgid "Kein Raum"
 msgstr "No room"
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:61
+#: resources/vue/components/CourseDateRoomFieldset.vue:58
 #, fuzzy
 msgid "Kein Raum verfügbar"
 msgstr "No module available"
@@ -6105,15 +6100,15 @@ msgstr "None"
 #: resources/vue/components/forum/categories/CategoryItem.vue:361
 #: resources/vue/components/forum/categories/ShowCategory.vue:30
 #: resources/vue/components/forum/discussions/DiscussionIndex.vue:354
-#: resources/vue/components/forum/topics/ShowTopic.vue:36
-#: resources/vue/components/forum/topics/TopicItem.vue:175
-#: resources/vue/components/forum/topics/TopicItem.vue:240
-#: resources/vue/components/forum/topics/TopicItem.vue:357
+#: resources/vue/components/forum/topics/ShowTopic.vue:37
+#: resources/vue/components/forum/topics/TopicItem.vue:173
+#: resources/vue/components/forum/topics/TopicItem.vue:238
+#: resources/vue/components/forum/topics/TopicItem.vue:356
 #, fuzzy
 msgid "Keine Aktivität"
 msgstr "Last activity"
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:189
+#: resources/vue/components/CourseDateRoomFieldset.vue:168
 #, fuzzy
 msgid "Keine Änderung"
 msgstr "-- No change --"
@@ -6298,7 +6293,7 @@ msgstr "Royal purple"
 msgid "Kontakte, mit denen der Kalender geteilt wird"
 msgstr "Contacts the calendar is shared with"
 
-#: resources/vue/components/admission/ConditionalAdmission.vue:141
+#: resources/vue/components/admission/ConditionalAdmission.vue:142
 msgid "Kontingent auflösen"
 msgstr "Cancel contingent"
 
@@ -6306,9 +6301,14 @@ msgstr "Cancel contingent"
 msgid "Kontingent erstellen"
 msgstr "Create contingent"
 
-#: resources/vue/components/admission/ConditionalAdmission.vue:117
+#: resources/vue/components/admission/ConditionalAdmission.vue:118
 msgid "Kontingent in Prozent"
 msgstr "Contingent in percent"
+
+#: resources/vue/components/admission/ConditionalAdmission.vue:109
+#, fuzzy
+msgid "Kontingente"
+msgstr "Contingent:"
 
 #: resources/vue/components/blubber/ThreadsWidget.vue:26
 msgid "Konversationen"
@@ -6316,8 +6316,8 @@ msgstr "Conversations"
 
 #: resources/vue/components/courseware/structural-element/CoursewareStructuralElementDialogCopy.vue:37
 #: resources/vue/components/courseware/unit/CoursewareShelfDialogCopy.vue:38
-#: resources/vue/components/forum/posts/Post.vue:187
-#: resources/vue/components/forum/posts/Post.vue:188
+#: resources/vue/components/forum/posts/Post.vue:199
+#: resources/vue/components/forum/posts/Post.vue:200
 msgid "Kopieren"
 msgstr "Copy"
 
@@ -6662,12 +6662,12 @@ msgstr "Last"
 #: resources/vue/components/forum/discussions/DiscussionIndex.vue:149
 #: resources/vue/components/forum/discussions/DiscussionIndex.vue:156
 #: resources/vue/components/forum/discussions/DiscussionIndex.vue:298
-#: resources/vue/components/forum/topics/ShowTopic.vue:28
-#: resources/vue/components/forum/topics/TopicItem.vue:160
-#: resources/vue/components/forum/topics/TopicItem.vue:224
-#: resources/vue/components/forum/topics/TopicItem.vue:232
-#: resources/vue/components/forum/topics/TopicItem.vue:340
-#: resources/vue/components/forum/topics/TopicItem.vue:349
+#: resources/vue/components/forum/topics/ShowTopic.vue:29
+#: resources/vue/components/forum/topics/TopicItem.vue:158
+#: resources/vue/components/forum/topics/TopicItem.vue:222
+#: resources/vue/components/forum/topics/TopicItem.vue:230
+#: resources/vue/components/forum/topics/TopicItem.vue:339
+#: resources/vue/components/forum/topics/TopicItem.vue:348
 #: resources/vue/components/forum/topics/TopicsIndex.vue:196
 #: resources/vue/components/forum/topics/TopicsIndex.vue:204
 msgid "Letzte Aktivität"
@@ -6747,6 +6747,12 @@ msgstr "Link has been copied"
 #, fuzzy
 msgid "Link zu dieser Seite erstellen"
 msgstr "in all current versions"
+
+#: resources/vue/components/forum/posts/Post.vue:111
+#: resources/vue/components/forum/posts/Post.vue:144
+#, fuzzy
+msgid "Link zum Beitrag"
+msgstr "Link to post: "
 
 #: resources/vue/components/courseware/structural-element/CoursewareTreeUnits.vue:59
 msgid "Link zum Lernmaterial auswählen"
@@ -6949,7 +6955,7 @@ msgstr "My rating"
 msgid "Meine Vorlagen"
 msgstr "My templates"
 
-#: resources/vue/components/MemcachedCacheConfig.vue:19
+#: resources/vue/components/MemcachedCacheConfig.vue:20
 msgid "Memcached-Server"
 msgstr "Memcached server"
 
@@ -7042,11 +7048,11 @@ msgstr ""
 msgid "Mitgliedschaft"
 msgstr "Membership"
 
-#: resources/vue/components/admission/CourseMemberAdmission.vue:50
+#: resources/vue/components/admission/CourseMemberAdmission.vue:55
 msgid "Mitgliedschaft ist in keiner dieser Veranstaltungen erlaubt"
 msgstr "Enrolment is allowed into none of these courses"
 
-#: resources/vue/components/admission/CourseMemberAdmission.vue:40
+#: resources/vue/components/admission/CourseMemberAdmission.vue:45
 msgid "Mitgliedschaft ist in mindestens einer dieser Veranstaltungen notwendig"
 msgstr "Enrolment into at least one of those courses is necessary"
 
@@ -7361,7 +7367,7 @@ msgid "Nachricht an alle Angemeldeten"
 msgstr "Message to all enroled members"
 
 #: resources/vue/components/admission/ConditionalAdmission.vue:36
-#: resources/vue/components/admission/CourseMemberAdmission.vue:14
+#: resources/vue/components/admission/CourseMemberAdmission.vue:19
 #: resources/vue/components/admission/LimitedAdmission.vue:14
 #: resources/vue/components/admission/LockedAdmission.vue:9
 #: resources/vue/components/admission/ParticipantRestrictedAdmission.vue:15
@@ -7509,14 +7515,14 @@ msgstr "Attribution & Sharing under the same conditions"
 msgid "Navigation"
 msgstr "Navigation"
 
-#: resources/vue/apps/responsive/ResponsiveNavigation.vue:54
-#: resources/vue/apps/responsive/ResponsiveNavigation.vue:66
+#: resources/vue/apps/responsive/ResponsiveNavigation.vue:59
+#: resources/vue/apps/responsive/ResponsiveNavigation.vue:71
 #: resources/vue/components/tree/TreeBreadcrumb.vue:67
 msgid "Navigation öffnen"
 msgstr "Open navigation"
 
-#: resources/vue/apps/responsive/ResponsiveNavigation.vue:54
-#: resources/vue/apps/responsive/ResponsiveNavigation.vue:66
+#: resources/vue/apps/responsive/ResponsiveNavigation.vue:59
+#: resources/vue/apps/responsive/ResponsiveNavigation.vue:71
 #: resources/vue/components/tree/TreeBreadcrumb.vue:67
 msgid "Navigation schließen"
 msgstr "Close navigation"
@@ -7795,7 +7801,7 @@ msgstr "OAuth signature method of the LTI tool"
 msgid "oder"
 msgstr "or"
 
-#: resources/vue/components/EditableList.vue:90
+#: resources/vue/components/EditableList.vue:96
 msgid "Oder aus Liste auswählen:"
 msgstr "Or select from list:"
 
@@ -8137,7 +8143,7 @@ msgstr "Mandatory question"
 msgid "Polardiagramm"
 msgstr "Polar diagram"
 
-#: resources/vue/components/MemcachedCacheConfig.vue:48
+#: resources/vue/components/MemcachedCacheConfig.vue:51
 #: resources/vue/components/RedisCacheConfig.vue:23
 msgid "Port"
 msgstr "Port"
@@ -8150,15 +8156,15 @@ msgstr "Position of the new page"
 msgid "Profil anzeigen"
 msgstr "Show profile"
 
-#: resources/vue/apps/responsive/ResponsiveNavigation.vue:88
-#: resources/vue/apps/responsive/ResponsiveNavigation.vue:89
-#: resources/vue/apps/responsive/ResponsiveNavigation.vue:106
-#: resources/vue/apps/responsive/ResponsiveNavigation.vue:107
+#: resources/vue/apps/responsive/ResponsiveNavigation.vue:93
+#: resources/vue/apps/responsive/ResponsiveNavigation.vue:94
+#: resources/vue/apps/responsive/ResponsiveNavigation.vue:111
+#: resources/vue/apps/responsive/ResponsiveNavigation.vue:112
 msgid "Profilnavigation öffnen"
 msgstr "Open profile navigation"
 
-#: resources/vue/apps/responsive/ResponsiveNavigation.vue:135
-#: resources/vue/apps/responsive/ResponsiveNavigation.vue:136
+#: resources/vue/apps/responsive/ResponsiveNavigation.vue:140
+#: resources/vue/apps/responsive/ResponsiveNavigation.vue:141
 msgid "Profilnavigation schließen"
 msgstr "Close profile navigation"
 
@@ -8204,11 +8210,11 @@ msgstr "Radius"
 msgid "Rasteransicht umschalten"
 msgstr "Switch raster view"
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:53
+#: resources/vue/components/CourseDateRoomFieldset.vue:52
 msgid "Raum auswählen"
 msgstr "Select room"
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:27
+#: resources/vue/components/CourseDateRoomFieldset.vue:26
 msgid "Raumangaben"
 msgstr "Room"
 
@@ -8297,11 +8303,11 @@ msgstr "Red"
 msgid "Rückgängig"
 msgstr "Undo"
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:130
+#: resources/vue/components/CourseDateRoomFieldset.vue:109
 msgid "Rüstzeit nach dem Termin (in Minuten)"
 msgstr "Preparation time after the date (in minutes)"
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:115
+#: resources/vue/components/CourseDateRoomFieldset.vue:94
 msgid "Rüstzeit vor dem Termin (in Minuten)"
 msgstr "Preparation time before the date (in minutes)"
 
@@ -8339,7 +8345,7 @@ msgstr "Labels"
 #: resources/assets/javascripts/studip-ui.js:558
 #: resources/vue/apps/forum/categories/Index.vue:295
 #: resources/vue/apps/short-urls/ShortUrlList.vue:136
-#: resources/vue/components/StudipDialog.vue:89
+#: resources/vue/components/StudipDialog.vue:91
 #: resources/vue/components/courseware/CoursewareAdminTemplates.vue:62
 #: resources/vue/components/courseware/CoursewareAdminTemplates.vue:129
 #: resources/vue/components/courseware/CoursewareCommentsOverviewDialog.vue:15
@@ -8584,6 +8590,7 @@ msgid "Sekunden"
 msgstr "Seconds"
 
 #: resources/vue/apps/admission/ConfigureCourseSet.vue:210
+#: resources/vue/components/admission/CourseMemberAdmission.vue:74
 #: resources/vue/components/courseware/structural-element/CoursewareStructuralElementDialogCopy.vue:154
 #: resources/vue/components/courseware/unit/CoursewareShelfDialogCopy.vue:153
 #: resources/vue/components/form_inputs/MyCoursesColouredTable.vue:22
@@ -8610,9 +8617,19 @@ msgstr "September"
 msgid "Sequentiell"
 msgstr "Sequential"
 
-#: resources/vue/components/MemcachedCacheConfig.vue:71
+#: resources/vue/components/MemcachedCacheConfig.vue:25
+#, fuzzy
+msgid "Server entfernen"
+msgstr "Remove cover"
+
+#: resources/vue/components/MemcachedCacheConfig.vue:75
 msgid "Server hinzufügen"
 msgstr "Add server"
+
+#: resources/vue/components/MemcachedCacheConfig.vue:22
+#, fuzzy
+msgid "Server wirklich entfernen?"
+msgstr "Do you really want to remove the person?"
 
 #: resources/vue/components/courseware/structural-element/CoursewareStructuralElementDialogPermissions.vue:157
 #: resources/vue/components/courseware/structural-element/CoursewareStructuralElementDialogPermissions.vue:255
@@ -8692,10 +8709,10 @@ msgstr "You have selected %{ count } persons"
 #: resources/vue/components/forum/categories/CategoryItem.vue:98
 #: resources/vue/components/forum/categories/CategoryItem.vue:281
 #: resources/vue/components/forum/categories/CategoryItem.vue:282
+#: resources/vue/components/forum/topics/TopicItem.vue:97
 #: resources/vue/components/forum/topics/TopicItem.vue:98
-#: resources/vue/components/forum/topics/TopicItem.vue:99
-#: resources/vue/components/forum/topics/TopicItem.vue:272
-#: resources/vue/components/forum/topics/TopicItem.vue:273
+#: resources/vue/components/forum/topics/TopicItem.vue:270
+#: resources/vue/components/forum/topics/TopicItem.vue:271
 #, fuzzy
 msgid "Sie haben %{count} ungelesene Beiträge"
 msgstr "You have %d unread message"
@@ -8741,7 +8758,7 @@ msgstr "You did not specify who should receive the message!"
 msgid "Sie haben noch keine Auswahl festgelegt."
 msgstr "You have not made a selection yet."
 
-#: resources/vue/components/admission/ConditionalAdmission.vue:154
+#: resources/vue/components/admission/ConditionalAdmission.vue:155
 msgid "Sie haben noch keine Bedingungen festgelegt."
 msgstr "You have not defined any conditions yet."
 
@@ -8989,10 +9006,10 @@ msgstr ""
 #: resources/vue/components/forum/categories/CategoryItem.vue:67
 #: resources/vue/components/forum/categories/CategoryItem.vue:308
 #: resources/vue/components/forum/categories/CategoryItem.vue:309
+#: resources/vue/components/forum/topics/TopicItem.vue:73
 #: resources/vue/components/forum/topics/TopicItem.vue:74
-#: resources/vue/components/forum/topics/TopicItem.vue:75
+#: resources/vue/components/forum/topics/TopicItem.vue:301
 #: resources/vue/components/forum/topics/TopicItem.vue:302
-#: resources/vue/components/forum/topics/TopicItem.vue:303
 #, fuzzy
 msgid ""
 "Sortierelement für Element %{name}. Drücken Sie die Tasten Pfeil-nach-oben "
@@ -9053,7 +9070,7 @@ msgstr "Sorted in ascending order by %{field}"
 #: resources/vue/apps/forum/topics/Edit.vue:144
 #: resources/vue/apps/my-courses/ColorGroupSelector.vue:127
 #: resources/vue/apps/my-courses/NotificationConfiguration.vue:145
-#: resources/vue/apps/questionnaires/QuestionnaireEditor.vue:317
+#: resources/vue/apps/questionnaires/QuestionnaireEditor.vue:318
 #: resources/vue/components/avatar/AvatarApp.vue:193
 #: resources/vue/components/blubber/Comment.vue:109
 #: resources/vue/components/courseware/CoursewareAdminTemplates.vue:127
@@ -9124,7 +9141,7 @@ msgstr "Language of the text field."
 msgid "Standard"
 msgstr "Standard"
 
-#: resources/vue/apps/responsive/ResponsiveNavigation.vue:182
+#: resources/vue/apps/responsive/ResponsiveNavigation.vue:187
 msgid "Start"
 msgstr "Start"
 
@@ -9285,7 +9302,8 @@ msgstr "Searching..."
 #: resources/vue/apps/forum/search/Index.vue:96
 #: resources/vue/apps/forum/search/Index.vue:97
 #: resources/vue/apps/forum/search/Index.vue:104
-#: resources/vue/components/EditableList.vue:84
+#: resources/vue/components/EditableList.vue:82
+#: resources/vue/components/EditableList.vue:90
 #: resources/vue/components/SearchWidget.vue:50
 #: resources/vue/components/SearchWithFilter.vue:53
 #: resources/vue/components/StudipMultiPersonSearch.vue:26
@@ -9559,6 +9577,8 @@ msgstr "Topics"
 #: resources/vue/components/courseware/unit/CoursewareShelfDialogImport.vue:39
 #: resources/vue/components/courseware/unit/CoursewareUnitItemDialogLayout.vue:110
 #: resources/vue/components/courseware/unit/CoursewareUnitItemDialogSettings.vue:158
+#: resources/vue/components/forum/categories/ShowCategory.vue:10
+#: resources/vue/components/forum/topics/ShowTopic.vue:10
 #: resources/vue/components/stock-images/AttributesFieldset.vue:17
 msgid "Titel"
 msgstr "Title"
@@ -9596,11 +9616,6 @@ msgstr "Link target"
 #: resources/vue/components/courseware/unit/CoursewareUnitItemDialogLayout.vue:158
 msgid "Titelseite"
 msgstr "Title page"
-
-#: resources/vue/components/forum/categories/ShowCategory.vue:10
-#: resources/vue/components/forum/topics/ShowTopic.vue:10
-msgid "Title"
-msgstr "Title"
 
 #: resources/vue/components/forum/EmptyForum.vue:34
 #, fuzzy
@@ -9680,22 +9695,6 @@ msgstr "Element type"
 msgid "Übernehmen"
 msgstr "Accept"
 
-#: resources/vue/components/form_inputs/CaptchaInput.vue:33
-msgid "Überprüft"
-msgstr "Checked"
-
-#: resources/vue/components/form_inputs/CaptchaInput.vue:30
-msgid "Überprüfung fehlgeschlagen. Versuchen Sie es später erneut."
-msgstr "Check failed. Try again later."
-
-#: resources/vue/components/form_inputs/CaptchaInput.vue:34
-msgid "Überprüfung..."
-msgstr "Checking..."
-
-#: resources/vue/components/form_inputs/CaptchaInput.vue:35
-msgid "Überprüfung... Bitte warten."
-msgstr "Checking... Please wait."
-
 #: resources/vue/components/courseware/blocks/CoursewareAudioBlock.vue:476
 #: resources/vue/components/courseware/blocks/CoursewareCanvasBlock.vue:185
 #: resources/vue/components/courseware/blocks/CoursewareDocumentBlock.vue:360
@@ -9766,8 +9765,8 @@ msgstr "unrestricted"
 msgid "unbekannt"
 msgstr "unknown"
 
-#: resources/vue/components/forum/posts/Post.vue:97
-#: resources/vue/components/forum/posts/Post.vue:125
+#: resources/vue/components/forum/posts/Post.vue:99
+#: resources/vue/components/forum/posts/Post.vue:132
 #: resources/vue/components/forum/posts/PostReactionShow.vue:98
 msgid "Unbekannt"
 msgstr "Unknown"
@@ -9780,7 +9779,7 @@ msgstr "unrestricted"
 msgid "und"
 msgstr "and"
 
-#: resources/vue/components/forum/posts/Post.vue:77
+#: resources/vue/components/forum/posts/Post.vue:79
 #, fuzzy
 msgid "Ungelesen"
 msgstr "read online"
@@ -9871,6 +9870,11 @@ msgstr "Save anyway"
 msgid "Veranstaltung"
 msgstr "Course"
 
+#: resources/vue/components/admission/CourseMemberAdmission.vue:64
+#, fuzzy
+msgid "Veranstaltung %{course} entfernen"
+msgstr "Remove this course"
+
 #: resources/vue/apps/admission/ConfigureCourseSet.vue:286
 msgid "Veranstaltung %{coursename} dem Anmeldeset zuordnen"
 msgstr "Assign course %{coursename} to the registration set"
@@ -9900,7 +9904,7 @@ msgstr "Do not regard course"
 msgid "Veranstaltung suchen"
 msgstr "Find course"
 
-#: resources/vue/components/admission/CourseMemberAdmission.vue:54
+#: resources/vue/components/admission/CourseMemberAdmission.vue:60
 msgid "Veranstaltung(en)"
 msgstr "Cours(es)"
 
@@ -10587,7 +10591,7 @@ msgstr ""
 "If a text is entered here, booking persons have to confirm that they read "
 "this text."
 
-#: resources/vue/components/form_inputs/FileUpload.vue:87
+#: resources/vue/components/form_inputs/FileUpload.vue:88
 msgid "Wird hochgeladen..."
 msgstr "Uploading..."
 
@@ -10614,7 +10618,7 @@ msgstr "Weekly"
 msgid "Wöchentliche Wiederholung"
 msgstr "Weekly repetition"
 
-#: resources/assets/javascripts/bootstrap/studip_helper_attributes.js:236
+#: resources/assets/javascripts/bootstrap/studip_helper_attributes.js:246
 msgid "Wollen Sie die Aktion wirklich ausführen?"
 msgstr "Do you really want to execute this action?"
 
@@ -10752,12 +10756,12 @@ msgstr "Delete quote"
 msgid "Zitat teilen"
 msgstr "Share quote"
 
-#: resources/vue/components/forum/posts/Post.vue:271
+#: resources/vue/components/forum/posts/Post.vue:283
 #, fuzzy
 msgid "Zitieren und antworten"
 msgstr "Reply on this"
 
-#: resources/vue/components/forum/posts/Post.vue:272
+#: resources/vue/components/forum/posts/Post.vue:284
 #, fuzzy
 msgid "Zitieren und Antworten"
 msgstr "Correct answers"
@@ -10859,8 +10863,8 @@ msgstr "Go to profile"
 msgid "Zum Nutzer Profile von %{name}"
 msgstr "To the profile of %{ user }"
 
-#: resources/vue/components/forum/posts/Post.vue:103
-#: resources/vue/components/forum/posts/Post.vue:131
+#: resources/vue/components/forum/posts/Post.vue:105
+#: resources/vue/components/forum/posts/Post.vue:138
 #: resources/vue/components/forum/posts/PostCreateForm.vue:29
 #: resources/vue/components/forum/posts/PostReactionShow.vue:94
 msgid "Zum Profil"
@@ -10872,8 +10876,8 @@ msgstr "To the profile of %{ user }"
 
 #: resources/vue/components/avatar/UserAvatar.vue:61
 #: resources/vue/components/avatar/UserAvatar.vue:62
-#: resources/vue/components/forum/posts/Post.vue:104
-#: resources/vue/components/forum/posts/Post.vue:132
+#: resources/vue/components/forum/posts/Post.vue:106
+#: resources/vue/components/forum/posts/Post.vue:139
 #: resources/vue/components/forum/posts/PostCreateForm.vue:30
 #: resources/vue/components/forum/posts/PostReactionShow.vue:95
 #, fuzzy
@@ -10888,8 +10892,8 @@ msgstr "To the profile of %{ user }"
 msgid "Zum Schlagwort"
 msgstr "Keyword"
 
-#: resources/vue/apps/responsive/ResponsiveNavigation.vue:164
-#: resources/vue/apps/responsive/ResponsiveNavigation.vue:165
+#: resources/vue/apps/responsive/ResponsiveNavigation.vue:169
+#: resources/vue/apps/responsive/ResponsiveNavigation.vue:170
 msgid "Zum Start"
 msgstr "Go to start"
 
@@ -10898,15 +10902,15 @@ msgstr "Go to start"
 #: resources/vue/apps/forum/discussions/Show.vue:86
 #: resources/vue/apps/forum/search/Index.vue:130
 #: resources/vue/apps/forum/subscriptions/Index.vue:146
-#: resources/vue/components/forum/topics/TopicItem.vue:88
-#: resources/vue/components/forum/topics/TopicItem.vue:257
+#: resources/vue/components/forum/topics/TopicItem.vue:87
+#: resources/vue/components/forum/topics/TopicItem.vue:255
 #, fuzzy
 msgid "Zum Thema"
 msgstr "Topic"
 
 #: resources/vue/apps/forum/discussions/Show.vue:87
 #: resources/vue/apps/forum/search/Index.vue:131
-#: resources/vue/components/forum/topics/TopicItem.vue:89
+#: resources/vue/components/forum/topics/TopicItem.vue:88
 msgid "Zum Thema: %{name}"
 msgstr ""
 
@@ -10995,7 +10999,6 @@ msgstr "Back to the learning material overview"
 
 #: resources/vue/apps/forum/search/Index.vue:110
 #: resources/vue/apps/forum/search/Index.vue:111
-#: resources/vue/apps/my-courses/ColorGroupSelector.vue:132
 #: resources/vue/apps/my-courses/NotificationConfiguration.vue:150
 #: resources/vue/components/avatar/AvatarApp.vue:170
 #: resources/vue/components/courseware/blocks/CoursewareCanvasBlock.vue:61
@@ -11033,6 +11036,35 @@ msgstr "second element"
 #: resources/vue/components/courseware/unit/CoursewareUnitItemDialogSettings.vue:275
 msgid "Zweiwöchentlich"
 msgstr "Fortnightly"
+
+#~ msgid "Bitte geben Sie eine gültige Endzeit an."
+#~ msgstr "Please specify a valid end time."
+
+#~ msgid "Bitte geben Sie eine gültige Startzeit an."
+#~ msgstr "Please enter a valid start time."
+
+#~ msgid ""
+#~ "Geschützt von <a href=\"https://altcha.org/\" target=\"_blank\">ALTCHA</a>"
+#~ msgstr ""
+#~ "Protected by <a href=\"https://altcha.org/\" target=\"_blank\">ALTCHA</a>"
+
+#~ msgid "Ich bin kein Bot"
+#~ msgstr "I am not a bot"
+
+#~ msgid "Title"
+#~ msgstr "Title"
+
+#~ msgid "Überprüft"
+#~ msgstr "Checked"
+
+#~ msgid "Überprüfung fehlgeschlagen. Versuchen Sie es später erneut."
+#~ msgstr "Check failed. Try again later."
+
+#~ msgid "Überprüfung..."
+#~ msgstr "Checking..."
+
+#~ msgid "Überprüfung... Bitte warten."
+#~ msgstr "Checking... Please wait."
 
 #~ msgid " Ziel-Lernmaterial"
 #~ msgstr " Target learning material"
@@ -11128,9 +11160,6 @@ msgstr "Fortnightly"
 
 #~ msgid "Lade Einstellungen…"
 #~ msgstr "Loading settings…"
-
-#~ msgid "Link zum Beitrag: "
-#~ msgstr "Link to post: "
 
 #~ msgid "Möchten Sie diesen Beitrag wirklich löschen"
 #~ msgstr "Are you sure you want to delete this post?"
