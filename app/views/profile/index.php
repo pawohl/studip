@@ -1,3 +1,25 @@
+<?php
+/**
+ * @var User $current_user
+ * @var string|null $public_email
+ * @var string|null $private_nr
+ * @var string|null $private_cell
+ * @var string|null $privadr
+ * @var string|null $homepage
+ * @var array $study_institutes
+ * @var array $institutes
+ * @var array $shortDatafields
+ * @var string|null $news
+ * @var string|null $dates
+ * @var string|null $questionnaires
+ * @var array|null $public_files
+ * @var array|null $ausgabe_inhalt
+ * @var array $longDatafields
+ * @var string $hompage_plugin
+ * @var array $categories
+ * @var ProfileController $controller
+ */
+?>
 <div class="hidden-medium-up">
     <?= Avatar::getAvatar($current_user->user_id)->getImageTag(Avatar::NORMAL) ?>
 </div>
@@ -59,9 +81,11 @@
 
         <? if ($current_user->user_id === $GLOBALS['user']->id) : ?>
             <dt><?= _('Status') ?>:</dt>
-            <dd><?= htmlReady(ucfirst($current_user['perms'])) ?></dd>
+            <dd><?= htmlReady(ucfirst($current_user->perms)) ?></dd>
+          <? if ($current_user->matriculation_number): ?>
             <dt><?= _('Matrikelnummer') ?>:</dt>
-            <dd><?= htmlReady($current_user['matriculation_number']) ?></dd>
+            <dd><?= htmlReady($current_user->matriculation_number) ?></dd>
+          <? endif ?>
         <? endif ?>
 
         <? if (!empty($shortDatafields)) : ?>
@@ -101,7 +125,7 @@
     <?= $this->render_partial('profile/public_files') ?>
 <? endif ?>
 
-<? if ($current_user['perms'] === 'dozent' && !empty($seminare)) : ?>
+<? if ($current_user->perms === 'dozent' && !empty($seminare)) : ?>
     <?= $this->render_partial('profile/seminare') ?>
 <? endif ?>
 
