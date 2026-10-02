@@ -308,7 +308,16 @@ class ConsultationSlot extends SimpleORMap
         // Reset relation in order to account to the above changes
         $this->resetRelation('events');
 
+        $deleted = 0;
         foreach ($this->events as $event) {
+            if (!$event->event) {
+                $event->delete();
+
+                $deleted += 1;
+
+                continue;
+            }
+
             setTempLanguage($event->user_id);
 
             $bookings = $this->bookings->filter(function (ConsultationBooking $booking) {
@@ -346,7 +355,10 @@ class ConsultationSlot extends SimpleORMap
             $event->event->store();
 
             restoreLanguage();
+        }
 
+        if ($deleted > 0) {
+            $this->initRelation('events');
         }
     }
 
