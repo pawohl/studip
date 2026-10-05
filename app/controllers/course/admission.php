@@ -264,7 +264,7 @@ class Course_AdmissionController extends AuthenticatedController
             if (isset($request['admission_disable_waitlist'])) {
                 $this->course->admission_disable_waitlist = $request['admission_disable_waitlist'] ? 0 : 1;
                 if ($this->course->admission_disable_waitlist && $this->course->getNumWaiting()) {
-                    $question = sprintf(_("Sie beabsichtigen die Warteliste zu deaktivieren. Die bestehende Warteliste mit %s Einträgen wird gelöscht. Sind sie sicher?"), $this->course->getNumWaiting());
+                    $question = sprintf(_("Sie beabsichtigen die Warteliste zu deaktivieren. Die bestehende Warteliste mit %s Einträgen wird gelöscht. Sind Sie sicher?"), $this->course->getNumWaiting());
                 }
             }
             if (isset($request['admission_disable_waitlist_move'])) {
@@ -273,7 +273,7 @@ class Course_AdmissionController extends AuthenticatedController
             if (isset($request['admission_waitlist_max'])) {
                 $this->course->admission_waitlist_max = abs($request['admission_waitlist_max']);
                 if ($this->course->admission_waitlist_max > 0 && !$this->admission_disable_waitlist && $this->course->getNumWaiting() > $this->course->admission_waitlist_max) {
-                    $question = sprintf(_("Sie beabsichtigen die Anzahl der Wartenden zu begrenzen. Die letzten %s Einträge der Warteliste werden gelöscht. Sind sie sicher?"), $this->course->getNumWaiting()-$this->course->admission_waitlist_max);
+                    $question = sprintf(_("Sie beabsichtigen die Anzahl der Wartenden zu begrenzen. Die letzten %s Einträge der Warteliste werden gelöscht. Sind Sie sicher?"), $this->course->getNumWaiting()-$this->course->admission_waitlist_max);
                 }
             }
             if (Request::submitted('change_admission_turnout_yes') || empty($question)) {
@@ -358,16 +358,16 @@ class Course_AdmissionController extends AuthenticatedController
             PageLayout::setTitle(_('Anmelderegeln aufheben'));
 
             if ($this->course->getNumWaiting() && !Request::submitted('change_course_set_unassign_yes')) {
-                $question = sprintf(_("In dieser Veranstaltung existiert eine Warteliste. Die bestehende Warteliste mit %s Einträgen wird gelöscht. Sind sie sicher?"), $this->course->getNumWaiting());
+                $question = sprintf(_("In dieser Veranstaltung existiert eine Warteliste. Die bestehende Warteliste mit %s Einträgen wird gelöscht. Sind Sie sicher?"), $this->course->getNumWaiting());
             }
             $cs = CourseSet::getSetForCourse($this->course_id);
             if ($cs) {
                 $priorities = AdmissionPriority::getPrioritiesByCourse($cs->getId(), $this->course_id);
                 if (count($priorities) && !Request::submitted('change_course_set_unassign_yes')) {
-                    $question = sprintf(_("In dieser Veranstaltung existiert eine Anmeldeliste (Platzverteilung am %s). Die bestehende Anmeldeliste mit %s Einträgen wird gelöscht. Sind sie sicher?"), strftime('%x %R', $cs->getSeatDistributionTime()), count($priorities));
+                    $question = sprintf(_("In dieser Veranstaltung existiert eine Anmeldeliste (Platzverteilung am %s). Die bestehende Anmeldeliste mit %s Einträgen wird gelöscht. Sind Sie sicher?"), strftime('%x %R', $cs->getSeatDistributionTime()), count($priorities));
                 }
             }
-            if (empty($question) && $cs) {
+            if (Request::submitted('change_course_set_unassign_yes') && $cs) {
                 CourseSet::removeCourseFromSet($cs->getId(), $this->course_id);
                 $cs->load();
                 if (!in_array($this->course_id, $cs->getCourses())) {
