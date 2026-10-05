@@ -119,8 +119,6 @@ if ($navigation) {
             <? endif; ?>
 
         <? if (is_object($GLOBALS['perm']) && $GLOBALS['perm']->have_perm('user')): ?>
-            <? $active = Navigation::getItem('/profile')?->isActive() ?? false; ?>
-
             <? if ($GLOBALS['perm']->have_perm('autor')) : ?>
 
                 <? if (PersonalNotifications::isActivated()): ?>

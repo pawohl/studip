@@ -77,9 +77,16 @@ class VipsModule extends CorePlugin implements StudipModule, SystemPlugin, Priva
                 if (match_route('dispatch.php/jsupdater/get')) {
                     // always allow jsupdater calls
                     UpdateInformation::setInformation('vips', ['exam_mode' => true]);
+                } else if (match_route('dispatch.php/logout')) {
+                    // always allow logout
+                    $_SESSION['logout_ticket'] = get_ticket();
+                } else if (match_route('sendfile.php')) {
+                    // always allow file downloads
                 } else if (isset($course_id, $courses[$course_id])) {
+                    $this->setupExamNavigation();
+
                     // course with running exam is selected, allow all exam actions
-                    if (!match_route('dispatch.php/vips/sheets')) {
+                    if (!match_route('dispatch.php/vips/sheets') && !match_route('dispatch.php/vips/sheets/*')) {
                         header('Location: ' . URLHelper::getURL('dispatch.php/vips/sheets'));
                         sess()->save();
                         die();
@@ -236,30 +243,12 @@ class VipsModule extends CorePlugin implements StudipModule, SystemPlugin, Priva
 
     public function setupExamNavigation()
     {
-        $navigation = new Navigation('');
-
-        $start = Navigation::getItem('/start');
-        $start->setURL('dispatch.php/vips/exam_mode');
-        $navigation->addSubNavigation('start', $start);
-
-        $course = new Navigation(_('Veranstaltung'));
-        $navigation->addSubNavigation('course', $course);
-
-        $vips = new Navigation($this->getPluginName());
-        $vips->setImage(Icon::create('tasks'));
-        $course->addSubNavigation('vips', $vips);
-
-        $nav_item = new Navigation(_('Aufgabenblätter'), 'dispatch.php/vips/sheets');
-        $vips->addSubNavigation('sheets', $nav_item);
-
-        $links = new Navigation('Links');
-        $links->addSubNavigation('logout', new Navigation(_('Logout'), 'logout.php'));
-        $navigation->addSubNavigation('links', $links);
+        Navigation::getItem('/start')->setURL('dispatch.php/vips/exam_mode');
+        Navigation::addItem('/links/logout', new Navigation(_('Logout'), 'dispatch.php/logout'));
 
         Config::get()->PERSONAL_NOTIFICATIONS_ACTIVATED = 0;
-        PageLayout::addStyle('#navigation-level-1, #navigation-level-2, #context-title { display: none; }');
-        PageLayout::addCustomQuicksearch('<div style="width: 64px;"></div>');
-        Navigation::setRootNavigation($navigation);
+        PageLayout::addStyle('#navigation-level-1, #navigation-level-2, #avatar-wrapper, #context-title { display: none; }');
+        PageLayout::addCustomQuicksearch('<div style="height: 30px; width: 120px;"></div>');
     }
 
     public function getIconNavigation($course_id, $last_visit, $user_id)
@@ -333,8 +322,10 @@ class VipsModule extends CorePlugin implements StudipModule, SystemPlugin, Priva
         $nav_item = new Navigation(_('Aufgabenblätter'), 'dispatch.php/vips/sheets');
         $navigation->addSubNavigation('sheets', $nav_item);
 
-        $nav_item = new Navigation(_('Ergebnisse'), 'dispatch.php/vips/solutions');
-        $navigation->addSubNavigation('solutions', $nav_item);
+        if (!self::$exam_mode) {
+            $nav_item = new Navigation(_('Ergebnisse'), 'dispatch.php/vips/solutions');
+            $navigation->addSubNavigation('solutions', $nav_item);
+        }
 
         return ['vips' => $navigation];
     }
