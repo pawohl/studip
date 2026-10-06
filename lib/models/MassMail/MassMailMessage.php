@@ -189,9 +189,7 @@ class MassMailMessage extends \SimpleORMap implements \UserFilterRange
                 $parameters = ['perms' => ['autor', 'tutor', 'dozent']];
                 if (!MassMailPermission::has($this->author_id, true)) {
                     $sql .= " AND `Institut_id` IN (:institutes)";
-                    $parameters = [
-                        'institutes' => $permission['allowed_institutes']
-                    ];
+                    $parameters['institutes'] = $permission['allowed_institutes'];
                 }
                 $employees = DBManager::get()->fetchFirst($sql, $parameters);
 
@@ -230,7 +228,7 @@ class MassMailMessage extends \SimpleORMap implements \UserFilterRange
 
                 break;
 
-            // Employees are users with at least one institute assignment at 'autor" level or more.
+            // Employees are users with at least one institute assignment at "autor" level or more.
             case 'employees':
 
                 $sql = "SELECT DISTINCT `user_id` FROM `user_inst` WHERE `inst_perms` IN (:perms)";
@@ -239,9 +237,7 @@ class MassMailMessage extends \SimpleORMap implements \UserFilterRange
                     $permission = MassMailPermission::getForUser($this->author);
 
                     $sql .= " AND `Institut_id` IN (:institutes)";
-                    $parameters = [
-                        'institutes' => $permission->allowed_institutes ? $permission->allowed_institutes->pluck('id') : []
-                    ];
+                    $parameters['institutes'] = $permission->allowed_institutes ? $permission->allowed_institutes->pluck('id') : [];
                 }
                 $ids = DBManager::get()->fetchFirst($sql, $parameters);
 
