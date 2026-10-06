@@ -367,7 +367,7 @@ class Course_AdmissionController extends AuthenticatedController
                     $question = sprintf(_("In dieser Veranstaltung existiert eine Anmeldeliste (Platzverteilung am %s). Die bestehende Anmeldeliste mit %s Einträgen wird gelöscht. Sind Sie sicher?"), strftime('%x %R', $cs->getSeatDistributionTime()), count($priorities));
                 }
             }
-            if (Request::submitted('change_course_set_unassign_yes') && $cs) {
+            if (empty($question) && $cs) {
                 CourseSet::removeCourseFromSet($cs->getId(), $this->course_id);
                 $cs->load();
                 if (!in_array($this->course_id, $cs->getCourses())) {
