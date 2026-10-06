@@ -141,7 +141,7 @@ class PageLayout
         // interact with Vue2, although Stud.IP v6 uses Vue3.
         self::addHeadElement('script', [], 'window.Vue.use = () => {};');
 
-        self::addStylesheet('studip-base.css?v=' . $v, ['media' => 'screen']);
+        self::addStylesheet('studip-base.css?v=' . $v, ['media' => 'screen, print']);
 
         try {
             $old_base = URLHelper::setBaseURL($GLOBALS['ABSOLUTE_URI_STUDIP']);

@@ -25,11 +25,21 @@ body, input, textarea, td, th, blockquote, p, form, ul, h4 {
     font-size: 10pt;
 }
 
+body {
+    display: unset;
+}
+
+#content-wrapper {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
 #content {
     margin-right: 0;
 }
 
-#top-bar, #navigation-level-1, #navigation-level-2,
+#main-header, #main-footer, #navigation-level-1, #navigation-level-2,
 #page-title-container, #responsive-contentbar-container, #sidebar, #edit_inst_entry,
 .messagebox_buttons a.close, a.button, button.button,
 #skip_link_navigation, #skiplink_list, .skip_target, .action-menu {
@@ -46,6 +56,18 @@ a, a:link, a:visited {
 
 a:visited, a:link, a:hover, a:active {
     text-decoration: none;
+}
+
+h1.sr-only {
+    clip: unset;
+    clip-path: unset;
+    height: unset;
+    margin: 3pt 0 2pt 0;
+    overflow: unset;
+    padding: unset;
+    position: unset;
+    white-space: unset;
+    width: unset;
 }
 
 h1, .topic {
@@ -105,24 +127,6 @@ td.rahmen_table_row_odd {
     margin: 0 0 5pt 0;
     border-bottom: 1pt solid var(--black);
 
-}
-
-/* --- studip-logo im footer ------------------------------------------------ */
-#main-footer * {
-    display: none;
-}
-
-
-#main-footer {
-    width: 100%;
-    text-align: center;
-    padding: 2pt 0 0 0;
-    margin: 5pt 0 0 0;
-    border-top: 1pt solid var(--black);
-
-    &:after {
-        content: url('../images/logos/logo2b.png');
-    }
 }
 
 /* course date entries in the schedule need to be styled for print view: */
