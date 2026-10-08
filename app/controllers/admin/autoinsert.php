@@ -49,7 +49,10 @@ class Admin_AutoinsertController extends AuthenticatedController
                 $search = new SeminarSearch();
                 $this->seminar_search = $search->getResults(
                     $this->sem_search,
-                    ['search_sem_sem' => $this->sem_select]
+                    [
+                        'search_sem_sem' => $this->sem_select,
+                        'search_sem_qs_choose' => 'title_number',
+                    ]
                 );
                 if (count($this->seminar_search) == 0) {
                     PageLayout::postInfo(_('Es wurden keine Veranstaltungen gefunden.'));
@@ -223,7 +226,10 @@ class Admin_AutoinsertController extends AuthenticatedController
                 $search = new SeminarSearch();
                 $this->seminar_search = $search->getResults(
                     $this->sem_search,
-                    ['search_sem_sem' => $this->sem_select]
+                    [
+                        'search_sem_sem' => $this->sem_select,
+                        'search_sem_qs_choose' => 'title_number',
+                    ]
                 );
                 if (count($this->seminar_search) == 0) {
                     PageLayout::postInfo(_('Es wurden keine Veranstaltungen gefunden.'));

@@ -59,8 +59,11 @@ class StudipSemSearchHelper {
                     $params[$key] = $this->trim($params['quick_search']);
                 }
                 $params['combination'] = 'OR';
-            } elseif ($params['qs_choose'] == 'title_lecturer_number') {
-                foreach (explode('_', 'title_lecturer_number') as $key) {
+            } elseif (
+                $params['qs_choose'] === 'title_lecturer_number'
+                || $params['qs_choose'] === 'title_number'
+            ) {
+                foreach (explode('_', $params['qs_choose']) as $key) {
                     $params[$key] = $this->trim($params['quick_search']);
                 }
                 $params['combination'] = 'OR';
