@@ -103,13 +103,35 @@ class CourseExDate extends SimpleORMap implements PrivacyObject, Event
     }
 
     /**
-     * Returns the assigned room for this date as an object.
+     * @see CourseExDate::getRoomNames
      *
-     * @return null. always. canceled dates need no room.
+     * @deprecated Will be removed in Stud.IP 7.0. Please use getRoomNames.
+     */
+    public function getRoomName()
+    {
+        return '';
+    }
+
+    /**
+     * Returns the assigned rooms for this date as an object.
+     *
+     * @return array An empty array, always. Cancelled dates need no rooms.
      */
     public function getRooms()
     {
         return [];
+    }
+
+    /**
+     * Returns the assigned room for this date as an object.
+     *
+     * @return null. always. canceled dates need no room.
+     *
+     * @deprecated Will be removed in Stud.IP 7.0. Please use getRooms.
+     */
+    public function getRoom()
+    {
+        return null;
     }
 
     /**

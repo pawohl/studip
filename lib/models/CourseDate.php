@@ -242,6 +242,23 @@ class CourseDate extends SimpleORMap implements PrivacyObject, Event
     }
 
     /**
+     * @see CourseDate::getRoomNames
+     *
+     * @deprecated Will be removed in Stud.IP 7.0. Please use getRoomNames.
+     */
+    public function getRoomName()
+    {
+        if (Config::get()->RESOURCES_ENABLE) {
+            foreach ($this->getRooms() as $room) {
+                return $room->getFullName();
+            }
+        }
+        //The room management is disabled or there are no room bookings for this course date.
+        //Maybe a freetext room name exists.
+        return $this->raum ?? '';
+    }
+
+    /**
      * Returns the assigned rooms for this date as objects.
      *
      * @return Room[] Either the room objects or an empty array if no rooms are assigned.
@@ -268,6 +285,26 @@ class CourseDate extends SimpleORMap implements PrivacyObject, Event
             return $rooms;
         }
         return [];
+    }
+
+    /**
+     * Returns the first assigned room for this date as an object.
+     *
+     * @return Resource Either the object or null if no room is assigned
+     *
+     * @deprecated Will be removed in Stud.IP 7.0. Please use getRooms.
+     */
+    public function getRoom()
+    {
+        if (Config::get()->RESOURCES_ENABLE) {
+            foreach ($this->room_bookings as $booking) {
+                $resource = $booking->resource;
+                if ($resource) {
+                    return $resource;
+                }
+            }
+        }
+        return null;
     }
 
     /**

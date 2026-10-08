@@ -999,9 +999,9 @@ class Course_StatusgroupsController extends AuthenticatedController
                     foreach ($singledates as $d) {
                         $name = $d->getFullName();
 
-                        // Get room name and append to group title.
-                        if ($room = $d->getRoomName()) {
-                            $name .= ' (' . $room . ')';
+                        // Get room names and append to group title.
+                        if ($rooms = $d->getRoomNames()) {
+                            $name .= ' (' . $rooms . ')';
                         }
 
                         $group = Statusgruppen::createOrUpdate(
