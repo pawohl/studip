@@ -19,7 +19,7 @@ use Trails\Exceptions\SessionRequiredException;
  * @copyright (c) Authors
  * @version       $Id: trails.php 7001 2008-04-04 11:20:27Z mlunzena $
  */
-final class Flash implements \ArrayAccess
+final class Flash implements \ArrayAccess, \IteratorAggregate
 {
     private array $flash = [];
     private array $used = [];
@@ -58,6 +58,11 @@ final class Flash implements \ArrayAccess
     public function offsetUnset($offset): void
     {
         unset($this->flash[$offset], $this->used[$offset]);
+    }
+
+    public function getIterator(): \Traversable
+    {
+        return new \ArrayIterator($this->flash);
     }
 
     /**
