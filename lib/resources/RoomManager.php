@@ -909,6 +909,27 @@ class RoomManager
             $grouped_rooms[$location->id]['buildings'][$building->id]['rooms'][] = $room;
         }
 
+        //Sort the locations by their names:
+        uasort($grouped_rooms, function ($a, $b) {
+            return strcoll($a['location']->name, $b['location']->name);
+        });
+
+        //Sort the buildings and rooms by their names:
+        foreach ($grouped_rooms as $location_id => $location_data) {
+            $buildings_to_sort = $location_data['buildings'];
+            foreach ($buildings_to_sort as $building_id => $building_data) {
+                $rooms_to_sort = $building_data['rooms'];
+                uasort($rooms_to_sort, function ($a, $b) {
+                    return strcoll($a->name, $b->name);
+                });
+                $buildings_to_sort[$building_id]['rooms'] = $rooms_to_sort;
+            }
+            uasort($buildings_to_sort, function ($a, $b) {
+                return strcoll($a['building']->name, $b['building']->name);
+            });
+            $grouped_rooms[$location_id]['buildings'] = $buildings_to_sort;
+        }
+
         return $grouped_rooms;
     }
 
