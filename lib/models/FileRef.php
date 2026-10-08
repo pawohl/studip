@@ -86,7 +86,7 @@ class FileRef extends SimpleORMap implements PrivacyObject, FeedbackRange
     public function cbLogDeleteFileRef()
     {
         StudipLog::log('FILE_DELETE',
-            User::findCurrent()->id,
+            $this->id,
             null,
             sprintf(
                 'Kommentar: %s',
