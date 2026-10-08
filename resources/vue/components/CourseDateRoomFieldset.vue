@@ -13,10 +13,10 @@
                        value="room">
                 {{ $gettext('Gebuchte Räume') }}
             </label>
-            <label v-if="selected_room_option === 'room' && available_rooms.length > 0" for="room_ids[]">
+            <label class="sr-only" v-if="selected_room_option === 'room' && available_rooms.length > 0" for="room_ids[]">
                 {{ $gettext('Raum auswählen') }}
             </label>
-            <span class="flex-row">
+            <div class="flex-row editablelist">
                 <StudipSelect v-model="selected_room_list"
                               :no_options_text="$gettext('Kein Raum verfügbar')"
                               :options="available_rooms"
@@ -29,7 +29,7 @@
                     </template>
                 </StudipSelect>
                 <studip-icon v-if="show_ajax_indicator" shape="reload" role="info"></studip-icon>
-            </span>
+            </div>
             <section v-if="selected_room_option === 'room' && available_rooms.length > 0 && Object.keys(visible_info_texts).length > 0">
                 <h3>{{ $gettext('Hinweise zu teilbaren Räumen') }}</h3>
                 <ul class="default">
