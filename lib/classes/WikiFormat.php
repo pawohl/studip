@@ -135,7 +135,7 @@ class WikiFormat extends StudipFormat
         $display_page = !empty($matches[2]) ? $markup->format($matches[2]) : htmlReady($keyword);
 
         $range_id = $markup->getRangeId() ?? Context::getId();
-        $page = WikiPage::findByName($range_id, trim($keyword));
+        $page = WikiPage::findByName($range_id, $keyword);
 
         // Page does not exist
         if (!$page) {
