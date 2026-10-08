@@ -88,10 +88,7 @@ class FileRef extends SimpleORMap implements PrivacyObject, FeedbackRange
         StudipLog::log('FILE_DELETE',
             $this->id,
             null,
-            sprintf(
-                'Kommentar: %s',
-                $this->name
-            )
+            $this->name
         );
     }
     /**
