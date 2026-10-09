@@ -85,7 +85,7 @@
         </article>
     <? endif ?>
 </section>
-<? if ($room_requests && count($room_requests)) : ?>
+<? if ($display_current_requests && count($room_requests)) : ?>
 <br>
     <table class="default request-list">
         <caption><?= _('Aktuelle Raumanfragen') ?></caption>
