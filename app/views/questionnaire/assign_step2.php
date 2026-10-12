@@ -60,8 +60,7 @@
             </tbody>
         </table>
         <label>
-            <input type="checkbox" name="delete_dates" value="1"
-                   <?= $delete_dates ? 'checked="checked"' : '' ?>>
+            <input type="checkbox" name="delete_dates" value="1">
             <?= _('Kopierte Fragebögen händisch starten und enden lassen') ?>
         </label>
         <?= \Studip\Button::create(
