@@ -640,7 +640,7 @@ export default {
 
                 STUDIP.jsonapi.withPromises().patch(
                     'course-sets/' + this.courseSetId,
-                    { data: data}
+                    { data: data }
                 ).then(() => {
                     this.relocateToIndex();
                 });

@@ -72,7 +72,7 @@ export default {
             return {
                 type: 'PasswordAdmission',
                 payload: {
-                    password: this.password1,
+                    newPassword: this.password1,
                     message: this.messageText
                 }
             }

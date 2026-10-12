@@ -178,8 +178,8 @@ class PasswordAdmission extends AdmissionRule
     public function setAllData($data)
     {
         parent::setAllData($data);
-        if ($this->new || $data['password'] !== '') {
-            $this->setPassword($data['password']);
+        if ($this->new || !empty($data['newPassword'])) {
+            $this->setPassword($data['newPassword']);
         }
         return $this;
     }
