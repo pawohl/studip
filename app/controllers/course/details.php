@@ -37,10 +37,11 @@ class Course_DetailsController extends AuthenticatedController
         }
         $this->send_from_search_page = Request::get('send_from_search_page');
 
-        if (isset($GLOBALS['SessionSeminar']) && $GLOBALS['SessionSeminar'] != $this->course->id
-            && !(int)$this->course->visible
+        if (
+            !$this->course->visible
             && !($GLOBALS['perm']->have_perm(Config::get()->SEM_VISIBILITY_PERM)
-                || $GLOBALS['perm']->have_studip_perm('user', $this->course->id))) {
+                || $GLOBALS['perm']->have_studip_perm('user', $this->course->id))
+        ) {
             throw new AccessDeniedException(_('Diese Veranstaltung ist versteckt. Hier gibt es nichts zu sehen.'));
         }
 
