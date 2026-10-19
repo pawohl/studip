@@ -73,9 +73,4 @@ class CoreStudygroupParticipants extends CorePlugin implements StudipModuleExten
         // TODO: Implement getInfoTemplate() method.
         return null;
     }
-
-    public function isActivatableForContext(Range $context)
-    {
-        return false;
-    }
 }

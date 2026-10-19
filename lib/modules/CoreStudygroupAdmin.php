@@ -57,13 +57,11 @@ class CoreStudygroupAdmin extends CorePlugin implements StudipModuleExtended
     public function getMetadata()
     {
         return [
-            'displayname' => _('Verwaltung')
+            'displayname' => _('Verwaltung'),
+            'summary' => _('Verwaltung der Grunddaten, Zugangsberechtigungen und sonstigen Einstellungen'),
+            'icon' => Icon::create('admin', Icon::ROLE_INFO),
+            'icon_clickable' => Icon::create('admin')
         ];
-    }
-
-    public function isActivatableForContext(Range $context)
-    {
-        return false;
     }
 
     public function getInfoTemplate($course_id)
