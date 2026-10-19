@@ -13,7 +13,13 @@
     <ul class="list-unstyled collapsible-list" data-label="<?= _('Termine') ?>">
         <? foreach ($collection->getRegularDates() as $regular_date) : ?>
             <li>
-                <?= $regular_date->toString($with_room_names ? 'long-start' : 'long-start-without-room', true) ?>
+                <?
+                $output = $regular_date->toString($with_room_names ? 'long-start' : 'long-start-without-room', true);
+                if ($regular_date->description) {
+                    $output .= sprintf(', <i>%s</i>', htmlReady($regular_date->description));
+                }
+                ?>
+                <?= $output ?>
             </li>
         <? endforeach ?>
         <? foreach ($collection->getSingleDates() as $single_date) : ?>
