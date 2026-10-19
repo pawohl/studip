@@ -36,7 +36,11 @@
                                     <input type="checkbox" name="courses[]" value="<?= htmlReady($course->id) ?>"
                                     title="<?= sprintf(_('%s auswählen'), htmlReady($course->getFullName())) ?>">
                                 </td>
-                                <td><?= htmlReady($course->getFullName()) ?></td>
+                                <td>
+                                    <a href="<?= URLHelper::getLink('dispatch.php/course/details', ['sem_id' => $course->id], true) ?>">
+                                        <?= htmlReady($course->getFullName()) ?>
+                                    </a>
+                                </td>
                                 <td class="actions">
                                     <?= Icon::create('trash')->asInput([
                                         'formaction'   => $controller->delete_course_assignment(
