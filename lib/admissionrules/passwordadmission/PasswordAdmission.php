@@ -252,7 +252,7 @@ class PasswordAdmission extends AdmissionRule
         return array_merge(
             parent::getPayload(),
             [
-                'password' => $this->getPassword()
+                'has-password' => !empty($this->getPassword())
             ]
         );
     }

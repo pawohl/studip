@@ -34,26 +34,18 @@ import { AdmissionRuleMixin } from '../../mixins/AdmissionRuleMixin';
 export default {
     name: 'PasswordAdmission',
     mixins: [AdmissionRuleMixin],
-    props: {
-        hasPassword: {
-            type: Boolean,
-            default: false
-        }
-    },
     data() {
         return {
             messageText: this.message || this.$gettext('Für die Anmeldung ist ein Passwort erforderlich.'),
             password1: '',
             password2: '',
-            passwordSet: this.hasPassword
+            passwordSet: false
         }
     },
     methods: {
         setRuleData(data) {
             this.messageText = data.attributes.payload['message'];
-            if (data.attributes.payload.password !== '') {
-                this.passwordSet = true;
-            }
+            this.passwordSet = data.attributes.payload['has-password'];
         },
         validate() {
             this.invalidData = [];
@@ -72,6 +64,7 @@ export default {
             return {
                 type: 'PasswordAdmission',
                 payload: {
+                    'has-password': this.password1.length > 0,
                     newPassword: this.password1,
                     message: this.messageText
                 }
