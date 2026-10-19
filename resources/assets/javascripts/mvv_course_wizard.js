@@ -102,7 +102,7 @@ STUDIP.MVV.CourseWizard = {
                             const lvgroup_html = $(items[i].html_string);
                             if ($('#lvgroup-tree-assigned-' + items[i].id).length) {
                                 lvgroup_html
-                                    .find('input')
+                                    .find('button')
                                     .first()
                                     .css('visibility', 'hidden');
                             }
@@ -225,7 +225,7 @@ STUDIP.MVV.CourseWizard = {
                     root.append(items.html_string);
                 }
 
-                $("input[name*='assign[" + lvgid[0] + "']").each(function () {
+                $("button[name*='assign[" + lvgid[0] + "']").each(function () {
                     $(this).hide();
                 });
                 $("svg[name*='assign[" + lvgid[0] + "']").each(function () {
@@ -335,7 +335,7 @@ STUDIP.MVV.CourseWizard = {
      */
     removeLVGroup(id) {
         $('#lvgroup-tree-assigned-' + id).remove();
-        $("input[name*='assign[" + id + "']").show();
+        $("button[name*='assign[" + id + "']").show();
         return false;
     }
 };
