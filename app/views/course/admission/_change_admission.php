@@ -17,6 +17,9 @@
 <? endforeach ?>
 <footer data-dialog-button>
     <?= Studip\Button::create(_('Ja'), $button_yes, ['data-dialog' => ''])?>
+    <? if (isset($button_no)): ?>
+        <?= Studip\Button::create(_('Nein'), $button_no, ['data-dialog' => ''])?>
+    <? endif ?>
     <?= Studip\Button::createCancel(_('Abbrechen'), 'cancel') ?>
 </footer>
 </form>
