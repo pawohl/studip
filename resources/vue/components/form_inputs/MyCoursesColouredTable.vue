@@ -129,7 +129,6 @@ export default {
                 data: {
                     'fields[courses]': 'id,course-number,title,course-type',
                     'filter[semester]': semester_id,
-                    'include': 'memberships',
                     'page[limit]': 1000,
                 }
             }).done((response) => {
