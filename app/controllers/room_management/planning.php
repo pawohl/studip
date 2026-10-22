@@ -65,7 +65,7 @@ class RoomManagement_PlanningController extends AuthenticatedController
                     ]
                 ),
                 null,
-                ['class' => 'booking-plan-std_view']
+                ['class' => 'booking-plan-std_view', 'data-use-calendar-date' => '1']
             )->setActive(!Request::get('allday'));
 
             $views->addLink(
@@ -78,7 +78,7 @@ class RoomManagement_PlanningController extends AuthenticatedController
                     ]
                 ),
                 null,
-                ['class' => 'booking-plan-allday_view']
+                ['class' => 'booking-plan-allday_view', 'data-use-calendar-date' => '1']
             )->setActive(Request::get('allday'));
         }
         $sidebar->addWidget($views);
@@ -219,7 +219,7 @@ class RoomManagement_PlanningController extends AuthenticatedController
                 $this->url_for(
                     'room_management/planning/index/' . $_SESSION['selected_clipboard_id']
                 ),
-                []
+                ['data-use-calendar-date' => '1']
             );
             $sidebar->insertWidget($options, 'roomclipboard');
         }

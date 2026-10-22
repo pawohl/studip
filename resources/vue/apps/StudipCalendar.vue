@@ -249,7 +249,10 @@ export default defineComponent({
         return {
             calendar_api: null as CalendarApi|null,
             calendar_options: {...calendar_options, ...event_handlers},
-            all_extra_classes: all_extra_classes.join(' ')
+            all_extra_classes: all_extra_classes.join(' '),
+            date_picker: null as HTMLInputElement|null,
+            date_set_from_date_picker: false,
+            url_elements: [] as Array<HTMLElement>
         }
     },
     mounted() {
@@ -267,10 +270,11 @@ export default defineComponent({
         //Check if there is a date selector with calendar control enabled.
         //In that case, the calendar shall change its date when the
         //date selector changes its value.
-        const date_picker = document.querySelector('#date_select[data-calendar-control]') as HTMLElement;
-        if (date_picker) {
-            date_picker.onchange = this.useDateFromDatePicker;
+        this.date_picker = document.querySelector('#date_select[data-calendar-control]') as HTMLInputElement|null;
+        if (this.date_picker) {
+            this.date_picker.onchange = this.useDateFromDatePicker;
         }
+        this.url_elements = Array.from(document.querySelectorAll('[data-use-calendar-date]'));
     },
     methods: {
         openActionIconUrlAsDialog(action: Action) {
@@ -331,6 +335,7 @@ export default defineComponent({
                 0,
                 0
             );
+            this.date_set_from_date_picker = true;
             this.calendar_api.gotoDate(date);
         },
         startColourDragging(event: DragEvent) {
@@ -417,14 +422,15 @@ export default defineComponent({
                 return holiday_cache.getVacationName(date);
             }
         },
-        handleCalendarRangeUpdate: function(arg: DatesSetArg) : void {
-            //Update the defaultDate URL parameter first:
-            const url = new URL(window.location.href);
-            //Set the defaultView parameter:
-            let seconds = (arg.end.getTime() - arg.start.getTime()) / 1000;
-            if (seconds > (86400 * 7) + 1) {
-                //That is longer than a week, even if a leap second is in it.
-                url.searchParams.set('defaultView', 'month');
+        updateDateInUrl(arg: DatesSetArg, params: URLSearchParams) {
+            if (arg.start >= arg.end) {
+                //Invalid time range. Do nothing.
+                return;
+            }
+            let days = Math.floor((arg.end.getTime() - arg.start.getTime()) / 86400000);
+
+            //Set the defaultDate parameter:
+            if (days > 7) {
                 //Special handling for the month view: It starts on the beginning of a week
                 //that does not lie on the first day of the month in most cases.
                 const default_date = arg.start;
@@ -438,18 +444,73 @@ export default defineComponent({
                         default_date.setMonth(0, 1);
                     }
                 }
-                url.searchParams.set('defaultDate', datetime.getISODate(default_date));
-            } else if (seconds <= 86401) {
+                params.set('defaultDate', datetime.getISODate(default_date));
+            } else {
+                params.set('defaultDate', datetime.getISODate(arg.start));
+            }
+        },
+        updateViewInUrl(arg: DatesSetArg, params: URLSearchParams) {
+            if (arg.start >= arg.end) {
+                //Invalid time range. Do nothing.
+                return;
+            }
+            let days = Math.floor((arg.end.getTime() - arg.start.getTime()) / 86400000);
+
+            //Set the defaultView parameter:
+            if (days > 7) {
+                //That is longer than a week, even if a leap second is in it.
+                params.set('defaultView', 'month');
+            } else if (days <= 1) {
                 //This is one day, even if a leap second is in it.
-                url.searchParams.set('defaultView', 'day');
-                url.searchParams.set('defaultDate', datetime.getISODate(arg.start));
+                params.set('defaultView', 'day');
             } else {
                 //This must be a week view.
-                url.searchParams.set('defaultView', 'week');
-                url.searchParams.set('defaultDate', datetime.getISODate(arg.start));
+                params.set('defaultView', 'week');
             }
-            //Set the updated URLs parameters without reloading the page:
+        },
+        handleCalendarRangeUpdate: function(arg: DatesSetArg) : void {
+            //Update the defaultDate and defaultView URL search parameters first:
+            let url = new URL(window.location.href);
+            this.updateDateInUrl(arg, url.searchParams);
+            this.updateViewInUrl(arg, url.searchParams);
             window.history.replaceState(null, '', url.toString());
+
+            //Set the date for the datepicker, if any:
+            if (this.date_picker && !this.date_set_from_date_picker) {
+                this.date_picker.value = datetime.getStudipDate(arg.start, false, true);
+            }
+            //Reset the flag date_set_from_date_picker here:
+            if (this.date_set_from_date_picker) {
+                this.date_set_from_date_picker = false;
+            }
+
+            //Set the defaultDate URL parameter for all elements that accept it:
+            this.url_elements.forEach((element: HTMLElement) => {
+                let attrname = '';
+                if (element.hasAttribute('href')) {
+                    attrname = 'href';
+                } else if (element.hasAttribute('formaction')) {
+                    attrname = 'formaction';
+                }
+                if (attrname.length === 0) {
+                    //Invalid element.
+                    return;
+                }
+                let link = element.getAttribute(attrname) as string;
+                if (link.length > 0) {
+                    if (link[0] === '?') {
+                        //The link contains only the search parameters.
+                        let params = new URLSearchParams(link);
+                        this.updateDateInUrl(arg, params)
+                        element.setAttribute(attrname, '?' + params.toString());
+                    } else {
+                        //The link contains the whole URL.
+                        let url = new URL(link);
+                        this.updateDateInUrl(arg, url.searchParams);
+                        element.setAttribute(attrname, url.toString());
+                    }
+                }
+            });
 
             if (this.displayHolidays || this.displayVacations) {
                 //Make sure that all holidays and vacations are loaded for the range.

@@ -220,7 +220,7 @@ class Resources_RoomPlanningController extends AuthenticatedController
                         ]
                     ),
                     null,
-                    ['class' => 'booking-plan-std_view']
+                    ['class' => 'booking-plan-std_view', 'data-use-calendar-date' => '1']
                 )->setActive(!Request::get('allday'));
 
                 $views->addLink(
@@ -233,7 +233,7 @@ class Resources_RoomPlanningController extends AuthenticatedController
                         ]
                     ),
                     null,
-                    ['class' => 'booking-plan-allday_view']
+                    ['class' => 'booking-plan-allday_view', 'data-use-calendar-date' => '1']
                 )->setActive(Request::get('allday'));
             }
         }
@@ -249,17 +249,19 @@ class Resources_RoomPlanningController extends AuthenticatedController
                         'resources/room_planning/booking_plan/' . $this->resource->id,
                         [
                             'display_all_requests' => true,
-                            'allday'               => Request::bool('allday', false)
+                            'allday'               => Request::bool('allday', false),
+                            'defaultDate'          => $this->date->format('Y-m-d')
                         ]
                     ),
                     $this->url_for(
                         'resources/room_planning/booking_plan/' . $this->resource->id,
                         [
-                            'allday' => Request::bool('allday', false),
+                            'allday'               => Request::bool('allday', false),
                             'display_all_requests' => false,
+                            'defaultDate'          => $this->date->format('Y-m-d')
                         ]
                     ),
-                    []
+                    ['data-use-calendar-date' => '1']
                 );
             }
             $sidebar->addWidget($options);
@@ -328,8 +330,9 @@ class Resources_RoomPlanningController extends AuthenticatedController
                         ),
                         Icon::create('file-excel'),
                         [
-                            'data-dialog' => 'size=auto',
-                            'class' => 'resource-bookings-actions'
+                            'data-dialog'            => 'size=auto',
+                            'class'                  => 'resource-bookings-actions',
+                            'data-use-calendar-date' => '1'
                         ]
                     );
                 }
