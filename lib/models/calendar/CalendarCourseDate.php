@@ -101,4 +101,39 @@ class CalendarCourseDate extends CourseDate
         }
         return $check_related;
     }
+
+    public function toEventData(string $user_id): \Studip\Calendar\EventData
+    {
+        $event_data = parent::toEventData($user_id);
+        //The title is different from ordinary course dates:
+        //It contains the names of the lecturers and the rooms, too. Furthermore,
+        //if the course date is part of a regular date which has a description,
+        //the description shall be appended to the title.
+        if ($this->course) {
+            $lecturer_names = array_map(
+                fn($lecturer) => $lecturer->user->nachname,
+                CourseMember::findByCourseAndStatus($this->range_id, 'dozent')
+            );
+            sort($lecturer_names);
+            $event_data->title = studip_interpolate(
+                '%{course_name} (%{lecturer_names})',
+                [
+                    'course_name' => $this->course->getFullName(),
+                    'lecturer_names' => implode(', ', $lecturer_names)
+                ]
+            );
+            if ($this->cycle) {
+                // Add the room, if available:
+                $room_name = $this->cycle->getMostBookedRoom()?->getFullName()
+                    ?? $this->cycle->getMostUsedFreetextRoomName();
+                if ($room_name) {
+                    $event_data->title .= "\n" . $room_name;
+                }
+                if ($this->cycle->description) {
+                    $event_data->title .= sprintf(' (%s)', $this->cycle->description);
+                }
+            }
+        }
+        return $event_data;
+    }
 }
