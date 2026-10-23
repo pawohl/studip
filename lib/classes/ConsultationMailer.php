@@ -19,7 +19,7 @@ class ConsultationMailer
         // Don't send message if user doesn't want it
         if (
             $booking->user_id !== $user->id
-            && !UserConfig::get($user->id)->CONSULTATION_SEND_MESSAGES
+            && $booking->slot->block->shouldSuppressMailsForUser($user)
         ) {
             return;
         }

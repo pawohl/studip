@@ -468,4 +468,17 @@ class ConsultationBlock extends SimpleORMap implements PrivacyObject
             $slot->updateEvents();
         });
     }
+
+    /**
+     * Decides whether mails should be suppressed for a given user.
+     */
+    public function shouldSuppressMailsForUser(User $user): bool
+    {
+        return !$user->getConfiguration()->getValue('CONSULTATION_SEND_MESSAGES')
+            || (
+                $this->range_type === 'course'
+                && !$this->mail_to_tutors
+                && !$GLOBALS['perm']->have_studip_perm('dozent', $this->range_id, $user->id)
+            );
+    }
 }
