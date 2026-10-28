@@ -4,7 +4,12 @@
     <table class="default sortable-table" data-sortlist="[[6, 1]]" id="questionnaire_overview">
         <thead>
             <tr>
-                <th width="20"><input type="checkbox" data-proxyfor="#questionnaire_overview > tbody input[type=checkbox]"></th>
+                <th width="20">
+                    <input type="checkbox"
+                           data-proxyfor="#questionnaire_overview > tbody input[type=checkbox]"
+                           data-activates="#questionnaire_overview tfoot button"
+                    >
+                </th>    
                 <th data-sort="text"><?= _('Fragebogen') ?></th>
                 <th data-sort="digit"><?= _('Start') ?></th>
                 <th data-sort="digit"><?= _('Ende') ?></th>
