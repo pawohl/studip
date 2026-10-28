@@ -479,9 +479,14 @@ class Calendar_DateController extends AuthenticatedController
 
                 if ($this->date->repetition_type === CalendarDate::REPETITION_WEEKLY) {
                     $dow = array_unique(Request::getArray('repetition_dow'));
+                    if (count($dow) === 0) {
+                        $this->form_errors[_('Wiederholung an bestimmtem Wochentag')] =
+                            _('Bitte wählen Sie mindestens einen Wochentag aus.');
+                    }
                     foreach ($dow as $day) {
                         if ($day < 1 || $day > 7) {
-                            $this->form_errors[_('Wiederholung an bestimmtem Wochentag')] = _('Bitte wählen Sie einen Wochentag zwischen Montag und Sonntag aus.');
+                            $this->form_errors[_('Wiederholung an bestimmtem Wochentag')] = 
+                                _('Bitte wählen Sie einen Wochentag zwischen Montag und Sonntag aus.');
                         }
                     }
                     $this->date->days = implode('', $dow);

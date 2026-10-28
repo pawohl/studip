@@ -513,14 +513,11 @@ class CalendarDate extends SimpleORMap implements PrivacyObject
             }
         } elseif ($this->repetition_type === self::REPETITION_WEEKLY) {
             $weekday_string = '';
-            if (strlen($this->days) > 1) {
+            if (strlen((string) $this->days) > 1) {
                 //Multiple days
                 $days = [];
                 foreach (str_split($this->days) as $day_number) {
-                    if ($day_number == '7') {
-                        $day_number = '0';
-                    }
-                    $days[] = getWeekday($day_number, false);
+                    $days[] = getWeekday($day_number === '7' ? 0 : (int) $day_number, false);
                 }
                 $all_but_last_day = array_slice($days, 0, -1);
                 $weekday_string = sprintf(
@@ -528,9 +525,12 @@ class CalendarDate extends SimpleORMap implements PrivacyObject
                     implode(', ', $all_but_last_day),
                     end($days)
                 );
-            } else {
+            } elseif ((string) $this->days !== '') {
                 //One day
-                $weekday_string = getWeekday($this->days[0], false);
+                $weekday_string = getWeekday((int) $this->days[0], false);
+            } else {
+                //Defective data without a weekday: fall back to the weekday of the beginning.
+                $weekday_string = getWeekday((int) date('w', $this->begin), false);
             }
             if ($this->interval == '1') {
                 //Each week
