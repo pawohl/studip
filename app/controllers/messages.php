@@ -885,10 +885,18 @@ class MessagesController extends AuthenticatedController {
     public function delete_attachment_action()
     {
         CSRFProtection::verifyUnsafeRequest();
-        $attachment = FileRef::find(Request::option('document_id'));
-        if ($attachment) {
-            $attachment->delete();
+
+        $fileRef = FileRef::find(Request::get('document_id'));
+        $folder = $fileRef->foldertype;
+        if (
+            !$folder instanceof MessageFolder
+            || !$fileRef->getFileType()->isWritable($GLOBALS['user']->id)
+        ) {
+            throw new AccessDeniedException();
         }
+
+        $fileRef->delete();
+
         $this->render_nothing();
     }
 

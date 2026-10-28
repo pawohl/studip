@@ -340,12 +340,12 @@ class MessageFolder extends StandardFolder implements FolderType
     }
 
     /**
-     * Files inside MessageFolders are not writable.
+     * Files inside MessageFolders are only writable for the owner of the
+     * folder as long as the message has not been sent.
      */
-    public function isFileWritable($file_ref_id, $user_id)
+    public function isFileWritable($file_ref_id, $user_id): bool
     {
-        //message attachments are never writable!
-        return false;
+        return $this->isWritable($user_id) && !Message::exists($this->folder->range_id);
     }
 
     /**
