@@ -12,6 +12,10 @@ const props = defineProps({
         type: String,
         default: 'content'
     },
+    id: {
+        type: String,
+        default: 'content-input'
+    },
     autofocus: Boolean
 });
 
@@ -58,5 +62,5 @@ onMounted(() => STUDIP.loadChunk('mathjax'));
         :onReady="onReady"
         v-bind="$attrs"
     />
-    <textarea :name="name" :value="content" style="display:none;"></textarea>
+    <textarea :id="id" :name="name" :value="content" style="display:none;"></textarea>
 </template>

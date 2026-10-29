@@ -11,7 +11,7 @@ const addDiscussion = () => {
         getDiscussionCreateURL(),
         {
             width: '900',
-            height: '700'
+            height: '750'
         }
     );
 }

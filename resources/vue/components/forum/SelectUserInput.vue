@@ -6,7 +6,7 @@ import StudipSelect from '@/vue/components/StudipSelect.vue';
 <template>
     <StudipSelect
         label="name"
-        :placeholder="$gettext('Autor/-in')"
+        :placeholder="$gettext('Auswählen')"
         v-bind="$attrs"
     >
         <template #selected-option="{name, avatar_url}">

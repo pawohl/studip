@@ -2,11 +2,18 @@
 import {$gettext} from '@/assets/javascripts/lib/gettext';
 import StudipSelect from '@/vue/components/StudipSelect.vue';
 const selectedTopics = defineModel();
+
+defineProps({
+    placeholder: {
+        type: String,
+        default: () => $gettext('Auswählen')
+    }
+});
 </script>
 
 <template>
     <StudipSelect
-        :placeholder="$gettext('Thema')"
+        :placeholder="placeholder"
         label="name"
         v-model="selectedTopics"
         :reduce="topic => {
@@ -23,6 +30,8 @@ const selectedTopics = defineModel();
                 class="vs__search"
                 :required="!selectedTopics && $attrs.required"
                 v-bind="attributes"
+                :aria-labelledby="$attrs['aria-labelledby'] ?? null"
+                :aria-describedby="$attrs['aria-describedby'] ?? null"
                 v-on="events"
             />
         </template>

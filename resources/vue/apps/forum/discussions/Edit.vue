@@ -6,6 +6,7 @@ import SelectTagsInput from '@/vue/components/forum/SelectTagsInput.vue';
 import StudipIcon from '@/vue/components/StudipIcon.vue';
 import StudipWysiwyg from '@/vue/components/StudipWysiwyg.vue';
 import StudipSwitch from '@/vue/components/StudipSwitch.vue';
+import StudipTooltipIcon from '@/vue/components/StudipTooltipIcon.vue';
 import {$gettext} from '@/assets/javascripts/lib/gettext';
 import {useForumConfig} from '@/vue/store/pinia/forum/ForumConfig';
 
@@ -57,6 +58,8 @@ const availableTags = computed(() => {
     return props.tags;
 });
 
+const topicHint = $gettext('Wählen Sie ein vorhandenes Thema aus oder legen Sie ein neues an, indem Sie den Namen des Themas eingeben und die Eingabetaste drücken.');
+
 const titleInput = useTemplateRef('titleInput');
 
 onMounted(() => {
@@ -67,7 +70,7 @@ onMounted(() => {
 <template>
     <div class="forum" style="display: flex;">
         <form
-            class="default use-utility-classes forum-form"
+            class="default use-utility-classes forum-form forum-form--discussion"
             :action="formActionURL"
             method="post"
             data-secure="true"
@@ -96,12 +99,12 @@ onMounted(() => {
 
                     <div class="discussion-badges-container">
                         <div v-if="discussionForm.topic" class="badge">
-                            <span :style="{ backgroundColor: discussionForm.topic.color ?? '#EDEDED', height: '12px', width: '12px'}" aria-hidden="true"></span>
+                            <span v-if="discussionForm.topic.color" :style="{ backgroundColor: discussionForm.topic.color, height: '12px', width: '12px'}" aria-hidden="true"></span>
                             <span>{{ discussionForm.topic.name }}</span>
                             <button
                                 type="button"
                                 class="action button-base"
-                                @click="discussionForm.topics = discussionForm.topics.filter(t => t.topic_id !== topic.topic_id)"
+                                @click="discussionForm.topic = null"
                                 :title="$gettext('Entfernen')"
                                 :aria-label="$gettext('Ausgewähltes Thema entfernen')"
                             >
@@ -112,6 +115,7 @@ onMounted(() => {
                             <StudipIcon :shape="discussionForm.type.icon" :size="15" aria-hidden="true" />
                             <span>{{ discussionForm.type.name }}</span>
                             <button
+                                type="button"
                                 class="action button-base"
                                 @click="discussionForm.type = null"
                                 :title="$gettext('Entfernen')"
@@ -139,11 +143,15 @@ onMounted(() => {
 
                 <section class="inputs-container">
                     <div class="flex-1">
-                        <label for="select-topic-input">
-                            <span class="sr-only">{{ $gettext('Thema') }}</span>
+                        <label for="select-topic-input" class="studiprequired m-0">
+                            <span class="textlabel">{{ $gettext('Thema') }}</span>
+                            <span :title="$gettext('Thema ist ein Pflichtfeld')" aria-hidden="true" class="asterisk">*</span>
+                            <StudipTooltipIcon :text="topicHint" />
                         </label>
                         <SelectTopicInput
                             id="select-topic-input"
+                            aria-describedby="select-topic-hint"
+                            :placeholder="$gettext('Auswählen oder erstellen')"
                             :options="topics"
                             v-model="discussionForm.topic"
                             :taggable="true"
@@ -152,8 +160,8 @@ onMounted(() => {
                         <input type="hidden" name="topic" :value="JSON.stringify(discussionForm.topic)">
                     </div>
                     <div class="flex-1">
-                        <label for="select-discussion-type">
-                            <span class="sr-only">{{ $gettext('Diskussionstyp') }}</span>
+                        <label for="select-discussion-type" class="m-0">
+                            {{ $gettext('Diskussionstyp') }}
                         </label>
                         <SelectDiscussionType
                             id="select-discussion-type"
@@ -163,8 +171,8 @@ onMounted(() => {
                         <input v-if="discussionForm.type" type="hidden" name="type_id" :value="discussionForm.type.type_id">
                     </div>
                     <div class="flex-1">
-                        <label for="select-tags-input">
-                            <span class="sr-only">{{ $gettext('Schlagworte') }}</span>
+                        <label for="select-tags-input" class="m-0">
+                            {{ $gettext('Schlagworte') }}
                         </label>
                         <SelectTagsInput
                             id="select-tags-input"
@@ -178,8 +186,17 @@ onMounted(() => {
                 </section>
 
                 <section class="mt-10" v-if="!discussion.discussion_id">
+                    <label for="post-description-input" class="m-0">
+                        {{ $gettext('Beschreibung') }}
+                    </label>
+                    <div class="post-description-wrapper">
+                        <StudipWysiwyg
+                            id="post-description-input"
+                            :required="true"
+                            v-model="discussionForm.content"
+                        />
+                    </div>
                     <input type="hidden" name="content" v-model="discussionForm.content">
-                    <StudipWysiwyg :required="true" v-model="discussionForm.content" />
                 </section>
                 <section class="mt-10">
                     <StudipSwitch name="closed_at" v-model="discussionForm.closed_at" :label="$gettext('Diskussion schließen, keine weiteren Beiträge zulassen')" />
@@ -203,6 +220,10 @@ onMounted(() => {
 <style scoped>
 .vs__dropdown-menu {
     z-index: 1020 !important;
+}
+
+.post-description-wrapper {
+    margin-top: 0.5ex;
 }
 </style>
 

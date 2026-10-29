@@ -6,7 +6,7 @@ import StudipSelect from '@/vue/components/StudipSelect.vue';
 
 <template>
     <StudipSelect
-        :placeholder="$gettext('Diskussionstyp (Optional)')"
+        :placeholder="$gettext('Auswählen')"
         label="name"
         v-bind="$attrs"
     >

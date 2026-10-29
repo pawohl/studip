@@ -245,7 +245,6 @@ $cardMaxWidth: 350px;
     }
 
     .v-select {
-        margin: 0;
         min-width: 160px;
     }
 
@@ -1371,8 +1370,7 @@ $cardMaxWidth: 350px;
         flex-wrap: wrap;
         align-items: center;
         gap: 10px;
-        margin-top: 5px;
-        margin-bottom: 10px;
+        margin: 5px 0;
     }
 
     .badge {
@@ -1419,6 +1417,7 @@ $cardMaxWidth: 350px;
         .search-controls {
             margin-top: 10px;
             display: flex;
+            align-items: end;
             gap: 10px;
 
             .search-input-container {

@@ -5,7 +5,7 @@ import StudipSelect from '@/vue/components/StudipSelect.vue';
 
 <template>
     <StudipSelect
-        :placeholder="$gettext('Schlagworte')"
+        :placeholder="$gettext('Auswählen')"
         label="name"
         :clearable="true"
         :reduce="tag => {

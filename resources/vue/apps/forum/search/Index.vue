@@ -189,13 +189,12 @@ onMounted(async () => {
     <ForumApp id="forum-search">
         <form action="#" @submit.prevent="fetchDiscussions" method="post" class="default search-container use-utility-classes">
             <input type="hidden" :name="CSRF.name" :value="CSRF.value">
-            <h1>{{ $gettext('Suche') }}</h1>
             <div class="search-controls">
                 <div class="search-input-container">
-                    <label for="search-field" class="sr-only">
-                        {{ $gettext('Suchfeld') }}
+                    <label for="search-field">
+                        {{ $gettext('Diskussionen und Beiträge durchsuchen') }}
                     </label>
-                    <input id="search-field" name="q" type="text" v-model="searchForm.keyword" :placeholder="$gettext('Diskussionen oder Beiträge')"/>
+                    <input id="search-field" name="q" type="text" v-model="searchForm.keyword" :placeholder="$gettext('Suchbegriff eingeben')"/>
                 </div>
                 <button
                     type="submit"
@@ -312,7 +311,7 @@ onMounted(async () => {
                 </button>
                 <div v-if="isFilterVisible" class="filter-controls">
                     <div>
-                        <label for="select-topic-input" class="sr-only">
+                        <label for="select-topic-input">
                             {{ $gettext('Thema') }}
                         </label>
                         <SelectTopicInput
@@ -324,7 +323,7 @@ onMounted(async () => {
                         />
                     </div>
                     <div>
-                        <label for="select-discussion-type" class="sr-only">
+                        <label for="select-discussion-type">
                             {{ $gettext('Diskussionstyp') }}
                         </label>
                         <SelectDiscussionType
@@ -335,7 +334,7 @@ onMounted(async () => {
                         />
                     </div>
                     <div>
-                        <label for="select-tags-input" class="sr-only">
+                        <label for="select-tags-input">
                             {{ $gettext('Schlagworte') }}
                         </label>
                         <SelectTagsInput
@@ -346,13 +345,13 @@ onMounted(async () => {
                         />
                     </div>
                     <div>
-                        <label for="discussion-statuses-input" class="sr-only">
+                        <label for="discussion-statuses-input">
                             {{ $gettext('Status der Diskussion') }}
                         </label>
                         <StudipSelect
                             id="discussion-statuses-input"
                             :options="discussionStatuses"
-                            :placeholder="$gettext('Status der Diskussion')"
+                            :placeholder="$gettext('Auswählen')"
                             v-model="searchForm.status"
                         >
                             <template #no-options>
@@ -363,11 +362,17 @@ onMounted(async () => {
                         </StudipSelect>
                     </div>
                     <div class="date-inputs-container">
-                        <input type="date" v-model="searchForm.begin" :placeholder="$gettext('Von')" autocomplete="off" />
-                        <input type="date" v-model="searchForm.end" :placeholder="$gettext('Bis')" autocomplete="off" />
+                        <label class="flex-1">
+                            {{ $gettext('Von') }}
+                            <input type="date" v-model="searchForm.begin" autocomplete="off" />
+                        </label>
+                        <label class="flex-1">
+                            {{ $gettext('Bis') }}
+                            <input type="date" v-model="searchForm.end" autocomplete="off" />
+                        </label>
                     </div>
                     <div>
-                        <label for="select-user-input" class="sr-only">
+                        <label for="select-user-input">
                             {{ $gettext('Autor/-in') }}
                         </label>
                         <SelectUserInput
@@ -382,7 +387,6 @@ onMounted(async () => {
         </form>
 
         <div class="search-result-container">
-            <h2>{{ $gettext('Suchergebnisse') }}</h2>
             <DiscussionIndex :discussions="discussions" :isLoading="isLoading" redirect="search">
                 <template #pagination>
                     <tfoot v-if="pagination && pagination.total > pagination.limit">
