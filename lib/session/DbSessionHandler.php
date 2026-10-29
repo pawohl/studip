@@ -96,11 +96,8 @@ class DbSessionHandler implements
 
     public function create_sid(): string
     {
-        do {
-            $new_id = md5(bin2hex(random_bytes(128)));
-        } while ($this->exists($new_id));
         $this->exists = null;
-        return $new_id;
+        return session_create_id();
     }
 
     public function updateTimestamp(string $id, string $data): bool
