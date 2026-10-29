@@ -82,9 +82,6 @@ $messagebox-icons: (
       color: $color;
       background-color: $background-color;
       border-color: $border-color;
-      position: relative;
-      display: flex;
-      align-items: center;
 
       // Der Kreis mit ::before
       &::before {
@@ -93,9 +90,6 @@ $messagebox-icons: (
         height: 32px;
         background-color: $border-color;  // Kreisfarbe
         border-radius: 50%;  // Macht es rund
-        display: flex;
-        justify-content: center;
-        align-items: center;
         position: absolute;
         left: 16px;
         top: 50%;
