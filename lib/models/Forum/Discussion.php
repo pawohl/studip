@@ -148,7 +148,7 @@ class Discussion extends SimpleORMap
         }
 
         return \DBManager::get()->fetchAll(
-            $query[0]." GROUP BY discussions.discussion_id ORDER BY latest_post_date DESC",
+            $query[0]." GROUP BY discussions.discussion_id ORDER BY discussions.sticky DESC, latest_post_date DESC",
             $query[1],
             self::buildExisting(...)
         );

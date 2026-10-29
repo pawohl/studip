@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, toRef} from 'vue';
+import {toRef} from 'vue';
 import {getDiscussionURL, getSearchURL} from "../helpers/urls";
 import {numberFormatter} from '@/assets/javascripts/lib/number_formatter';
 import ForumMembers from '@/vue/components/forum/ForumMembers.vue';
@@ -70,10 +70,6 @@ const deleteDiscussion = id => {
     deleteForm.action = STUDIP.URLHelper.getURL(`dispatch.php/course/forum/discussions/delete/${id}`);
     deleteForm.submit();
 }
-
-onMounted(() => {
-    sortBy('meta.recent_activity', 'desc');
-});
 </script>
 
 <template>
