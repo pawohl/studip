@@ -45,7 +45,7 @@ if (file_exists("../ilias.ini.php")) {
         'edit' => match($_GET['type']) {
             'cat'   => 'ilias.php?baseClass=ilrepositorygui&cmd=edit',
             'crs'   => 'ilias.php?baseClass=ilrepositorygui&cmd=edit',
-            'exc'   => 'ilias.php?baseClass=ilExerciseHandlerGUI',
+            'exc'   => 'ilias.php?baseClass=ilExerciseHandlerGUI&cmdClass=ilObjExerciseGUI&cmd=edit',
             'glo'   => 'ilias.php?baseClass=ilGlossaryEditorGUI',
             'htlm'  => 'ilias.php?baseClass=ilHTLMEditorGUI',
             'lm'    => 'ilias.php?baseClass=ilLMEditorGUI',
@@ -59,7 +59,7 @@ if (file_exists("../ilias.ini.php")) {
         'start' => match ($_GET['type']) {
             'cat'   => 'ilias.php?cmd=view&baseClass=ilRepositoryGUI&cmdClass=ilObjCategoryGUI',
             'crs'   => 'ilias.php?cmd=view&cmdClass=ilobjcoursegui&baseClass=ilRepositoryGUI',
-            'exc'   => 'ilias.php?cmd=infoScreen&cmdClass=ilExerciseHandlerGUI&baseClass=ilRepositoryGUI',
+            'exc'   => 'ilias.php?cmd=showOverview&cmdClass=ilExerciseHandlerGUI&baseClass=ilexercisehandlergui',
             'glo'   => 'ilias.php?baseClass=ilGlossaryPresentationGUI',
             'lm'    => 'ilias.php?baseClass=ilLMPresentationGUI',
             'htlm'  => 'ilias.php?baseClass=ilHTLMPresentationGUI',
