@@ -33,10 +33,12 @@ class DbSessionHandler implements
 
     public function destroy(string $id): bool
     {
-        return (bool) DBManager::get()->execute(
+        DBManager::get()->execute(
             "DELETE FROM session_data WHERE sid = ? LIMIT 1",
             [$id]
         );
+
+        return true;
     }
 
     public function gc(int $max_lifetime): false|int
