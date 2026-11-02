@@ -1,7 +1,5 @@
 <?php
 
-use Trails\Attributes\RequirePost;
-
 /**
  * files.php - controller class for related files
  *
@@ -431,55 +429,28 @@ class Materialien_FilesController extends MVVController
         $this->render_json($output);
     }
 
-    #[RequirePost]
     public function delete_attachment_action()
     {
         CSRFProtection::verifyUnsafeRequest();
 
-        $fileRef = FileRef::find(Request::get('fileref_id'));
-        if ($fileRef->folder->folder_type  !== MVVFolder::class) {
-            throw new AccessDeniedException();
-        }
-
-        // check permission for related objects
-        $mvv_file_id = Request::option('mvvfile_id', '');
-        $file_ranges = MvvFileRange::findBySQL('`mvvfile_id` = ?', [$mvv_file_id]);
-        $granted = false;
-        foreach ($file_ranges as $file_range) {
-            $mvv_obj = $file_range->range_type::find($file_range->range_id);
-            $perm = MvvPerm::get($mvv_obj);
-            if ($perm->haveFieldPerm('document_assignments', MvvPerm::PERM_CREATE)) {
-                $granted = true;
-                break;
+        $attachment = FileRef::find(Request::option('fileref_id'));
+        if ($attachment) {
+            if($attachment->delete()) {
+                MvvFileFileref::deleteBySQL('mvvfile_id =? AND fileref_id =?',
+                [
+                    Request::option('mvvfile_id'),
+                    Request::option('fileref_id')
+                ]);
+                PageLayout::postSuccess(_('Datei gelöscht.'));
             }
         }
-        if (!$granted) {
-            throw new AccessDeniedException();
-        }
-
-        $mvvFileLinkCount = MvvFileFileref::countBySql(
-            'mvvfile_id = ? AND fileref_id = ?',
-            [$mvv_file_id, $fileRef->id]
-        );
-
-        if ($mvvFileLinkCount === 0) {
-            throw new AccessDeniedException();
-        }
-
-        if ($fileRef->delete()) {
-            MvvFileFileref::deleteBySQL(
-                'mvvfile_id = ? AND fileref_id = ?',
-                [$mvv_file_id, $fileRef->id]
-            );
-        }
-
         $this->render_nothing();
-
     }
 
-    #[RequirePost]
     public function delete_range_action($mvvfile_id, $range_id)
     {
+        CSRFProtection::verifyUnsafeRequest();
+
         if ($mvvfile_range = MvvFileRange::find([$mvvfile_id, $range_id])) {
             $vacant = $mvvfile_range->position;
             $range_type = $mvvfile_range->range_type;
@@ -503,9 +474,10 @@ class Materialien_FilesController extends MVVController
         }
     }
 
-    #[RequirePost]
     public function delete_all_dokument_action($mvvfile_id)
     {
+        CSRFProtection::verifyUnsafeRequest();
+
         MvvFile::deleteBySQL('mvvfile_id =?', [$mvvfile_id]);
         MvvFileRange::deleteBySQL('mvvfile_id =?', [$mvvfile_id]);
         MvvFileFileref::deleteBySQL('mvvfile_id =?', [$mvvfile_id]);
