@@ -2555,6 +2555,14 @@ class Resources_RoomRequestController extends AuthenticatedController
             'institute'            => $user_config->MY_INSTITUTES_DEFAULT,
         ];
 
+        if (!$filters['semester']) {
+            //Set the current semester if no semester is preselected:
+            $semester = Semester::findCurrent();
+            if ($semester) {
+                $filters['semester'] = $semester->id;
+            }
+        }
+
         if ($filters['institute'] === 'all') {
             unset($filters['institute']);
         }
