@@ -98,8 +98,8 @@ class ConnectedIlias
         );
         $this->soap_client->setCachingStatus($this->ilias_interface_config['cache']);
 
-        // init current user (only if ILIAS installation is active)
-        if ($this->ilias_config['is_active']) {
+        // init current user (only if user is already logged in and ILIAS installation is active)
+        if (!empty($GLOBALS['perm']) && $this->ilias_config['is_active']) {
             $this->user = new IliasUser($this->index, $this->ilias_config['version']);
 
             $this->checkIliasUserEntry();

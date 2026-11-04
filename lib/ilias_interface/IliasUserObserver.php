@@ -28,8 +28,12 @@ class IliasUserObserver
             case 'UserDidUpdate':
                 foreach (Config::get()->ILIAS_INTERFACE_SETTINGS as $ilias_index => $ilias_config) {
                     if ($ilias_config['is_active']) {
-                        $ilias = new ConnectedIlias($ilias_index);
-                        $ilias->updateUser($user);
+                        try {
+                            $ilias = new ConnectedIlias($ilias_index);
+                            $ilias->updateUser($user);
+                        } catch (Throwable $e) {
+                            error_log('ILIAS user update failed: ' . $e->getMessage());
+                        }
                     }
                 }
                 break;
