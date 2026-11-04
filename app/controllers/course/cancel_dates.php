@@ -54,6 +54,7 @@ class Course_CancelDatesController extends AuthenticatedController
         CSRFProtection::verifyUnsafeRequest();
         $msg = '';
         $cancelled_dates = [];
+        $ex_dates = [];
 
         foreach ($this->dates as $date) {
             $cancelled_dates[] = $date->getFullName();
@@ -61,10 +62,11 @@ class Course_CancelDatesController extends AuthenticatedController
             if ($ex_date) {
                 $ex_date->content = Request::get('cancel_dates_comment');
                 $ex_date->store();
+                $ex_dates[] = $ex_date;
             }
         }
-        if (Request::int('cancel_dates_snd_message') && count($this->dates) > 0) {
-            $snd_messages = raumzeit_send_cancel_message(Request::get('cancel_dates_comment'), $this->dates);
+        if (Request::int('cancel_dates_snd_message') && count($ex_dates) > 0) {
+            $snd_messages = raumzeit_send_cancel_message(Request::get('cancel_dates_comment'), $ex_dates);
             if ($snd_messages > 0) {
                 $msg = _('Alle Teilnehmenden wurden benachrichtigt.');
             }
