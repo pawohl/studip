@@ -549,6 +549,9 @@ export default {
         // Listen to changes in fullscreen setting
         this.globalOn('toggle-compact-navigation', (value) => {
             this.setCompactNavigation(value);
+            this.$nextTick(() => {
+                document.getElementById(value ? 'fullscreen-off' : 'fullscreen-on')?.focus();
+            });
         });
 
         // Listen to sidebar widgets coming in from other components
