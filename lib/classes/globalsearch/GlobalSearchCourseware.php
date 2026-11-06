@@ -48,7 +48,7 @@ class GlobalSearchCourseware extends GlobalSearchModule implements GlobalSearchF
             $sql = "(SELECT `cw_structural_elements` . `id` AS id, CONCAT('', 'cw_structural_elements') AS type
             FROM `cw_structural_elements`
             WHERE (`title` LIKE {$query} OR `payload` LIKE {$payload_query})
-                AND `range_id` = '{$range_id}'
+                AND `range_id` = {$range_id}
             ORDER BY `cw_structural_elements`.`mkdate` DESC)
             UNION (
                 SELECT se . `id` AS id, CONCAT('', 'cw_containers') AS type
@@ -57,7 +57,7 @@ class GlobalSearchCourseware extends GlobalSearchModule implements GlobalSearchF
                 ON se . `id` = c . `structural_element_id`
                 WHERE c. `payload` LIKE {$payload_query}
                     AND `container_type` != 'list'
-                    AND se . `range_id` = '{$range_id}'
+                    AND se . `range_id` = {$range_id}
                 ORDER BY c . `mkdate` DESC)
             UNION (
                 SELECT se . `id` AS id, CONCAT('', 'cw_blocks') AS type
@@ -67,7 +67,7 @@ class GlobalSearchCourseware extends GlobalSearchModule implements GlobalSearchF
                 JOIN cw_structural_elements se
                 ON se . `id` = c . `structural_element_id`
                 WHERE b.payload LIKE {$payload_query}
-                    AND se . `range_id` = '{$range_id}'
+                    AND se . `range_id` = {$range_id}
                 ORDER BY b . `mkdate` DESC
             ) LIMIT {$limit}";
         } else {
