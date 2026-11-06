@@ -131,3 +131,17 @@ async function getTranslations(locale: string): Promise<Translation> {
 export const $gettext = gettext.$gettext;
 export const $ngettext = gettext.$ngettext;
 export const $gettextInterpolate = gettext.interpolate;
+export const addTranslation = (locale: string, translation: Translation) => {
+    if (!(locale in gettext.translations)) {
+        gettext.translations[locale] = {};
+    }
+
+    Object.entries(translation).forEach(([key, value]) => {
+        gettext.translations[locale][key] = value;
+    });
+};
+export const addTranslations = (translations: Translations) => {
+    Object.entries(translations).forEach(([locale, translation]) => {
+        addTranslation(locale, translation);
+    });
+};
