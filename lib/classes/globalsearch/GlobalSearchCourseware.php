@@ -44,7 +44,7 @@ class GlobalSearchCourseware extends GlobalSearchModule implements GlobalSearchF
         $query = DBManager::get()->quote("%{$search}%");
         $payload_query = DBManager::get()->quote("%{$payload_search}%");
         if (!empty($filter['rangeId'])) {
-            $range_id = $filter['rangeId'];
+            $range_id = DBManager::get()->quote($filter['rangeId']);
             $sql = "(SELECT `cw_structural_elements` . `id` AS id, CONCAT('', 'cw_structural_elements') AS type
             FROM `cw_structural_elements`
             WHERE (`title` LIKE {$query} OR `payload` LIKE {$payload_query})
