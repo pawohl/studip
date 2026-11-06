@@ -446,7 +446,7 @@ msgstr "2nd subtitle"
 #: resources/vue/apps/admission/InstantCourseSet.vue:46
 #: resources/vue/apps/forum/categories/Edit.vue:93
 #: resources/vue/apps/forum/configs/Edit.vue:66
-#: resources/vue/apps/forum/discussions/Edit.vue:267
+#: resources/vue/apps/forum/discussions/Edit.vue:293
 #: resources/vue/apps/forum/discussions_types/Edit.vue:88
 #: resources/vue/apps/forum/topics/Edit.vue:145
 #: resources/vue/apps/my-courses/ColorGroupSelector.vue:134
@@ -1074,7 +1074,7 @@ msgstr "Anonymous review"
 msgid "Anpassen"
 msgstr "Adapt"
 
-#: resources/vue/apps/forum/discussions/Edit.vue:260
+#: resources/vue/apps/forum/discussions/Edit.vue:286
 msgid "Anpinnen"
 msgstr ""
 
@@ -1499,7 +1499,7 @@ msgstr "Sign out of the course"
 msgid "ausgewählt"
 msgstr "selected"
 
-#: resources/vue/apps/forum/search/Index.vue:227
+#: resources/vue/apps/forum/search/Index.vue:208
 #, fuzzy
 msgid "Ausgewählte Autor/-in entfernen"
 msgstr "Perform selected actions"
@@ -1513,8 +1513,8 @@ msgstr "Configure selected rule"
 msgid "ausgewählte Studierende"
 msgstr "selected students"
 
-#: resources/vue/apps/forum/discussions/Edit.vue:140
-#: resources/vue/apps/forum/search/Index.vue:170
+#: resources/vue/apps/forum/discussions/Edit.vue:158
+#: resources/vue/apps/forum/search/Index.vue:151
 #, fuzzy
 msgid "Ausgewählten Diskussionstyp entfernen"
 msgstr "Create new document"
@@ -1525,14 +1525,14 @@ msgid_plural "Ausgewählte Bilder unwideruflich löschen?"
 msgstr[0] "Delete selected image irrevocably?"
 msgstr[1] "Delete selected images irrevocably?"
 
-#: resources/vue/apps/forum/discussions/Edit.vue:161
-#: resources/vue/apps/forum/search/Index.vue:192
+#: resources/vue/apps/forum/discussions/Edit.vue:179
+#: resources/vue/apps/forum/search/Index.vue:173
 #, fuzzy
 msgid "Ausgewähltes Schlagwort entfernen"
 msgstr "Remove label"
 
-#: resources/vue/apps/forum/discussions/Edit.vue:118
-#: resources/vue/apps/forum/search/Index.vue:144
+#: resources/vue/apps/forum/discussions/Edit.vue:135
+#: resources/vue/apps/forum/search/Index.vue:125
 #, fuzzy
 msgid "Ausgewähltes Thema entfernen"
 msgstr "Selected courses"
@@ -1565,9 +1565,18 @@ msgstr "External tool selection"
 msgid "Auswahl zitieren und antworten"
 msgstr "Amount of answers"
 
+#: resources/vue/apps/forum/search/Index.vue:281
 #: resources/vue/components/file-chooser/FileChooserDialog.vue:26
+#: resources/vue/components/forum/SelectTagsInput.vue:7
+#: resources/vue/components/forum/SelectUserInput.vue:18
+#: resources/vue/components/forum/discussions/SelectDiscussionType.vue:16
 msgid "Auswählen"
 msgstr "Select"
+
+#: resources/vue/apps/forum/discussions/Edit.vue:205
+#, fuzzy
+msgid "Auswählen oder erstellen"
+msgstr "Create a new folder"
 
 #: resources/vue/components/feedback/StudipFiveStarsInput.vue:20
 msgid "auswählen, um mit einem Stern zu bewerten."
@@ -1616,11 +1625,10 @@ msgstr "Author"
 msgid "Autor:in"
 msgstr "Author"
 
-#: resources/vue/apps/forum/search/Index.vue:329
+#: resources/vue/apps/forum/search/Index.vue:314
 #: resources/vue/components/FilesTable.vue:265
 #: resources/vue/components/FilesTable.vue:271
 #: resources/vue/components/file-chooser/FileChooserTable.vue:49
-#: resources/vue/components/forum/SelectUserInput.vue:18
 msgid "Autor/-in"
 msgstr "Author"
 
@@ -1909,6 +1917,7 @@ msgid "Berufserfahrung"
 msgstr "Work experience"
 
 #: resources/vue/apps/forum/categories/Edit.vue:68
+#: resources/vue/apps/forum/discussions/Edit.vue:254
 #: resources/vue/apps/forum/topics/Edit.vue:78
 #: resources/vue/components/courseware/blocks/CoursewareBiographyAchievementsBlock.vue:54
 #: resources/vue/components/courseware/blocks/CoursewareBiographyAchievementsBlock.vue:137
@@ -2140,7 +2149,7 @@ msgid "bis"
 msgstr "until"
 
 #: resources/vue/apps/ConsultationCreator.vue:221
-#: resources/vue/apps/forum/search/Index.vue:322
+#: resources/vue/apps/forum/search/Index.vue:303
 msgid "Bis"
 msgstr "Until"
 
@@ -2668,7 +2677,7 @@ msgstr "The download of this file is restricted."
 msgid "Das Lesezeichen wurde gesetzt."
 msgstr "The bookmark has been set."
 
-#: resources/vue/components/admission/PasswordAdmission.vue:30
+#: resources/vue/components/admission/PasswordAdmission.vue:22
 msgid "Das Passwort darf nicht leer sein."
 msgstr "Password required."
 
@@ -3118,7 +3127,7 @@ msgstr "The clipboard does not contain sections."
 msgid "Die Merkliste enthält keine Blöcke."
 msgstr "The clipboard does not contain blocks."
 
-#: resources/vue/components/admission/PasswordAdmission.vue:33
+#: resources/vue/components/admission/PasswordAdmission.vue:25
 msgid "Die Passwörter stimmen nicht überein."
 msgstr "The passwords don't match."
 
@@ -3480,7 +3489,7 @@ msgstr "Go to discussion"
 msgid "Diskussion %{title} bearbeiten"
 msgstr "Edit this account"
 
-#: resources/vue/apps/forum/discussions/Edit.vue:84
+#: resources/vue/apps/forum/discussions/Edit.vue:98
 #, fuzzy
 msgid "Diskussion bearbeiten"
 msgstr "Edit this account"
@@ -3503,7 +3512,7 @@ msgstr "This function is disabled."
 msgid "Diskussion ist offen"
 msgstr "Edit this account"
 
-#: resources/vue/apps/forum/discussions/Edit.vue:251
+#: resources/vue/apps/forum/discussions/Edit.vue:277
 msgid "Diskussion schließen, keine weiteren Beiträge zulassen"
 msgstr ""
 
@@ -3514,31 +3523,26 @@ msgstr ""
 msgid "Diskussionen"
 msgstr "General discussion"
 
-#: resources/vue/apps/forum/search/Index.vue:88
+#: resources/vue/apps/forum/search/Index.vue:63
 #, fuzzy
-msgid "Diskussionen oder Beiträge"
+msgid "Diskussionen und Beiträge durchsuchen"
 msgstr "Start search for fields of study"
 
-#: resources/vue/apps/forum/discussions/Edit.vue:88
+#: resources/vue/apps/forum/discussions/Edit.vue:102
 #: resources/vue/components/forum/discussions/DiscussionIndex.vue:97
 #, fuzzy
 msgid "Diskussionstitel"
 msgstr "Edit this account"
 
-#: resources/vue/apps/forum/discussions/Edit.vue:90
+#: resources/vue/apps/forum/discussions/Edit.vue:104
 #, fuzzy
 msgid "Diskussionstitel ist ein Pflichtfeld"
 msgstr "This is a mandatory field"
 
-#: resources/vue/apps/forum/discussions/Edit.vue:194
-#: resources/vue/apps/forum/search/Index.vue:276
+#: resources/vue/apps/forum/discussions/Edit.vue:219
+#: resources/vue/apps/forum/search/Index.vue:257
 #, fuzzy
 msgid "Diskussionstyp"
-msgstr "Edit this account"
-
-#: resources/vue/components/forum/discussions/SelectDiscussionType.vue:16
-#, fuzzy
-msgid "Diskussionstyp (Optional)"
 msgstr "Edit this account"
 
 #: resources/vue/apps/forum/discussions_types/Index.vue:90
@@ -3887,13 +3891,13 @@ msgstr "End point"
 msgid "Endzeitpunkt"
 msgstr "End time"
 
-#: resources/vue/apps/forum/discussions/Edit.vue:117
-#: resources/vue/apps/forum/discussions/Edit.vue:139
-#: resources/vue/apps/forum/discussions/Edit.vue:160
-#: resources/vue/apps/forum/search/Index.vue:143
-#: resources/vue/apps/forum/search/Index.vue:169
-#: resources/vue/apps/forum/search/Index.vue:191
-#: resources/vue/apps/forum/search/Index.vue:226
+#: resources/vue/apps/forum/discussions/Edit.vue:134
+#: resources/vue/apps/forum/discussions/Edit.vue:157
+#: resources/vue/apps/forum/discussions/Edit.vue:178
+#: resources/vue/apps/forum/search/Index.vue:124
+#: resources/vue/apps/forum/search/Index.vue:150
+#: resources/vue/apps/forum/search/Index.vue:172
+#: resources/vue/apps/forum/search/Index.vue:207
 msgid "Entfernen"
 msgstr "Remove"
 
@@ -4091,19 +4095,19 @@ msgstr "First reminder on"
 msgid "Erstmaliges Zurücksetzen am"
 msgstr "First reset on"
 
-#: resources/vue/apps/forum/search/Index.vue:247
+#: resources/vue/apps/forum/search/Index.vue:228
 #, fuzzy
 msgid "Erweiterte Filter"
 msgstr "Extended search"
 
-#: resources/vue/apps/forum/search/Index.vue:243
-#: resources/vue/apps/forum/search/Index.vue:244
+#: resources/vue/apps/forum/search/Index.vue:224
+#: resources/vue/apps/forum/search/Index.vue:225
 #, fuzzy
 msgid "Erweiterte Filter aufklappen"
 msgstr "Extended settings"
 
-#: resources/vue/apps/forum/search/Index.vue:243
-#: resources/vue/apps/forum/search/Index.vue:244
+#: resources/vue/apps/forum/search/Index.vue:224
+#: resources/vue/apps/forum/search/Index.vue:225
 #, fuzzy
 msgid "Erweiterte Filter zuklappen"
 msgstr "Extended settings"
@@ -4129,7 +4133,7 @@ msgstr "An error occurred. Please try again!"
 msgid "Es gibt keine Benutzer/-innen."
 msgstr "No user found."
 
-#: resources/vue/apps/forum/search/Index.vue:305
+#: resources/vue/apps/forum/search/Index.vue:286
 #, fuzzy
 msgid "Es gibt keine Diskussionsstatus."
 msgstr "Start new search"
@@ -4149,7 +4153,7 @@ msgstr "Personal category"
 msgid "Es gibt keine Schlagworte."
 msgstr "There are no participants yet."
 
-#: resources/vue/components/forum/topics/SelectTopicInput.vue:59
+#: resources/vue/components/forum/topics/SelectTopicInput.vue:62
 #, fuzzy
 msgid "Es gibt keine Themen."
 msgstr "There are no participants yet."
@@ -4860,8 +4864,8 @@ msgstr "Free"
 msgid "Frei bearbeitbar"
 msgstr "Freely editable"
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:133
-#: resources/vue/components/CourseDateRoomFieldset.vue:141
+#: resources/vue/components/CourseDateRoomFieldset.vue:134
+#: resources/vue/components/CourseDateRoomFieldset.vue:142
 msgid "Freie Ortsangabe (keine Raumbuchung)"
 msgstr "Location (no room booking)"
 
@@ -4915,7 +4919,7 @@ msgstr "Visible for %{persons} from %{start} to %{end}"
 msgid "für alle"
 msgstr "for all"
 
-#: resources/vue/components/admission/PasswordAdmission.vue:14
+#: resources/vue/components/admission/PasswordAdmission.vue:8
 msgid "Für die Anmeldung ist ein Passwort erforderlich."
 msgstr "A password is required to log in."
 
@@ -4979,7 +4983,7 @@ msgstr ""
 msgid "Geben Sie mindestens %{min} Zeichen ein."
 msgstr "Please enter at least %{min} characters."
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:49
+#: resources/vue/components/CourseDateRoomFieldset.vue:50
 msgid "Gebuchte Räume"
 msgstr "Booked rooms"
 
@@ -5372,7 +5376,7 @@ msgstr "Background type"
 msgid "Hinweis"
 msgstr "Hint"
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:84
+#: resources/vue/components/CourseDateRoomFieldset.vue:85
 #, fuzzy
 msgid "Hinweise zu teilbaren Räumen"
 msgstr "%s: Separable rooms"
@@ -5509,7 +5513,7 @@ msgid ""
 "Im gewählten Semester stehen keine Veranstaltungen zur Auswahl zur Verfügung."
 msgstr "No courses are available for selection in the selected semester."
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:35
+#: resources/vue/components/CourseDateRoomFieldset.vue:36
 msgid "Im gewählten Zeitbereich sind keine buchbaren Räume verfügbar."
 msgstr ""
 
@@ -6074,11 +6078,11 @@ msgstr "No suitable element for the full screen mode."
 msgid "Kein Peer-Review abgegeben"
 msgstr "No peer review provided"
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:156
+#: resources/vue/components/CourseDateRoomFieldset.vue:157
 msgid "Kein Raum"
 msgstr "No room"
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:58
+#: resources/vue/components/CourseDateRoomFieldset.vue:59
 #, fuzzy
 msgid "Kein Raum verfügbar"
 msgstr "No module available"
@@ -6108,7 +6112,7 @@ msgstr "None"
 msgid "Keine Aktivität"
 msgstr "Last activity"
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:168
+#: resources/vue/components/CourseDateRoomFieldset.vue:169
 #, fuzzy
 msgid "Keine Änderung"
 msgstr "-- No change --"
@@ -7587,7 +7591,7 @@ msgstr "New, structure from schedule"
 msgid "Neue Aufnahme starten"
 msgstr "Start new recording"
 
-#: resources/vue/apps/forum/discussions/Edit.vue:85
+#: resources/vue/apps/forum/discussions/Edit.vue:99
 #: resources/vue/components/forum/discussions/Create.vue:14
 #: resources/vue/components/forum/discussions/Create.vue:15
 #, fuzzy
@@ -8210,11 +8214,11 @@ msgstr "Radius"
 msgid "Rasteransicht umschalten"
 msgstr "Switch raster view"
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:52
+#: resources/vue/components/CourseDateRoomFieldset.vue:53
 msgid "Raum auswählen"
 msgstr "Select room"
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:26
+#: resources/vue/components/CourseDateRoomFieldset.vue:27
 msgid "Raumangaben"
 msgstr "Room"
 
@@ -8303,11 +8307,11 @@ msgstr "Red"
 msgid "Rückgängig"
 msgstr "Undo"
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:109
+#: resources/vue/components/CourseDateRoomFieldset.vue:110
 msgid "Rüstzeit nach dem Termin (in Minuten)"
 msgstr "Preparation time after the date (in minutes)"
 
-#: resources/vue/components/CourseDateRoomFieldset.vue:94
+#: resources/vue/components/CourseDateRoomFieldset.vue:95
 msgid "Rüstzeit vor dem Termin (in Minuten)"
 msgstr "Preparation time before the date (in minutes)"
 
@@ -8332,9 +8336,8 @@ msgstr "Column diagram"
 msgid "Schief"
 msgstr "Slanted"
 
-#: resources/vue/apps/forum/discussions/Edit.vue:213
-#: resources/vue/apps/forum/search/Index.vue:286
-#: resources/vue/components/forum/SelectTagsInput.vue:7
+#: resources/vue/apps/forum/discussions/Edit.vue:236
+#: resources/vue/apps/forum/search/Index.vue:267
 msgid "Schlagworte"
 msgstr "Labels"
 
@@ -9065,7 +9068,7 @@ msgstr "Sorted in ascending order by %{field}"
 #: resources/vue/apps/admission/ConfigureCourseSet.vue:509
 #: resources/vue/apps/admission/InstantCourseSet.vue:45
 #: resources/vue/apps/forum/categories/Edit.vue:92
-#: resources/vue/apps/forum/discussions/Edit.vue:266
+#: resources/vue/apps/forum/discussions/Edit.vue:292
 #: resources/vue/apps/forum/discussions_types/Edit.vue:87
 #: resources/vue/apps/forum/topics/Edit.vue:144
 #: resources/vue/apps/my-courses/ColorGroupSelector.vue:127
@@ -9182,8 +9185,7 @@ msgstr "Start time"
 msgid "Status"
 msgstr "Status"
 
-#: resources/vue/apps/forum/search/Index.vue:296
-#: resources/vue/apps/forum/search/Index.vue:300
+#: resources/vue/apps/forum/search/Index.vue:277
 #: resources/vue/apps/forum/subscriptions/Index.vue:81
 #, fuzzy
 msgid "Status der Diskussion"
@@ -9249,8 +9251,11 @@ msgstr "Hour"
 msgid "Stunden"
 msgstr "Hours"
 
+#: resources/vue/apps/forum/search/Index.vue:69
+msgid "Suchbegriff eingeben"
+msgstr "Enter search term"
+
 #: resources/vue/apps/admission/ConfigureCourseSet.vue:245
-#: resources/vue/apps/forum/search/Index.vue:79
 #: resources/vue/components/SearchWidget.vue:16
 #: resources/vue/components/blubber/SearchWidget.vue:21
 #: resources/vue/components/courseware/blocks/CoursewareDocumentBlock.vue:114
@@ -9299,9 +9304,9 @@ msgstr "Reset search"
 msgid "Suche..."
 msgstr "Searching..."
 
-#: resources/vue/apps/forum/search/Index.vue:96
-#: resources/vue/apps/forum/search/Index.vue:97
-#: resources/vue/apps/forum/search/Index.vue:104
+#: resources/vue/apps/forum/search/Index.vue:77
+#: resources/vue/apps/forum/search/Index.vue:78
+#: resources/vue/apps/forum/search/Index.vue:85
 #: resources/vue/components/EditableList.vue:82
 #: resources/vue/components/EditableList.vue:90
 #: resources/vue/components/SearchWidget.vue:50
@@ -9313,7 +9318,6 @@ msgid "Suchen"
 msgstr "Search"
 
 #: resources/assets/javascripts/lib/multi_person_search.js:28
-#: resources/vue/apps/forum/search/Index.vue:343
 #: resources/vue/components/StudipMultiPersonSearch.vue:66
 #: resources/vue/components/courseware/structural-element/CoursewareSearchResults.vue:53
 msgid "Suchergebnisse"
@@ -9332,11 +9336,6 @@ msgstr "Rate the learning material"
 #: resources/vue/components/courseware/structural-element/CoursewareSearchResults.vue:57
 msgid "Suchergebnisse schließen"
 msgstr "Close search results"
-
-#: resources/vue/apps/forum/search/Index.vue:82
-#, fuzzy
-msgid "Suchfeld"
-msgstr "Search"
 
 #: resources/vue/components/SearchWithFilter.vue:39
 msgid "Suchfilter einstellen"
@@ -9499,17 +9498,21 @@ msgstr "Text background color"
 msgid "Textwerkzeug"
 msgstr "Text tool"
 
-#: resources/vue/apps/forum/discussions/Edit.vue:176
-#: resources/vue/apps/forum/search/Index.vue:265
+#: resources/vue/apps/forum/discussions/Edit.vue:194
+#: resources/vue/apps/forum/search/Index.vue:246
 #: resources/vue/apps/forum/subscriptions/Index.vue:78
 #: resources/vue/apps/forum/topics/Show.vue:115
-#: resources/vue/components/forum/topics/SelectTopicInput.vue:16
 msgid "Thema"
 msgstr "Topic"
 
 #: resources/vue/apps/forum/topics/Edit.vue:54
 msgid "Thema bearbeiten"
 msgstr "Edit topic"
+
+#: resources/vue/apps/forum/discussions/Edit.vue:196
+#, fuzzy
+msgid "Thema ist ein Pflichtfeld"
+msgstr "This is a mandatory field"
 
 #: resources/vue/apps/forum/subscriptions/Index.vue:70
 #, fuzzy
@@ -10141,7 +10144,7 @@ msgid "von"
 msgstr "from"
 
 #: resources/vue/apps/ConsultationCreator.vue:209
-#: resources/vue/apps/forum/search/Index.vue:314
+#: resources/vue/apps/forum/search/Index.vue:293
 msgid "Von"
 msgstr "From"
 
@@ -10853,12 +10856,12 @@ msgstr "Go to main folder"
 msgid "Zum letzten Beitrag"
 msgstr "Latest posting "
 
-#: resources/vue/apps/forum/search/Index.vue:211
+#: resources/vue/apps/forum/search/Index.vue:192
 #, fuzzy
 msgid "Zum Nutzer Profile"
 msgstr "Go to profile"
 
-#: resources/vue/apps/forum/search/Index.vue:212
+#: resources/vue/apps/forum/search/Index.vue:193
 #, fuzzy
 msgid "Zum Nutzer Profile von %{name}"
 msgstr "To the profile of %{ user }"
@@ -10900,7 +10903,7 @@ msgstr "Go to start"
 #: resources/vue/apps/forum/discussions/Show.vue:72
 #: resources/vue/apps/forum/discussions/Show.vue:73
 #: resources/vue/apps/forum/discussions/Show.vue:86
-#: resources/vue/apps/forum/search/Index.vue:130
+#: resources/vue/apps/forum/search/Index.vue:111
 #: resources/vue/apps/forum/subscriptions/Index.vue:146
 #: resources/vue/components/forum/topics/TopicItem.vue:87
 #: resources/vue/components/forum/topics/TopicItem.vue:255
@@ -10909,7 +10912,7 @@ msgid "Zum Thema"
 msgstr "Topic"
 
 #: resources/vue/apps/forum/discussions/Show.vue:87
-#: resources/vue/apps/forum/search/Index.vue:131
+#: resources/vue/apps/forum/search/Index.vue:112
 #: resources/vue/components/forum/topics/TopicItem.vue:88
 msgid "Zum Thema: %{name}"
 msgstr ""
@@ -10997,8 +11000,8 @@ msgstr "Back"
 msgid "Zurück zur Lernmaterialübersicht"
 msgstr "Back to the learning material overview"
 
-#: resources/vue/apps/forum/search/Index.vue:110
-#: resources/vue/apps/forum/search/Index.vue:111
+#: resources/vue/apps/forum/search/Index.vue:91
+#: resources/vue/apps/forum/search/Index.vue:92
 #: resources/vue/apps/my-courses/NotificationConfiguration.vue:150
 #: resources/vue/components/avatar/AvatarApp.vue:170
 #: resources/vue/components/courseware/blocks/CoursewareCanvasBlock.vue:61
@@ -11036,6 +11039,14 @@ msgstr "second element"
 #: resources/vue/components/courseware/unit/CoursewareUnitItemDialogSettings.vue:275
 msgid "Zweiwöchentlich"
 msgstr "Fortnightly"
+
+#, fuzzy
+#~ msgid "Diskussionstyp (Optional)"
+#~ msgstr "Edit this account"
+
+#, fuzzy
+#~ msgid "Suchfeld"
+#~ msgstr "Search"
 
 #~ msgid "Bitte geben Sie eine gültige Endzeit an."
 #~ msgstr "Please specify a valid end time."
