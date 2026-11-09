@@ -566,34 +566,35 @@ class User extends AuthUserMd5 implements Range, PrivacyObject, Studip\Calendar\
         $query .= " GROUP BY au.`user_id` ";
 
         if (!empty($attributes['sortby'])) {
+            $direction = mb_strtolower($attributes['order']) === 'asc' ? 'ASC' : 'DESC';
             //sortieren
             switch ($attributes['sortby']) {
                 case "perms":
-                    $query .= "ORDER BY au.`perms` {$attributes['order']}, au.`username`";
+                    $query .= "ORDER BY au.`perms` {$direction}, au.`username`";
                     break;
                 case "Vorname":
-                    $query .= "ORDER BY au.`Vorname` {$attributes['order']}, au.`Nachname`";
+                    $query .= "ORDER BY au.`Vorname` {$direction}, au.`Nachname`";
                     break;
                 case "Nachname":
-                    $query .= "ORDER BY au.`Nachname` {$attributes['order']}, au.`Vorname`";
+                    $query .= "ORDER BY au.`Nachname` {$direction}, au.`Vorname`";
                     break;
                 case "Email":
-                    $query .= "ORDER BY au.`Email` {$attributes['order']}, au.`username`";
+                    $query .= "ORDER BY au.`Email` {$direction}, au.`username`";
                     break;
                 case 'matriculation_number':
-                    $query .= "ORDER BY au.`matriculation_number` {$attributes['order']}, au.`username`";
+                    $query .= "ORDER BY au.`matriculation_number` {$direction}, au.`username`";
                     break;
                 case "changed":
-                    $query .= "ORDER BY uo.`last_lifesign` {$attributes['order']}, au.`username`";
+                    $query .= "ORDER BY uo.`last_lifesign` {$direction}, au.`username`";
                     break;
                 case "mkdate":
-                    $query .= "ORDER BY ui.`mkdate` {$attributes['order']}, au.`username`";
+                    $query .= "ORDER BY ui.`mkdate` {$direction}, au.`username`";
                     break;
                 case "auth_plugin":
-                    $query .= "ORDER BY `auth_plugin` {$attributes['order']}, au.`username`";
+                    $query .= "ORDER BY `auth_plugin` {$direction}, au.`username`";
                     break;
                 default:
-                    $query .= " ORDER BY au.`username` {$attributes['order']}";
+                    $query .= " ORDER BY au.`username` {$direction}";
             }
         }
 
