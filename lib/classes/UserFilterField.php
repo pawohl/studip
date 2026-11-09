@@ -58,6 +58,11 @@ class UserFilterField
 
     public static $isParameterized = false;
 
+    public static $validContexts = [
+        '',
+        'MassMail'
+    ];
+
     protected static $cached_valid_values;
     protected static $available_filter_fields;
 
@@ -213,19 +218,31 @@ class UserFilterField
     {
         if (self::$available_filter_fields === null) {
             $fields = [];
-            try {
-                $i = new FileSystemIterator(
-                    $GLOBALS['STUDIP_BASE_PATH'] . '/lib/classes/UserFilterFields' . ($context !== '' ? '/' . $context : ''),
-                    FileSystemIterator::SKIP_DOTS
-                );
 
-                foreach ($i as $class) {
-                    if ($class->isFile()) {
-                        require_once $class;
-                    }
+            // Check if given context is allowed.
+            if (in_array($context, static::$validContexts)) {
+
+                $path = $GLOBALS['STUDIP_BASE_PATH'] . '/lib/classes/UserFilterFields';
+
+                if ($context !== '') {
+                    $path .= DIRECTORY_SEPARATOR . $context;
                 }
-            } catch (UnexpectedValueException $e) {
-                Log::error($e->getMessage());
+
+                try {
+                    $i = new FileSystemIterator(
+                        $path,
+                        FileSystemIterator::SKIP_DOTS
+                    );
+
+                    foreach ($i as $class) {
+                        if ($class->isFile()) {
+                            require_once $class;
+                        }
+                    }
+                } catch (UnexpectedValueException $e) {
+                    Log::error($e->getMessage());
+                }
+
             }
 
             // Get all classes in given context.

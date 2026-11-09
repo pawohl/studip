@@ -3,6 +3,7 @@
 namespace JsonApi\Routes\UserFilters;
 
 use JsonApi\Errors\AuthorizationFailedException;
+use JsonApi\Errors\BadRequestException;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use JsonApi\JsonApiController;
@@ -32,12 +33,17 @@ class UserFiltersCreate extends JsonApiController
 
         foreach (self::arrayGet($json, 'data.attributes.filters') as $one) {
             $classname = '\\' . $one['attributes']['type'];
-            $field = !empty($one['attributes']['typeparam'])
-                ? new $classname($one['attributes']['typeparam'])
-                : new $classname();
-            $field->setValue($one['attributes']['value']);
-            $field->setCompareOperator($one['attributes']['compare-operator']);
-            $filter->addField($field);
+
+            if (is_subclass_of($classname, \UserFilterField::class)) {
+                $field = !empty($one['attributes']['typeparam'])
+                    ? new $classname($one['attributes']['typeparam'])
+                    : new $classname();
+                $field->setValue($one['attributes']['value']);
+                $field->setCompareOperator($one['attributes']['compare-operator']);
+                $filter->addField($field);
+            } else {
+                throw new BadRequestException();
+            }
         }
 
         $filter->id = '';

@@ -44,11 +44,9 @@ class UserFilterFieldsIndex extends JsonApiController
         // context aka namespace filter
         if (
             isset($filtering['context'])
-            && !file_exists(
-                $GLOBALS['STUDIP_BASE_PATH'] . '/lib/classes/UserFilterFields/' . $filtering['context']
-            )
+            && !in_array($filtering['context'], \UserFilterField::$validContexts)
         ) {
-            return 'Requested context user filters do not exist.';
+            return 'Requested context does not exist.';
         }
     }
 
