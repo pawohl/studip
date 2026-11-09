@@ -22,7 +22,8 @@ class Forum3 extends Migration
         \DBManager::get()->exec("
             ALTER TABLE `forum_entries`
             ADD KEY `lft` (`lft`),
-            ADD KEY `rgt` (`rgt`)
+            ADD KEY `rgt` (`rgt`),
+            ADD KEY idx_migr (seminar_id, depth, lft, rgt)
         ");
 
         \DBManager::get()->exec("
