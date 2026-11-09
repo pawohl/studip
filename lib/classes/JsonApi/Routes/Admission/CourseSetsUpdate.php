@@ -38,9 +38,8 @@ class CourseSetsUpdate extends JsonApiController
 
         foreach (self::arrayGet($json, 'data.attributes.rules') as $oneRule) {
             [$classname, $id] = explode('_', $oneRule['id']);
-            $classname = '\\' . $classname;
 
-            $rule = new $classname($id);
+            $rule = \AdmissionRule::getRule($classname, $id);
             $rule->setAllData($oneRule['attributes']['payload']);
             $cs->addAdmissionRule($rule);
         }
