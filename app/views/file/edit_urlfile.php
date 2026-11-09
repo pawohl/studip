@@ -26,12 +26,12 @@
                 </label>
                 <label>
                     <input type="radio" name="access_type" value="redirect"
-                        <? if ($file_ref->file['metadata']['access_type'] === "redirect") echo 'checked'; ?>>
+                        <? if ($file_ref->file['metadata']['access_type'] !== 'proxy') echo 'checked'; ?>>
                     <?= _('Direktlink')?>
                 </label>
                 <label>
                     <input type="radio" name="access_type" value="proxy"
-                        <? if ($file_ref->file['metadata']['access_type'] === "proxy") echo 'checked'; ?>>
+                        <? if ($file_ref->file['metadata']['access_type'] === 'proxy') echo 'checked'; ?>>
                     <?= _('Link über Proxy')?>
                 </label>
 

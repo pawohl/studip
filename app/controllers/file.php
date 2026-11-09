@@ -626,7 +626,11 @@ class FileController extends AuthenticatedController
         $this->file = $this->file_ref->getFileType();
         $this->folder = $this->file_ref->foldertype;
 
-        if (!$this->folder || !$this->folder->isFileEditable($this->file_ref->id, $GLOBALS['user']->id)) {
+        if (
+            !$this->folder
+            || !$this->folder->isFileEditable($this->file_ref->id, $GLOBALS['user']->id)
+            || !($this->file instanceof URLFile)
+        ) {
             throw new AccessDeniedException();
         }
 
@@ -636,15 +640,25 @@ class FileController extends AuthenticatedController
         if (Request::isPost()) {
             //form was sent
             CSRFProtection::verifyUnsafeRequest();
-            $this->file_ref['name'] = trim(Request::get('name'));
-            $this->file_ref['description'] = trim(Request::get('description'));
-            $this->file_ref['content_terms_of_use_id'] = Request::get('content_terms_of_use_id');
-            $this->file_ref->file['metadata']['url'] = Request::get('url');
-            $this->file_ref->file['metadata']['access_type'] = Request::get('access_type');
-            $this->file_ref->file->store();
-            $this->file_ref->store();
 
-            PageLayout::postSuccess(_('Änderungen gespeichert!'));
+            $url = trim(Request::get('url'));
+            $accessType = Request::option('access_type');
+            if (!FileManager::isRemoteURL($url)) {
+                PageLayout::postError(_('Die angegebene URL ist ungültig.'));
+            } elseif (!$this->verifyAccessType($accessType)) {
+                PageLayout::postError(_('Die angegebene Zugriffsart ist ungültig.'));
+            } else {
+                $this->file_ref['name'] = trim(Request::get('name'));
+                $this->file_ref['description'] = trim(Request::get('description'));
+                $this->file_ref['content_terms_of_use_id'] = Request::get('content_terms_of_use_id');
+                $this->file_ref->file['metadata']['url'] = $url;
+                $this->file_ref->file['metadata']['access_type'] = $accessType;
+                $this->file_ref->file->store();
+                $this->file_ref->store();
+
+                PageLayout::postSuccess(_('Änderungen gespeichert!'));
+            }
+
             $this->redirectToFolder($this->folder);
         }
 
@@ -1816,12 +1830,16 @@ class FileController extends AuthenticatedController
         if (Request::submitted('store')) {
             CSRFProtection::verifyUnsafeRequest();
             $url = trim(Request::get('url'));
-            $url_parts = parse_url($url);
-            if (filter_var($url, FILTER_VALIDATE_URL) !== false && in_array($url_parts['scheme'], ['http', 'https','ftp'])) {
+            $accessType = Request::option('access_type', 'redirect');
+            if (!FileManager::isRemoteURL($url)) {
+                PageLayout::postError(_('Die angegebene URL ist ungültig.'));
+            } elseif (!$this->verifyAccessType($accessType)) {
+                PageLayout::postError(_('Die angegebene Zugriffsart ist ungültig.'));
+            } else {
                 $this->file = $this->top_folder->addFile(URLFile::create([
                     'name' => Request::get('name'),
                     'url' => $url,
-                    'access_type' => Request::get('access_type', "redirect"),
+                    'access_type' => $accessType,
                     'content_terms_of_use_id' => Request::get('content_terms_of_use_id')
                 ]));
 
@@ -1849,8 +1867,6 @@ class FileController extends AuthenticatedController
                     );
                     $this->render_json($payload);
                 }
-            } else {
-                PageLayout::postError(_('Die angegebene URL ist ungültig.'));
             }
         }
     }
@@ -2297,5 +2313,10 @@ class FileController extends AuthenticatedController
                 $file_ref->file->store();
             }
         }
+    }
+
+    private function verifyAccessType(?string $accessType): bool
+    {
+        return in_array($accessType, ['redirect', 'proxy'], true);
     }
 }

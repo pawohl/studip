@@ -1999,4 +1999,33 @@ class FileManager
         }
         return Icon::create($icon, $role);
     }
+
+    /**
+     * Checks whether a given string is a remote url.
+     */
+    public static function isRemoteURL(?string $url): bool
+    {
+        $scheme = mb_strtolower((string) parse_url($url ?? '', PHP_URL_SCHEME));
+        return in_array($scheme, ['http', 'https', 'ftp'], true)
+            && filter_var($url, FILTER_VALIDATE_URL) !== false
+            && parse_url($url, PHP_URL_HOST);
+    }
+
+    /**
+     * Checks whether a given string is a locale storage path.
+     */
+    public static function isLocalStoragePath(?string $path): bool
+    {
+        $real = realpath($path ?? '');
+        if ($real === false || !is_file($real)) {
+            return false;
+        }
+        foreach ([$GLOBALS['UPLOAD_PATH'], $GLOBALS['ARCHIV_PATH'], $GLOBALS['TMP_PATH']] as $base) {
+            $base = realpath($base);
+            if ($base && str_starts_with($real, $base . DIRECTORY_SEPARATOR)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

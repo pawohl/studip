@@ -127,6 +127,8 @@ if ($no_access) {
 //replace bad charakters to avoid problems when saving the file
 $file_name = FileManager::cleanFileName(Request::get('file_name'));
 $path_file = '';
+$is_remote = false;
+$access_type = null;
 switch ($type) {
     //We want to download from the archive (this mode performs perm checks)
     case 1:
@@ -138,17 +140,26 @@ switch ($type) {
         $content_type = get_mime_type($file_name);
     break;
     default:
-        if ($file instanceof LibraryFile) {
-            //Get the file type:
-            if ($file->hasFileAttached()) {
-                $path_file = $file->getPath();
-            } elseif ($file->hasURL() && !empty($file->metadata['url'])) {
-                $path_file = $file->metadata['url'];
+        if (
+            $file instanceof URLFile
+            || (
+                $file instanceof LibraryFile
+                && !$file->hasFileAttached()
+                && $file->hasURL()
+            )
+        ) {
+            $path_file   = (string) $file_ref->file->metadata['url'];
+            $access_type = $file_ref->file->metadata['access_type'] ?: 'redirect';
+
+            if (
+                !FileManager::isRemoteURL($path_file)
+                || !in_array($access_type, ['redirect', 'proxy'], true)
+            ) {
+                throw new Trails\Exception(404, _('Fehler beim Laden der Inhalte der Datei'));
             }
+            $is_remote = true;
         } else {
-            $path_file = $file instanceof URLFile
-                       ? $file_ref->file->metadata['url']
-                       : $file_ref->file->path;
+            $path_file = $file instanceof LibraryFile ? $file->getPath() : $file_ref->file->path;
         }
         $content_type = $file_ref->mime_type ?: get_mime_type($file_name);
     break;
@@ -158,8 +169,7 @@ switch ($type) {
 // check if linked file is obtainable
 $filesize = 0;
 if (
-    isset($file_ref, $file_ref->file, $file_ref->file->metadata['access_type'])
-    && $file_ref->file->metadata['access_type'] === 'proxy'
+    isset($file_ref->file, $access_type) && $access_type === 'proxy'
 ) {
     $link_data = FileManager::fetchURLMetadata($file_ref->file->metadata['url']);
     if ($link_data['response_code'] != 200) {
@@ -185,14 +195,14 @@ while (ob_get_level()) {
     ob_end_clean();
 }
 
-if (isset($file_ref, $file_ref->file, $file_ref->file->metadata['access_type']) && $file_ref->file->metadata['access_type'] === 'redirect') {
+if (isset($file_ref->file, $access_type) && $access_type === 'redirect') {
     $file_ref->incrementDownloadCounter();
     header('Location: ' . $file_ref->file->metadata['url']);
     die();
 }
 
 // Check if file actually exists
-if (!parse_url($path_file, PHP_URL_SCHEME) && !file_exists($path_file)) {
+if (!$is_remote && !FileManager::isLocalStoragePath($path_file)) {
     throw new Trails\Exception(404, _('Fehler beim Laden der Inhalte der Datei'));
 }
 
