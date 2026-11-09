@@ -6,6 +6,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use JsonApi\Errors\RecordNotFoundException;
 use JsonApi\JsonApiController;
+use JsonApi\Errors\BadRequestException;
 
 /**
  * Shows a single UserFilterField.
@@ -21,11 +22,15 @@ class UserFilterFieldsShow extends JsonApiController
 
         $classname = '\\' . $class;
 
-        $field = new $classname($id);
+        if (is_subclass_of($classname, \UserFilterField::class)) {
+            $field = new $classname($id);
 
-        // The userfilter object has a new ID -> new object not yet existing in database.
-        if ($field->getId() !== $id) {
-            throw new RecordNotFoundException();
+            // The userfilter object has a new ID -> new object not yet existing in database.
+            if ($field->getId() !== $id) {
+                throw new RecordNotFoundException();
+            }
+        } else {
+            throw new BadRequestException();
         }
 
         return $this->getContentResponse($field);
