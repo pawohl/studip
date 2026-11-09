@@ -22,7 +22,13 @@ Veranstaltungen:
 
 ## Breaking changes
 
--
+- Es ist nun möglich, mehrere Räume für einen Veranstaltungstermin zu buchen (TIC #639).
+  Alle Stellen, die über einen Veranstaltungstermin bisher auf Raumbuchungen zugegriffen haben,
+  müssen angepasst werden. Zudem wurde die Relation room_booking in der CourseDate-Klasse
+  entfernt und durch die Relation room_bookings ersetzt. Die Methoden getRoomName und getRoom
+  sind aus Gründen der Rückwärtskompatibilität noch enthalten, liefern aber nur Daten zu
+  einem für den Veranstaltungstermin gebuchten Raum.
+
 
 ## Security related issues
 
