@@ -12,7 +12,7 @@
 <div class="formpart">
     <section <?= $orientation == 'horizontal' ? 'class="hgroup"' : '' ?> id="<?= htmlReady($id) ?>">
     <span class="textlabel<?= $required ? ' studiprequired' : '' ?> ">
-        <?= htmlReady($this->title) ?>
+        <?= htmlReady($title) ?>
         <? if ($required) : ?>
             <span class="asterisk" title="<?= _('Dies ist ein Pflichtfeld') ?>" aria-hidden="true">*</span>
         <? endif ?>

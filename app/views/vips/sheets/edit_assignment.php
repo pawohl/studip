@@ -23,7 +23,7 @@
             <?= _('Grunddaten') ?>
         </legend>
 
-        <? if ($this->locked): ?>
+        <? if ($locked): ?>
             <?= MessageBox::info(_('Die Klausur kann nur eingeschränkt bearbeitet werden, da bereits Lösungen abgegeben wurden.')) ?>
         <? endif ?>
 

@@ -39,7 +39,7 @@
                             <? $object_name = htmlReady($object_type::find($rel['range_id'])->getDisplayName()); ?>
                                 <tr>
                                     <td data-sort-value="<?= $object_name ?>">
-                                        <a href="<?= $this->controller->url_for('shared/contacts/dispatch', mb_strtolower($object_type), $rel['range_id']) ?>">
+                                        <a href="<?= $controller->url_for('shared/contacts/dispatch', mb_strtolower($object_type), $rel['range_id']) ?>">
                                             <?= $object_name ?>
                                         </a>
                                     </td>

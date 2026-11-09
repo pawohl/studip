@@ -28,7 +28,7 @@ $perm = MvvPerm::get($abschnitt)
                 <?= MvvI18N::input('ueberschrift', $abschnitt->ueberschrift, ['maxlength' => '254'])->checkPermission($abschnitt) ?>
             </label>
     </fieldset>
-    <input type="hidden" name="version_id" value="<?= $this->version->id ?>">
+    <input type="hidden" name="version_id" value="<?= $version->id ?>">
     <footer data-dialog-button>
         <? if ($abschnitt->isNew()) : ?>
             <?= Button::createAccept(_('Anlegen'), 'store', ['title' => _('Abschnitt anlegen')]) ?>

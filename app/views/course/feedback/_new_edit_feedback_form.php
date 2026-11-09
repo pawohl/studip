@@ -21,20 +21,20 @@
             type="checkbox"
             name="anonymous_entries"
             value="1"
-            <?= $this->current_action === 'edit_form' ? 'disabled' : '' ?>
+            <?= $current_action === 'edit_form' ? 'disabled' : '' ?>
             <?= $feedback->anonymous_entries ? 'checked' : '' ?>
         > 
         <?= _('Feedback kann anonym abgegeben werden')?>
     </label>
     <label>
-        <input id="comment-activated" type="checkbox" name="commentable" value="1" <? if ($this->current_action ==
+        <input id="comment-activated" type="checkbox" name="commentable" value="1" <? if ($current_action ==
         'edit_form') {echo ('disabled');} else { echo('data-activates="#comment-only"');}?>
         <?= $feedback->commentable == 1 ? 'checked' : '' ?>>
         <?= _('Abgegebenes Feedback kann einen Kommentar beinhalten') ?>
     </label>
     <label>
         <input id="comment-only" type="checkbox" name="comment_only" value="1"
-            <?= $feedback->mode == FeedbackElement::MODE_NO_RATING ? 'checked' : '' ?> <? if ($this->current_action ==
+            <?= $feedback->mode == FeedbackElement::MODE_NO_RATING ? 'checked' : '' ?> <? if ($current_action ==
         'edit_form') {echo ('disabled');} else { echo('data-deactivates="#comment-activated, .feedback-mode"');}?>>
         <?= _('Nur Kommentare (keine numerische Bewertung)') ?>
     </label>

@@ -1,6 +1,6 @@
 <? if ($show_form): ?>
     <form class="default" method="post"
-          action="<?= $this->controller->link_for(
+          action="<?= $controller->link_for(
                   'resources/booking/copy/' . $booking->id
                   ) ?>" data-dialog>
         <?= CSRFProtection::tokenTag() ?>

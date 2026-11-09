@@ -8,7 +8,7 @@
         <li>
             <a href="<?= $controller->link_for($url, $studiengang->id) ?>"><?= htmlReady($studiengang->getDisplayName()) ?></a> 
             <? if ($studiengang->getValue('beschreibung')) : ?>
-                <a data-dialog href="<?= $this->controller->action_link('info', $studiengang->id) ?>">
+                <a data-dialog href="<?= $controller->action_link('info', $studiengang->id) ?>">
                     <?= Icon::create('info-circle', 'clickable', ['title' => _('Informationen zum Studiengang')]); ?>
                 </a>
             <? endif; ?>

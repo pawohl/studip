@@ -1,4 +1,4 @@
-<?= $this->controller->jsUrl() ?>
+<?= $controller->jsUrl() ?>
 <form method="post">
     <?= CSRFProtection::tokenTag(); ?>
     <table id="abschluss_kategorien" class="default sortable collapsable">

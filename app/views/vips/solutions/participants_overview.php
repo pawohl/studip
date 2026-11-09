@@ -129,7 +129,7 @@
             <? endif ?>
         </tr>
 
-        <? if ($display == 'points' || $this->overall['weighting']): ?>
+        <? if ($display == 'points' || $overall['weighting']): ?>
             <tr class="smaller" style="background-color: #D1D1D1;">
                 <td>
                     <? if ($display == 'points') : ?>

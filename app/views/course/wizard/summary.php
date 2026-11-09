@@ -68,10 +68,10 @@
 </fieldset>
 
     <footer data-dialog-button>
-    <? if (isset($_SESSION['coursewizard'][$this->temp_id]['batchcreate'])) : ?>
+    <? if (isset($_SESSION['coursewizard'][$temp_id]['batchcreate'])) : ?>
         <?= addHiddenFields(
             'batchcreate',
-            $_SESSION['coursewizard'][$this->temp_id]['batchcreate']
+            $_SESSION['coursewizard'][$temp_id]['batchcreate']
         ) ?>
     <? endif ?>
         <?= Studip\Button::create(_('Zurück'), 'back',

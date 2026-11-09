@@ -1,5 +1,5 @@
 <form method="post" name="room_request" class="default"
-      action="<?= $controller->link_for('course/room_requests/request_find_matching_rooms/' . $request_id . '/' . $this->step) ?>"
+      action="<?= $controller->link_for('course/room_requests/request_find_matching_rooms/' . $request_id . '/' . $step) ?>"
     <?= Request::isXhr() ? 'data-dialog="size=big"' : ''?>>
     <input type="hidden" name="request_id" value="<?= htmlReady($request_id) ?>">
     <?= CSRFProtection::tokenTag() ?>

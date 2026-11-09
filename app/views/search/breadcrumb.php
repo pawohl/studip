@@ -1,5 +1,5 @@
 <div style="padding-bottom: 20px;">
-<? $bc_points = $this->breadcrumb->getTrail(); ?>
+<? $bc_points = $breadcrumb->getTrail(); ?>
 <? $sum_points = count($bc_points) - 1; ?>
 <? $index = 0; ?>
 <? foreach($bc_points as $type => $point):?>

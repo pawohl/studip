@@ -8,7 +8,7 @@
 ?>
 <fieldset<?= $collapsable ? ' class="collapsable' . ($collapsed ? ' collapsed' : '') . '"' : '' ?>>
     <? if ($legend) : ?>
-        <legend><?= htmlReady($this->legend) ?></legend>
+        <legend><?= htmlReady($legend) ?></legend>
     <? endif ?>
     <? foreach ($parts as $part) : ?>
         <?= $part->renderWithCondition() ?>

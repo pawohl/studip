@@ -381,7 +381,7 @@
                                     [
                                         'room' => $room,
                                         'time_intervals' => $request_time_intervals,
-                                        'availability' => $this->room_availability[$room->id],
+                                        'availability' => $room_availability[$room->id],
                                         'underload' => $room_underload[$room->id],
                                         'selected_rooms' => $selected_rooms
                                     ]

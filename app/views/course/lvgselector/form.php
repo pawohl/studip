@@ -33,7 +33,7 @@
 
     <h3><?=_("Suche:")?></h3>
 
-    <input type="text" name="lvgruppe_selection[search_key]" value="<?= htmlReady($this->selection->getSearchKey()) ?>">
+    <input type="text" name="lvgruppe_selection[search_key]" value="<?= htmlReady($selection->getSearchKey()) ?>">
     <?= Icon::create('search')->asInput(false, ['name' => 'lvgruppe_selection[search_button]']); ?>
 
     <? if ($selection->searched()) : ?>

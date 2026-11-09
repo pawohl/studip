@@ -1,7 +1,7 @@
 <? if ($show_form): ?>
     <? if ($available_resources): ?>
         <form class="default" method="post"
-              action="<?= $this->controller->link_for('resources/booking/move/' . $booking->id) ?>" data-dialog="size=auto">
+              action="<?= $controller->link_for('resources/booking/move/' . $booking->id) ?>" data-dialog="size=auto">
             <?= CSRFProtection::tokenTag() ?>
                 <label>
                     <? if ($booking->resource->class_name == 'Room'): ?>

@@ -61,7 +61,7 @@
             <?= _('Verweisziel') ?>
 
             <? if ($banner->isNew()) : ?>
-                <input type="url" class="target-url" name="target" placeholder="<?= _('URL eingeben') ?>" value="<?= htmlReady($this->flash['request']['target']) ?>" style="width: 240px;" maxlen="254">
+                <input type="url" class="target-url" name="target" placeholder="<?= _('URL eingeben') ?>" value="<?= htmlReady($flash['request']['target']) ?>" style="width: 240px;" maxlen="254">
 
                 <?= QuickSearch::get('seminar', new StandardSearch('Seminar_id'))
                     ->setInputStyle('width: 240px')

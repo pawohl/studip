@@ -1,20 +1,20 @@
 <div class="formpart">
-    <label <?= $this->required ? 'class="studiprequired"' : '' ?> for="<?= $id ?>">
+    <label <?= $required ? 'class="studiprequired"' : '' ?> for="<?= $id ?>">
         <span class="textlabel">
-            <?= htmlReady($this->title) ?>
+            <?= htmlReady($title) ?>
         </span>
-        <? if ($this->required) : ?>
+        <? if ($required) : ?>
             <span class="asterisk" title="<?= _('Dies ist ein Pflichtfeld') ?>" aria-hidden="true">*</span>
         <? endif ?>
         <input type="text"
-               list="<?= htmlReady($this->title) ?>"
-               v-model="<?= htmlReady($this->name) ?>"
-               name="<?= htmlReady($this->name) ?>"
-               value="<?= htmlReady($this->value) ?>"
+               list="<?= htmlReady($title) ?>"
+               v-model="<?= htmlReady($name) ?>"
+               name="<?= htmlReady($name) ?>"
+               value="<?= htmlReady($value) ?>"
                id="<?= htmlReady($id) ?>"
-               <?= $this->required ? 'required aria-required="true"' : '' ?>
+               <?= $required ? 'required aria-required="true"' : '' ?>
             <?= $attributes ?>>
-        <datalist class="" id="<?= htmlReady($this->title)  ?>">
+        <datalist class="" id="<?= htmlReady($title)  ?>">
             <? foreach ($options as $key => $option) : ?>
                 <option value="<?= htmlReady($option) ?>"<?= ($option == $value ? " selected" : "") ?>>
                 </option>

@@ -30,7 +30,7 @@
 
         <h3><?= _("Veranstaltungen") ?></h3>
         <ul class="clean courseselector">
-            <? foreach ($this->questionnaire->assignments as $assignment) : ?>
+            <? foreach ($questionnaire->assignments as $assignment) : ?>
             <? if ($assignment['range_type'] === "course") : ?>
                 <? $course = Course::find($assignment['range_id']) ?>
                 <? if ($course) : ?>
@@ -53,7 +53,7 @@
 
         <h3><?= _("Teilnehmergruppen in Veranstaltungen") ?></h3>
         <ul class="clean statusgroupselector">
-            <? foreach ($this->questionnaire->assignments as $assignment) : ?>
+            <? foreach ($questionnaire->assignments as $assignment) : ?>
                 <? if ($assignment['range_type'] === "statusgruppe") : ?>
                     <li>
                         <label>
@@ -75,7 +75,7 @@
         <? if ($GLOBALS['perm']->have_perm("admin")) : ?>
             <h3><?= _("Einrichtungen") ?></h3>
             <ul class="clean instituteselector">
-                <? foreach ($this->questionnaire->assignments as $assignment) : ?>
+                <? foreach ($questionnaire->assignments as $assignment) : ?>
                     <? if ($assignment['range_type'] === 'institute') : ?>
                         <li>
                             <label>
@@ -87,14 +87,14 @@
                     <? endif ?>
                 <? endforeach ?>
             </ul>
-            <?= QuickSearch::get('add_institut_id', new InstituteSearch($this->questionnaire->assignments->filter(function ($q) {
+            <?= QuickSearch::get('add_institut_id', new InstituteSearch($questionnaire->assignments->filter(function ($q) {
                 return $q['range_type'] === 'institute';
             })->pluck('range_id')))->render() ?>
         <? endif ?>
 
         <?
         foreach (PluginManager::getInstance()->getPlugins(QuestionnaireAssignmentPlugin::class) as $plugin) {
-            $template = $plugin->getQuestionnaireAssignmentEditTemplate($this->questionnaire);
+            $template = $plugin->getQuestionnaireAssignmentEditTemplate($questionnaire);
             if ($template) {
                 echo $template->render();
             }

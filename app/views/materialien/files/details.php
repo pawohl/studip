@@ -66,7 +66,7 @@
                     <? foreach ($relation as $rel) : ?>
                         <? $related_object = $object_type::find($rel['range_id']) ?>
                         <li>
-                            <a href="<?= $this->controller->url_for('materialien/files/dispatch', mb_strtolower($object_type), $rel['range_id']) ?>">
+                            <a href="<?= $controller->url_for('materialien/files/dispatch', mb_strtolower($object_type), $rel['range_id']) ?>">
                                 <?= $related_object->getDisplayName() ?>
                             </a>
                         </li>

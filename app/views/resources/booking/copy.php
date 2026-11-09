@@ -2,7 +2,7 @@
     <? if ($available_resources): ?>
 
         <form class="default" method="post"
-              action="<?= $this->controller->link_for('resources/booking/copy/' . $booking->id) ?>"
+              action="<?= $controller->link_for('resources/booking/copy/' . $booking->id) ?>"
               data-dialog="size=auto">
             <?= CSRFProtection::tokenTag() ?>
             <label>

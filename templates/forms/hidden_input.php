@@ -1,4 +1,4 @@
 <input type="hidden"
-       name="<?= htmlReady($this->name) ?>"
-       value="<?= htmlReady($this->value) ?>"
+       name="<?= htmlReady($name) ?>"
+       value="<?= htmlReady($value) ?>"
        id="<?= $id ?>" <?= $attributes ?>>

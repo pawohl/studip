@@ -327,7 +327,7 @@
         <?= $course->getAllDatesInSemester()->toHtml(true) ?>
     </section>
 </article>
-<? if ($this->studymodules) : ?>
+<? if ($studymodules) : ?>
 
     <article class="studip">
         <header>
@@ -335,7 +335,7 @@
         </header>
         <section>
             <ul class="list-unstyled">
-                <? foreach ($this->studymodules as $module) : ?>
+                <? foreach ($studymodules as $module) : ?>
                     <li>
                         <a class="module-info" href="<?= URLHelper::getLink($module['nav']->getUrl())?>">
                             <?= htmlReady($module['title']) ?>

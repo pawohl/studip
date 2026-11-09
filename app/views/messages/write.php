@@ -58,7 +58,7 @@
             ->setLinkText(_('Mehrere Adressaten hinzufügen'))
             ->setExecuteURL($controller->url_for('messages/write'))
             ->setJSFunctionOnSubmit('STUDIP.Messages.add_adressees')
-            ->setSearchObject($this->mp_search_object);
+            ->setSearchObject($mp_search_object);
         foreach (Statusgruppen::findContactGroups() as $group) {
             $mps->addQuickfilter(
                 $group['name'],

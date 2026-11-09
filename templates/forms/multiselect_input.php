@@ -1,9 +1,9 @@
 <div class="formpart" data-form-input-for="<?= htmlReady($name) ?>">
-    <label<?= ($this->required ? ' class="studiprequired"' : '') ?> for="<?= $id ?>">
+    <label<?= ($required ? ' class="studiprequired"' : '') ?> for="<?= $id ?>">
         <span class="textlabel">
-            <?= htmlReady($this->title) ?>
+            <?= htmlReady($title) ?>
         </span>
-        <? if ($this->required) : ?>
+        <? if ($required) : ?>
             <span class="asterisk" title="<?= _('Dies ist ein Pflichtfeld') ?>" aria-hidden="true">*</span>
         <? endif ?>
     </label>

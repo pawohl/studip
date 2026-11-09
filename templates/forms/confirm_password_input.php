@@ -1,16 +1,16 @@
 <div class="formpart">
-    <label <?= $this->required ? 'class="studiprequired"' : '' ?> for="<?= $id ?>">
+    <label <?= $required ? 'class="studiprequired"' : '' ?> for="<?= $id ?>">
         <span class="textlabel">
-            <?= htmlReady($this->title) ?>
+            <?= htmlReady($title) ?>
         </span>
-        <? if ($this->required) : ?>
+        <? if ($required) : ?>
             <span class="asterisk" title="<?= _('Dies ist ein Pflichtfeld') ?>" aria-hidden="true">*</span>
         <? endif ?>
         <input type="password"
-               v-model="<?= htmlReady($this->name) ?>"
-               name="<?= htmlReady($this->name) ?>"
-               value="<?= htmlReady($this->value) ?>"
-               id="<?= $id ?>" <?= $this->required ? 'required aria-required="true"' : '' ?>
+               v-model="<?= htmlReady($name) ?>"
+               name="<?= htmlReady($name) ?>"
+               value="<?= htmlReady($value) ?>"
+               id="<?= $id ?>" <?= $required ? 'required aria-required="true"' : '' ?>
             <?= $attributes ?>>
     </label>
 </div>
