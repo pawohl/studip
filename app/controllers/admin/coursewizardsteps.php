@@ -15,14 +15,6 @@
  * @since       3.3
  */
 
-$stepdir = "../lib/classes/coursewizardsteps";
-foreach (scandir($stepdir) as $file) {
-    if (mb_stripos($file, ".php") !== false) {
-        require_once $stepdir . "/" . $file;
-    }
-}
-
-
 class Admin_CourseWizardStepsController extends AuthenticatedController
 {
     public function before_filter(&$action, &$args)
@@ -33,6 +25,12 @@ class Admin_CourseWizardStepsController extends AuthenticatedController
         if (!$GLOBALS['perm']->have_perm('root')) {
             throw new AccessDeniedException();
         }
+
+        $stepdir = $GLOBALS['STUDIP_BASE_PATH'] . '/lib/classes/coursewizardsteps';
+        foreach (glob($stepdir . '/*.php') as $file) {
+            require_once $file;
+        }
+
         PageLayout::setTitle(_('Schritte im Veranstaltungsanlegeassistenten'));
         Navigation::activateItem('/admin/config/coursewizardsteps');
     }
@@ -64,13 +62,16 @@ class Admin_CourseWizardStepsController extends AuthenticatedController
             $this->step->number = 0;
             $this->step->enabled = false;
 
+            $registeredClasses = CourseWizardStepRegistry::findAndMapBySQL(
+                fn(CourseWizardStepRegistry $step) => $step->classname,
+                "1 ORDER BY `number`"
+            );
             foreach (get_declared_classes() as $className) {
-                if (is_a($className, "CourseWizardStep", true)
-                        && $className !== "CourseWizardStep") {
-                    $collection = new SimpleCollection(CourseWizardStepRegistry::findBySQL("1 ORDER BY `number`"));
-                    if (!in_array($className, $collection->pluck("classname"))) {
-                        $this->availableClasses[] = $className;
-                    }
+                if (
+                    is_subclass_of($className, CourseWizardStep::class)
+                    && !in_array($className, $registeredClasses)
+                ) {
+                    $this->availableClasses[] = $className;
                 }
             }
         }

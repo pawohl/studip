@@ -27,6 +27,9 @@ parameters:
         -
             message: '#Unsafe usage of new static\(\)\.#'
             path: lib/classes/SimpleORMap.php
-
+        -
+            identifier: class.notFound
+            message: '#^Parameter \$event of method Studip\\Build\\ComposerHooks::configureAttributeCollector\(\) has invalid type Composer\\Script\\Event\.$#'
+            path: lib/classes/Build/ComposerHooks.php
 includes:
   - ./composer/zorac/phpstan-php-di/extension.neon

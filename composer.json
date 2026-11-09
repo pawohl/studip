@@ -9,7 +9,11 @@
     },
     "scripts": {
         "rector-dryrun": "rector process --dry-run",
-        "rector": "rector process"
+        "rector": "rector process",
+
+        "pre-autoload-dump": [
+            "Studip\\Build\\ComposerHooks::configureAttributeCollector"
+        ]
     },
     "autoload": {
         "psr-4": {
