@@ -273,6 +273,33 @@ const Questionnaire = {
                         node.removeAttribute('xmlns');
                     });
 
+                    // Replace foreignObject with SVG text for html2canvas compatibility
+                    svg.querySelectorAll('foreignObject').forEach(fo => {
+                        const span = fo.querySelector('span');
+                        if (!span) return;
+
+                        const x = Number(fo.getAttribute('x'));
+                        const y = Number(fo.getAttribute('y'));
+                        const width = Number(fo.getAttribute('width'));
+                        const height = Number(fo.getAttribute('height'));
+                        const isVertical = span.classList.contains('ct-vertical');
+
+                        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                        if (isVertical) {
+                            text.setAttribute('x', x + width);
+                            text.setAttribute('y', y + height - 2);
+                            text.setAttribute('text-anchor', 'end');
+                        } else {
+                            text.setAttribute('x', x + width / 2);
+                            text.setAttribute('y', y + 14);
+                            text.setAttribute('text-anchor', 'middle');
+                        }
+                        text.setAttribute('font-size', '12');
+                        text.setAttribute('fill', 'currentColor');
+                        text.textContent = span.textContent.trim();
+                        fo.replaceWith(text);
+                    });
+
                     // Set width and height as attribute, not as style
                     svg.setAttribute('width', svg.getBoundingClientRect().width);
                     svg.setAttribute('height', svg.getBoundingClientRect().height);
