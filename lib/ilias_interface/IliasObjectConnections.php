@@ -90,9 +90,9 @@ class IliasObjectConnections
     function isConnected($ilias_index = '')
     {
         if ($ilias_index) {
-            return (boolean) $this->object_connections[$ilias_index];
+            return (bool) $this->object_connections[$ilias_index];
         } else {
-            return (boolean) $this->object_connections;
+            return (bool) $this->object_connections;
         }
     }
 

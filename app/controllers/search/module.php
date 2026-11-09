@@ -286,7 +286,7 @@ class Search_ModuleController extends MVVController
         // semesters for selector
         // $sem_valid = false;
         // Augsburg Module ohne Angabe der Gültigkeit
-        $sem_valid = !((boolean) $this->modul->start);
+        $sem_valid = !$this->modul->start;
         $sem_number = 1;
         foreach (Semester::getAll() as $semester) {
             if ($sem_valid || $this->modul->start == $semester->getId()) {
@@ -525,7 +525,7 @@ class Search_ModuleController extends MVVController
         // semesters for selector
         // $sem_valid = false;
         // Augsburg Module ohne Angabe der Gültigkeit
-        $sem_valid = !((boolean) $this->modul->start);
+        $sem_valid = !$this->modul->start;
         $sem_number = 1;
         foreach (Semester::getAll() as $semester) {
             if ($sem_valid || $this->modul->start == $semester->getId()) {

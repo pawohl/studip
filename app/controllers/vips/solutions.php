@@ -2281,7 +2281,7 @@ class Vips_SolutionsController extends AuthenticatedController
                 'exercise_id' => $exercise_id,
                 'user_id'     => $user_id,
                 'time'        => $solution->mkdate,
-                'corrected'   => (boolean) $solution->state,
+                'corrected'   => (bool) $solution->state,
                 'points'      => (float) $solution->points,
                 'grader_id'   => $solution->grader_id,
                 'feedback'    => $solution->feedback,
@@ -2466,7 +2466,7 @@ class Vips_SolutionsController extends AuthenticatedController
         foreach ($result as $row) {
             $exercise_id = (int) $row['task_id'];
             $user_id     = $row['user_id'];
-            $corrected   = (boolean) $row['state'];
+            $corrected   = (bool) $row['state'];
 
             if (!array_key_exists($user_id, $group)) {
                 $group[$user_id] = $assignment->getUserGroup($user_id);

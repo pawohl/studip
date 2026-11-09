@@ -879,7 +879,7 @@ class ConnectedIlias
      */
     public function isAllowedModuleType($module_type)
     {
-        return (boolean)$this->ilias_config['modules'][$module_type];
+        return (bool) $this->ilias_config['modules'][$module_type];
     }
 
     /**

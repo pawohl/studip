@@ -104,8 +104,8 @@ class Admin_IliasInterfaceController extends AuthenticatedController
             $this->ilias_interface_config['cache'] = Request::bool('ilias_interface_cache', false);
             $this->ilias_interface_config['allow_change_course'] = Request::get('ilias_interface_allow_change_course');
             $this->ilias_interface_config['allow_add_own_course'] = Request::get('ilias_interface_allow_add_own_course');
-            $this->ilias_interface_config['create_category'] = (boolean)Request::get('ilias_interface_create_category');
-            $this->ilias_interface_config['create_objects'] = (boolean)Request::get('ilias_interface_create_objects');
+            $this->ilias_interface_config['create_category'] = Request::bool('ilias_interface_create_category', false);
+            $this->ilias_interface_config['create_objects'] = Request::bool('ilias_interface_create_objects', false);
 
             //store config entry
             Config::get()->store('ILIAS_INTERFACE_BASIC_SETTINGS', $this->ilias_interface_config);

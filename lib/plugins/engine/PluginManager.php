@@ -135,7 +135,7 @@ class PluginManager
         $query = "UPDATE plugins SET enabled = ? WHERE pluginid = ?";
         DBManager::get()->execute($query, [$state, $id]);
 
-        $this->plugins[$id]['enabled'] = (boolean) $enabled;
+        $this->plugins[$id]['enabled'] = (bool) $enabled;
 
         NotificationCenter::postNotification(
             $enabled ? 'PluginDidEnable' : 'PluginDidDisable',

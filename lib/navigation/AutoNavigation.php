@@ -56,6 +56,6 @@ class AutoNavigation extends Navigation
             }
         }
 
-        return $this->active = (boolean) $this->activeSubNavigation();
+        return $this->active = (bool) $this->activeSubNavigation();
     }
 }

@@ -290,7 +290,7 @@ class Navigation implements IteratorAggregate
      */
     public function hasBadgeNumber()
     {
-        return (boolean) $this->badgeNumber;
+        return (bool) $this->badgeNumber;
     }
 
 
@@ -303,7 +303,7 @@ class Navigation implements IteratorAggregate
             return $this->active;
         }
 
-        return (boolean) $this->activeSubNavigation();
+        return (bool) $this->activeSubNavigation();
     }
 
     /**
