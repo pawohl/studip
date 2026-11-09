@@ -1,10 +1,24 @@
 # Stud.IP v6.2
 
-**dd.mm.jjjj**
+**16.11.2026**
 
 ## Neue Features
 
--
+System:
+- Full Calendar wurde auf Version 6 aktualisiert
+- In Ankündigungen ist Mediensupport zur Einbindung von Videos enthalten
+- Deeplinks und Short-URLs lassen sich auf jeder Seite aus dem Footer aufrufen
+- Zielgruppenspezifische Startseitenwidgets inkl. Push-Option
+- Root: Rootassistent erlaubt direkten Zugriff auf Konfiguratiosoptionen nach einem Update
+
+Raumverwaltung:
+- Teilbare Räume lassen sich verwalten
+- Einem Veranstaltungstermin lässt sich nun mehr als ein Raum zuordnen
+- Feiertage werden auch in den Raumbelegungsplänen angezeigt
+
+Veranstaltungen:
+- RTF-Export wurde neu implementiert
+- Anlage von Ordnern und Foren zu Themen wurde vereinfacht und per Sammelaktion durchführbar
 
 ## Breaking changes
 
