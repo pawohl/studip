@@ -33,6 +33,14 @@ class UnitsCopy extends NonJsonApiController
         $modified = $data['modified'];
         $duplicate = $data['duplicate'];
 
+        if (!$sourceUnit) {
+            throw new RecordNotFoundException('Unknown source unit');
+        }
+
+        if (!Authority::canUpdateUnit($user, $sourceUnit)) {
+            throw new AuthorizationFailedException();
+        }
+
         try {
             $range = \RangeFactory::createRange($rangeType, $rangeId);
         } catch (\Exception $e) {
