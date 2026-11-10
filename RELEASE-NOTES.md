@@ -34,7 +34,7 @@ Veranstaltungen:
 
 ## Deprecated Features
 
-- Die externe Bibliothek phpass zum hashen von Benutzerpasswörtern wird in absehbarer Zeit durch die PHP-eigene Implementation von bcrypt ersetzt. Die bisher verfügbare Option PHPASS_USE_PORTABLE_HASH wird damit obsolet, damit erzeugte Passwort-Hashes sind nicht kompatibel. Falls sie unter Admin -> System -> Konfiguration die Option PHPASS_USE_PORTABLE_HASH aktiviert hatten dann deaktivieren Sie diese bitte und melden sich bei uns.
+- Die externe Bibliothek phpass zum hashen von Benutzerpasswörtern wird in absehbarer Zeit durch die PHP-eigene Implementation von bcrypt ersetzt. Die bisher verfügbare Option PHPASS_USE_PORTABLE_HASH wird damit obsolet, damit erzeugte Passwort-Hashes sind nicht kompatibel (siehe #4131). Falls sie unter Admin -> System -> Konfiguration die Option PHPASS_USE_PORTABLE_HASH aktiviert hatten dann deaktivieren Sie diese bitte und melden sich bei uns.
 
 ## Known Issues
 
