@@ -114,7 +114,7 @@ class TextTask extends Exercise
 
         $answerDefault   = Studip\Markup::removeHtml($this->task['template'] ?? '');
         $musterLoesung   = Studip\Markup::removeHtml($this->task['answers'][0]['text']);
-        $studentSolution = Studip\Markup::removeHtml($solution->response[0]);
+        $studentSolution = Studip\Markup::removeHtml($solution->response[0] ?? '');
 
         $answerDefault   = $this->normalizeText($answerDefault, true);
         $studentSolution = $this->normalizeText($studentSolution, true);

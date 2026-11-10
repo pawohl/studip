@@ -79,7 +79,7 @@ class TextLineTask extends Exercise
         $result = [];
 
         $response = $solution->response;
-        $studentSolution = $response[0];
+        $studentSolution = $response[0] ?? '';
 
         $similarity = 0;
         $safe = false;
