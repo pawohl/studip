@@ -85,7 +85,7 @@ class Institute_MembersController extends AuthenticatedController
 
         $this->direction = Request::option('direction');
         if (!in_array($this->direction, ['ASC', 'DESC'])) {
-            $this->direction === 'ASC';
+            $this->direction = 'ASC';
         }
 
         URLHelper::addLinkParam('admin_view', $this->admin_view);
