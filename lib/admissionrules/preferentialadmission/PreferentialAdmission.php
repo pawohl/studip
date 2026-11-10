@@ -119,7 +119,7 @@ class PreferentialAdmission extends AdmissionRule
         if (!$this->favorSemester) {
 
             $userlist = new AdmissionUserList();
-            $userlist->setUsers($users)->setFactor($this->bonus_difference + 1)->store();
+            $userlist->setUsers($users)->setFactor(2 * $this->bonus_difference + 1)->store();
             $this->userlists[] = $userlist->getId();
             $courseset->addUserList($userlist->getId());
 
@@ -252,8 +252,8 @@ class PreferentialAdmission extends AdmissionRule
      * set and should be considered, only the semesters of study belonging
      * to the given conditions are set.
      *
-     * @param $users user IDs to process
-     * @param $considerConditions should only the semesters of study belonging
+     * @param $users array user IDs to process
+     * @param $considerConditions bool should only the semesters of study belonging
      *                            to given conditions be considered?
      * @param array $exclude user IDs to exclude
      * @return array Users with their maximal semester of study.
@@ -277,21 +277,21 @@ class PreferentialAdmission extends AdmissionRule
                 // Search for subject and degree entries.
                 foreach ($condition->getFields() as $field) {
                     switch (get_class($field)) {
-                        case 'DegreeCondition':
+                        case UserFilterFields\DegreeCondition::class:
                             if ($queryPart) {
                                 $queryPart .= " AND ";
                             }
                             $queryPart .= "`abschluss_id`".$field->getCompareOperator()."?";
                             $values[] = $field->getValue() ?: '';
                             break;
-                        case 'SubjectCondition':
+                        case UserFilterFields\SubjectCondition::class:
                             if ($queryPart) {
                                 $queryPart .= " AND ";
                             }
                             $queryPart .= "`fach_id`".$field->getCompareOperator()."?";
                             $values[] = $field->getValue() ?: '';
                             break;
-                        case 'SemesterOfStudyCondition':
+                        case UserFilterFields\SemesterOfStudyCondition::class:
                             if ($queryPart) {
                                 $queryPart .= " AND ";
                             }
