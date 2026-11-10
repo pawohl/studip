@@ -244,8 +244,11 @@ class QuestionnaireController extends AuthenticatedController
         }
         $this->questionnaire->delete();
         PageLayout::postSuccess(_('Der Fragebogen wurde gelöscht.'));
-        if (Request::get("redirect")) {
-            $this->redirect(Request::get("redirect"));
+
+
+        $redirect = Request::get('redirect');
+        if ($redirect && is_internal_url($redirect)) {
+            $this->redirect($redirect);
         } else {
             $this->redirect("questionnaire/overview");
         }

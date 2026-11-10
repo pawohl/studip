@@ -87,7 +87,7 @@ class JsupdaterController extends AuthenticatedController
             $url = $notification->url;
         }
 
-        if ($url) {
+        if ($url && is_internal_url($url)) {
             $this->redirect(URLHelper::getURL(TransformInternalLinks($url)));
         } else {
             $this->render_nothing();
