@@ -126,6 +126,7 @@ class NewsController extends StudipController
             $range = Request::get('news_range');
             if ($news->havePermission('unassign', $range)) {
                 if (Request::get('confirm')) {
+                    CSRFProtection::verifyUnsafeRequest();
                     $news->deleteRange($range);
                     $news->store();
                 } else {
@@ -142,6 +143,7 @@ class NewsController extends StudipController
             $news = new StudipNews($news_id);
             if ($news->havePermission('delete')) {
                 if (Request::get('confirm')) {
+                    CSRFProtection::verifyUnsafeRequest();
                     $news->delete();
                 } else {
                     PageLayout::postQuestion(
