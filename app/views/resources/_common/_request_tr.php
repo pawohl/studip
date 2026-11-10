@@ -52,13 +52,12 @@
         <?= htmlReady($request->getTypeString()) ?>
         <? if ($request->isSimpleRequest()): ?>
             <?
-            $begin          = $request->getStartDate();
-            $end            = $request->getEndDate();
-            $different_days = $begin->format('Ymd') != $end->format('Ymd');
+            $begin = $request->getStartDate();
+            $end   = $request->getEndDate();
             ?>
-            <? if (($begin instanceof DateTime) && ($end instanceof DateTime)): ?>
+            <? if ($begin instanceof DateTime && $end instanceof DateTime): ?>
                 <br>
-                <? if ($different_days): ?>
+                <? if ($begin->format('Ymd') !== $end->format('Ymd')): ?>
                     (<?= sprintf(
                         _('vom %1$s bis %2$s'),
                         $begin->format('d.m.Y H:i'),
