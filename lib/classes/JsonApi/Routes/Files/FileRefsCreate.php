@@ -2,6 +2,10 @@
 
 namespace JsonApi\Routes\Files;
 
+use File;
+use FileManager;
+use FileRef;
+use FolderType;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use JsonApi\Errors\AuthorizationFailedException;
@@ -11,6 +15,8 @@ use JsonApi\Errors\RecordNotFoundException;
 use JsonApi\JsonApiController;
 use JsonApi\Routes\ValidationTrait;
 use JsonApi\Schemas\File as FileSchema;
+use StandardFile;
+use User;
 
 class FileRefsCreate extends JsonApiController
 {
@@ -27,7 +33,7 @@ class FileRefsCreate extends JsonApiController
         $json = $this->validate($request);
 
         // validate parent folder
-        if (!$parent = \FileManager::getTypedFolder($args['id'])) {
+        if (!$parent = FileManager::getTypedFolder($args['id'])) {
             throw new RecordNotFoundException();
         }
 
@@ -56,16 +62,16 @@ class FileRefsCreate extends JsonApiController
                 return $err;
             }
             $fileId = self::arrayGet($file, 'data.id');
-            if (!\File::find($fileId)) {
+            if (!File::find($fileId)) {
                 return 'Invalid `file` specified.';
             }
         }
     }
 
     private function createFileRef(
-        \User $user,
-        array $json,
-        \FolderType $parentFolder
+        User        $user,
+        array       $json,
+        FolderType $parentFolder
     ) {
         $getTrimmed = function ($key, $default = '') use ($json) {
             return trim(self::arrayGet($json, $key, $default));
@@ -77,22 +83,28 @@ class FileRefsCreate extends JsonApiController
 
         if (self::arrayHas($json, 'data.relationships.file')) {
             $fileId = $getTrimmed('data.relationships.file.data.id');
-            $source = \File::find($fileId);
-            if ($source->user_id === $user->id) {
-                $file = $source;
-            } else {
-                $file = $this->copyFile($source, $user);
+
+            $source = File::find($fileId);
+            if (!$source) {
+                throw new RecordNotFoundException('Unknown source file');
             }
+
+            $sourceRef = $this->findCopySourceRef($source, $user);
+            if (!$sourceRef) {
+                throw new AuthorizationFailedException();
+            }
+
+            $file = $source->user_id === $user->id
+                  ? $source
+                  : $this->copyFile($source, $user);
         } else {
             try {
-                $file = \File::create(
-                    [
-                        'filetype' => 'StandardFile',
-                        'name' => $name,
-                        'size' => 0,
-                        'user_id' => $user->id,
-                    ]
-                );
+                $file = File::create([
+                    'filetype' => 'StandardFile',
+                    'name' => $name,
+                    'size' => 0,
+                    'user_id' => $user->id,
+                ]);
 
                 $emptyTmpFile = $this->getTmpFile();
                 $file->connectWithDataFile($emptyTmpFile);
@@ -101,22 +113,22 @@ class FileRefsCreate extends JsonApiController
             }
         }
 
-        $fileRef = new \FileRef();
+        $fileRef = new FileRef();
         $fileRef->name = $name;
         $fileRef->description = $description;
         $fileRef->content_terms_of_use_id = $licenseId;
 
         $filetype = $parentFolder->addFile(
-            new \StandardFile($fileRef, $file)
+            new StandardFile($fileRef, $file)
         );
 
         return $filetype->getFileRef();
     }
 
 
-    private function copyFile(\File $source, \User $user)
+    private function copyFile(File $source, User $user)
     {
-        $file = new \File();
+        $file = new File();
         $file->user_id = $user->id;
         $file->mime_type = $source->mime_type;
         $file->name = $source->name;
@@ -143,5 +155,22 @@ class FileRefsCreate extends JsonApiController
         $file->store();
 
         return $file;
+    }
+
+    private function findCopySourceRef(File $source, User $user): ?FileRef
+    {
+        foreach ($source->refs as $ref) {
+            $folder = $ref->getFolderType();
+
+            if (
+                $folder
+                && $folder->isReadable($user->id)
+                && Authority::canDownloadFileRef($user, $ref)
+            ) {
+                return $ref;
+            }
+        }
+
+        return null;
     }
 }
