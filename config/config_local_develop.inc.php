@@ -89,7 +89,6 @@ namespace {
             'auth_user_md5.Email' => ['callback' => 'getUserData', 'map_args' => 'mail']
         ]
     ];
-    $PHPASS_USE_PORTABLE_HASH = true;
 
     $LIBRARY_CATALOGS = [
         [

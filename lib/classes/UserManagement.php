@@ -43,7 +43,7 @@ class UserManagement
     public static function getPwdHasher()
     {
         if (self::$pwd_hasher === null) {
-            self::$pwd_hasher = new PasswordHash(8, Config::get()->PHPASS_USE_PORTABLE_HASH);
+            self::$pwd_hasher = new PasswordHash(8, false);
         }
         return self::$pwd_hasher;
     }
