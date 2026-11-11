@@ -589,7 +589,7 @@ class BasicDataWizardStep implements CourseWizardStep
             'description' => $course->beschreibung,
             'description_i18n' => is_object($course->beschreibung) ?
                 $course->beschreibung->toArray() : $course->beschreibung,
-            'maxmembers' => $course->getSemClass()->offsetGet('admission_turnout_mandatory') ? $course->admission_turnout : '',
+            'maxmembers' => $course->admission_turnout,
         ];
         $lecturers = $course->members->findBy('status', 'dozent')->pluck('user_id');
         $data['lecturers'] = array_flip($lecturers);
@@ -723,7 +723,7 @@ class BasicDataWizardStep implements CourseWizardStep
         string $source_id
     ): void {
         $source = Course::find($source_id);
-        $course->setData($source->toArray('untertitel ort sonstiges art teilnehmer vorrausetzungen lernorga leistungsnachweis ects admission_turnout modules'));
+        $course->setData($source->toArray('untertitel ort sonstiges art teilnehmer vorrausetzungen lernorga leistungsnachweis ects modules'));
         foreach ($source->datafields as $one) {
             $df = $one->getTypedDatafield();
             if ($df->isEditable()) {
