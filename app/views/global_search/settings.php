@@ -10,22 +10,6 @@
     </section>
     <br>
     <section>
-        <label>
-            <?= _('Auf welche Art sollen die Suchergebnisse aus der Datenbank gelesen werden?') ?>
-            <select name="async_queries" size="1">
-                <?php if (in_array('mysqli', get_loaded_extensions())) : ?>
-                    <option value="1"<?= Config::get()->GLOBALSEARCH_ASYNC_QUERIES ? ' selected' : '' ?>>
-                        <?= _('Asynchron, via mysqli') ?>
-                    </option>
-                <?php endif ?>
-                <option value="0"<?= Config::get()->GLOBALSEARCH_ASYNC_QUERIES ? '' : ' selected' ?>>
-                    <?= _('Synchron, via PDO') ?>
-                </option>
-            </select>
-        </label>
-    </section>
-    <br>
-    <section>
         <table class="default sortable-table" id="globalsearch-modules">
             <caption>
                 <?= _('In welcher Reihenfolge sollen Suchergebnisse erscheinen?') ?>

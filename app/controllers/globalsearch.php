@@ -30,14 +30,6 @@ class GlobalSearchController extends AuthenticatedController
     public function find_action($limit)
     {
         $limit = min(100, (int)$limit);
-        // Perform search by mysqli (=async) or by PDO (=sync)?
-        $async = Config::get()->GLOBALSEARCH_ASYNC_QUERIES
-                 && extension_loaded('mysqli');
-        if ($async) {
-            // throw exceptions on mysqli error
-            $driver = new mysqli_driver();
-            $driver->report_mode = MYSQLI_REPORT_ERROR;
-        }
 
         // Now load all modules
         $modules = GlobalSearchModule::getActiveSearchModules();
@@ -56,27 +48,9 @@ class GlobalSearchController extends AuthenticatedController
                 continue;
             }
 
-            // Global config setting says to use mysqli
-            if ($async) {
-                $mysqli = new mysqli($GLOBALS['DB_STUDIP_HOST'], $GLOBALS['DB_STUDIP_USER'],
-                    $GLOBALS['DB_STUDIP_PASSWORD'], $GLOBALS['DB_STUDIP_DATABASE']);
-                mysqli_set_charset($mysqli, 'UTF8');
-                if ($mysqli->multi_query($partSQL . '; SELECT FOUND_ROWS() as found_rows;')) {
-                    do {
-                        if ($res = $mysqli->store_result()) {
-                            $all_links[$className][] = $res->fetch_all(MYSQLI_ASSOC);
-                            $res->free();
-                        }
-                    } while ($mysqli->more_results() && $mysqli->next_result());
-                }
-                $entries = $all_links[$className][0];
-                $entries_count = (int)$all_links[$className][1][0]['found_rows'];
-            // Global config setting calls for PDO
-            } else {
-                $entries = DBManager::get()->fetchAll($partSQL);
-                $entries_count_array = DBManager::get()->fetchAll('SELECT FOUND_ROWS() as found_rows');
-                $entries_count = (int)$entries_count_array[0]['found_rows'];
-            }
+            $entries = DBManager::get()->fetchAll($partSQL);
+            $entries_count_array = DBManager::get()->fetchAll('SELECT FOUND_ROWS() as found_rows');
+            $entries_count = (int)$entries_count_array[0]['found_rows'];
 
             // No results? Leave.
             if (!is_array($entries)) {
@@ -167,7 +141,6 @@ class GlobalSearchController extends AuthenticatedController
             ];
         }
 
-        Config::get()->store('GLOBALSEARCH_ASYNC_QUERIES', Request::int('async_queries', 0));
         Config::get()->store('GLOBALSEARCH_MAX_RESULT_OF_TYPE', Request::int('entries_per_type', 3));
         Config::get()->store('GLOBALSEARCH_MODULES', $config);
 
