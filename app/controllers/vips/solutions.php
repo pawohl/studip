@@ -1461,7 +1461,7 @@ class Vips_SolutionsController extends AuthenticatedController
                 if ($display == 'points') {
                     $row[] = sprintf('%.1f', $this->overall['points']);
                 } else {
-                    $row[] = '100%';
+                    $row[] = sprintf('%.1f%%', 100);
 
                     if ($this->has_grades) {
                         $row[] = '';
@@ -1959,6 +1959,12 @@ class Vips_SolutionsController extends AuthenticatedController
                     $item['weighting'] = $equal_weight;
                 }
             }
+        } else {
+            foreach ($items as &$list) {
+                foreach ($list as &$item) {
+                    $item['weighting'] = 100 * $item['weighting'] / $overall['weighting'];
+                }
+            }
         }
 
         if (count($assignments) > 0) {
@@ -2004,8 +2010,8 @@ class Vips_SolutionsController extends AuthenticatedController
 
                 // compute percent and weighted percent
                 if ($max_points > 0) {
-                    $percent          = round(100 * $reached_points / $max_points, 1);
-                    $weighted_percent = round($weighting * $reached_points / $max_points, 1);
+                    $percent          = 100 * $reached_points / $max_points;
+                    $weighted_percent = $weighting * $reached_points / $max_points;
                 } else {
                     $percent          = 0;
                     $weighted_percent = 0;

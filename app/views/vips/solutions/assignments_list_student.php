@@ -82,7 +82,7 @@
                         </td>
                         <td style="text-align: right;">
                             <? if ($ass['max_points'] != 0) : ?>
-                                <?= sprintf('%.1f %%', round(100 * $ass['reached_points'] / $ass['max_points'], 1)) ?>
+                                <?= sprintf('%.1f %%', 100 * $ass['reached_points'] / $ass['max_points']) ?>
                             <? else : ?>
                                 &ndash;
                             <? endif ?>
@@ -119,7 +119,7 @@
             </td>
             <td style="padding: 5px; text-align: right;">
                 <? if ($sum_max_points != 0) : ?>
-                    <?= sprintf('%.1f %%', round(100 * $sum_reached_points / $sum_max_points, 1)) ?>
+                    <?= sprintf('%.1f %%', 100 * $sum_reached_points / $sum_max_points) ?>
                 <? else : ?>
                     &ndash;
                 <? endif ?>

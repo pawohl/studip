@@ -145,7 +145,7 @@
                             <? if ($display == 'points') : ?>
                                 <?= sprintf('%g', $item['points']) ?>
                             <? else : ?>
-                                <?= sprintf('%d %%', round($item['weighting'], 1)) ?>
+                                <?= sprintf('%.1f %%', $item['weighting']) ?>
                             <? endif ?>
                         </td>
                     <? endforeach ?>
@@ -155,7 +155,7 @@
                     <? if ($display == 'points') : ?>
                         <?= sprintf('%g', $overall['points']) ?>
                     <? else : ?>
-                        100 %
+                        <?= sprintf('%.1f %%', 100) ?>
                     <? endif ?>
                 </td>
 

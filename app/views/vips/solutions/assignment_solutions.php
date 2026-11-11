@@ -145,7 +145,7 @@
                     <? /* percent */ ?>
                     <td style="text-align: center;">
                         <? if ($overall_max_points != 0) : ?>
-                            <?= sprintf('%.1f %%', round($reached_points / $overall_max_points * 100, 1)) ?>
+                            <?= sprintf('%.1f %%', $reached_points / $overall_max_points * 100) ?>
                         <? else : ?>
                             &ndash;
                         <? endif ?>
