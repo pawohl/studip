@@ -126,11 +126,7 @@ final class TwoFactorAuth
             return;
         }
 
-        // TODO: AJAX?
-        if (
-            Request::isXhr()
-            || match_route('dispatch.php/logout')
-        ) {
+        if (match_route('dispatch.php/logout')) {
             return;
         }
 
@@ -165,6 +161,10 @@ final class TwoFactorAuth
             }
 
             self::removeCookie();
+        }
+
+        if (Request::isXhr()) {
+            throw new \Studip\TFARequiredException();
         }
 
         $this->showConfirmationScreen('', [

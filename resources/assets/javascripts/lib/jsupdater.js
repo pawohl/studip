@@ -165,8 +165,16 @@ function poll(forced) {
                 // Stop updater
                 JSUpdater.stop();
 
+                let title = $gettext('Sie sind nicht mehr im System angemeldet');
+                let message = $gettext('Bitte laden Sie die Seite neu, um fortzufahren.');
+
+                if (arguments[0].responseJSON?.message.includes('|')) {
+                    const chunks = arguments[0].responseJSON?.message.split('|');
+                    title = chunks[0];
+                    message = chunks[1];
+                }
+
                 // Present appropriate message in dialog
-                const message = $gettext('Bitte laden Sie die Seite neu, um fortzufahren.');
                 const buttons = {};
                 buttons[$gettext('Neu laden')] = function() {
                     location.reload();
@@ -177,7 +185,7 @@ function poll(forced) {
 
                 Dialog.show(
                     $('<div>')
-                        .html(message)
+                        .text(message)
                         .css({
                             textAlign: 'center',
                             padding: '1.5em 0 0 0'
@@ -186,7 +194,7 @@ function poll(forced) {
                         buttons: buttons,
                         width: 450,
                         height: 200,
-                        title: $gettext('Sie sind nicht mehr im System angemeldet')
+                        title: title
                     });
             } else {
                 registerNextPoll();
