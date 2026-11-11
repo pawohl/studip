@@ -371,7 +371,7 @@ class Course_BasicdataController extends AuthenticatedController
                          ['studip_ticket' => get_ticket()]
                     ),
                     Icon::create('seminar')
-                );
+                )->asDialog();
             }
         }
 
