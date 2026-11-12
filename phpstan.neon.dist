@@ -17,7 +17,7 @@ parameters:
         - lib
         - vendor
     excludePaths:
-        - config/config_local_develop.inc.php
+        - config/config_local_develop.inc.php (?)
         - lib/ilias_interface/studip_referrer_7x.php
         - lib/ilias_interface/studip_referrer_8x.php
         - lib/ilias_interface/studip_referrer_9x.php
