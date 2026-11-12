@@ -152,11 +152,15 @@ class Admin_OverlappingController extends AuthenticatedController
             )
         );
         $this->form->addPart($this->fieldset);
-        $this->form->setURL($this->check())
+        $this->form->setURL($this->indexURL())
             ->setCollapsable(true)
             ->setDataSecure(false)
             ->setSaveButtonText(_('Vergleichen'))
-            ->setCancelButtonText(_('Zurücksetzen'));
+            ->setCancelButtonText(_('Zurücksetzen'))
+            ->addStoreCallback(function (\Studip\Forms\Form $form, array $values) {
+                return $this->check($values);
+            })
+            ->autoStore();
     }
 
     /**
@@ -174,24 +178,29 @@ class Admin_OverlappingController extends AuthenticatedController
     }
 
     /**
-     * Calculates the conflicts and redirects to index view.
+     * Calculates the conflicts for the submitted selection (store callback
+     * of the selection form).
      *
-     * @return void
+     * @param array $values The submitted form values.
+     * @return int Number of stored selections.
+     * @throws Exception
      */
-    public function check_action()
+
+    private function check(array $values): int
     {
-        $this->base_version = StgteilVersion::find(Request::option('base_version'));
+        $stored = 0;
+        $this->base_version = StgteilVersion::find($values['base_version'] ?? '');
         if ($this->base_version) {
             $this->comp_versions = [];
-            foreach (Request::optionArray('comp_versions') as $comp_version_id) {
+            foreach ((array) ($values['comp_versions'] ?? []) as $comp_version_id) {
                 $this->comp_versions[] = StgteilVersion::find($comp_version_id);
             }
             // if no comparison version, check base version for internal conflicts
             if (count($this->comp_versions) == 0) {
                 $this->comp_versions[$this->base_version->id] = $this->base_version;
             }
-            $this->fachsems = Request::intArray('fachsems');
-            $this->semtypes = Request::intArray('semtypes');
+            $this->fachsems = array_map('intval', (array) ($values['fachsems'] ?? []));
+            $this->semtypes = array_map('intval', (array) ($values['semtypes'] ?? []));
 
             $selection_id = MvvOverlappingSelection::createSelectionId(
                 $this->base_version,
@@ -206,7 +215,7 @@ class Admin_OverlappingController extends AuthenticatedController
 
             foreach ($this->comp_versions as $comp_version) {
                 $selection[$comp_version->id] = MvvOverlappingSelection::findOneBySQL(
-                '`selection_id` = ? AND `comp_version_id` = ?', [
+                    '`selection_id` = ? AND `comp_version_id` = ?', [
                     $selection_id,
                     $comp_version->id
                 ]);
@@ -222,6 +231,7 @@ class Admin_OverlappingController extends AuthenticatedController
                     $selection[$comp_version->id]->store();
                 }
                 $selection[$comp_version->id]->storeConflicts();
+                $stored++;
             }
             $conflicts = MvvOverlappingSelection::getConflictsBySelection($selection_id);
             $visible_conflicts = MvvOverlappingSelection::getConflictsBySelection($selection_id, true);
@@ -247,11 +257,14 @@ class Admin_OverlappingController extends AuthenticatedController
             } else {
                 PageLayout::postSuccess(_('Keine Konflikte gefunden.'));
             }
+
+            $_SESSION['MVV_OVL_SELECTION_ID'] = $selection_id;
         } else {
-            PageLayout::postError('Die Basis-Version muss angegeben werden!');
+            PageLayout::postError(_('Die Basis-Version muss angegeben werden!'));
         }
-        $_SESSION['MVV_OVL_HIDDEN'] = Request::int('show_hidden');
-        $this->redirect($this->indexURL(['selection' => $selection_id]));
+        $_SESSION['MVV_OVL_HIDDEN'] = (int) ($values['show_hidden'] ?? 0);
+
+        return $stored;
     }
 
     /**
