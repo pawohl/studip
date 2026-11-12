@@ -38,4 +38,4 @@ Veranstaltungen:
 
 ## Known Issues
 
--
+- Der Courseware-Import funktioniert nicht über alle Versionen hinweg zufriedenstellend
