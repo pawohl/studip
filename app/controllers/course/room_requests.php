@@ -587,6 +587,17 @@ class Course_RoomRequestsController extends AuthenticatedController
             $this->request->resource_id = $this->fromSession('room_id') ?? $this->request->resource_id;
             $this->request->course_id = Context::getId();
 
+            //Requests without upcoming dates are never shown to the room
+            //administration (the request overview lists only requests with
+            //upcoming dates) and could not be resolved anyway.
+            if (!$this->request->getTimeIntervals(false, false, false)) {
+                PageLayout::postError(
+                    _('Die Anfrage enthält keine zukünftigen Termine und wurde daher nicht gespeichert.')
+                );
+                $this->relocate('course/timesrooms/');
+                return;
+            }
+
             if ($this->request->closed != ResourceRequest::STATE_OPEN) {
                 PageLayout::postInfo(_('Die Raumanfrage wurde wieder geöffnet und damit erneut gestellt.'));
                 $this->request->closed = ResourceRequest::STATE_OPEN;

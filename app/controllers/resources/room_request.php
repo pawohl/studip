@@ -1646,7 +1646,16 @@ class Resources_RoomRequestController extends AuthenticatedController
                     }
                     if ($metadate->dates) {
                         $overlap_messages = [];
-                        foreach ($metadate->dates as $date) {
+                        //Past dates are not shown in the resolve dialog
+                        //(see getGroupedTimeIntervals above), so they must
+                        //not be booked either. Otherwise dates that kept an
+                        //old time after the regular time had been changed
+                        //cause overlaps the admin cannot see.
+                        $now = time();
+                        $future_dates = $metadate->dates->filter(
+                            fn (CourseDate $date): bool => $date->end_time >= $now
+                        );
+                        foreach ($future_dates as $date) {
                             $room_ids = [];
                             foreach ($date->room_bookings as $booking) {
                                 $room_ids[] = $booking->resource_id;
@@ -1689,7 +1698,7 @@ class Resources_RoomRequestController extends AuthenticatedController
                                         //Note the booking in the array for booked rooms:
                                         $booked_rooms_ids_for_dates[$date->id][] = $room_id;
                                     }
-                                } catch (ResourceBookingException $e) {
+                                } catch (ResourceBookingOverlapException | ResourceBookingException $e) {
                                     $overlap_messages[] = $e->getMessage();
                                 } catch (Exception $e) {
                                     $errors[] = $e->getMessage();
@@ -1697,7 +1706,7 @@ class Resources_RoomRequestController extends AuthenticatedController
                                 }
                             }
                         }
-                        if (count($overlap_messages) == count($metadate->dates)) {
+                        if (count($overlap_messages) == count($future_dates)) {
                             //The booking could not be saved at all.
                             $errors = array_merge($errors, $overlap_messages);
                         } else {
@@ -1764,6 +1773,11 @@ class Resources_RoomRequestController extends AuthenticatedController
                     $errors
                 );
             } else if ($warnings && !$force_resolve && !$save_only) {
+                //Nothing is booked until the resolving is confirmed.
+                //The confirmation (force_resolve) creates the bookings again.
+                foreach ($bookings as $booking) {
+                    $booking->delete();
+                }
                 PageLayout::postWarning(
                     _('Es wurden nicht für alle Termine der Anfrage Räume ausgewählt! Soll die Anfrage wirklich aufgelöst werden?'),
                     $warnings
@@ -2315,7 +2329,12 @@ class Resources_RoomRequestController extends AuthenticatedController
             }
             $range_name = $metadate->course->getFullName();
             if ($metadate->dates) {
+                //Like in resolve_action: past dates are not booked.
+                $now = time();
                 foreach ($metadate->dates as $date) {
+                    if ($date->end_time < $now) {
+                        continue;
+                    }
                     try {
                         $booking = $room->createBooking(
                             $this->current_user,
