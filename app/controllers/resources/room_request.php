@@ -49,7 +49,14 @@ class Resources_RoomRequestController extends AuthenticatedController
             $this->selected_room_ids = [];
 
             if (!Semester::find($GLOBALS['user']->cfg->MY_COURSES_SELECTED_CYCLE)) {
-                $GLOBALS['user']->cfg->MY_COURSES_SELECTED_CYCLE = Semester::findCurrent()->id;
+                //There is no current semester between two semesters that are
+                //not directly adjacent. Use the upcoming one in that case
+                //(Semester::findNext() needs a current semester).
+                $semester = Semester::findCurrent()
+                    ?? Semester::findOneBySQL('beginn > UNIX_TIMESTAMP() ORDER BY beginn');
+                if ($semester) {
+                    $GLOBALS['user']->cfg->MY_COURSES_SELECTED_CYCLE = $semester->id;
+                }
             }
         }
 
