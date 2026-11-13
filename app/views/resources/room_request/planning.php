@@ -210,11 +210,21 @@
                             if ($requestsinterval['metadate'] instanceof SeminarCycleDate) {
                                 $range_str = 'SeminarCycleDate_' . $requestsinterval['metadate']->id;
                                 $cdates = $requestsinterval['metadate']->getAllDates();
-                                if ($cdates[0]) {
+                                //Use the first upcoming date: past dates keep their
+                                //old time when the regular time has been changed.
+                                $cdate = null;
+                                foreach ($cdates as $candidate) {
+                                    if ($candidate->end_time >= time()) {
+                                        $cdate = $candidate;
+                                        break;
+                                    }
+                                }
+                                $cdate = $cdate ?? ($cdates[0] ?? null);
+                                if ($cdate) {
                                     $begin = new DateTime();
-                                    $begin->setTimestamp($cdates[0]->date);
+                                    $begin->setTimestamp($cdate->date);
                                     $end = new DateTime();
-                                    $end->setTimestamp($cdates[0]->end_time);
+                                    $end->setTimestamp($cdate->end_time);
                                 }
                             }
 
