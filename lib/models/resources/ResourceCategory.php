@@ -52,14 +52,23 @@ class ResourceCategory extends SimpleORMap
             'on_delete'   => 'delete'
         ];
 
+        //Only update an already loaded cache. Otherwise the cache would
+        //consist of this one category and findAll() would regard it as
+        //completely loaded.
         $config['registered_callbacks']['after_create'][] = function ($category) {
-            self::$cache[$category->id] = $category;
+            if (is_array(self::$cache)) {
+                self::$cache[$category->id] = $category;
+            }
         };
         $config['registered_callbacks']['after_store'][] = function ($category) {
-            self::$cache[$category->id] = $category;
+            if (is_array(self::$cache)) {
+                self::$cache[$category->id] = $category;
+            }
         };
         $config['registered_callbacks']['after_delete'][] = function ($category) {
-            unset(self::$cache[$category->id]);
+            if (is_array(self::$cache)) {
+                unset(self::$cache[$category->id]);
+            }
         };
 
         parent::configure($config);
