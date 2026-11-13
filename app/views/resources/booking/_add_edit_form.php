@@ -148,12 +148,12 @@
                                 : '' ?>
                                class="semester-time-option">
                         <input type="hidden" name="semester_course_end_date"
-                               value="<?= date('d.m.Y', $semesters[$semester_id]->vorles_ende); ?>">
+                               value="<?= $semester_id ? date('d.m.Y', $semesters[$semester_id]->vorles_ende) : '' ?>">
                         <?= sprintf(
                             _('Ende der Vorlesungszeit des Semesters %s'),
                             sprintf(
                                 '<span id="semester_course_name">%s</span>',
-                                htmlReady($semesters[$semester_id]->name)
+                                htmlReady($semester_id ? $semesters[$semester_id]->name : '')
                             )
                         ) ?>
                     </label>

@@ -1039,7 +1039,9 @@ class Resources_BookingController extends AuthenticatedController
             }
             $this->description = $this->booking->description;
         }
-        $this->semester_id = $this->selected_semester->id;
+        //Without a matching or current semester, the semester options
+        //of the form are disabled.
+        $this->semester_id = $this->selected_semester?->id;
 
         $this->notification_enabled = '0';
 

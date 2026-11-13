@@ -103,7 +103,9 @@ class SemesterSelectorWidget extends SelectWidget
             if (!empty($this->template_variables['value'])) {
                 $current_id = $this->template_variables['value'];
             } elseif (!$this->include_all) {
-                $current_id = Semester::findCurrent()->id;
+                //There is no current semester between two semesters
+                //that are not directly adjacent:
+                $current_id = Semester::findCurrent()?->id;
             }
         }
 
