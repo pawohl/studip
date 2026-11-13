@@ -259,6 +259,15 @@ export default defineComponent({
         const calendar = this.$refs.fullCalendar as typeof FullCalendar;
         if (calendar) {
             this.calendar_api = calendar.getApi();
+            //Expose the calendar API on the surrounding section element
+            //(the one with the data-fullcalendar attribute), so that
+            //non-Vue code like the request plan can add events.
+            const calendar_element = (calendar as unknown as {$el: HTMLElement}).$el;
+            const vue_root = calendar_element.closest('section.studip-fullcalendar');
+            const host = vue_root?.parentElement?.closest('section.studip-fullcalendar') ?? vue_root;
+            if (host) {
+                (host as HTMLElement & {calendar?: unknown}).calendar = calendar.getApi();
+            }
         }
         this.initExternalDraggableItems();
         if (this.$refs.action_icons) {

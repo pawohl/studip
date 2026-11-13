@@ -524,6 +524,26 @@ STUDIP.ready(function () {
     );
 
 
+    /**
+     * Moves an event of the request plan to the same weekday in the week
+     * the calendar shows, keeping its local time of day.
+     * Replaces STUDIP.Fullcalendar.convertSemesterEvents, which was removed
+     * with the update to Fullcalendar 6.
+     */
+    function moveToCalendarWeek(eventData, calendarDate) {
+        const toWeek = (value, isoWeekday) => {
+            const time = String(value).split('T')[1].substring(0, 8);
+            const day = new Date(calendarDate);
+            day.setHours(12, 0, 0, 0);
+            day.setDate(day.getDate() - (day.getDay() || 7) + Number(isoWeekday));
+            const pad = (number) => String(number).padStart(2, '0');
+            return `${day.getFullYear()}-${pad(day.getMonth() + 1)}-${pad(day.getDate())}T${time}`;
+        };
+        eventData.start = toWeek(eventData.start, eventData.studip_weekday_begin);
+        eventData.end = toWeek(eventData.end, eventData.studip_weekday_end);
+        return eventData;
+    }
+
     $(document).on('click', '.fc-request-event',
         function () {
             var parent_table_row = $(this).closest('tr');
@@ -566,7 +586,7 @@ STUDIP.ready(function () {
                             $("button[name='bulk-book-requests']").prop('disabled', true);
                         }
                     } else {
-                        STUDIP.Fullcalendar.convertSemesterEvents(eventData, calendar.getDate().toString());
+                        moveToCalendarWeek(eventData, calendar.getDate());
                         var overlap = false;
                         var checkStart = new Date(eventData.start);
                         var checkEnd = new Date(eventData.end);
